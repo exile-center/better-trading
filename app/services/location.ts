@@ -4,8 +4,8 @@ import {reads} from '@ember/object/computed';
 import Service, {inject as service} from '@ember/service';
 
 // Types
-import BrowserLocation from 'ember-boilerplate/services/location/browser';
-import FastBootLocation from 'ember-boilerplate/services/location/fastboot';
+import BrowserLocation from 'better-trading/services/location/browser';
+import FastBootLocation from 'better-trading/services/location/fastboot';
 import FastBoot from 'ember-cli-fastboot/services/fastboot';
 import IntlService from 'ember-intl/services/intl';
 

@@ -2,10 +2,10 @@
 import Service, {inject as service} from '@ember/service';
 
 // Config
-import config from 'ember-boilerplate/config/environment';
+import config from 'better-trading/config/environment';
 
 // Types
-import {LocationInterface} from 'ember-boilerplate/services/location';
+import {LocationInterface} from 'better-trading/services/location';
 import FastBoot from 'ember-cli-fastboot/services/fastboot';
 
 export default class FastBootLocation extends Service

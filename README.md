@@ -1,49 +1,123 @@
-<div align="center">
-  <img src="https://user-images.githubusercontent.com/11348/51911477-f2b17880-239f-11e9-89aa-8cf94e957155.png" width="600" />
-  <p><br />This repository is the stable base upon which we build our Ember.js projects at Mirego.<br />We want to share it with the world so you can build awesome Ember.js applications too.</p>
-  <a href="https://travis-ci.com/mirego/ember-boilerplate"><img src="https://travis-ci.com/mirego/ember-boilerplate.svg?branch=master" /></a>
-</div>
+# better-trading
 
-## Content
+| Section                                               | Description                                                     |
+| ----------------------------------------------------- | --------------------------------------------------------------- |
+| [🎯 Objectives and context](#-objectives-and-context) | Project introduction and context                                |
+| [🚧 Dependencies](#-dependencies)                     | Technical dependencies and how to install them                  |
+| [🏎 Kickstart](#kickstart)                             | Details on how to kickstart development on the project          |
+| [🏗 Code & architecture](#-code--architecture)         | Details on the application modules and technical specifications |
+| [🔭 Possible improvements](#-possible-improvements)   | Possible code refactors, improvements and ideas                 |
+| [🚑 Troubleshooting](#-troubleshooting)               | Recurring problems and proven solutions                         |
+| [🚀 Deploy](#-deploy)                                 | Deployment details for various enviroments                      |
 
-This boilerplate comes with batteries included, you’ll find:
+## 🎯 Objectives and context
 
-- A battle-tested production-ready [FastBoot](https://ember-fastboot.com) server
-- Tests with [mocha](https://mochajs.org), with coverage
-- Linting with [tslint](https://palantir.github.io/tslint), [eslint](https://eslint.org), [stylelint](https://stylelint.io) and [ember-template-lint](https://github.com/ember-template-lint/ember-template-lint)
-- Formatting with [Prettier](https://prettier.io)
-- A [GraphQL](https://graphql.org) setup powered by [Apollo](https://www.apollographql.com)
-- Translations powered by [ember-intl](https://github.com/ember-intl/ember-intl)
-- [TypeScript](https://www.typescriptlang.org)
-- [ember-decorators](https://ember-decorators.github.io/ember-decorators)
-- [CSS modules](https://github.com/salsify/ember-css-modules) with [Sass/SCSS](https://sass-lang.com)
-- A clean and useful `README.md` template (in both [english](./BOILERPLATE_README.md) and [french](./BOILERPLATE_README.fr.md))
+…
 
-## Usage
+### Browser support
 
-### With GitHub template
+| Browser | OS  | Constraint |
+| ------- | --- | ---------- |
+| …       | …   | …          |
 
-1. Click on the [**Use this template**](https://github.com/mirego/ember-boilerplate/generate) button to create a new repository
-2. Clone your newly created project (`git clone https://github.com/you/repo.git`)
-3. Run the boilerplate setup script (`./boilerplate-setup.sh your-project-name`)
-4. Commit the changes (`git commit -a -m "Rename ember-boilerplate parts"`)
+## 🚧 Dependencies
 
-### Without GitHub template
+- Node.js (`~> 10.15`)
+- NPM (`~> 6.4`)
 
-1. Clone this project (`git clone https://github.com/mirego/ember-boilerplate.git`)
-2. Delete the internal Git directory (`rm -rf .git`)
-3. Run the boilerplate setup script (`./boilerplate-setup.sh your-project-name`)
-4. Create a new Git repository (`git init`)
-5. Create the initial Git commit (`git commit -a -m "Initial commit"`)
+## 🏎 Kickstart
 
-## License
+### Environment variables
 
-Ember Boilerplate is © 2015-2019 [Mirego](https://www.mirego.com) and may be freely distributed under the [New BSD license](http://opensource.org/licenses/BSD-3-Clause). See the [`LICENSE.md`](https://github.com/mirego/ember-boilerplate/blob/master/LICENSE.md) file.
+All required environment variables are documented in [`.env.dev`](./.env.dev).
 
-The glasses logo is based on [this lovely icon by Daniela Baptista](https://thenounproject.com/term/glasses/789701), from The Noun Project. Used under a [Creative Commons BY 3.0](http://creativecommons.org/licenses/by/3.0/) license.
+When running scripts or `npm` commands, it is important that these variables are present in the environment. You can use `source`, [`nv`](https://github.com/jcouture/nv) or any custom script to achieve this.
 
-## About Mirego
+### Initial setup
 
-[Mirego](https://www.mirego.com) is a team of passionate people who believe that work is a place where you can innovate and have fun. We’re a team of [talented people](https://life.mirego.com) who imagine and build beautiful Web and mobile applications. We come together to share ideas and [change the world](http://www.mirego.org).
+1. Create `.env.dev.local` from empty values in [`.env.dev`](./.env.dev)
+2. Install dependencies with `make dependencies`
 
-We also [love open-source software](https://open.mirego.com) and we try to give back to the community as much as we can.
+### Run the application in development mode
+
+To start a FastBoot-enabled development server:
+
+```bash
+$ npm run start
+```
+
+### Build the application for production
+
+To create a production-ready build:
+
+```bash
+$ npm run build --prod
+```
+
+### Serve the application in production
+
+To launch a “FastBoot-enabled production-ready server” with support for canonical host, SSL and `Basic` authentication, the following command can be executed _after_ a production build has been created:
+
+```bash
+$ npm run server
+```
+
+### Tests
+
+Tests can be ran with the following script and do not need any environment variables as they should not create side effects (eg. they should not make any network calls, they should not read cookies, etc.)
+
+```bash
+$ make test
+```
+
+### Code coverage
+
+Test coverage is enforced using configuration metrics defined in `.nycrc`. To check test coverage, this command can be ran **after tests have been ran**:
+
+```bash
+$ make check-code-coverage
+```
+
+Code instrumentation results are also available in the `coverage` directory.
+
+### Linting & formatting
+
+Several linting and formatting tools can be ran to ensure coding style consistency:
+
+- `make lint-scripts` ensures TypeScript and JavaScript code follows our best practices
+- `make lint-styles` ensures SCSS code follows our best practices
+- `make lint-templates` ensures Handlebars code follows our best practices
+- `make check-format` ensures all code is properly formatted
+- `make format` formats files using Prettier
+
+### Continuous integration
+
+To ensure the project and its code are in a good state, tests and linting tools can be ran all at once:
+
+```bash
+$ ./scripts/ci-check.sh
+```
+
+## 🏗 Code & architecture
+
+…
+
+## 🔭 Possible improvements
+
+| Description | Priority | Complexity | Ideas |
+| ----------- | -------- | ---------- | ----- |
+| …           | …        | …          | …     |
+
+## 🚑 Troubleshooting
+
+…
+
+## 🚀 Deploy
+
+### Versions & branches
+
+Each deployment is made from a Git tag. The codebase version is managed with [`incr`](https://github.com/jcouture/incr).
+
+### Container
+
+A Docker image running a Fastboot-ready Node.js server can be created with `make build`, tested with `docker-compose up application` and pushed to a registry with `make push`.

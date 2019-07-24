@@ -6,7 +6,7 @@ import {NormalizedCacheObject} from 'apollo-cache-inmemory';
 import FastBoot from 'ember-cli-fastboot/services/fastboot';
 
 // Config
-import config from 'ember-boilerplate/config/environment';
+import config from 'better-trading/config/environment';
 
 export default class ShoeboxReader extends Service {
   @service('fastboot')

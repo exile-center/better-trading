@@ -5,13 +5,13 @@ import {inject as service} from '@ember/service';
 import fetch from 'fetch';
 
 // Types
-import ShoeboxWriter from 'ember-boilerplate/services/apollo/shoebox-writer';
-import Location from 'ember-boilerplate/services/location';
-import ServiceWorker from 'ember-boilerplate/services/service-worker';
+import ShoeboxWriter from 'better-trading/services/apollo/shoebox-writer';
+import Location from 'better-trading/services/location';
+import ServiceWorker from 'better-trading/services/service-worker';
 import IntlService from 'ember-intl/services/intl';
 
 // Config
-import config from 'ember-boilerplate/config/environment';
+import config from 'better-trading/config/environment';
 
 export default class ApplicationRoute extends Route {
   @service('intl')

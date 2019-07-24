@@ -4,7 +4,7 @@
 import Ember from 'ember';
 
 // Constants
-import internalErrorPage from 'ember-boilerplate/error-pages/internal-error-page';
+import internalErrorPage from 'better-trading/error-pages/internal-error-page';
 
 // Types
 import ApplicationInstance from '@ember/application/instance';

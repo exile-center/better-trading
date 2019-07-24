@@ -6,7 +6,7 @@ import Apollo from 'ember-apollo-client/services/apollo';
 import FastBoot from 'ember-cli-fastboot/services/fastboot';
 
 // Config
-import config from 'ember-boilerplate/config/environment';
+import config from 'better-trading/config/environment';
 
 export default class ShoeboxWriter extends Service {
   @service('apollo')

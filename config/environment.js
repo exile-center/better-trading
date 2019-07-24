@@ -15,8 +15,8 @@ const {asBoolean} = require('./utils');
 // eslint-disable-next-line complexity
 module.exports = function(environment) {
   const ENV = {
-    modulePrefix: 'ember-boilerplate',
-    podModulePrefix: 'ember-boilerplate/pods',
+    modulePrefix: 'better-trading',
+    podModulePrefix: 'better-trading/pods',
     environment,
     rootURL: '/',
     locationType: 'auto'

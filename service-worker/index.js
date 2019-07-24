@@ -7,8 +7,8 @@
     with basic JavaScript.
 */
 
-const STATIC_CACHE_NAME = `ember-boilerplate-static-${self.CACHE_BUSTER}`;
-const RUNTIME_ASSET_CACHE_NAME = `ember-boilerplate-${self.CACHE_BUSTER}`;
+const STATIC_CACHE_NAME = `better-trading-static-${self.CACHE_BUSTER}`;
+const RUNTIME_ASSET_CACHE_NAME = `better-trading-${self.CACHE_BUSTER}`;
 const ALL_CACHES = [STATIC_CACHE_NAME, RUNTIME_ASSET_CACHE_NAME];
 
 const CACHEABLE_STATIC_ASSET_EXTENSIONS = [
@@ -104,7 +104,7 @@ const clearUnusedCaches = () => {
     const deleteableCaches = cacheNames
       .filter(cacheName => {
         return (
-          cacheName.startsWith('ember-boilerplate') &&
+          cacheName.startsWith('better-trading') &&
           !ALL_CACHES.includes(cacheName)
         );
       })

@@ -4,7 +4,7 @@ import {setupTest} from 'ember-mocha';
 import {beforeEach, describe, it} from 'mocha';
 
 // Types
-import SessionFetcher from 'ember-boilerplate/services/session/fetcher';
+import SessionFetcher from 'better-trading/services/session/fetcher';
 
 describe('Unit | Services | Session | fetcher', () => {
   setupTest();

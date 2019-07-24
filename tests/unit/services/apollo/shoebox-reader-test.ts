@@ -6,7 +6,7 @@ import {beforeEach, describe, it} from 'mocha';
 import sinon from 'sinon';
 
 // Types
-import ShoeboxReader from 'ember-boilerplate/services/apollo/shoebox-reader';
+import ShoeboxReader from 'better-trading/services/apollo/shoebox-reader';
 
 describe('Unit | Services | Apollo | shoebox-reader', () => {
   setupTest();

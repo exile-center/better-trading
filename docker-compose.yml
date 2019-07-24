@@ -1,8 +1,8 @@
 version: '3.3'
 services:
   application:
-    image: ember-boilerplate
-    container_name: ember-boilerplate
+    image: better-trading
+    container_name: better-trading
     env_file: .env.dev
     volumes:
       - '.:/usr/src/app'

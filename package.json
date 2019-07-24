@@ -1,7 +1,7 @@
 {
-  "name": "ember-boilerplate",
+  "name": "better-trading",
   "version": "0.0.1",
-  "description": "Small description for ember-boilerplate goes here",
+  "description": "Small description for better-trading goes here",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -17,7 +17,7 @@
     "pretest": "npm run enforce-engine-versions",
     "prestart": "npm run enforce-engine-versions"
   },
-  "repository": "https://github.com/mirego/ember-boilerplate",
+  "repository": "https://github.com/mirego/better-trading",
   "engine-strict": true,
   "engines": {
     "node": "~10.15",

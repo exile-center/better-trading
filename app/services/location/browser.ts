@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import window from 'ember-window-mock';
 
 // Types
-import {LocationInterface} from 'ember-boilerplate/services/location';
+import {LocationInterface} from 'better-trading/services/location';
 
 export default class BrowserLocation extends Service
   implements LocationInterface {

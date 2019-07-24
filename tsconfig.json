@@ -26,10 +26,10 @@
       "esnext.asynciterable"
     ],
     "paths": {
-      "ember-boilerplate/tests/*": [
+      "better-trading/tests/*": [
         "tests/*"
       ],
-      "ember-boilerplate/*": [
+      "better-trading/*": [
         "app/*"
       ],
       "fetch": [

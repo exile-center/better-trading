@@ -5,8 +5,8 @@ import {setContext} from 'apollo-link-context';
 import ApolloService from 'ember-apollo-client/services/apollo';
 
 // Types
-import ShoeBoxReader from 'ember-boilerplate/services/apollo/shoebox-reader';
-import SessionFetcher from 'ember-boilerplate/services/session/fetcher';
+import ShoeBoxReader from 'better-trading/services/apollo/shoebox-reader';
+import SessionFetcher from 'better-trading/services/session/fetcher';
 import FastBoot from 'ember-cli-fastboot/services/fastboot';
 
 const dataIdFromObject = (result: any): string | null => {

@@ -6,10 +6,10 @@ import {afterEach, beforeEach, describe, it} from 'mocha';
 import sinon from 'sinon';
 
 // Config
-import config from 'ember-boilerplate/config/environment';
+import config from 'better-trading/config/environment';
 
 // Types
-import ApplicationRoute from 'ember-boilerplate/pods/application/route';
+import ApplicationRoute from 'better-trading/pods/application/route';
 
 describe('Unit | Routes | application', () => {
   setupTest();
