@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <link rel="preload" as="style" href="{{rootURL}}assets/vendor.css">
+    <link rel="preload" as="style" href="{{rootURL}}assets/ember-boilerplate.css">
+    <link rel="preload" as="script" href="{{rootURL}}assets/vendor.js">
+    <link rel="preload" as="script" href="{{rootURL}}assets/ember-boilerplate.js">
+
+    {{content-for 'head'}}
+
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
+    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/ember-boilerplate.css">
+
+    {{content-for 'head-footer'}}
+  </head>
+  <body>
+    {{content-for 'body'}}
+
+    <script src="{{rootURL}}assets/vendor.js"></script>
+    <script src="{{rootURL}}assets/ember-boilerplate.js"></script>
+
+    {{content-for 'body-footer'}}
+  </body>
+</html>

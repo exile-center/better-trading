@@ -1,0 +1,43 @@
+# NOTE: `svgo` will not use this file unless we tell it to:
+#
+# ```
+# $ svgo --config=.svgo.yml /path/to/file.svg
+# ```
+full: true
+plugins:
+  - removeDoctype: true
+  - removeXMLProcInst: true
+  - removeComments: true
+  - removeMetadata: true
+  - removeEditorsNSData: true
+  - cleanupAttrs: true
+  - convertStyleToAttrs: true
+  - cleanupIDs: true
+  - removeRasterImages: true
+  - removeUselessDefs: true
+  - cleanupNumericValues: true
+  - cleanupListOfValues: true
+  - convertColors: true
+  - removeUnknownsAndDefaults: true
+  - removeNonInheritableGroupAttrs: true
+  - removeUselessStrokeAndFill: true
+  - removeViewBox: false
+  - cleanupEnableBackground: true
+  - removeHiddenElems: true
+  - removeEmptyText: true
+  - convertShapeToPath: true
+  - moveElemsAttrsToGroup: true
+  - moveGroupAttrsToElems: true
+  - collapseGroups: true
+  - convertPathData: true
+  - convertTransform: true
+  - removeEmptyAttrs: true
+  - removeEmptyContainers: true
+  - mergePaths: true
+  - removeUnusedNS: true
+  - removeTitle: true
+  - removeDesc: true
+  - removeAttrs:
+      attrs:
+        - 'svg:width'
+        - 'svg:height'

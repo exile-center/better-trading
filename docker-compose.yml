@@ -1,0 +1,11 @@
+version: '3.3'
+services:
+  application:
+    image: ember-boilerplate
+    container_name: ember-boilerplate
+    env_file: .env.dev
+    volumes:
+      - '.:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    ports:
+      - '3000:3000'

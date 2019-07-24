@@ -1,0 +1,6 @@
+node_modules/*
+**/vendor/*.js
+vendor/**/*.js
+dist/**/*.js
+tmp/**/*.js
+app/**/translations.js

@@ -1,0 +1,6 @@
+{
+  "extends": "stylelint-config-mirego",
+  "rules": {
+    "selector-pseudo-class-no-unknown": [true, {"ignorePseudoClasses": ["global"]}]
+  }
+}
