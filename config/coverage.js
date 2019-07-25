@@ -12,11 +12,8 @@ module.exports = {
     '*/resolver.js',
     '*/router.js',
     '*/server.js',
-    '*/services/apollo.js',
-    '*/services/service-worker.js',
     '*/translations.js',
     '*/config/**/*',
-    '*/tests/**/*',
-    '*/graphql/**/*'
+    '*/tests/**/*'
   ]
 };

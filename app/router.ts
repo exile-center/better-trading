@@ -8,9 +8,6 @@ class Router extends EmberRouter {
 
 Router.map(function() {
   this.route('home', {path: '/'});
-
-  // Catch-all error page, put your routes above this one
-  this.route('not-found', {path: '/*path'});
 });
 
 export default Router;

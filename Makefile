@@ -4,14 +4,12 @@
 APP_NAME = `grep -m1 name package.json | awk -F: '{ print $$2 }' | sed 's/[ ",]//g'`
 APP_VERSION = `grep -m1 version package.json | awk -F: '{ print $$2 }' | sed 's/[ ",]//g'`
 GIT_REVISION = `git rev-parse HEAD`
-DOCKER_IMAGE_TAG ?= latest
-DOCKER_REGISTRY ?=
 
 # Linter and formatter configuration
 # ----------------------------------
 
 JAVASCRIPT_FILES_PATTERN = ember-cli-build.js testem.js app/ tests/ config/ scripts/ service-worker/ node-server/
-PRETTIER_FILES_PATTERN = ember-cli-build.js testem.js '{app,tests,config,scripts,service-worker,node-server/}/**/*.{ts,js,graphql,scss}' '**/*.md'
+PRETTIER_FILES_PATTERN = ember-cli-build.js testem.js '{app,tests,config,scripts,service-worker,node-server/}/**/*.{ts,js,scss}' '**/*.md'
 STYLES_PATTERN = './app/**/*.scss'
 TEMPLATES_PATTERN = './app/**/*.hbs'
 TYPESCRIPT_FILES_PATTERN = '{app,tests,config,service-worker}/**/*.ts'
@@ -34,12 +32,6 @@ header:
 	@echo ""
 	@printf "\033[33m%-23s\033[0m" "GIT_REVISION"
 	@printf "\033[35m%s\033[0m" $(GIT_REVISION)
-	@echo ""
-	@printf "\033[33m%-23s\033[0m" "DOCKER_IMAGE_TAG"
-	@printf "\033[35m%s\033[0m" $(DOCKER_IMAGE_TAG)
-	@echo ""
-	@printf "\033[33m%-23s\033[0m" "DOCKER_REGISTRY"
-	@printf "\033[35m%s\033[0m" $(DOCKER_REGISTRY)
 	@echo "\n"
 
 .PHONY: targets
@@ -48,17 +40,6 @@ targets:
 	@echo "\033[34m---------------------------------------------------------------\033[0m"
 	@perl -nle'print $& if m{^[a-zA-Z_-]+:.*?## .*$$}' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-22s\033[0m %s\n", $$1, $$2}'
 
-# Build targets
-# -------------
-
-.PHONY: build
-build: ## Build the Docker image
-	docker build --rm --tag $(APP_NAME):$(DOCKER_IMAGE_TAG) .
-
-.PHONY: push
-push: ## Push the Docker image to the registry
-	docker tag $(APP_NAME):$(DOCKER_IMAGE_TAG) $(DOCKER_REGISTRY)/$(APP_NAME):$(DOCKER_IMAGE_TAG)
-	docker push $(DOCKER_REGISTRY)/$(APP_NAME):$(DOCKER_IMAGE_TAG)
 
 # Development targets
 # -------------------

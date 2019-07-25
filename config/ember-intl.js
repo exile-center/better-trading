@@ -2,8 +2,6 @@
 
 'use strict';
 
-const {asBoolean} = require('./utils');
-
 module.exports = function() {
   return {
     /**
@@ -19,7 +17,7 @@ module.exports = function() {
      * @type {Array?}
      * @default "null"
      */
-    locales: ['en-ca'],
+    locales: ['en-us'],
 
     /**
      * autoPolyfill, when true will automatically inject the IntlJS polyfill
@@ -51,7 +49,7 @@ module.exports = function() {
      * @type {Boolean}
      * @default "false"
      */
-    publicOnly: asBoolean(process.env.ASYNC_TRANSLATIONS),
+    publicOnly: false,
 
     /**
      * Path where translations are kept.  This is relative to the project root.

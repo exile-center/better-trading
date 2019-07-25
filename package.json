@@ -8,7 +8,6 @@
     "test": "tests"
   },
   "scripts": {
-    "server": "npm run enforce-engine-versions && NODE_PATH=$NODE_PATH:. node --optimize_for_size app/server.js",
     "start": "ember server",
     "build": "npm run enforce-engine-versions && ember build",
     "deploy": "npm run enforce-engine-versions && ember build --prod",
@@ -17,7 +16,7 @@
     "pretest": "npm run enforce-engine-versions",
     "prestart": "npm run enforce-engine-versions"
   },
-  "repository": "https://github.com/mirego/better-trading",
+  "repository": "https://github.com/poe-world/better-trading",
   "engine-strict": true,
   "engines": {
     "node": "~10.15",
@@ -26,15 +25,8 @@
   "dependencies": {
     "@ember-decorators/argument": "1.0.0-beta.2",
     "@ember/optional-features": "0.7.0",
-    "apollo-cache-inmemory": "1.5.1",
-    "apollo-client": "2.5.1",
-    "apollo-link-context": "1.0.17",
-    "apollo-link-http": "1.5.14",
-    "babel-plugin-graphql-tag": "2.4.0",
     "broccoli-asset-rev": "3.0.0",
     "broccoli-file-creator": "2.1.1",
-    "compression": "1.7.4",
-    "ember-apollo-client": "2.0.0-beta.4",
     "ember-auto-import": "1.3.0",
     "ember-cli": "3.10.1",
     "ember-cli-autoprefixer": "0.8.1",
@@ -42,14 +34,11 @@
     "ember-cli-code-coverage": "github:charlesdemers/ember-cli-code-coverage#6961be288d5666e0c8eae4d1988bbfac3773b433",
     "ember-cli-content-security-policy": "1.1.1",
     "ember-cli-dependency-checker": "3.1.0",
-    "ember-cli-fastboot": "2.0.4",
     "ember-cli-head": "0.4.1",
     "ember-cli-htmlbars": "3.0.1",
     "ember-cli-htmlbars-inline-precompile": "2.1.0",
     "ember-cli-inject-live-reload": "2.0.1",
     "ember-cli-sass": "10.0.1",
-    "ember-cli-sentry": "4.1.0",
-    "ember-cli-sri": "2.1.1",
     "ember-cli-typescript": "2.0.1",
     "ember-cli-uglify": "3.0.0",
     "ember-concurrency": "0.10.0",
@@ -64,17 +53,8 @@
     "ember-service-worker": "0.7.2",
     "ember-source": "3.10.0",
     "ember-window-mock": "0.5.4",
-    "express-basic-auth": "1.2.0",
-    "express-cache-controller": "1.1.0",
-    "express-force-ssl": "0.3.2",
-    "fastboot-app-server": "1.1.2-beta.1",
-    "forcedomain": "1.0.1",
-    "graphql": "14.3.0",
-    "graphql-tag": "2.10.1",
     "loader.js": "4.7.0",
-    "raven": "2.6.4",
-    "sass": "1.20.1",
-    "simple-css-reset": "3.0.0"
+    "sass": "1.20.1"
   },
   "devDependencies": {
     "@types/chai": "4.1.7",
@@ -83,8 +63,6 @@
     "@types/ember-test-helpers": "1.0.5",
     "@types/ember-testing-helpers": "0.0.3",
     "@types/ember__test-helpers": "0.7.8",
-    "@types/express": "^4.16.1",
-    "@types/graphql": "14.2.0",
     "@types/handlebars": "4.1.0",
     "@types/mocha": "5.2.6",
     "@types/rsvp": "4.0.2",
@@ -114,10 +92,5 @@
     "tslint": "5.16.0",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.4.5"
-  },
-  "ember-addon": {
-    "paths": [
-      "lib/asset-cache-manifest"
-    ]
   }
 }
