@@ -10,8 +10,8 @@ module.exports = function(environment) {
     modulePrefix: 'better-trading',
     podModulePrefix: 'better-trading/pods',
     environment,
-    rootURL: '/',
-    locationType: 'auto'
+    locationType: 'hash',
+    rootURL: ''
   };
 
   ENV.EmberENV = {

@@ -1,20 +1,16 @@
-$color: red;
-
-h1 {
-  color: $color;
+body {
+  overflow-y: scroll;
 }
 
-:global(.home) {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
-  text-align: center;
-  line-height: 1.4;
+:global(#app) {
+  width: calc(100% - 400px);
+  margin: 0;
+}
 
-  a {
-    display: block;
-    margin: 0 0 20px;
-  }
+:global(#better-trading-container) {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 400px;
 }
