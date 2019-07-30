@@ -1,16 +1,10 @@
-body {
-  overflow-y: scroll;
-}
+@import 'variables';
 
-:global(#app) {
-  width: calc(100% - 400px);
-  margin: 0;
-}
+// Fontawesome
+@import './node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
+@import './node_modules/@fortawesome/fontawesome-free/scss/solid';
 
-:global(#better-trading-container) {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  width: 400px;
-}
+// Mixins
+@import 'mixins/font-awesome';
+@import 'pods';
+@import 'global';

@@ -1,0 +1,16 @@
+body {
+  overflow-y: scroll;
+}
+
+#app {
+  width: calc(100% - 400px);
+  margin: 0;
+}
+
+#better-trading-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+}

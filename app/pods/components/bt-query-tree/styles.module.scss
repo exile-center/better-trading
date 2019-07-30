@@ -1,0 +1,12 @@
+.filter-wrapper {
+  border: 1px solid hotpink;
+}
+
+:global(.fancytree-folder .fancytree-expander)::before {
+  @include font-awesome-pseudo($fa-var-folder);
+  padding-right: 5px;
+}
+
+:global(.fancytree-folder.fancytree-expanded .fancytree-expander)::before {
+  @include font-awesome-pseudo($fa-var-folder-open);
+}

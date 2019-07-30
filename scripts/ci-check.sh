@@ -45,9 +45,6 @@ run make test
 header "Check test code coverage…"
 run make check-code-coverage
 
-header "Build Docker image…"
-run make build
-
 if [ ${error_status} -ne 0 ]; then
   echo "\n\n${YELLOW}▶▶ One of the checks ${RED_BOLD}failed${YELLOW}. Please fix it before committing.${NO_COLOR}"
 else

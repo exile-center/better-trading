@@ -8,11 +8,11 @@ GIT_REVISION = `git rev-parse HEAD`
 # Linter and formatter configuration
 # ----------------------------------
 
-JAVASCRIPT_FILES_PATTERN = ember-cli-build.js testem.js app/ tests/ config/ scripts/ service-worker/ node-server/
-PRETTIER_FILES_PATTERN = ember-cli-build.js testem.js '{app,tests,config,scripts,service-worker,node-server/}/**/*.{ts,js,scss}' '**/*.md'
+JAVASCRIPT_FILES_PATTERN = ember-cli-build.js testem.js app/ tests/ config/ scripts/
+PRETTIER_FILES_PATTERN = ember-cli-build.js testem.js '{app,tests,config,scripts}/**/*.{ts,js,scss}' '**/*.md'
 STYLES_PATTERN = './app/**/*.scss'
 TEMPLATES_PATTERN = './app/**/*.hbs'
-TYPESCRIPT_FILES_PATTERN = '{app,tests,config,service-worker}/**/*.ts'
+TYPESCRIPT_FILES_PATTERN = '{app,tests,config}/**/*.ts'
 
 # Introspection targets
 # ---------------------
@@ -74,6 +74,8 @@ check-code-coverage:
 .PHONY: format
 format: ## Format project files
 	- npx prettier --write $(PRETTIER_FILES_PATTERN)
+	- npx eslint --fix $(JAVASCRIPT_FILES_PATTERN)
+	- npx stylelint --fix $(STYLES_PATTERN)
 	- count=`ls -1 ./public/**/*.svg 2>/dev/null | wc -l` ; \
     if [ $$count != 0 ] ; then \
       npx svgo --config=.svgo.yml --recursive --folder ./public ; \

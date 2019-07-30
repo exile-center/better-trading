@@ -23,9 +23,13 @@ module.exports = function(defaults) {
       sourcemap: false
     },
 
+    sassOptions: {
+      includePaths: 'node_modules/@fortawesome/fontawesome-free/scss'
+    },
+
     cssModules: {
-      intermediateOutputPath: 'app/styles/app.scss',
-      extension: 'scss',
+      intermediateOutputPath: 'app/styles/_pods.scss',
+      extension: 'module.scss',
       postcssOptions: {
         syntax: require('postcss-scss')
       }
@@ -50,6 +54,10 @@ module.exports = function(defaults) {
       paths: ['public/assets/inline-svgs']
     }
   });
+
+  app.import(
+    'node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js'
+  );
 
   return app.toTree();
 };
