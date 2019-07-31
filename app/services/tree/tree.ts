@@ -28,10 +28,10 @@ export interface FancyTreeNode {
 }
 
 export default class Tree extends Service {
-  @service()
+  @service
   fancyGenerator: FancyGenerator;
 
-  @service()
+  @service
   fancySerializer: FancySerializer;
 
   serializeFancyNodes(nodes: FancyTreeNode[]): RawTreeNode[] {
