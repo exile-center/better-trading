@@ -11,6 +11,7 @@
     "start": "ember server",
     "build": "npm run enforce-engine-versions && ember build",
     "dev": "npm run enforce-engine-versions && ember build --watch",
+    "dev-test": "npm run enforce-engine-versions && ember test --server",
     "deploy": "npm run enforce-engine-versions && ember build --prod",
     "enforce-engine-versions": "./scripts/enforce-engine-versions.js",
     "preinstall": "npm run enforce-engine-versions",
