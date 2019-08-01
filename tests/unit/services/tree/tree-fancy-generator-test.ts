@@ -4,13 +4,13 @@ import {setupTest} from 'ember-mocha';
 import {describe, it} from 'mocha';
 
 // Services
-import FancyGenerator from 'better-trading/services/tree/fancy-generator';
+import TreeFancyGenerator from 'better-trading/services/tree/fancy-generator';
 
 describe('Unit | Service | Tree | Fancy Generator', () => {
   setupTest();
 
   it('should recursively generates the Fancy Tree data structure', function() {
-    const service: FancyGenerator = this.owner.lookup(
+    const service: TreeFancyGenerator = this.owner.lookup(
       'service:tree/fancy-generator'
     );
 

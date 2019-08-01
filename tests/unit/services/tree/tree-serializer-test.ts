@@ -4,13 +4,13 @@ import {setupTest} from 'ember-mocha';
 import {describe, it} from 'mocha';
 
 // Services
-import FancySerializer from 'better-trading/services/tree/fancy-serializer';
+import TreeFancySerializer from 'better-trading/services/tree/fancy-serializer';
 
 describe('Unit | Service | Tree | Fancy Serializer', () => {
   setupTest();
 
   it('should recursively serializes the Fancy Tree data structure', function() {
-    const service: FancySerializer = this.owner.lookup(
+    const service: TreeFancySerializer = this.owner.lookup(
       'service:tree/fancy-serializer'
     );
 

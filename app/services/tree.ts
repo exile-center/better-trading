@@ -2,8 +2,8 @@
 import Service, {inject as service} from '@ember/service';
 
 // Services
-import FancyGenerator from 'better-trading/services/tree/fancy-generator';
-import FancySerializer from 'better-trading/services/tree/fancy-serializer';
+import TreeFancyGenerator from 'better-trading/services/tree/fancy-generator';
+import TreeFancySerializer from 'better-trading/services/tree/fancy-serializer';
 
 // Types
 export interface NodeData {
@@ -28,17 +28,17 @@ export interface FancyTreeNode {
 }
 
 export default class Tree extends Service {
-  @service
-  fancyGenerator: FancyGenerator;
+  @service('tree/fancy-generator')
+  treeFancyGenerator: TreeFancyGenerator;
 
-  @service
-  fancySerializer: FancySerializer;
+  @service('tree/fancy-serializer')
+  treeFancySerializer: TreeFancySerializer;
 
   serializeFancyNodes(nodes: FancyTreeNode[]): RawTreeNode[] {
-    return this.fancySerializer.serialize(nodes);
+    return this.treeFancySerializer.serialize(nodes);
   }
 
   generateFancyNodes(nodes: RawTreeNode[]): FancyTreeNode[] {
-    return this.fancyGenerator.generate(nodes);
+    return this.treeFancyGenerator.generate(nodes);
   }
 }

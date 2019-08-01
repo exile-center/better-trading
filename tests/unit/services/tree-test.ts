@@ -4,19 +4,13 @@ import {setupTest} from 'ember-mocha';
 import {describe, it} from 'mocha';
 
 // Services
-import FancyGenerator from 'better-trading/services/tree/fancy-generator';
-import FancySerializer from 'better-trading/services/tree/fancy-serializer';
+import Tree from 'better-trading/services/tree';
 
 describe('Unit | Service | Tree', () => {
   setupTest();
 
   it('fancy serialization/generation should be idempotent', function() {
-    const generator: FancyGenerator = this.owner.lookup(
-      'service:tree/fancy-generator'
-    );
-    const serializer: FancySerializer = this.owner.lookup(
-      'service:tree/fancy-serializer'
-    );
+    const tree: Tree = this.owner.lookup('service:tree');
 
     const rawNodes = [
       {
@@ -38,8 +32,8 @@ describe('Unit | Service | Tree', () => {
       }
     ];
 
-    expect(serializer.serialize(generator.generate(rawNodes))).to.deep.equal(
-      rawNodes
-    );
+    expect(
+      tree.serializeFancyNodes(tree.generateFancyNodes(rawNodes))
+    ).to.deep.equal(rawNodes);
   });
 });

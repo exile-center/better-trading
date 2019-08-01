@@ -2,9 +2,9 @@
 import Service from '@ember/service';
 
 // Types
-import {FancyTreeNode, RawTreeNode} from 'better-trading/services/tree/tree';
+import {FancyTreeNode, RawTreeNode} from 'better-trading/services/tree';
 
-export default class FancyGenerator extends Service {
+export default class TreeFancyGenerator extends Service {
   generate(nodes: RawTreeNode[]): FancyTreeNode[] {
     return nodes.map(node => {
       if (Boolean(node.children.length)) return this._generateFolder(node);
@@ -33,5 +33,11 @@ export default class FancyGenerator extends Service {
       key: node.id,
       title: `<span>${node.data.name}</span><div>ITEM BUTTONS</div>`
     };
+  }
+}
+
+declare module '@ember/service' {
+  interface Registry {
+    'tree/fancy-generator': TreeFancyGenerator;
   }
 }
