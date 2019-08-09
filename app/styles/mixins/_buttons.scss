@@ -1,0 +1,24 @@
+@mixin button() {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid;
+  font-family: $primary-font;
+  font-size: 13px;
+  line-height: 1;
+  color: $white;
+}
+
+@mixin blue-button() {
+  @include button();
+  border-color: $blue-alt;
+  background-color: $blue;
+}
+
+@mixin gold-button() {
+  @include button();
+  border-color: $gold-alt;
+  background-color: $gold;
+}

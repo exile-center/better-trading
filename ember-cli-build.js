@@ -55,9 +55,5 @@ module.exports = function(defaults) {
     }
   });
 
-  app.import(
-    'node_modules/jquery.fancytree/dist/jquery.fancytree-all-deps.min.js'
-  );
-
   return app.toTree();
 };

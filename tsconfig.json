@@ -29,9 +29,6 @@
       "better-trading/tests/*": [
         "tests/*"
       ],
-      "better-trading/*": [
-        "app/*"
-      ],
       "fetch": [
         "node_modules/ember-fetch"
       ],

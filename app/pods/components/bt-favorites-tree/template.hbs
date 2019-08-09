@@ -1,0 +1,8 @@
+<div local-class="wrapper">
+  {{#each this.folders as |folder|}}
+    <div local-class="folder-wrapper">
+      <BtFavoritesTree::Folder @folder={{folder}} />
+    </div>
+  {{/each}}
+</div>
+

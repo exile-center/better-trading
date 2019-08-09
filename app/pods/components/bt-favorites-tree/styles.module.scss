@@ -1,0 +1,11 @@
+.wrapper {
+  background-color: rgba(#141414, 0.8);
+}
+
+.folder-wrapper {
+  border-top: 1px solid #333;
+
+  &:first-child {
+    border-top: 0;
+  }
+}

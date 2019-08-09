@@ -1,0 +1,13 @@
+<div local-class="header">
+  <span local-class="title">
+    {{@folder.title}}
+  </span>
+</div>
+
+{{#if @folder.isExpanded}}
+  <div local-class="items">
+    {{#each @folder.items as |item|}}
+      <BtFavoritesTree::Item @item={{item}} />
+    {{/each}}
+  </div>
+{{/if}}

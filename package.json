@@ -25,7 +25,6 @@
     "npm": "~6.4"
   },
   "dependencies": {
-    "@ember-decorators/argument": "1.0.0-beta.2",
     "@ember/optional-features": "0.7.0",
     "@fortawesome/fontawesome-free": "5.9.0",
     "broccoli-asset-rev": "3.0.0",
@@ -56,7 +55,6 @@
     "ember-service-worker": "0.7.2",
     "ember-source": "3.10.0",
     "ember-window-mock": "0.5.4",
-    "jquery.fancytree": "2.31.0",
     "loader.js": "4.7.0",
     "sass": "1.20.1"
   },
