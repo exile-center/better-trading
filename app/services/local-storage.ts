@@ -9,9 +9,6 @@ const EXPIRY_SUFFIX = '--expires-at';
 type LocalStorageKey = 'favorites';
 
 export default class LocalStorage extends Service {
-  // Local reference so it can be stubbed
-  localStorage: any = window.localStorage;
-
   setValue(key: LocalStorageKey, value: string): void {
     this.write(key, value);
   }
@@ -41,11 +38,11 @@ export default class LocalStorage extends Service {
   }
 
   private write(key: string, value: string): void {
-    this.localStorage.setItem(KEY_PREFIX + key, value);
+    window.localStorage.setItem(KEY_PREFIX + key, value);
   }
 
   private read(key: string): string | null {
-    return this.localStorage.getItem(KEY_PREFIX + key);
+    return window.localStorage.getItem(KEY_PREFIX + key);
   }
 }
 
