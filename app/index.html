@@ -1,27 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-
-    <link rel="preload" as="style" href="{{rootURL}}assets/vendor.css">
-    <link rel="preload" as="style" href="{{rootURL}}assets/better-trading.css">
-    <link rel="preload" as="script" href="{{rootURL}}assets/vendor.js">
-    <link rel="preload" as="script" href="{{rootURL}}assets/better-trading.js">
-
-    {{content-for 'head'}}
-
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/vendor.css">
-    <link integrity="" rel="stylesheet" href="{{rootURL}}assets/better-trading.css">
-
-    {{content-for 'head-footer'}}
-  </head>
-  <body>
-    {{content-for 'body'}}
-
-    <script src="{{rootURL}}assets/vendor.js"></script>
-    <script src="{{rootURL}}assets/better-trading.js"></script>
-
-    {{content-for 'body-footer'}}
-  </body>
-</html>
+<!--
+Since the app in injected via the browser extension API, the file is not used.
+Its presence is required by Ember-cli to work properly,
+-->
