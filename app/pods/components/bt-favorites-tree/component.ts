@@ -1,11 +1,16 @@
 // Vendors
+import {A} from '@ember/array';
 import Component from '@ember/component';
+import {action, setProperties} from '@ember/object';
+import {inject as service} from '@ember/service';
 
-// Services
-import {FavoritesFolder} from 'better-trading/favorites';
+// Types
+import MutableArray from '@ember/array/mutable';
+import LocalStorage from 'better-trading/services/local-storage';
+import {FavoritesFolder} from 'better-trading/types/favorites';
 
 // Constants
-const TMP_DATA = [
+const TMP_DATA = A([
   {
     isExpanded: true,
     items: [
@@ -42,8 +47,37 @@ const TMP_DATA = [
     ],
     title: 'Dark Pact'
   }
-];
+]);
 
 export default class BtFavoritesTree extends Component {
-  folders: FavoritesFolder[] = TMP_DATA;
+  @service('local-storage')
+  localStorage: LocalStorage;
+
+  folders: MutableArray<FavoritesFolder> = TMP_DATA;
+
+  willInsertElement(): void {
+    const savedFavorites = this.localStorage.getValue('favorites');
+    if (!savedFavorites) return;
+
+    this.folders = A(JSON.parse(savedFavorites));
+  }
+
+  @action
+  updateFolder(
+    index: number,
+    updatedFolder: Pick<FavoritesFolder, 'isExpanded' | 'title'>
+  ): void {
+    const folder: FavoritesFolder | undefined = this.folders.objectAt(index);
+    if (!folder) return;
+
+    setProperties(folder, updatedFolder);
+    this._saveFolders();
+  }
+
+  _saveFolders(): void {
+    this.localStorage.setValue(
+      'favorites',
+      JSON.stringify(this.folders.toArray())
+    );
+  }
 }

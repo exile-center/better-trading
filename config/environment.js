@@ -23,6 +23,12 @@ module.exports = function(environment) {
     version: PACKAGE.version
   };
 
+  ENV.fontawesome = {
+    icons: {
+      'free-solid-svg-icons': ['chevron-down']
+    }
+  };
+
   if (environment === 'test') {
     ENV.locationType = 'none';
 

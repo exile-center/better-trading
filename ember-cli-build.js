@@ -23,10 +23,6 @@ module.exports = function(defaults) {
       sourcemap: false
     },
 
-    sassOptions: {
-      includePaths: 'node_modules/@fortawesome/fontawesome-free/scss'
-    },
-
     cssModules: {
       intermediateOutputPath: 'app/styles/_pods.scss',
       extension: 'module.scss',

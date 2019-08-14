@@ -1,7 +1,14 @@
-<div local-class="header">
+<div
+  local-class="header {{if @folder.isExpanded "expanded"}}"
+  onclick={{this.toggleExpanded}}
+>
   <span local-class="title">
     {{@folder.title}}
   </span>
+
+  <div>
+    <FaIcon local-class="chevron" @icon="chevron-down" />
+  </div>
 </div>
 
 {{#if @folder.isExpanded}}

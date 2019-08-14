@@ -1,11 +1,6 @@
 @import 'variables';
 
-// Fontawesome
-@import './node_modules/@fortawesome/fontawesome-free/scss/fontawesome';
-@import './node_modules/@fortawesome/fontawesome-free/scss/solid';
-
 // Mixins
 @import 'mixins/buttons';
-@import 'mixins/font-awesome';
 @import 'pods';
 @import 'global';

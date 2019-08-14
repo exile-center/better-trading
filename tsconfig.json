@@ -32,6 +32,9 @@
       "fetch": [
         "node_modules/ember-fetch"
       ],
+      "better-trading/*": [
+        "app/*"
+      ],
       "*": [
         "types/*"
       ]

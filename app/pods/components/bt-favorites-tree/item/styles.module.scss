@@ -1,3 +1,15 @@
+.link-wrapper {
+  display: flex;
+  padding: 5px;
+  background-color: transparent;
+  transition: background-color 0.2s ease-in-out;
+
+  &:hover {
+    background-color: $blue;
+    text-decoration: none;
+  }
+}
+
 .title {
   font-family: $primary-font;
   font-size: 13px;

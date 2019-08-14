@@ -26,7 +26,6 @@
   },
   "dependencies": {
     "@ember/optional-features": "0.7.0",
-    "@fortawesome/fontawesome-free": "5.9.0",
     "broccoli-asset-rev": "3.0.0",
     "broccoli-file-creator": "2.1.1",
     "ember-auto-import": "1.3.0",
@@ -60,6 +59,9 @@
   },
   "devDependencies": {
     "@ember/jquery": "0.5.2",
+    "@fortawesome/ember-fontawesome": "0.1.14",
+    "@fortawesome/free-brands-svg-icons": "^5.10.1",
+    "@fortawesome/free-solid-svg-icons": "^5.10.1",
     "@types/chai": "4.1.7",
     "@types/ember": "3.1.0",
     "@types/ember-mocha": "0.14.6",

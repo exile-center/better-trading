@@ -1,6 +1,28 @@
 .header {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  background-color: transparent;
   letter-spacing: 0.5px;
   color: $white;
+  transition: background-color 0.2s ease-in-out;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $blue;
+  }
+
+  &.expanded {
+    .chevron {
+      transform: rotate(90deg);
+    }
+  }
+}
+
+.chevron {
+  transition: transform 0.2s ease-in-out;
 }
 
 .title {

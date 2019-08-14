@@ -21,5 +21,9 @@
     "ember/require-super-in-init": 2,
     "ember/avoid-leaking-state-in-ember-objects": 2,
     "ember/use-brace-expansion": 2
+  },
+  "globals": {
+    "Partial": "readonly",
+    "Pick": "readonly"
   }
 }
