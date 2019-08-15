@@ -9,6 +9,10 @@
   font-size: 13px;
   line-height: 1;
   color: $white;
+
+  svg {
+    margin-right: 8px;
+  }
 }
 
 @mixin blue-button() {

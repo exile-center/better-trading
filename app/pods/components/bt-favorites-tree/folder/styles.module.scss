@@ -40,9 +40,18 @@
 }
 
 .items {
-  padding-left: 10px;
+  margin-left: 10px;
 
   .title {
     font-size: 15px;
   }
+}
+
+.root-buttons {
+  margin: 5px 0 5px 10px;
+}
+
+.root-button {
+  @include blue-button();
+  height: 25px;
 }

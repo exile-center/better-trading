@@ -14,6 +14,13 @@
 </div>
 
 {{#if @folder.isExpanded}}
+  <div local-class="root-buttons">
+    <button local-class="root-button" onclick={{action this.createFolder}}>
+      <FaIcon @icon="folder-plus"/>
+      {{t "pods.components.bt-favorites-tree.folder.new_folder"}}
+    </button>
+  </div>
+
   <DragSortList
     local-class="items"
     @items={{@folder.items}}

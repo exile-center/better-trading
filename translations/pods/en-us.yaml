@@ -1,0 +1,5 @@
+pods:
+  components:
+    bt-favorites-tree:
+      folder:
+        new_folder:  New folder
