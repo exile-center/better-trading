@@ -8,6 +8,7 @@ import {FavoritesFolder} from 'better-trading/types/favorites';
 export default class BtFavoritesTreeFolder extends Component {
   folder: FavoritesFolder;
   onUpdate: () => void;
+  onMoveItem: () => void;
 
   @action
   toggleExpanded() {

@@ -2,19 +2,32 @@
   local-class="header {{if @folder.isExpanded "expanded"}}"
   onclick={{this.toggleExpanded}}
 >
-  <span local-class="title">
-    {{@folder.title}}
-  </span>
+  <div local-class="title-wrapper">
+    <FaIcon local-class="chevron" @icon="chevron-down"/>
 
-  <div>
-    <FaIcon local-class="chevron" @icon="chevron-down" />
+    <span local-class="title">
+      {{@folder.title}}
+    </span>
   </div>
+
+  <div></div>
 </div>
 
 {{#if @folder.isExpanded}}
-  <div local-class="items">
-    {{#each @folder.items as |item|}}
-      <BtFavoritesTree::Item @item={{item}} />
-    {{/each}}
-  </div>
+  <DragSortList
+    local-class="items"
+    @items={{@folder.items}}
+    @dragEndAction={{action @onMoveItem}}
+    as |item|
+  >
+    {{#if item.slug}}
+      <BtFavoritesTree::Trade @trade={{item}} />
+    {{else}}
+      <BtFavoritesTree::Folder
+        @folder={{item}}
+        @onUpdate={{action @onUpdate}}
+        @onMoveItem={{action @onMoveItem}}
+      />
+    {{/if}}
+  </DragSortList>
 {{/if}}

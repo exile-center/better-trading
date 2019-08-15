@@ -4,7 +4,9 @@ export interface FavoritesFolder {
   isExpanded: boolean;
 }
 
-export interface FavoritesItem {
+export interface FavoritesTrade {
   title: string;
   slug: string;
 }
+
+export type FavoritesItem = FavoritesFolder | FavoritesTrade;

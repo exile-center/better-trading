@@ -16,16 +16,33 @@
 
   &.expanded {
     .chevron {
-      transform: rotate(90deg);
+      transform: rotate(0);
     }
   }
 }
 
 .chevron {
+  width: 10px !important; // Override FA's default sizing
+  transform: rotate(-90deg);
   transition: transform 0.2s ease-in-out;
 }
 
-.title {
+.title-wrapper {
+  display: flex;
+  align-items: center;
   font-family: $primary-font;
   font-size: 17px;
+  line-height: 1;
+}
+
+.title {
+  margin-left: 5px;
+}
+
+.items {
+  padding-left: 10px;
+
+  .title {
+    font-size: 15px;
+  }
 }

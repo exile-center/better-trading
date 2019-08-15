@@ -1,11 +1,17 @@
 <div local-class="wrapper">
-  {{#each this.folders as |folder index|}}
-    <div local-class="folder-wrapper">
+  <DragSortList
+    @items={{this.items}}
+    @dragEndAction={{action this.moveItem}}
+    as |item|
+  >
+    {{#if item.slug}}
+      <BtFavoritesTree::Trade @trade={{item}} />
+    {{else}}
       <BtFavoritesTree::Folder
-        @folder={{folder}}
+        @folder={{item}}
         @onUpdate={{action this.persistFavorites}}
+        @onMoveItem={{action this.moveItem}}
       />
-    </div>
-  {{/each}}
+    {{/if}}
+  </DragSortList>
 </div>
-

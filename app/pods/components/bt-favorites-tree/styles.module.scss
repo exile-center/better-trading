@@ -1,11 +1,24 @@
 .wrapper {
   background-color: rgba(#141414, 0.8);
-}
 
-.folder-wrapper {
-  border-top: 1px solid #333;
+  > :global(.dragSortList) > :global(.dragSortItem) {
+    border-top: 1px solid #333;
 
-  &:first-child {
-    border-top: 0;
+    &:first-child {
+      border-top: 0;
+    }
+  }
+
+  :global(.dragSortList.-isDraggingOver) {
+    background-color: rgba($gold-alt, 0.1);
+  }
+
+  :global(.dragSortList.-isExpanded.-isDraggingOver),
+  :global(.dragSortItem.-placeholderAbove),
+  :global(.dragSortItem.-placeholderBelow) {
+    &::before {
+      content: '→';
+      color: $white;
+    }
   }
 }

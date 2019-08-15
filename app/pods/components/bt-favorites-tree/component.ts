@@ -7,45 +7,63 @@ import {inject as service} from '@ember/service';
 // Types
 import MutableArray from '@ember/array/mutable';
 import LocalStorage from 'better-trading/services/local-storage';
-import {FavoritesFolder} from 'better-trading/types/favorites';
+import {FavoritesItem} from 'better-trading/types/favorites';
+
+interface MoveActionParams {
+  sourceList: MutableArray<FavoritesItem>;
+  sourceIndex: number;
+  targetList: MutableArray<FavoritesItem>;
+  targetIndex: number;
+}
 
 // Constants
 const TMP_DATA = A([
   {
     isExpanded: true,
-    items: [
+    items: A([
       {
         slug: 'KMjkPnU5',
-        title: 'Top helm'
+        title: 'First list item'
       },
       {
-        slug: 'KMjkPnU5',
-        title: 'Top helm'
+        isExpanded: false,
+        items: A([
+          {
+            slug: 'KMjkPnU5',
+            title: 'Second list item'
+          }
+        ]),
+        title: 'Sub Dark 1'
       },
       {
-        slug: 'KMjkPnU5',
-        title: 'Top helm'
+        isExpanded: false,
+        items: A([]),
+        title: 'Empty folder'
       }
-    ],
-    title: 'Dark Pact'
+    ]),
+    title: 'Dark 1'
   },
   {
     isExpanded: true,
-    items: [
+    items: A([
       {
         slug: 'KMjkPnU5',
-        title: 'Top helm'
+        title: 'Top helm 1'
       },
       {
         slug: 'KMjkPnU5',
-        title: 'Top helm'
+        title: 'Top helm 2'
       },
       {
         slug: 'KMjkPnU5',
-        title: 'Top helm'
+        title: 'Top helm 3'
       }
-    ],
-    title: 'Dark Pact'
+    ]),
+    title: 'Dark 2'
+  },
+  {
+    slug: 'KMjkPnU5',
+    title: 'Root item'
   }
 ]);
 
@@ -53,24 +71,32 @@ export default class BtFavoritesTree extends Component {
   @service('local-storage')
   localStorage: LocalStorage;
 
-  folders: MutableArray<FavoritesFolder> = TMP_DATA;
+  items: MutableArray<FavoritesItem> = TMP_DATA;
 
   willInsertElement(): void {
+    this.items = TMP_DATA;
+
+    /*
     const savedFavorites = this.localStorage.getValue('favorites');
     if (!savedFavorites) return;
 
     this.folders = A(JSON.parse(savedFavorites));
+    */
   }
 
   @action
   persistFavorites(): void {
-    this._saveFolders();
+    console.log("persist");
   }
 
-  _saveFolders(): void {
-    this.localStorage.setValue(
-      'favorites',
-      JSON.stringify(this.folders.toArray())
-    );
+  @action
+  moveItem({sourceList, sourceIndex, targetList, targetIndex}: MoveActionParams) {
+    if (sourceList === targetList && sourceIndex === targetIndex) return;
+
+    const item = sourceList.objectAt(sourceIndex);
+    if (!item) return;
+
+    sourceList.removeAt(sourceIndex);
+    targetList.insertAt(targetIndex, item);
   }
 }
