@@ -1,7 +1,7 @@
 // Vendors
 import {A} from '@ember/array';
 import Component from '@ember/component';
-import {action, setProperties} from '@ember/object';
+import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
 
 // Types
@@ -63,14 +63,7 @@ export default class BtFavoritesTree extends Component {
   }
 
   @action
-  updateFolder(
-    index: number,
-    updatedFolder: Pick<FavoritesFolder, 'isExpanded' | 'title'>
-  ): void {
-    const folder: FavoritesFolder | undefined = this.folders.objectAt(index);
-    if (!folder) return;
-
-    setProperties(folder, updatedFolder);
+  persistFavorites(): void {
     this._saveFolders();
   }
 

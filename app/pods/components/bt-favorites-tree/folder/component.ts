@@ -1,18 +1,18 @@
 // Vendors
 import Component from '@ember/component';
-import {action} from '@ember/object';
+import {action, set} from '@ember/object';
 
 // Types
 import {FavoritesFolder} from 'better-trading/types/favorites';
 
 export default class BtFavoritesTreeFolder extends Component {
   folder: FavoritesFolder;
-  onUpdate: (updatedFolder: Pick<FavoritesFolder, 'isExpanded'>) => void;
+  onUpdate: () => void;
 
   @action
   toggleExpanded() {
-    this.onUpdate({
-      isExpanded: !this.folder.isExpanded
-    });
+    set(this.folder, 'isExpanded', !this.folder.isExpanded);
+
+    this.onUpdate();
   }
 }

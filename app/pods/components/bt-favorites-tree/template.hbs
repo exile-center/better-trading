@@ -3,7 +3,7 @@
     <div local-class="folder-wrapper">
       <BtFavoritesTree::Folder
         @folder={{folder}}
-        @onUpdate={{action this.updateFolder index}}
+        @onUpdate={{action this.persistFavorites}}
       />
     </div>
   {{/each}}
