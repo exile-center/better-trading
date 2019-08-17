@@ -1,3 +1,8 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .header {
   display: flex;
   position: relative;
@@ -9,6 +14,7 @@
   color: $white;
   transition: background-color 0.2s ease-in-out;
   cursor: pointer;
+  order: 0;
 
   &:hover {
     background-color: $blue;
@@ -18,6 +24,18 @@
     .chevron {
       transform: rotate(0);
     }
+  }
+}
+
+:global(.dragSortList.-isDragging) {
+  .header:hover {
+    background-color: inherit;
+  }
+}
+
+:global(.dragSortList.-isDraggingOver) {
+  & ~ .header {
+    background-color: rgba($gold-alt, 0.1);
   }
 }
 
@@ -40,6 +58,7 @@
 }
 
 .items {
+  order: 3;
   margin-left: 10px;
 
   .title {
@@ -48,6 +67,7 @@
 }
 
 .root-buttons {
+  order: 1;
   margin: 5px 0 5px 10px;
 }
 

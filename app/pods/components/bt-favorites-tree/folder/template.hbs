@@ -1,40 +1,42 @@
-<div
-  local-class="header {{if @folder.isExpanded "expanded"}}"
-  onclick={{this.toggleExpanded}}
->
-  <div local-class="title-wrapper">
-    <FaIcon local-class="chevron" @icon="chevron-down"/>
+<div local-class="wrapper">
+  {{#if @folder.isExpanded}}
+    <DragSortList
+      local-class="items"
+      @items={{@folder.items}}
+      @dragEndAction={{action @onMoveItem}}
+      as |item|
+    >
+      {{#if item.slug}}
+        <BtFavoritesTree::Trade @trade={{item}} />
+      {{else}}
+        <BtFavoritesTree::Folder
+          @folder={{item}}
+          @onUpdate={{action @onUpdate}}
+          @onMoveItem={{action @onMoveItem}}
+        />
+      {{/if}}
+    </DragSortList>
 
-    <span local-class="title">
-      {{@folder.title}}
-    </span>
-  </div>
+    <div local-class="root-buttons">
+      <button local-class="root-button" onclick={{action this.createFolder}}>
+        <FaIcon @icon="folder-plus"/>
+        {{t "pods.components.bt-favorites-tree.folder.new_folder"}}
+      </button>
+    </div>
+  {{/if}}
 
-  <div></div>
-</div>
-
-{{#if @folder.isExpanded}}
-  <div local-class="root-buttons">
-    <button local-class="root-button" onclick={{action this.createFolder}}>
-      <FaIcon @icon="folder-plus"/>
-      {{t "pods.components.bt-favorites-tree.folder.new_folder"}}
-    </button>
-  </div>
-
-  <DragSortList
-    local-class="items"
-    @items={{@folder.items}}
-    @dragEndAction={{action @onMoveItem}}
-    as |item|
+  <div
+    local-class="header {{if @folder.isExpanded "expanded"}}"
+    onclick={{this.toggleExpanded}}
   >
-    {{#if item.slug}}
-      <BtFavoritesTree::Trade @trade={{item}} />
-    {{else}}
-      <BtFavoritesTree::Folder
-        @folder={{item}}
-        @onUpdate={{action @onUpdate}}
-        @onMoveItem={{action @onMoveItem}}
-      />
-    {{/if}}
-  </DragSortList>
-{{/if}}
+    <div local-class="title-wrapper">
+      <FaIcon local-class="chevron" @icon="chevron-down"/>
+
+      <span local-class="title">
+        {{@folder.title}}
+      </span>
+    </div>
+
+    <div></div>
+  </div>
+</div>

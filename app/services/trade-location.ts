@@ -1,6 +1,5 @@
 // Vendor
 import Service from '@ember/service';
-import window from 'ember-window-mock';
 
 interface ParsedPath {
   tab: string;
@@ -9,6 +8,11 @@ interface ParsedPath {
 }
 
 export default class TradeLocation extends Service {
+  setupWatches() {
+    console.log("Listening for url changes");
+
+  }
+
   get league(): string {
     const {league} = this.parseCurrentPath();
 

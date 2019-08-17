@@ -10,6 +10,12 @@
   }
 }
 
+:global(.dragSortList.-isDragging) {
+  .link-wrapper:hover {
+    background-color: inherit;
+  }
+}
+
 .title {
   font-family: $primary-font;
   font-size: 12px;

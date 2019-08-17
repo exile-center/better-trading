@@ -9,10 +9,6 @@
     }
   }
 
-  :global(.dragSortList.-isDraggingOver) {
-    background-color: rgba($gold-alt, 0.1);
-  }
-
   :global(.dragSortList.-isExpanded.-isDraggingOver),
   :global(.dragSortItem.-placeholderAbove),
   :global(.dragSortItem.-placeholderBelow) {
