@@ -18,9 +18,20 @@
     </DragSortList>
 
     <div local-class="root-buttons">
-      <button local-class="root-button" onclick={{action this.createFolder}}>
+      <button
+        local-class="root-button"
+        onclick={{action this.createFolder}}
+      >
         <FaIcon @icon="folder-plus"/>
         {{t "pods.components.bt-favorites-tree.folder.new_folder"}}
+      </button>
+
+      <button
+        local-class="root-button {{if this.tradeLocation.slug "visible" "hidden"}}"
+        onclick={{action this.createTrade}}
+      >
+        <FaIcon @icon="save"/>
+        {{t "pods.components.bt-favorites-tree.folder.new_trade"}}
       </button>
     </div>
   {{/if}}

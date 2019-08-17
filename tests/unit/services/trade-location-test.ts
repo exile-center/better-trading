@@ -20,18 +20,21 @@ describe('Unit | Services | Trade location', () => {
   describe('get league', () => {
     it('should returns the active league from the base URL', () => {
       window.location.pathname = '/trade/search/Legion';
+      service.startUrlPolling();
 
       expect(service.league).to.equal('Legion');
     });
 
     it('should returns the active league from a trade URL', () => {
       window.location.pathname = '/trade/search/Legion/q1w2e3r4t5';
+      service.startUrlPolling();
 
       expect(service.league).to.equal('Legion');
     });
 
     it('should returns the active league from a bulk exchange URL', () => {
       window.location.pathname = '/trade/exchange/Legion/q1w2e3r4t5';
+      service.startUrlPolling();
 
       expect(service.league).to.equal('Legion');
     });
@@ -40,18 +43,21 @@ describe('Unit | Services | Trade location', () => {
   describe('get slug', () => {
     it('should handle the absence of a current trade', () => {
       window.location.pathname = '/trade/search/Legion';
+      service.startUrlPolling();
 
       expect(service.slug).to.be.null;
     });
 
     it('should returns the active trade slug from a trade URL', () => {
       window.location.pathname = '/trade/search/Legion/q1w2e3r4t5';
+      service.startUrlPolling();
 
       expect(service.slug).to.equal('q1w2e3r4t5');
     });
 
     it('should returns the active trade slug from a bulk exchange URL', () => {
       window.location.pathname = '/trade/exchange/Legion/q1w2e3r4t5';
+      service.startUrlPolling();
 
       expect(service.slug).to.equal('q1w2e3r4t5');
     });

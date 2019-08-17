@@ -3,8 +3,8 @@ import Route from '@ember/routing/route';
 import {inject as service} from '@ember/service';
 
 // Types
-import IntlService from 'ember-intl/services/intl';
 import TradeLocation from "better-trading/services/trade-location";
+import IntlService from 'ember-intl/services/intl';
 
 // Constants
 const DEFAULT_LOCALE = 'en-us';
@@ -18,6 +18,6 @@ export default class ApplicationRoute extends Route {
 
   async beforeModel() {
     this.intl.setLocale(DEFAULT_LOCALE);
-    this.tradeLocation.setupWatches();
+    this.tradeLocation.startUrlPolling();
   }
 }

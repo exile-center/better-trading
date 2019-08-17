@@ -1,5 +1,10 @@
 // Vendor
 import Service from '@ember/service';
+import {task, timeout} from "ember-concurrency";
+import window from 'ember-window-mock';
+
+// Constants
+const POLLING_DELAY = 500;
 
 interface ParsedPath {
   tab: string;
@@ -7,23 +12,26 @@ interface ParsedPath {
   slug?: string;
 }
 
-export default class TradeLocation extends Service {
-  setupWatches() {
-    console.log("Listening for url changes");
+export default class TradeLocation extends Service.extend({
+  locationPollingTask: task(function*(this: TradeLocation) {
+    const {tab, league, slug} = this.parseCurrentPath();
 
-  }
+    this.setProperties({
+      league: league || null,
+      slug: slug || null,
+      tab: tab || null
+    });
 
-  get league(): string {
-    const {league} = this.parseCurrentPath();
+    yield timeout(POLLING_DELAY);
+    this.locationPollingTask.perform();
+  })
+}) {
+  league: string | null;
+  slug: string | null;
+  tab: string | null;
 
-    return league;
-  }
-
-  get slug(): string | null {
-    const {slug} = this.parseCurrentPath();
-    if (!slug) return null;
-
-    return slug;
+  startUrlPolling() {
+    this.locationPollingTask.perform();
   }
 
   private parseCurrentPath(): ParsedPath {

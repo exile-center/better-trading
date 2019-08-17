@@ -25,7 +25,7 @@ module.exports = function(environment) {
 
   ENV.fontawesome = {
     icons: {
-      'free-solid-svg-icons': ['chevron-down', 'folder-plus']
+      'free-solid-svg-icons': ['chevron-down', 'folder-plus', 'save']
     }
   };
 

@@ -74,4 +74,15 @@
 .root-button {
   @include blue-button();
   height: 25px;
+  transition: opacity 0.2s ease-in-out;
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &.visible {
+    opacity: 1;
+    pointer-events: all;
+  }
 }
