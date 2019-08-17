@@ -34,6 +34,8 @@ export default class BtFavoritesTreeFolder extends Component {
 
   @action
   createTrade() {
+    if (!this.tradeLocation.slug) return;
+
     this.folder.items.unshiftObject({
       slug: this.tradeLocation.slug,
       title: 'Untitled trade'
