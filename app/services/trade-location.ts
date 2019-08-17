@@ -1,6 +1,6 @@
 // Vendor
 import Service from '@ember/service';
-import {task, timeout} from "ember-concurrency";
+import {task, timeout} from 'ember-concurrency';
 import window from 'ember-window-mock';
 
 // Constants

@@ -3,7 +3,7 @@ import Route from '@ember/routing/route';
 import {inject as service} from '@ember/service';
 
 // Types
-import TradeLocation from "better-trading/services/trade-location";
+import TradeLocation from 'better-trading/services/trade-location';
 import IntlService from 'ember-intl/services/intl';
 
 // Constants

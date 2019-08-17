@@ -33,7 +33,10 @@ module.exports = function(defaults) {
 
     // JavaScript compilation
     babel: {
-      plugins: [require('ember-auto-import/babel-plugin'), 'transform-object-rest-spread'],
+      plugins: [
+        require('ember-auto-import/babel-plugin'),
+        'transform-object-rest-spread'
+      ],
       sourceMaps: 'inline'
     },
 

@@ -1,11 +1,11 @@
 // Vendors
-import {A} from "@ember/array";
+import {A} from '@ember/array';
 import Component from '@ember/component';
 import {action, set} from '@ember/object';
 import {inject as service} from '@ember/service';
 
 // Types
-import TradeLocation from "better-trading/services/trade-location";
+import TradeLocation from 'better-trading/services/trade-location';
 import {FavoritesFolder} from 'better-trading/types/favorites';
 
 export default class BtFavoritesTreeFolder extends Component {

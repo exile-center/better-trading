@@ -6,6 +6,7 @@
 .header {
   display: flex;
   position: relative;
+  order: 0;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
@@ -14,7 +15,6 @@
   color: $white;
   transition: background-color 0.2s ease-in-out;
   cursor: pointer;
-  order: 0;
 
   &:hover {
     background-color: $blue;
@@ -40,8 +40,8 @@
 }
 
 .chevron {
-  width: 10px !important; // Override FA's default sizing
   transform: rotate(-90deg);
+  width: 10px !important; // Override FA's default sizing
   transition: transform 0.2s ease-in-out;
 }
 
