@@ -30,6 +30,8 @@ export default class BtFavoritesTreeFolder extends Component {
       items: A([]),
       title: 'Untitled folder'
     });
+
+    this.onUpdate();
   }
 
   @action
@@ -40,5 +42,7 @@ export default class BtFavoritesTreeFolder extends Component {
       slug: this.tradeLocation.slug,
       title: 'Untitled trade'
     });
+
+    this.onUpdate();
   }
 }
