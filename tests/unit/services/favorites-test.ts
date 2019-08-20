@@ -73,7 +73,7 @@ describe('Unit | Services | Favorites', () => {
         .once()
         .withArgs(
           'favorites',
-          '[{"isExpanded":true,"title":"Foo","items":[{"slug":"some-slug","title":"Some slug"}]}]'
+          '[{"isExpanded":true,"items":[{"slug":"some-slug","title":"Some slug"}],"title":"Foo"}]'
         );
 
       service.persist(

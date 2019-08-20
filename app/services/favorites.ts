@@ -1,7 +1,10 @@
 // Vendor
 import {A} from '@ember/array';
 import Service, {inject as service} from '@ember/service';
+
 // Types
+import MutableArray from '@ember/array/mutable';
+import LocalStorage from 'better-trading/services/local-storage';
 import {
   FavoritesItem,
   FavoritesTrade,
@@ -9,8 +12,6 @@ import {
   RawFavoritesItem,
   RawFavoritesTrade
 } from 'better-trading/types/favorites';
-import MutableArray from '@ember/array/mutable';
-import LocalStorage from 'better-trading/services/local-storage';
 
 export default class Favorites extends Service {
   @service('local-storage')

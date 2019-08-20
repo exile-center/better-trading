@@ -5,7 +5,7 @@ import {inject as service} from '@ember/service';
 
 // Types
 import MutableArray from '@ember/array/mutable';
-import Favorites from "better-trading/services/favorites";
+import Favorites from 'better-trading/services/favorites';
 import LocalStorage from 'better-trading/services/local-storage';
 import {FavoritesItem} from 'better-trading/types/favorites';
 
