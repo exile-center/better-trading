@@ -5,6 +5,7 @@ import window from 'ember-window-mock';
 
 // Constants
 const POLLING_DELAY = 500;
+const BASE_URL = 'https://www.pathofexile.com/trade';
 
 interface ParsedPath {
   tab: string;
@@ -32,6 +33,13 @@ export default class TradeLocation extends Service.extend({
 
   startUrlPolling() {
     this.locationPollingTask.perform();
+  }
+
+  navigateToTrade(slug: string) {
+    const {league} = this.parseCurrentPath();
+    const newUrl = [BASE_URL, 'search', league, slug].join('/');
+
+    window.location.replace(newUrl);
   }
 
   private parseCurrentPath(): ParsedPath {

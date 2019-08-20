@@ -3,6 +3,7 @@ import {expect} from 'chai';
 import {setupTest} from 'ember-mocha';
 import {default as window, reset} from 'ember-window-mock';
 import {beforeEach, describe, it} from 'mocha';
+import sinon from 'sinon';
 
 // Types
 import TradeLocation from 'better-trading/services/trade-location';
@@ -60,6 +61,20 @@ describe('Unit | Services | Trade location', () => {
       service.startUrlPolling();
 
       expect(service.slug).to.equal('q1w2e3r4t5');
+    });
+  });
+
+  describe('navigateToTrade', () => {
+    it('should forge the proper URL and redirect to it', () => {
+      const replaceSpy = sinon.spy();
+      window.location.pathname = '/trade/search/Legion/q1w2e3r4t5';
+      window.location.replace = replaceSpy;
+
+      service.navigateToTrade('foobar');
+
+      expect(replaceSpy).to.have.been.calledOnceWith(
+        'https://www.pathofexile.com/trade/search/Legion/foobar'
+      );
     });
   });
 });

@@ -5,7 +5,7 @@ import {action, set} from '@ember/object';
 import {inject as service} from '@ember/service';
 
 // Types
-import SearchPanel from "better-trading/services/search-panel";
+import SearchPanel from 'better-trading/services/search-panel';
 import TradeLocation from 'better-trading/services/trade-location';
 import {FavoritesFolder} from 'better-trading/types/favorites';
 
