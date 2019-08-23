@@ -18,12 +18,12 @@ export default class BtFavoritesTreeFolder extends Component {
 
   folder: FavoritesFolder;
   onUpdate: () => void;
-  onMoveItem: () => void;
+  onMove: () => void;
+  onDelete: () => void;
 
   @action
   toggleExpanded() {
     set(this.folder, 'isExpanded', !this.folder.isExpanded);
-
     this.onUpdate();
   }
 
@@ -47,6 +47,12 @@ export default class BtFavoritesTreeFolder extends Component {
       title: this.searchPanel.recommendTitle()
     });
 
+    this.onUpdate();
+  }
+
+  @action
+  deleteAt(index: number) {
+    this.folder.items.removeAt(index);
     this.onUpdate();
   }
 }

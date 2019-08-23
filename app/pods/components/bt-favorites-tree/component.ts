@@ -30,12 +30,12 @@ export default class BtFavoritesTree extends Component {
   }
 
   @action
-  persistFavorites(): void {
+  persist(): void {
     this.favorites.persist(this.items);
   }
 
   @action
-  moveItem({
+  move({
     sourceList,
     sourceIndex,
     targetList,
@@ -49,6 +49,12 @@ export default class BtFavoritesTree extends Component {
     sourceList.removeAt(sourceIndex);
     targetList.insertAt(targetIndex, item);
 
-    this.persistFavorites();
+    this.persist();
+  }
+
+  @action
+  deleteAt(index: number) {
+    this.items.removeAt(index);
+    this.persist();
   }
 }

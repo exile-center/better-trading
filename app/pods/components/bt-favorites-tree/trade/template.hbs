@@ -1,5 +1,9 @@
-<button local-class="link-wrapper" onclick={{action this.navigateToTrade}}>
-  <span local-class="title">
+<div local-class="wrapper">
+  <button type="button" local-class="title-link" onclick={{action this.navigateToTrade}}>
     {{@trade.title}}
-  </span>
-</button>
+  </button>
+
+  <div local-class="actions">
+    <FaIcon @icon="trash-alt" local-class="action" onclick={{action @onDelete}}/>
+  </div>
+</div>

@@ -12,6 +12,7 @@ export default class BtFavoritesTreeTrade extends Component {
   tradeLocation: TradeLocation;
 
   trade: FavoritesTrade;
+  onDelete: () => void;
 
   @action
   navigateToTrade() {

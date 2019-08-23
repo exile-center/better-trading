@@ -1,16 +1,20 @@
 <div local-class="wrapper">
   <DragSortList
     @items={{this.items}}
-    @dragEndAction={{action this.moveItem}}
-    as |item|
+    @dragEndAction={{action this.move}}
+    as |item index|
   >
     {{#if item.slug}}
-      <BtFavoritesTree::Trade @trade={{item}} />
+      <BtFavoritesTree::Trade
+        @trade={{item}}
+        @onDelete={{action this.deleteAt index}}
+      />
     {{else}}
       <BtFavoritesTree::Folder
         @folder={{item}}
-        @onUpdate={{action this.persistFavorites}}
-        @onMoveItem={{action this.moveItem}}
+        @onUpdate={{action this.persist}}
+        @onMove={{action this.move}}
+        @onDelete={{action this.deleteAt index}}
       />
     {{/if}}
   </DragSortList>

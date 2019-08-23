@@ -3,16 +3,20 @@
     <DragSortList
       local-class="items"
       @items={{@folder.items}}
-      @dragEndAction={{action @onMoveItem}}
-      as |item|
+      @dragEndAction={{action @onMove}}
+      as |item index|
     >
       {{#if item.slug}}
-        <BtFavoritesTree::Trade @trade={{item}} />
+        <BtFavoritesTree::Trade
+          @trade={{item}}
+          @onDelete={{action this.deleteAt index}}
+        />
       {{else}}
         <BtFavoritesTree::Folder
           @folder={{item}}
           @onUpdate={{action @onUpdate}}
-          @onMoveItem={{action @onMoveItem}}
+          @onMove={{action @onMove}}
+          @onDelete={{action this.deleteAt index}}
         />
       {{/if}}
     </DragSortList>
@@ -36,18 +40,17 @@
     </div>
   {{/if}}
 
-  <div
-    local-class="header {{if @folder.isExpanded "expanded"}}"
-    onclick={{this.toggleExpanded}}
-  >
+  <div local-class="header {{if @folder.isExpanded "expanded"}}">
     <div local-class="title-wrapper">
       <FaIcon local-class="chevron" @icon="chevron-down"/>
 
-      <span local-class="title">
+      <button type="button" local-class="title-link" onclick={{this.toggleExpanded}}>
         {{@folder.title}}
-      </span>
+      </button>
     </div>
 
-    <div></div>
+    <div local-class="actions">
+      <FaIcon @icon="trash-alt" local-class="action" onclick={{action @onDelete}}/>
+    </div>
   </div>
 </div>
