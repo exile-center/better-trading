@@ -1,14 +1,6 @@
 .wrapper {
   background-color: rgba(#141414, 0.8);
 
-  > :global(.dragSortList) > :global(.dragSortItem) {
-    border-top: 1px solid #333;
-
-    &:first-child {
-      border-top: 0;
-    }
-  }
-
   :global(.dragSortList.-isExpanded.-isDraggingOver),
   :global(.dragSortItem.-placeholderAbove),
   :global(.dragSortItem.-placeholderBelow) {

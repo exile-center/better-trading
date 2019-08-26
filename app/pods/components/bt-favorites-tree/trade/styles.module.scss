@@ -41,9 +41,10 @@
 }
 
 .action {
+  border: 0;
+  background: transparent;
   color: $white;
   transition: transform 0.2s ease-in-out;
-  cursor: pointer;
 
   &:hover {
     transform: scale(1.2);

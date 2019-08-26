@@ -1,6 +1,17 @@
 .wrapper {
   display: flex;
   flex-direction: column;
+  border-left: 3px solid transparent;
+  margin: 5px 0;
+  transition: border-color 0.2s ease-in-out;
+
+  &.expanded {
+    border-color: $blue;
+
+    & > .header .chevron {
+      transform: rotate(0);
+    }
+  }
 }
 
 .header {
@@ -23,12 +34,6 @@
       opacity: 1;
     }
   }
-
-  &.expanded {
-    .chevron {
-      transform: rotate(0);
-    }
-  }
 }
 
 :global(.dragSortList.-isDragging) {
@@ -49,21 +54,16 @@
   transition: transform 0.2s ease-in-out;
 }
 
-.title-wrapper {
-  display: flex;
-  align-items: center;
-  font-family: $primary-font;
-  font-size: 17px;
-  line-height: 1;
-}
-
 .title-link {
   flex: 1 1 auto;
+  padding-left: 5px;
   border: 0;
-  margin: 0 10px 0 5px;
+  margin-right: 10px;
   background: transparent;
   text-align: left;
   font-family: $primary-font;
+  font-size: 15px;
+  line-height: 1;
   color: $white;
 }
 
@@ -77,14 +77,21 @@
 }
 
 .root-buttons {
+  display: flex;
   order: 1;
-  margin: 5px 0 5px 10px;
+  align-items: center;
+  margin: 5px 10px;
 }
 
 .root-button {
   @include blue-button();
-  height: 25px;
+  height: 24px;
+  margin-left: 5px;
   transition: opacity 0.2s ease-in-out;
+
+  &:first-child {
+    margin-left: 0;
+  }
 
   &.hidden {
     opacity: 0;
@@ -103,9 +110,10 @@
 }
 
 .action {
+  border: 0;
+  background: transparent;
   color: $white;
   transition: transform 0.2s ease-in-out;
-  cursor: pointer;
 
   &:hover {
     transform: scale(1.2);

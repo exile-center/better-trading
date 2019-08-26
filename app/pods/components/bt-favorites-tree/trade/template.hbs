@@ -4,6 +4,8 @@
   </button>
 
   <div local-class="actions">
-    <FaIcon @icon="trash-alt" local-class="action" onclick={{action @onDelete}}/>
+    <button type="button" local-class="action" onclick={{action @onDelete}}>
+      <FaIcon @icon="trash-alt" />
+    </button>
   </div>
 </div>

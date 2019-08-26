@@ -35,12 +35,7 @@ export default class BtFavoritesTree extends Component {
   }
 
   @action
-  move({
-    sourceList,
-    sourceIndex,
-    targetList,
-    targetIndex
-  }: MoveActionParams) {
+  move({sourceList, sourceIndex, targetList, targetIndex}: MoveActionParams) {
     if (sourceList === targetList && sourceIndex === targetIndex) return;
 
     const item = sourceList.objectAt(sourceIndex);

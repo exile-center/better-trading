@@ -1,4 +1,4 @@
-<div local-class="wrapper">
+<div local-class="wrapper {{if @folder.isExpanded "expanded"}}">
   {{#if @folder.isExpanded}}
     <DragSortList
       local-class="items"
@@ -40,17 +40,17 @@
     </div>
   {{/if}}
 
-  <div local-class="header {{if @folder.isExpanded "expanded"}}">
-    <div local-class="title-wrapper">
+  <div local-class="header">
+    <button type="button" local-class="title-link" onclick={{this.toggleExpanded}}>
       <FaIcon local-class="chevron" @icon="chevron-down"/>
 
-      <button type="button" local-class="title-link" onclick={{this.toggleExpanded}}>
-        {{@folder.title}}
-      </button>
-    </div>
+      {{@folder.title}}
+    </button>
 
     <div local-class="actions">
-      <FaIcon @icon="trash-alt" local-class="action" onclick={{action @onDelete}}/>
+      <button type="button" local-class="action" onclick={{action @onDelete}}>
+        <FaIcon @icon="trash-alt" />
+      </button>
     </div>
   </div>
 </div>
