@@ -31,7 +31,10 @@ module.exports = function(environment) {
         'save',
         'trash-alt',
         'expand-arrows-alt',
-        'compress-arrows-alt'
+        'compress-arrows-alt',
+        'check',
+        'times',
+        'pen'
       ]
     }
   };

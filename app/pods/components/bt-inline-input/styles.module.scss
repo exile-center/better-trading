@@ -1,0 +1,40 @@
+.wrapper {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  height: 100%;
+  border: 1px solid $white;
+  padding: 2px 4px;
+  color: $white;
+  background-color: transparent;
+  font-family: $primary-font;
+  outline: none;
+}
+
+.buttons {
+  height: 16px;
+  position: absolute;
+  right: 7px;
+  top: calc(50% - 8px);
+}
+
+.button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: $white;
+  margin-left: 5px;
+  opacity: 0.6;
+  transition: opacity 0.2s ease-in-out;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:hover,
+  &:focus {
+    opacity: 1;
+  }
+}

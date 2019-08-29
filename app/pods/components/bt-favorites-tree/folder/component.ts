@@ -20,6 +20,8 @@ export default class BtFavoritesTreeFolder extends Component {
   @service('favorites')
   favorites: Favorites;
 
+  isEditing = false;
+
   folder: FavoritesFolder;
   onUpdate: () => void;
   onMove: () => void;
@@ -62,6 +64,23 @@ export default class BtFavoritesTreeFolder extends Component {
   @action
   deleteAt(index: number) {
     this.folder.items.removeAt(index);
+    this.onUpdate();
+  }
+
+  @action
+  startEditing() {
+    this.set('isEditing', true);
+  }
+
+  @action
+  stopEditing() {
+    this.set('isEditing', false);
+  }
+
+  @action
+  updateTitle(newTitle: string) {
+    set(this.folder, 'title', newTitle);
+    this.set('isEditing', false);
     this.onUpdate();
   }
 

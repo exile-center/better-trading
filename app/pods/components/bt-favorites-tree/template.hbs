@@ -25,6 +25,7 @@
     {{#if item.slug}}
       <BtFavoritesTree::Trade
         @trade={{item}}
+        @onUpdate={{action this.persist}}
         @onDelete={{action this.deleteAt index}}
       />
     {{else}}

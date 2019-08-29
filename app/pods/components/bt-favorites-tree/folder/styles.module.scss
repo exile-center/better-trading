@@ -54,6 +54,11 @@
   transition: transform 0.2s ease-in-out;
 }
 
+.title {
+  flex: 1 1 auto;
+  margin-right: 5px;
+}
+
 .title-link {
   flex: 1 1 auto;
   padding-left: 5px;
@@ -113,9 +118,12 @@
   border: 0;
   background: transparent;
   color: $white;
-  transition: transform 0.2s ease-in-out;
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0.6;
+  padding: 0 4px;
 
-  &:hover {
-    transform: scale(1.2);
+  &:hover,
+  &:focus {
+    opacity: 1;
   }
 }
