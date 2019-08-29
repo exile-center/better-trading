@@ -1,4 +1,4 @@
-@mixin button() {
+@mixin button($iconOnly: false) {
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -10,19 +10,21 @@
   line-height: 1;
   color: $white;
 
-  svg {
-    margin-right: 8px;
+  @if not $iconOnly {
+    svg {
+      margin-right: 8px;
+    }
   }
 }
 
-@mixin blue-button() {
-  @include button();
+@mixin blue-button($iconOnly: false) {
+  @include button($iconOnly);
   border-color: $blue-alt;
   background-color: $blue;
 }
 
-@mixin gold-button() {
-  @include button();
+@mixin gold-button($iconOnly: false) {
+  @include button($iconOnly);
   border-color: $gold-alt;
   background-color: $gold;
 }

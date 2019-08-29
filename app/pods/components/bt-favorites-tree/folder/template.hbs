@@ -41,7 +41,11 @@
   {{/if}}
 
   <div local-class="header">
-    <button type="button" local-class="title-link" onclick={{this.toggleExpanded}}>
+    <button
+      type="button"
+      local-class="title-link"
+      onclick={{action this.toggleExpanded}}
+    >
       <FaIcon local-class="chevron" @icon="chevron-down"/>
 
       {{@folder.title}}

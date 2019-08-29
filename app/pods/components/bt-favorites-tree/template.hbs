@@ -1,3 +1,21 @@
+<div local-class="toolbar">
+  <button
+    type="button"
+    local-class="toolbar-button"
+    onclick={{action this.expandAllFolders}}
+  >
+    <FaIcon @icon="expand-arrows-alt" @fixedWidth={{true}} />
+  </button>
+
+  <button
+    type="button"
+    local-class="toolbar-button"
+    onclick={{action this.collapseAllFolders}}
+  >
+    <FaIcon @icon="compress-arrows-alt" @fixedWidth={{true}} />
+  </button>
+</div>
+
 <div local-class="wrapper">
   <DragSortList
     @items={{this.items}}

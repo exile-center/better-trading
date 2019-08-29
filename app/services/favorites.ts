@@ -6,6 +6,7 @@ import Service, {inject as service} from '@ember/service';
 import MutableArray from '@ember/array/mutable';
 import LocalStorage from 'better-trading/services/local-storage';
 import {
+  FavoritesFolder,
   FavoritesItem,
   FavoritesTrade,
   RawFavoritesFolder,
@@ -30,6 +31,25 @@ export default class Favorites extends Service {
 
   persist(items: MutableArray<FavoritesItem>): void {
     this.localStorage.setValue('favorites', JSON.stringify(items));
+  }
+
+  forEachItem(items: MutableArray<FavoritesItem>, callback: (item: FavoritesItem) => void): void {
+    items.forEach((item) => {
+      callback(item);
+
+      const potentialFolder = item as FavoritesFolder;
+      if (!potentialFolder.items) return;
+      this.forEachItem(potentialFolder.items, callback);
+    })
+  }
+
+  forEachFolder(items: MutableArray<FavoritesItem>, callback: (folder: FavoritesFolder) => void): void {
+    this.forEachItem(items, (item: FavoritesItem) => {
+      const potentialFolder = item as FavoritesFolder;
+      if (!potentialFolder.items) return;
+
+      callback(potentialFolder);
+    });
   }
 
   _parseItem(rawItem: RawFavoritesItem): FavoritesItem {

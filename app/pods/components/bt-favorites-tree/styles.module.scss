@@ -1,3 +1,17 @@
+.toolbar {
+  display: flex;
+  margin-bottom: 5px;
+}
+
+.toolbar-button {
+  @include gold-button($iconOnly: true);
+  margin-left: 5px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
 .wrapper {
   background-color: rgba(#141414, 0.8);
 

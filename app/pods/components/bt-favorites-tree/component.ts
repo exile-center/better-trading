@@ -1,13 +1,13 @@
 // Vendors
 import Component from '@ember/component';
-import {action} from '@ember/object';
+import {action, set} from '@ember/object';
 import {inject as service} from '@ember/service';
 
 // Types
 import MutableArray from '@ember/array/mutable';
 import Favorites from 'better-trading/services/favorites';
 import LocalStorage from 'better-trading/services/local-storage';
-import {FavoritesItem} from 'better-trading/types/favorites';
+import {FavoritesFolder, FavoritesItem} from 'better-trading/types/favorites';
 
 interface MoveActionParams {
   sourceList: MutableArray<FavoritesItem>;
@@ -50,6 +50,24 @@ export default class BtFavoritesTree extends Component {
   @action
   deleteAt(index: number) {
     this.items.removeAt(index);
+    this.persist();
+  }
+
+  @action
+  expandAllFolders() {
+    this.favorites.forEachFolder(this.items, (folder: FavoritesFolder) => {
+      set(folder, 'isExpanded', true);
+    });
+
+    this.persist();
+  }
+
+  @action
+  collapseAllFolders() {
+    this.favorites.forEachFolder(this.items, (folder: FavoritesFolder) => {
+      set(folder, 'isExpanded', false);
+    });
+
     this.persist();
   }
 }

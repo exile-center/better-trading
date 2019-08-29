@@ -6,8 +6,9 @@ import {beforeEach, describe, it} from 'mocha';
 import sinon from 'sinon';
 
 // Types
+import MutableArray from "@ember/array/mutable";
 import Favorites from 'better-trading/services/favorites';
-import {FavoritesFolder, FavoritesTrade} from 'better-trading/types/favorites';
+import {FavoritesFolder, FavoritesItem, FavoritesTrade} from 'better-trading/types/favorites';
 
 describe('Unit | Services | Favorites', () => {
   setupTest();
@@ -85,6 +86,19 @@ describe('Unit | Services | Favorites', () => {
           }
         ])
       );
+    });
+  });
+
+  describe('forEachItem', () => {
+    it('should traverse the tree recursively', () => {
+      const items = A([{isExpanded: false, title: '1', items: A([{title: '2', slug: ''}, {title: '3', slug: ''}])}]);
+
+      let memo = '';
+      service.forEachItem(items, (item: FavoritesItem) => {
+        memo += item.title;
+      });
+
+      expect(memo).to.equal('123');
     });
   });
 });

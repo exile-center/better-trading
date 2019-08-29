@@ -29,7 +29,9 @@ module.exports = function(environment) {
         'chevron-down',
         'folder-plus',
         'save',
-        'trash-alt'
+        'trash-alt',
+        'expand-arrows-alt',
+        'compress-arrows-alt'
       ]
     }
   };
