@@ -61,7 +61,11 @@
           <FaIcon local-class="chevron" @icon="chevron-down"/>
 
           <span local-class="title-label">
-            {{@folder.title}}
+            {{#if @folder.title}}
+              {{@folder.title}}
+            {{else}}
+              {{t "pods.components.bt-favorites-tree.folder.untitled"}}
+            {{/if}}
           </span>
         </button>
       {{else}}

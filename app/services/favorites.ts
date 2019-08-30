@@ -13,8 +13,28 @@ import {
   RawFavoritesItem,
   RawFavoritesTrade
 } from 'better-trading/types/favorites';
+import IntlService from 'ember-intl/services/intl';
+
+// Constants
+const BUILD_FOLDER_TITLE_KEYS = [
+  'services.favorites.build.helmet',
+  'services.favorites.build.body_armor',
+  'services.favorites.build.gloves',
+  'services.favorites.build.boots',
+  'services.favorites.build.belt',
+  'services.favorites.build.weapon',
+  'services.favorites.build.off_hand',
+  'services.favorites.build.left_ring',
+  'services.favorites.build.right_ring',
+  'services.favorites.build.amulet',
+  'services.favorites.build.jewels',
+  'services.favorites.build.flasks'
+];
 
 export default class Favorites extends Service {
+  @service('intl')
+  intl: IntlService;
+
   @service('local-storage')
   localStorage: LocalStorage;
 
@@ -56,6 +76,30 @@ export default class Favorites extends Service {
 
       callback(potentialFolder);
     });
+  }
+
+  createTrade(slug: string, title: string): FavoritesItem {
+    return {slug, title};
+  }
+
+  createEmptyFolder(title?: string): FavoritesFolder {
+    return {
+      isExpanded: true,
+      items: A([]),
+      title: title || ''
+    };
+  }
+
+  createBuildFolder(): FavoritesFolder {
+    return {
+      isExpanded: true,
+      items: A(
+        BUILD_FOLDER_TITLE_KEYS.map((titleKey: string) => {
+          return this.createEmptyFolder(this.intl.t(titleKey));
+        })
+      ),
+      title: ''
+    };
   }
 
   _parseItem(rawItem: RawFavoritesItem): FavoritesItem {

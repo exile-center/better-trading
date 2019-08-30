@@ -35,7 +35,8 @@ module.exports = function(environment) {
         'check',
         'times',
         'pen',
-        'bars'
+        'bars',
+        'hat-wizard'
       ]
     }
   };

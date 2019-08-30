@@ -4,3 +4,4 @@ pods:
       folder:
         new_folder:  New folder
         new_trade:  Save current trade
+        untitled: Untitled folder

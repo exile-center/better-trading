@@ -1,5 +1,4 @@
 // Vendors
-import {A} from '@ember/array';
 import Component from '@ember/component';
 import {action, set} from '@ember/object';
 import {inject as service} from '@ember/service';
@@ -40,11 +39,7 @@ export default class BtFavoritesTreeFolder extends Component {
 
   @action
   createFolder() {
-    this.folder.items.unshiftObject({
-      isExpanded: true,
-      items: A([]),
-      title: 'Untitled folder'
-    });
+    this.folder.items.unshiftObject(this.favorites.createEmptyFolder());
 
     this.onUpdate();
   }
@@ -52,11 +47,12 @@ export default class BtFavoritesTreeFolder extends Component {
   @action
   createTrade() {
     if (!this.tradeLocation.slug) return;
-
-    this.folder.items.unshiftObject({
-      slug: this.tradeLocation.slug,
-      title: this.searchPanel.recommendTitle()
-    });
+    this.folder.items.unshiftObject(
+      this.favorites.createTrade(
+        this.tradeLocation.slug,
+        this.searchPanel.recommendTitle()
+      )
+    );
 
     this.onUpdate();
   }
