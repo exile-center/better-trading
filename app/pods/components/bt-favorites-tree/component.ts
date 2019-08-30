@@ -54,15 +54,6 @@ export default class BtFavoritesTree extends Component {
   }
 
   @action
-  expandAllFolders() {
-    this.favorites.forEachFolder(this.items, (folder: FavoritesFolder) => {
-      set(folder, 'isExpanded', true);
-    });
-
-    this.persist();
-  }
-
-  @action
   collapseAllFolders() {
     this.favorites.forEachFolder(this.items, (folder: FavoritesFolder) => {
       set(folder, 'isExpanded', false);

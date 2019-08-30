@@ -30,7 +30,6 @@ module.exports = function(environment) {
         'folder-plus',
         'save',
         'trash-alt',
-        'expand-arrows-alt',
         'compress-arrows-alt',
         'check',
         'times',

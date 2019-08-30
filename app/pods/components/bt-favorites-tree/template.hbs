@@ -2,34 +2,28 @@
   <button
     type="button"
     local-class="toolbar-button"
-    onclick={{action this.expandAllFolders}}
-  >
-    <FaIcon @icon="expand-arrows-alt" @fixedWidth={{true}} />
-  </button>
-
-  <button
-    type="button"
-    local-class="toolbar-button"
     onclick={{action this.collapseAllFolders}}
   >
     <FaIcon @icon="compress-arrows-alt" @fixedWidth={{true}} />
   </button>
 
-  <button
-    type="button"
-    local-class="toolbar-button"
-    onclick={{action this.createRootFolder}}
-  >
-    <FaIcon @icon="folder-plus" @fixedWidth={{true}} />
-  </button>
+  <div local-class="toolbar-button-group">
+    <button
+      type="button"
+      local-class="toolbar-button"
+      onclick={{action this.createRootFolder}}
+    >
+      <FaIcon @icon="folder-plus" @fixedWidth={{true}} />
+    </button>
 
-  <button
-    type="button"
-    local-class="toolbar-button"
-    onclick={{action this.createRootBuildFolder}}
-  >
-    <FaIcon @icon="hat-wizard" @fixedWidth={{true}} />
-  </button>
+    <button
+      type="button"
+      local-class="toolbar-button"
+      onclick={{action this.createRootBuildFolder}}
+    >
+      <FaIcon @icon="hat-wizard" @fixedWidth={{true}} />
+    </button>
+  </div>
 </div>
 
 <div local-class="wrapper">

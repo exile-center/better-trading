@@ -3,12 +3,33 @@
   margin-bottom: 5px;
 }
 
+.toolbar-button,
+.toolbar-button-group {
+  margin-left: 5px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+}
+
 .toolbar-button {
   @include gold-button($iconOnly: true);
   margin-left: 5px;
 
   &:first-child {
     margin-left: 0;
+  }
+}
+
+.toolbar-button-group {
+  display: flex;
+
+  .toolbar-button {
+    margin-left: 0;
+
+    &:not(:first-child) {
+      border-left: 0;
+    }
   }
 }
 
