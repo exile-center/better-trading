@@ -2,6 +2,7 @@
   {{#if @folder.isExpanded}}
     <DragSortList
       local-class="items"
+      @handle=".drag-handle"
       @items={{@folder.items}}
       @dragEndAction={{action @onMove}}
       as |item index|
@@ -42,6 +43,14 @@
   {{/if}}
 
   <div local-class="header">
+    <div
+      class="drag-handle"
+      local-class="drag-handle"
+      draggable="true"
+    >
+      <FaIcon @icon="bars" />
+    </div>
+
     <div local-class="title">
       {{#unless this.isEditing}}
         <button
@@ -51,7 +60,9 @@
         >
           <FaIcon local-class="chevron" @icon="chevron-down"/>
 
-          {{@folder.title}}
+          <span local-class="title-label">
+            {{@folder.title}}
+          </span>
         </button>
       {{else}}
         <BtInlineInput

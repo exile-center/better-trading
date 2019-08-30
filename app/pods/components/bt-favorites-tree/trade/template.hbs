@@ -1,4 +1,12 @@
 <div local-class="wrapper">
+  <div
+    class="drag-handle"
+    local-class="drag-handle"
+    draggable="true"
+  >
+    <FaIcon @icon="bars" />
+  </div>
+
   <div local-class="title">
     {{#unless this.isEditing}}
       <button

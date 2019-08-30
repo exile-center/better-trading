@@ -18,6 +18,7 @@
 
 <div local-class="wrapper">
   <DragSortList
+    @handle=".drag-handle"
     @items={{this.items}}
     @dragEndAction={{action this.move}}
     as |item index|

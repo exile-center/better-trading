@@ -34,7 +34,8 @@ module.exports = function(environment) {
         'compress-arrows-alt',
         'check',
         'times',
-        'pen'
+        'pen',
+        'bars'
       ]
     }
   };

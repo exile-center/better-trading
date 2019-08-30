@@ -14,7 +14,7 @@ export default class BtInlineInput extends Component {
   onCancel: () => void;
 
   @action
-  handleInput(event: { target: { value: string; }; }) {
+  handleInput(event: {target: {value: string}}) {
     this.set('stagedValue', event.target.value);
   }
 

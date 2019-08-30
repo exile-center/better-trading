@@ -33,17 +33,23 @@ export default class Favorites extends Service {
     this.localStorage.setValue('favorites', JSON.stringify(items));
   }
 
-  forEachItem(items: MutableArray<FavoritesItem>, callback: (item: FavoritesItem) => void): void {
-    items.forEach((item) => {
+  forEachItem(
+    items: MutableArray<FavoritesItem>,
+    callback: (item: FavoritesItem) => void
+  ): void {
+    items.forEach(item => {
       callback(item);
 
       const potentialFolder = item as FavoritesFolder;
       if (!potentialFolder.items) return;
       this.forEachItem(potentialFolder.items, callback);
-    })
+    });
   }
 
-  forEachFolder(items: MutableArray<FavoritesItem>, callback: (folder: FavoritesFolder) => void): void {
+  forEachFolder(
+    items: MutableArray<FavoritesItem>,
+    callback: (folder: FavoritesFolder) => void
+  ): void {
     this.forEachItem(items, (item: FavoritesItem) => {
       const potentialFolder = item as FavoritesFolder;
       if (!potentialFolder.items) return;
