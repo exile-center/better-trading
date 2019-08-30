@@ -1,6 +1,14 @@
 :global(.dragSortList.-isDragging) {
   .header:hover {
     background-color: inherit;
+
+    .actions {
+      opacity: 0;
+    }
+
+    .drag-handle {
+      max-width: 0 !important;
+    }
   }
 }
 
