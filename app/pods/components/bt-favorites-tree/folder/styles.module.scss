@@ -12,12 +12,6 @@
   }
 }
 
-:global(.dragSortList.-isDraggingOver) {
-  & ~ .header {
-    background-color: rgba($gold-alt, 0.1);
-  }
-}
-
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -41,7 +35,6 @@
 .header {
   display: flex;
   position: relative;
-  order: 0;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
@@ -108,7 +101,6 @@
 }
 
 .items {
-  order: 3;
   margin-left: 10px;
 
   .title {
@@ -118,7 +110,6 @@
 
 .root-buttons {
   display: flex;
-  order: 1;
   align-items: center;
   margin: 5px 10px;
 }

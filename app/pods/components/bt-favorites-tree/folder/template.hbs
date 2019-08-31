@@ -1,47 +1,4 @@
 <div local-class="wrapper {{if @folder.isExpanded "expanded"}}">
-  {{#if @folder.isExpanded}}
-    <DragSortList
-      local-class="items"
-      @handle=".drag-handle"
-      @items={{@folder.items}}
-      @dragEndAction={{action @onMove}}
-      as |item index|
-    >
-      {{#if item.slug}}
-        <BtFavoritesTree::Trade
-          @trade={{item}}
-          @onUpdate={{action @onUpdate}}
-          @onDelete={{action this.deleteAt index}}
-        />
-      {{else}}
-        <BtFavoritesTree::Folder
-          @folder={{item}}
-          @onUpdate={{action @onUpdate}}
-          @onMove={{action @onMove}}
-          @onDelete={{action this.deleteAt index}}
-        />
-      {{/if}}
-    </DragSortList>
-
-    <div local-class="root-buttons">
-      <button
-        local-class="root-button"
-        onclick={{action this.createFolder}}
-      >
-        <FaIcon @icon="folder-plus"/>
-        {{t "pods.components.bt-favorites-tree.folder.new_folder"}}
-      </button>
-
-      <button
-        local-class="root-button {{if this.tradeLocation.slug "visible" "hidden"}}"
-        onclick={{action this.createTrade}}
-      >
-        <FaIcon @icon="save"/>
-        {{t "pods.components.bt-favorites-tree.folder.new_trade"}}
-      </button>
-    </div>
-  {{/if}}
-
   <div local-class="header">
     <div
       class="drag-handle"
@@ -95,4 +52,49 @@
       </button>
     </div>
   </div>
+
+  <LiquidSpacer @growDuration={{250}}>
+    {{#if @folder.isExpanded}}
+      <div local-class="root-buttons">
+        <button
+          local-class="root-button"
+          onclick={{action this.createFolder}}
+        >
+          <FaIcon @icon="folder-plus"/>
+          {{t "pods.components.bt-favorites-tree.folder.new_folder"}}
+        </button>
+
+        <button
+          local-class="root-button {{if this.tradeLocation.slug "visible" "hidden"}}"
+          onclick={{action this.createTrade}}
+        >
+          <FaIcon @icon="save"/>
+          {{t "pods.components.bt-favorites-tree.folder.new_trade"}}
+        </button>
+      </div>
+
+      <DragSortList
+        local-class="items"
+        @handle=".drag-handle"
+        @items={{@folder.items}}
+        @dragEndAction={{action @onMove}}
+        as |item index|
+      >
+        {{#if item.slug}}
+          <BtFavoritesTree::Trade
+            @trade={{item}}
+            @onUpdate={{action @onUpdate}}
+            @onDelete={{action this.deleteAt index}}
+          />
+        {{else}}
+          <BtFavoritesTree::Folder
+            @folder={{item}}
+            @onUpdate={{action @onUpdate}}
+            @onMove={{action @onMove}}
+            @onDelete={{action this.deleteAt index}}
+          />
+        {{/if}}
+      </DragSortList>
+    {{/if}}
+  </LiquidSpacer>
 </div>
