@@ -1,15 +1,10 @@
 services:
   favorites:
     build:
-      helmet: Helmet
       body_armor: Body armor
-      gloves: Gloves
-      boots: Boots
-      belt: Belt
-      weapon: Weapon
-      off_hand: Off hand
-      left_ring: Left ring
-      right_ring: Right ring
-      amulet: Amulet
+      weapon_shield: Weapon / Shield
+      helmet_gloves: Helmet / Gloves
+      boots_belt: Boots / Belt
+      rings_amulet: Rings / Amulet
       jewels: Jewels
       flasks: Flasks

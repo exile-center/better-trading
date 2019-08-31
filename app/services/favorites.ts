@@ -17,16 +17,11 @@ import IntlService from 'ember-intl/services/intl';
 
 // Constants
 const BUILD_FOLDER_TITLE_KEYS = [
-  'services.favorites.build.helmet',
   'services.favorites.build.body_armor',
-  'services.favorites.build.gloves',
-  'services.favorites.build.boots',
-  'services.favorites.build.belt',
-  'services.favorites.build.weapon',
-  'services.favorites.build.off_hand',
-  'services.favorites.build.left_ring',
-  'services.favorites.build.right_ring',
-  'services.favorites.build.amulet',
+  'services.favorites.build.weapon_shield',
+  'services.favorites.build.helmet_gloves',
+  'services.favorites.build.boots_belt',
+  'services.favorites.build.rings_amulet',
   'services.favorites.build.jewels',
   'services.favorites.build.flasks'
 ];
@@ -94,9 +89,11 @@ export default class Favorites extends Service {
     return {
       isExpanded: true,
       items: A(
-        BUILD_FOLDER_TITLE_KEYS.map((titleKey: string) => {
-          return this.createEmptyFolder(this.intl.t(titleKey));
-        })
+        BUILD_FOLDER_TITLE_KEYS.map((titleKey: string) => ({
+          isExpanded: false,
+          items: A([]),
+          title: this.intl.t(titleKey)
+        }))
       ),
       title: ''
     };
