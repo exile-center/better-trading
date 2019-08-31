@@ -27,7 +27,7 @@
     }
   }
 
-  &:not(.expanded) .header:hover .drag-handle {
+  &:not(.expanded):not(.editing) .header:hover .drag-handle {
     max-width: 12px;
   }
 }
@@ -37,7 +37,8 @@
   position: relative;
   justify-content: space-between;
   align-items: center;
-  padding: 5px;
+  min-height: 26px;
+  padding: 2px 5px;
   background-color: transparent;
   letter-spacing: 0.5px;
   color: $white;

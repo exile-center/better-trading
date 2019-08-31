@@ -1,4 +1,5 @@
 // Vendors
+import {tagName} from '@ember-decorators/component';
 import Component from '@ember/component';
 import {action} from '@ember/object';
 
@@ -6,6 +7,7 @@ import {action} from '@ember/object';
 const ENTER_KEY = 'Enter';
 const ESCAPE_KEY = 'Escape';
 
+@tagName('')
 export default class BtInlineInput extends Component {
   stagedValue: string;
 
