@@ -1,9 +1,8 @@
-export default function(){
-  // Add your transitions here, like:
-  //   this.transition(
-  //     this.fromRoute('people.index'),
-  //     this.toRoute('people.detail'),
-  //     this.use('toLeft'),
-  //     this.reverse('toRight')
-  //   );
+export default function() {
+  this.transition(
+    this.fromRoute('home'),
+    this.toRoute('settings'),
+    this.use('toLeft'),
+    this.reverse('toRight')
+  );
 }
