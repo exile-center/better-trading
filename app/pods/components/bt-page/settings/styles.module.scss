@@ -1,0 +1,24 @@
+.section-title {
+  margin: 10px 0;
+  font-family: $primary-font;
+  font-size: 22px;
+  color: $white;
+}
+
+.section {
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 13px;
+  color: $beige;
+}
+
+.note {
+  font-size: 11px;
+  color: $beige;
+
+  &::before {
+    content: '*';
+  }
+}

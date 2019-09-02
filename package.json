@@ -78,6 +78,7 @@
     "ember-service-worker": "0.7.2",
     "ember-source": "3.10.0",
     "ember-template-lint": "1.1.0",
+    "ember-truth-helpers": "2.1.0",
     "ember-window-mock": "0.5.4",
     "eslint": "5.16.0",
     "eslint-config-prettier": "4.3.0",

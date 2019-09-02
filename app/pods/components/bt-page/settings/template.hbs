@@ -1,0 +1,43 @@
+<h2 local-class="section-title">
+  {{t "pods.components.bt-page.settings.items_results"}}
+</h2>
+
+<section local-class="section">
+  <BtCheckbox
+    @value={{this.itemResultsHighlightStatFiltersEnabled}}
+    @label={{t "pods.components.bt-page.settings.highlight_stat_filters"}}
+    @onChange={{action this.setItemResultsHighlightStatFiltersEnabled}}
+  />
+
+  <p local-class="description">
+    {{t "pods.components.bt-page.settings.highlight_stat_filters_description"}}
+  </p>
+</section>
+
+<section local-class="section">
+  <BtCheckbox
+    @value={{this.itemResultsEquivalentPricingsEnabled}}
+    @label={{t "pods.components.bt-page.settings.equivalent_pricings"}}
+    @onChange={{action this.setItemResultsEquivalentPricingsEnabled}}
+  />
+
+  <p local-class="description">
+    {{t "pods.components.bt-page.settings.equivalent_pricings_description"}}
+  </p>
+
+  <p local-class="note">
+    {{t "pods.components.bt-page.settings.equivalent_pricings_note"}}
+  </p>
+</section>
+
+<section local-class="section">
+  <BtCheckbox
+    @value={{this.itemResultsColoredModifiersEnabled}}
+    @label={{t "pods.components.bt-page.settings.colored_modifiers"}}
+    @onChange={{action this.setItemResultsColoredModifiersEnabled}}
+  />
+
+  <p local-class="description">
+    {{t "pods.components.bt-page.settings.colored_modifiers_description"}}
+  </p>
+</section>

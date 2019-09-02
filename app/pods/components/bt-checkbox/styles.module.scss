@@ -1,0 +1,37 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.indicator {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  border: 2px solid #634928;
+  margin-right: 5px;
+
+  &::before {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    transform: scale(0);
+    width: 7px;
+    height: 7px;
+    background-color: $white;
+    transition: transform 0.2s ease-in-out;
+  }
+
+  &.active::before {
+    transform: scale(1);
+  }
+}
+
+.label {
+  font-family: $primary-font;
+  font-size: 17px;
+  line-height: 1;
+  color: $beige;
+}
