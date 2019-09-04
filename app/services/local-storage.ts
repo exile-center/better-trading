@@ -6,7 +6,10 @@ import window from 'ember-window-mock';
 const KEY_PREFIX = 'bt-';
 const EXPIRY_SUFFIX = '--expires-at';
 
-type LocalStorageKey = 'favorites' | 'settings';
+type LocalStorageKey =
+  | 'favorites'
+  | 'settings'
+  | 'poe-ninja-chaos-ratios-cache';
 
 export default class LocalStorage extends Service {
   setValue(key: LocalStorageKey, value: string): void {
