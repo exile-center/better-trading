@@ -119,20 +119,9 @@
   @include blue-button();
   height: 24px;
   margin-left: 5px;
-  transition: opacity 0.2s ease-in-out;
 
   &:first-child {
     margin-left: 0;
-  }
-
-  &.hidden {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  &.visible {
-    opacity: 1;
-    pointer-events: all;
   }
 }
 

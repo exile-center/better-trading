@@ -13,13 +13,14 @@ const CATEGORY_INPUT_SELECTOR =
   '.search-advanced-items .filter-group:nth-of-type(1) .filter-property:nth-of-type(1) input';
 const RARITY_INPUT_SELECTOR =
   '.search-advanced-items .filter-group:nth-of-type(1) .filter-property:nth-of-type(2) input';
-const STATS_SELECTOR = '.search-advanced-pane:last-child .filter-group-body .filter-title';
+const STATS_SELECTOR =
+  '.search-advanced-pane:last-child .filter-group-body .filter-title';
 
 interface ScrapedSearchPanel {
   name: string | null;
   category: string | null;
   rarity: string | null;
-  stats: string[]
+  stats: string[];
 }
 
 export default class SearchPanel extends Service {
@@ -58,14 +59,16 @@ export default class SearchPanel extends Service {
   _scrapeStats() {
     const stats: string[] = [];
 
-    window.document.querySelectorAll(STATS_SELECTOR).forEach((item: HTMLElement) => {
-      let stat = item.innerText;
-      stat = stat.trim();
-      stat = stat.toLowerCase();
-      stat = stat.replace(/^pseudo /, '');
+    window.document
+      .querySelectorAll(STATS_SELECTOR)
+      .forEach((item: HTMLElement) => {
+        let stat = item.innerText;
+        stat = stat.trim();
+        stat = stat.toLowerCase();
+        stat = stat.replace(/^pseudo /, '');
 
-      stats.push(stat);
-    });
+        stats.push(stat);
+      });
 
     return stats;
   }

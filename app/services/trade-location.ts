@@ -1,10 +1,8 @@
 // Vendor
 import Service from '@ember/service';
-import {task, timeout} from 'ember-concurrency';
 import window from 'ember-window-mock';
 
 // Constants
-const POLLING_DELAY = 500;
 const BASE_URL = 'https://www.pathofexile.com/trade';
 
 interface ParsedPath {
@@ -13,26 +11,23 @@ interface ParsedPath {
   slug?: string;
 }
 
-export default class TradeLocation extends Service.extend({
-  locationPollingTask: task(function*(this: TradeLocation) {
-    const {tab, league, slug} = this.parseCurrentPath();
+export default class TradeLocation extends Service {
+  get tab(): string {
+    const {tab} = this.parseCurrentPath();
 
-    this.setProperties({
-      league: league || null,
-      slug: slug || null,
-      tab: tab || null
-    });
+    return tab;
+  }
 
-    yield timeout(POLLING_DELAY);
-    this.locationPollingTask.perform();
-  })
-}) {
-  league: string | null;
-  slug: string | null;
-  tab: string | null;
+  get league(): string {
+    const {league} = this.parseCurrentPath();
 
-  startUrlPolling() {
-    this.locationPollingTask.perform();
+    return league;
+  }
+
+  get slug(): string | null {
+    const {slug} = this.parseCurrentPath();
+
+    return slug || null;
   }
 
   navigateToTrade(slug: string) {

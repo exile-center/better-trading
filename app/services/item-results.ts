@@ -3,8 +3,8 @@ import Service, {inject as service} from '@ember/service';
 import window from 'ember-window-mock';
 
 // Types
-import ItemResultsHighlightStatFilters from "better-trading/services/item-results/highlight-stat-filters";
-import Settings from "better-trading/services/settings";
+import ItemResultsHighlightStatFilters from 'better-trading/services/item-results/highlight-stat-filters';
+import Settings from 'better-trading/services/settings';
 
 export default class ItemResults extends Service {
   @service('settings')
@@ -34,13 +34,15 @@ export default class ItemResults extends Service {
   _enhance() {
     this.itemResultsHighlightStatFilters.prepare();
 
-    window.document.querySelectorAll('.resultset > :not([bt-enhanced])').forEach((resultElement: HTMLElement) => {
-      if (this.settings.itemResultsHighlightStatFiltersEnabled) {
-        this.itemResultsHighlightStatFilters.process(resultElement);
-      }
+    window.document
+      .querySelectorAll('.resultset > :not([bt-enhanced])')
+      .forEach((resultElement: HTMLElement) => {
+        if (this.settings.itemResultsHighlightStatFiltersEnabled) {
+          this.itemResultsHighlightStatFilters.process(resultElement);
+        }
 
-      resultElement.toggleAttribute('bt-enhanced', true);
-    });
+        resultElement.toggleAttribute('bt-enhanced', true);
+      });
   }
 }
 

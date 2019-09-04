@@ -46,12 +46,11 @@ export default class BtFavoritesTreeFolder extends Component {
 
   @action
   createTrade() {
-    if (!this.tradeLocation.slug) return;
+    const tradeSlug = this.tradeLocation.slug;
+    if (!tradeSlug) return;
+
     this.folder.items.unshiftObject(
-      this.favorites.createTrade(
-        this.tradeLocation.slug,
-        this.searchPanel.recommendTitle()
-      )
+      this.favorites.createTrade(tradeSlug, this.searchPanel.recommendTitle())
     );
 
     this.onUpdate();
