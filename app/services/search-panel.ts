@@ -13,16 +13,18 @@ const CATEGORY_INPUT_SELECTOR =
   '.search-advanced-items .filter-group:nth-of-type(1) .filter-property:nth-of-type(1) input';
 const RARITY_INPUT_SELECTOR =
   '.search-advanced-items .filter-group:nth-of-type(1) .filter-property:nth-of-type(2) input';
+const STATS_SELECTOR = '.search-advanced-pane:last-child .filter-group-body .filter-title';
 
 interface ScrapedSearchPanel {
   name: string | null;
   category: string | null;
   rarity: string | null;
+  stats: string[]
 }
 
 export default class SearchPanel extends Service {
   recommendTitle() {
-    const {name, category, rarity} = this._scrape();
+    const {name, category, rarity} = this.scrape();
 
     if (name) return name;
     if (!category) return DEFAULT_RECOMMEND_TITLE;
@@ -31,15 +33,16 @@ export default class SearchPanel extends Service {
     return `${category} (${rarity})`;
   }
 
-  _scrape(): ScrapedSearchPanel {
+  scrape(): ScrapedSearchPanel {
     return {
-      category: this._scrapeValue(CATEGORY_INPUT_SELECTOR, NULL_CATEGORY),
-      name: this._scrapeValue(SEARCH_INPUT_SELECTOR),
-      rarity: this._scrapeValue(RARITY_INPUT_SELECTOR, NULL_RARITY)
+      category: this._scrapeInputValue(CATEGORY_INPUT_SELECTOR, NULL_CATEGORY),
+      name: this._scrapeInputValue(SEARCH_INPUT_SELECTOR),
+      rarity: this._scrapeInputValue(RARITY_INPUT_SELECTOR, NULL_RARITY),
+      stats: this._scrapeStats()
     };
   }
 
-  _scrapeValue(selector: string, nullValue?: string): string | null {
+  _scrapeInputValue(selector: string, nullValue?: string): string | null {
     const input: HTMLInputElement | null = window.document.querySelector(
       selector
     );
@@ -50,6 +53,21 @@ export default class SearchPanel extends Service {
     if (nullValue && nullValue === value) return null;
 
     return value;
+  }
+
+  _scrapeStats() {
+    const stats: string[] = [];
+
+    window.document.querySelectorAll(STATS_SELECTOR).forEach((item: HTMLElement) => {
+      let stat = item.innerText;
+      stat = stat.trim();
+      stat = stat.toLowerCase();
+      stat = stat.replace(/^pseudo /, '');
+
+      stats.push(stat);
+    });
+
+    return stats;
   }
 }
 

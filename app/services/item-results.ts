@@ -1,33 +1,29 @@
 // Vendors
-import Service from '@ember/service';
-import {task, timeout} from 'ember-concurrency';
+import Service, {inject as service} from '@ember/service';
 import window from 'ember-window-mock';
 
-// Constants
-const INITIAL_WATCH_DELAY = 300;
+// Types
+import ItemResultsHighlightStatFilters from "better-trading/services/item-results/highlight-stat-filters";
+import Settings from "better-trading/services/settings";
 
-export default class ItemResults extends Service.extend({
-  tryObserveResultsTask: task(function*(this: ItemResults) {
-    const resultsNode = window.document.querySelector('.resultset');
-    if (resultsNode) return this.watchResults(resultsNode);
+export default class ItemResults extends Service {
+  @service('settings')
+  settings: Settings;
 
-    yield timeout(INITIAL_WATCH_DELAY);
-    this.tryObserveResultsTask.perform();
-  })
-}) {
+  @service('item-results/highlight-stat-filters')
+  itemResultsHighlightStatFilters: ItemResultsHighlightStatFilters;
+
   resultsObserver: MutationObserver;
-  resultsNode: Element;
 
-  tryObserveResults() {
-    this.tryObserveResultsTask.perform();
-  }
+  watchResults() {
+    const tradeAppElement = window.document.getElementById('trade');
+    if (!tradeAppElement || !tradeAppElement.parentElement) return;
 
-  watchResults(resultsNode: Element) {
-    this.resultsNode = resultsNode;
     this.resultsObserver = new MutationObserver(() => this._enhance());
 
-    this.resultsObserver.observe(this.resultsNode, {
-      childList: true
+    this.resultsObserver.observe(tradeAppElement.parentElement, {
+      childList: true,
+      subtree: true
     });
   }
 
@@ -36,7 +32,13 @@ export default class ItemResults extends Service.extend({
   }
 
   _enhance() {
-    this.resultsNode.querySelectorAll(':scope > :not([bt-enhanced])').forEach((resultElement: Element) => {
+    this.itemResultsHighlightStatFilters.prepare();
+
+    window.document.querySelectorAll('.resultset > :not([bt-enhanced])').forEach((resultElement: HTMLElement) => {
+      if (this.settings.itemResultsHighlightStatFiltersEnabled) {
+        this.itemResultsHighlightStatFilters.process(resultElement);
+      }
+
       resultElement.toggleAttribute('bt-enhanced', true);
     });
   }

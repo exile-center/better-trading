@@ -23,6 +23,6 @@ export default class ApplicationRoute extends Route {
   async beforeModel() {
     this.intl.setLocale(DEFAULT_LOCALE);
     this.tradeLocation.startUrlPolling();
-    this.itemResults.tryObserveResults();
+    this.itemResults.watchResults();
   }
 }
