@@ -41,30 +41,23 @@ export default class PoeNinja extends Service {
     league: string
   ): PoeNinjaCurrenciesRatios | null {
     const rawCachedRatios = this.localStorage.getValue(
-      'poe-ninja-chaos-ratios-cache'
+      'poe-ninja-chaos-ratios-cache',
+      league
     );
     if (!rawCachedRatios) return null;
 
-    const cachedRatios = JSON.parse(rawCachedRatios);
-
-    return cachedRatios[league] || null;
+    return JSON.parse(rawCachedRatios);
   }
 
   private cacheChaosRatiosFor(
     league: string,
     ratios: PoeNinjaCurrenciesRatios
   ): void {
-    const rawCachedRatios = this.localStorage.getValue(
-      'poe-ninja-chaos-ratios-cache'
-    );
-    const cachedRatios = rawCachedRatios ? JSON.parse(rawCachedRatios) : {};
-
-    cachedRatios[league] = ratios;
-
     this.localStorage.setEphemeralValue(
       'poe-ninja-chaos-ratios-cache',
-      JSON.stringify(cachedRatios),
-      SIX_HOURS
+      JSON.stringify(ratios),
+      SIX_HOURS,
+      league
     );
   }
 
