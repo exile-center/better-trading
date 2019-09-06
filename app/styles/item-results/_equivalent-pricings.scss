@@ -1,0 +1,32 @@
+.results.compact .resultset:not(.exchange) .price .currency-text::after {
+  display: none !important;
+}
+
+.results.compact .resultset:not(.exchange) .price > span {
+  margin-bottom: 5px;
+  float: unset !important; // Force the pricings on a different line
+}
+
+.results.compact .resultset:not(.exchange) .row .right {
+  margin-top: 0 !important;
+}
+
+.bt-equivalent-pricings-equals {
+  margin: 0 5px;
+}
+
+.results:not(.compact) .bt-equivalent-pricings {
+  background-color: rgba(#fff, 0.1);
+
+  img {
+    width: 20px !important;
+  }
+
+  &.bt-equivalent-pricings-equivalent {
+    padding-top: 0 !important;
+  }
+
+  &.bt-equivalent-pricings-chaos-fraction {
+    padding-top: 0 !important;
+  }
+}

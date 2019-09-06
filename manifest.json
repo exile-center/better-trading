@@ -15,5 +15,12 @@
         "dist/assets/better-trading.css"
       ]
     }
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "*://poe.ninja/*"
   ]
 }

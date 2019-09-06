@@ -5,8 +5,8 @@ import Service, {inject as service} from '@ember/service';
 import {slugify} from 'better-trading/utilities/slugify';
 
 // Types
+import ExtensionBackground from 'better-trading/services/extension-background';
 import LocalStorage from 'better-trading/services/local-storage';
-import Request from 'better-trading/services/request';
 import {
   PoeNinjaCurrenciesPayload,
   PoeNinjaCurrenciesPayloadLine,
@@ -14,13 +14,12 @@ import {
 } from 'better-trading/types/poe-ninja';
 
 // Constants
-const CURRENCIES_URL =
-  'https://poe.ninja/api/data/currencyoverview?type=Currency';
-const HALF_DAY = 43200000;
+const CURRENCIES_RESOURCE_URI = '/data/currencyoverview?type=Currency';
+const SIX_HOURS = 21600000;
 
 export default class PoeNinja extends Service {
-  @service('request')
-  request: Request;
+  @service('extension-background')
+  extensionBackground: ExtensionBackground;
 
   @service('local-storage')
   localStorage: LocalStorage;
@@ -29,8 +28,8 @@ export default class PoeNinja extends Service {
     const cachedRatios = this.lookupCachedChaosRatiosFor(league);
     if (cachedRatios) return cachedRatios;
 
-    const url = `${CURRENCIES_URL}&${league}`;
-    const payload = await this.request.fetch(url);
+    const uri = `${CURRENCIES_RESOURCE_URI}&league=${league}`;
+    const payload = await this.extensionBackground.fetchPoeNinjaResource(uri);
 
     const ratios = this.parseChaosRatios(payload as PoeNinjaCurrenciesPayload);
     this.cacheChaosRatiosFor(league, ratios);
@@ -65,7 +64,7 @@ export default class PoeNinja extends Service {
     this.localStorage.setEphemeralValue(
       'poe-ninja-chaos-ratios-cache',
       JSON.stringify(cachedRatios),
-      HALF_DAY
+      SIX_HOURS
     );
   }
 
