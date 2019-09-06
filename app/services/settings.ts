@@ -8,7 +8,6 @@ export default class Settings extends Service {
   @service('local-storage')
   localStorage: LocalStorage;
 
-  itemResultsColoredModifiersEnabled: boolean = true;
   itemResultsEquivalentPricingsEnabled: boolean = true;
   itemResultsHighlightStatFiltersEnabled: boolean = true;
 
@@ -17,11 +16,6 @@ export default class Settings extends Service {
     if (!rawPersistedSettings) return;
 
     this.setProperties(JSON.parse(rawPersistedSettings));
-  }
-
-  setItemResultsColoredModifiersEnabled(value: boolean): void {
-    this.set('itemResultsColoredModifiersEnabled', value);
-    this._persist();
   }
 
   setItemResultsEquivalentPricingsEnabled(value: boolean): void {
@@ -36,7 +30,6 @@ export default class Settings extends Service {
 
   _persist(): void {
     const settings = this.getProperties(
-      'itemResultsColoredModifiersEnabled',
       'itemResultsEquivalentPricingsEnabled',
       'itemResultsHighlightStatFiltersEnabled'
     );

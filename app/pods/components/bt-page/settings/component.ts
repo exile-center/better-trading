@@ -11,19 +11,11 @@ export default class BtPageSettings extends Component {
   @service('settings')
   settings: Settings;
 
-  @readOnly('settings.itemResultsColoredModifiersEnabled')
-  itemResultsColoredModifiersEnabled: boolean;
-
   @readOnly('settings.itemResultsEquivalentPricingsEnabled')
   itemResultsEquivalentPricingsEnabled: boolean;
 
   @readOnly('settings.itemResultsHighlightStatFiltersEnabled')
   itemResultsHighlightStatFiltersEnabled: boolean;
-
-  @action
-  setItemResultsColoredModifiersEnabled(value: boolean): void {
-    this.settings.setItemResultsColoredModifiersEnabled(value);
-  }
 
   @action
   setItemResultsEquivalentPricingsEnabled(value: boolean): void {

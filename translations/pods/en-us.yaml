@@ -13,5 +13,3 @@ pods:
         equivalent_pricings: Equivalent pricings
         equivalent_pricings_description: Include the Chaos Orb value* to items that are not listed as Chaos Orbs.
         equivalent_pricings_note: Convertion rates powered by poe.ninja
-        colored_modifiers: Colored modifiers
-        colored_modifiers_description: Recolor item's modifers so they are easier to spot quickly.
