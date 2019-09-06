@@ -46,11 +46,6 @@ module.exports = function(defaults) {
 
     sourcemaps: {
       enabled: !IS_TEST_ENVIRONMENT
-    },
-
-    // Inline SVGs
-    svg: {
-      paths: ['public/assets/inline-svgs']
     }
   });
 
