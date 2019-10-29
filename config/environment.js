@@ -35,7 +35,6 @@ module.exports = function(environment) {
         'times',
         'pen',
         'bars',
-        'hat-wizard',
         'cogs',
         'arrow-left'
       ]

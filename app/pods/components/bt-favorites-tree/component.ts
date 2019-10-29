@@ -68,11 +68,4 @@ export default class BtFavoritesTree extends Component {
 
     this.persist();
   }
-
-  @action
-  createRootBuildFolder() {
-    this.items.unshiftObject(this.favorites.createBuildFolder());
-
-    this.persist();
-  }
 }
