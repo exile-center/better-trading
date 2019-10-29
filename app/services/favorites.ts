@@ -15,17 +15,6 @@ import {
 } from 'better-trading/types/favorites';
 import IntlService from 'ember-intl/services/intl';
 
-// Constants
-const BUILD_FOLDER_TITLE_KEYS = [
-  'services.favorites.build.body_armor',
-  'services.favorites.build.weapon_shield',
-  'services.favorites.build.helmet_gloves',
-  'services.favorites.build.boots_belt',
-  'services.favorites.build.rings_amulet',
-  'services.favorites.build.jewels',
-  'services.favorites.build.flasks'
-];
-
 export default class Favorites extends Service {
   @service('intl')
   intl: IntlService;
@@ -82,20 +71,6 @@ export default class Favorites extends Service {
       isExpanded: true,
       items: A([]),
       title: title || ''
-    };
-  }
-
-  createBuildFolder(): FavoritesFolder {
-    return {
-      isExpanded: true,
-      items: A(
-        BUILD_FOLDER_TITLE_KEYS.map((titleKey: string) => ({
-          isExpanded: false,
-          items: A([]),
-          title: this.intl.t(titleKey)
-        }))
-      ),
-      title: ''
     };
   }
 
