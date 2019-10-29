@@ -64,7 +64,7 @@ export default class ItemResultsEquivalentPricings extends Service {
     );
 
     const flooredCurrencyValue = Math.floor(currencyValue);
-    if (chaosValue < 1 || flooredCurrencyValue === currencyValue) return;
+    if (flooredCurrencyValue === 0 || chaosValue < 1 || flooredCurrencyValue === currencyValue) return;
 
     const chaosFractionValue = Math.round(
       (currencyValue - flooredCurrencyValue) * chaosValue
