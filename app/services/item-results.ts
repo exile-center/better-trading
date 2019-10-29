@@ -1,6 +1,5 @@
 // Vendors
 import Service, {inject as service} from '@ember/service';
-// @ts-ignore
 import {task} from 'ember-concurrency';
 import window from 'ember-window-mock';
 
