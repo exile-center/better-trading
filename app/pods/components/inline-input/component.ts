@@ -1,36 +1,38 @@
 // Vendors
-import {tagName} from '@ember-decorators/component';
-import Component from '@ember/component';
 import {action} from '@ember/object';
+import Component from '@glimmer/component';
+import {tracked} from '@glimmer/tracking';
 
 // Constants
 const ENTER_KEY = 'Enter';
 const ESCAPE_KEY = 'Escape';
 
-@tagName('')
-export default class BtInlineInput extends Component {
-  stagedValue: string;
-
+interface Args {
   value: string;
   onConfirm: (newValue: string) => void;
   onCancel: () => void;
+}
+
+export default class InlineInput extends Component<Args> {
+  @tracked
+  stagedValue: string;
 
   @action
   handleInput(event: {target: {value: string}}) {
-    this.set('stagedValue', event.target.value);
+    this.stagedValue = event.target.value;
   }
 
   @action
   handleKeyup(event: KeyboardEvent) {
     if (event.key === ENTER_KEY) {
-      this.onConfirm(this.stagedValue);
+      this.args.onConfirm(this.stagedValue);
     } else if (event.key === ESCAPE_KEY) {
-      this.onCancel();
+      this.args.onCancel();
     }
   }
 
   @action
   confirm() {
-    this.onConfirm(this.stagedValue);
+    this.args.onConfirm(this.stagedValue);
   }
 }

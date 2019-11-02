@@ -1,9 +1,6 @@
-// Types
-import MutableArray from '@ember/array/mutable';
-
 export interface FavoritesFolder {
   title: string;
-  items: MutableArray<FavoritesItem>;
+  items: FavoritesItem[];
   isExpanded: boolean;
 }
 

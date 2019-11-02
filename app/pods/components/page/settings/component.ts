@@ -1,13 +1,13 @@
 // Vendors
-import Component from '@ember/component';
 import {action} from '@ember/object';
 import {readOnly} from '@ember/object/computed';
 import {inject as service} from '@ember/service';
+import Component from '@glimmer/component';
 
 // Types
 import Settings from 'better-trading/services/settings';
 
-export default class BtPageSettings extends Component {
+export default class PageSettings extends Component {
   @service('settings')
   settings: Settings;
 

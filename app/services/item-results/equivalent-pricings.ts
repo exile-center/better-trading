@@ -5,9 +5,8 @@ import Service, {inject as service} from '@ember/service';
 import {slugify} from 'better-trading/utilities/slugify';
 
 // Types
-import PoeNinja from 'better-trading/services/poe-ninja';
+import PoeNinja, {PoeNinjaCurrenciesRatios} from 'better-trading/services/poe-ninja';
 import TradeLocation from 'better-trading/services/trade-location';
-import {PoeNinjaCurrenciesRatios} from 'better-trading/types/poe-ninja';
 
 // Constants
 const CHAOS_IMAGE_URL =
@@ -45,13 +44,11 @@ export default class ItemResultsEquivalentPricings extends Service {
     const currencyImageElement = result.querySelector(
       CURRENCY_IMAGE_SELECTOR
     ) as HTMLImageElement;
-    if (
-      !currencyNameElement ||
-      !pricingContainerElement ||
-      !currencyValueElement ||
-      !currencyImageElement
-    )
-      return;
+
+    if (!currencyNameElement) return;
+    if (!pricingContainerElement) return;
+    if (!currencyValueElement) return;
+    if (!currencyImageElement) return;
 
     const currencySlug = slugify(currencyNameElement.textContent || '');
     const currencyValue = parseFloat(currencyValueElement.textContent || '');

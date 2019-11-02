@@ -7,11 +7,19 @@ import {slugify} from 'better-trading/utilities/slugify';
 // Types
 import ExtensionBackground from 'better-trading/services/extension-background';
 import LocalStorage from 'better-trading/services/local-storage';
-import {
-  PoeNinjaCurrenciesPayload,
-  PoeNinjaCurrenciesPayloadLine,
-  PoeNinjaCurrenciesRatios
-} from 'better-trading/types/poe-ninja';
+
+export interface PoeNinjaCurrenciesPayloadLine {
+  currencyTypeName: string;
+  chaosEquivalent: number;
+}
+
+export interface PoeNinjaCurrenciesPayload {
+  lines: PoeNinjaCurrenciesPayloadLine[];
+}
+
+export interface PoeNinjaCurrenciesRatios {
+  [key: string]: number;
+}
 
 // Constants
 const CURRENCIES_RESOURCE_URI = '/data/currencyoverview?type=Currency';

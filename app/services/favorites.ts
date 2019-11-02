@@ -1,9 +1,7 @@
 // Vendor
-import {A} from '@ember/array';
 import Service, {inject as service} from '@ember/service';
 
 // Types
-import MutableArray from '@ember/array/mutable';
 import LocalStorage from 'better-trading/services/local-storage';
 import {
   FavoritesFolder,
@@ -22,23 +20,21 @@ export default class Favorites extends Service {
   @service('local-storage')
   localStorage: LocalStorage;
 
-  fetch(): MutableArray<FavoritesItem> {
+  fetch(): FavoritesItem[] {
     const rawFavorites = this.localStorage.getValue('favorites');
-    if (!rawFavorites) return A([]);
+    if (!rawFavorites) return [];
 
-    return A(
-      JSON.parse(rawFavorites).map((rawItem: RawFavoritesItem) =>
-        this._parseItem(rawItem)
-      )
+    return JSON.parse(rawFavorites).map(
+      (rawItem: RawFavoritesItem) => this._parseItem(rawItem)
     );
   }
 
-  persist(items: MutableArray<FavoritesItem>): void {
+  persist(items: FavoritesItem[]): void {
     this.localStorage.setValue('favorites', JSON.stringify(items));
   }
 
   forEachItem(
-    items: MutableArray<FavoritesItem>,
+    items: FavoritesItem[],
     callback: (item: FavoritesItem) => void
   ): void {
     items.forEach(item => {
@@ -51,7 +47,7 @@ export default class Favorites extends Service {
   }
 
   forEachFolder(
-    items: MutableArray<FavoritesItem>,
+    items: FavoritesItem[],
     callback: (folder: FavoritesFolder) => void
   ): void {
     this.forEachItem(items, (item: FavoritesItem) => {
@@ -69,7 +65,7 @@ export default class Favorites extends Service {
   createEmptyFolder(title?: string): FavoritesFolder {
     return {
       isExpanded: true,
-      items: A([]),
+      items: [],
       title: title || ''
     };
   }
@@ -79,10 +75,8 @@ export default class Favorites extends Service {
 
     return {
       isExpanded: (rawItem as RawFavoritesFolder).isExpanded,
-      items: A(
-        (rawItem as RawFavoritesFolder).items.map(
-          (subRawItem: RawFavoritesItem) => this._parseItem(subRawItem)
-        )
+      items: (rawItem as RawFavoritesFolder).items.map(
+        (subRawItem: RawFavoritesItem) => this._parseItem(subRawItem)
       ),
       title: rawItem.title
     };
