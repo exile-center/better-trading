@@ -1,4 +1,4 @@
-// Vendors
+// Vendor
 import Service, {inject as service} from '@ember/service';
 import {task} from 'ember-concurrency';
 import window from 'ember-window-mock';

@@ -1,0 +1,51 @@
+.ember-modal-overlay.translucent {
+  background-color: rgba(#000, 0.6);
+}
+
+.ember-modal-dialog {
+  position: absolute;
+  z-index: 51;
+}
+
+.ember-modal-dialog.emd-in-place {
+  position: static;
+}
+
+.ember-modal-wrapper.emd-static.emd-wrapper-target-attachment-center
+.ember-modal-dialog {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.ember-modal-wrapper.emd-animatable.emd-wrapper-target-attachment-center {
+  display: flex;
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.ember-modal-wrapper.emd-animatable.emd-wrapper-target-attachment-center
+.ember-modal-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.ember-modal-wrapper.emd-animatable .ember-modal-dialog {
+  position: relative;
+}
+
+.ember-modal-overlay {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}

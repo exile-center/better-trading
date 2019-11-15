@@ -1,0 +1,15 @@
+bookmarks:
+  folder:
+    create-trade: Register current trade
+  folder-edition:
+    title: Bookmark folder
+    save: Save
+    fields:
+      title:
+        label: Title
+  trade-edition:
+    title: Bookmark trade
+    save: Save
+    fields:
+      title:
+        label: Title

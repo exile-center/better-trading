@@ -1,4 +1,4 @@
-// Vendors
+// Vendor
 import {action} from '@ember/object';
 import Component from '@glimmer/component';
 
@@ -11,6 +11,6 @@ interface Args {
 export default class Checkbox extends Component<Args> {
   @action
   toggleValue() {
-    this.args.onChange(!this.value);
+    this.args.onChange(!this.args.value);
   }
 }

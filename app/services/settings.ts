@@ -11,13 +11,6 @@ export default class Settings extends Service {
   itemResultsEquivalentPricingsEnabled: boolean = true;
   itemResultsHighlightStatFiltersEnabled: boolean = true;
 
-  init(): void {
-    const rawPersistedSettings = this.localStorage.getValue('settings');
-    if (!rawPersistedSettings) return;
-
-    this.setProperties(JSON.parse(rawPersistedSettings));
-  }
-
   setItemResultsEquivalentPricingsEnabled(value: boolean): void {
     this.set('itemResultsEquivalentPricingsEnabled', value);
     this._persist();

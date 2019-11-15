@@ -1,0 +1,38 @@
+.button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid;
+  font-family: $primary-font;
+  font-size: 13px;
+  line-height: 1;
+  color: $white;
+  outline: none;
+  transition: background-color 0.2s ease;
+
+  &.is-blue {
+    border-color: $blue-alt;
+    background-color: $blue;
+
+    &:hover,
+    &:focus {
+      background-color: lighten($blue, 5%);
+    }
+  }
+
+  &.is-gold {
+    border-color: $gold-alt;
+    background-color: $gold;
+
+    &:hover,
+    &:focus {
+      background-color: lighten($gold, 5%);
+    }
+  }
+
+  + .button {
+    margin-left: 10px;
+  }
+}

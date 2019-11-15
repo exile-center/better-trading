@@ -1,0 +1,14 @@
+<label local-class="container">
+  <div local-class="label">
+    {{@label}}
+  </div>
+
+  <input
+    {{on "input" (fn this.handleInput)}}
+    type="text"
+    local-class="input"
+    value={{@value}}
+    ...attributes
+  />
+</label>
+

@@ -21,7 +21,7 @@
     width: 7px;
     height: 7px;
     background-color: $white;
-    transition: transform 0.2s ease-in-out;
+    transition: transform 0.2s ease;
   }
 
   &.active::before {

@@ -1,4 +1,4 @@
-// Vendors
+// Vendor
 import Component from '@glimmer/component';
 
 // Types

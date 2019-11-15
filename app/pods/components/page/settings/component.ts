@@ -1,4 +1,4 @@
-// Vendors
+// Vendor
 import {action} from '@ember/object';
 import {readOnly} from '@ember/object/computed';
 import {inject as service} from '@ember/service';

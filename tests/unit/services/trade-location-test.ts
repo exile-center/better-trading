@@ -6,12 +6,12 @@ import {beforeEach, describe, it} from 'mocha';
 import sinon from 'sinon';
 
 // Types
-import TradeLocation from 'better-trading/services/trade-location';
+import Location from 'better-trading/services/location';
 
 describe('Unit | Services | Trade location', () => {
   setupTest();
 
-  let service: TradeLocation;
+  let service: Location;
 
   beforeEach(function() {
     reset();

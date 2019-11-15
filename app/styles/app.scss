@@ -1,7 +1,7 @@
 @import 'variables';
 
-// Mixins
-@import 'mixins/buttons';
+// Vendor
+@import 'vendor/ember-modal-dialog';
 
 // Item results
 @import 'item-results/equivalent-pricings';

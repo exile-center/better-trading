@@ -6,16 +6,16 @@ import window from 'ember-window-mock';
 const BASE_URL = 'https://www.pathofexile.com/trade';
 
 interface ParsedPath {
-  tab: string;
+  type: string;
   league: string;
   slug?: string;
 }
 
-export default class TradeLocation extends Service {
-  get tab(): string {
-    const {tab} = this.parseCurrentPath();
+export default class Location extends Service {
+  get type(): string {
+    const {type} = this.parseCurrentPath();
 
-    return tab;
+    return type;
   }
 
   get league(): string {
@@ -38,16 +38,16 @@ export default class TradeLocation extends Service {
   }
 
   private parseCurrentPath(): ParsedPath {
-    const [tab, league, slug] = window.location.pathname
+    const [type, league, slug] = window.location.pathname
       .replace('/trade/', '')
       .split('/');
 
-    return {tab, league, slug};
+    return {type, league, slug};
   }
 }
 
 declare module '@ember/service' {
   interface Registry {
-    'trade-location': TradeLocation;
+    'location': Location;
   }
 }

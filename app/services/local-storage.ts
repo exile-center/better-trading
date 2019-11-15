@@ -7,7 +7,9 @@ const KEY_PREFIX = 'bt-';
 const EXPIRY_SUFFIX = '--expires-at';
 
 type LocalStorageKey =
-  | 'favorites'
+  | 'bookmark-folders-expansion'
+  | 'bookmark-folders'
+  | 'bookmark-trades'
   | 'settings'
   | 'poe-ninja-chaos-ratios-cache';
 

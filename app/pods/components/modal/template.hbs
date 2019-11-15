@@ -1,0 +1,24 @@
+<ModalDialog
+  @translucentOverlay={{true}}
+  @targetAttachment="center"
+>
+  <div local-class="container" ...attributes>
+    <header local-class="header">
+      <h1 local-class="header-title">
+        {{@title}}
+      </h1>
+
+      <button
+        {{on "click" (fn @onClose)}}
+        type="button"
+        local-class="header-close"
+      >
+        <FaIcon @icon="times" />
+      </button>
+    </header>
+
+    <div local-class="body">
+      {{yield}}
+    </div>
+  </div>
+</ModalDialog>

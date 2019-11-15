@@ -1,0 +1,20 @@
+<Modal
+  @title={{t "bookmarks.trade-edition.title"}}
+  @onClose={{fn @onCancel}}
+>
+  <Form::Container @submitTask={{this.persistTradeTask}}>
+    <Form::Input
+      @label={{t "bookmarks.trade-edition.fields.title.label"}}
+      @value={{@trade.title}}
+      @onChange={{fn this.changeTitle}}
+    />
+
+    <div local-class="actions">
+      <Button
+        type="submit"
+        @theme="gold"
+        @label={{t "bookmarks.trade-edition.save"}}
+      />
+    </div>
+  </Form::Container>
+</Modal>

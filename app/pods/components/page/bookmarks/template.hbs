@@ -1,0 +1,20 @@
+<Button
+  type="button"
+  @theme="gold"
+  @label={{t "page.bookmarks.create-button"}}
+  @onClick={{fn this.createFolder}}
+/>
+
+{{#each this.folders as |folder|}}
+  <Bookmarks::Folder
+    @folder={{folder}}
+  />
+{{/each}}
+
+{{#if this.stagedFolder}}
+  <Bookmarks::FolderEdition
+    @folder={{this.stagedFolder}}
+    @onCancel={{fn this.unstageFolder}}
+    @onSave={{fn this.handleFolderSave}}
+  />
+{{/if}}

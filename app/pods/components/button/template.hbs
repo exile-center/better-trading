@@ -1,0 +1,7 @@
+<button
+  {{on "click" (fn this.handleClick)}}
+  local-class="button is-{{@theme}} {{if this.isIconOnly "is-icon-only"}}"
+  ...attributes
+>
+  {{@label}}
+</button>

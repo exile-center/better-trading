@@ -1,0 +1,38 @@
+<div local-class="container">
+  <div
+    {{on "click" (fn this.toggleExpansion)}}
+    local-class="head"
+  >
+    {{@folder.title}}
+  </div>
+
+  <div local-class="body">
+    <AnimatedContainer>
+      {{#animated-if this.isExpanded use=this.fadeTransition duration=200}}
+        <ul local-class="trades">
+          {{#each this.trades as |trade|}}
+            <li local-class="trade">
+              {{trade.title}}
+            </li>
+          {{/each}}
+        </ul>
+
+        <Button
+          type="button"
+          @theme="blue"
+          @label={{t "bookmarks.folder.create-trade"}}
+          @onClick={{fn this.createTrade}}
+        />
+      {{/animated-if}}
+    </AnimatedContainer>
+  </div>
+</div>
+
+{{#if this.stagedTrade}}
+  <Bookmarks::TradeEdition
+    @trade={{this.stagedTrade}}
+    @folderId={{@folder.id}}
+    @onCancel={{fn this.unstageTrade}}
+    @onSave={{fn this.handleTradeSave}}
+  />
+{{/if}}
