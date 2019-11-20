@@ -1,3 +1,6 @@
-<form {{on "submit" (fn this.handleSubmit)}}>
+<form
+  {{on "submit" (fn this.handleSubmit)}}
+  local-class="container"
+>
   {{yield}}
 </form>

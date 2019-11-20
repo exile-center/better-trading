@@ -22,5 +22,8 @@
   },
   "permissions": [
     "*://poe.ninja/*"
+  ],
+  "web_accessible_resources": [
+    "dist/assets/images/*"
   ]
 }

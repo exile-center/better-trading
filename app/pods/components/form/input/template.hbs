@@ -1,8 +1,4 @@
-<label local-class="container">
-  <div local-class="label">
-    {{@label}}
-  </div>
-
+<Form::Field @label={{@label}}>
   <input
     {{on "input" (fn this.handleInput)}}
     type="text"
@@ -10,5 +6,4 @@
     value={{@value}}
     ...attributes
   />
-</label>
-
+</Form::Field>

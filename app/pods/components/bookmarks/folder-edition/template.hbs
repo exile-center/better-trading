@@ -9,13 +9,49 @@
       @onChange={{fn this.changeTitle}}
     />
 
-    <div local-class="actions">
-      <Button
-        type="submit"
-        @theme="gold"
-        @label={{t "bookmarks.folder-edition.save"}}
-        @icon="save"
-      />
-    </div>
+    <Form::Field @label={{t "bookmarks.folder-edition.fields.icon.label"}}>
+      <ul local-class="icon-options with-items">
+        {{#each this.iconItemOptions as |itemOption|}}
+          <li
+            {{on "click" (fn this.toggleIcon itemOption.value)}}
+            local-class="icon-option {{if (eq itemOption.value this.folder.icon) "is-selected"}}"
+          >
+            <img
+              local-class="icon-option-image"
+              src={{image-resource-url itemOption.imagePath}}
+              alt={{itemOption.value}}
+            >
+          </li>
+        {{/each}}
+      </ul>
+
+      <ul local-class="icon-options with-ascendancies">
+        {{#each this.iconAscendancyOptions as |ascendancyOptions|}}
+          <li>
+            <ul local-class="icon-options">
+              {{#each ascendancyOptions as |ascendancyOption|}}
+                <li
+                  {{on "click" (fn this.toggleIcon ascendancyOption.value)}}
+                  local-class="icon-option {{if (eq ascendancyOption.value this.folder.icon) "is-selected"}}"
+                >
+                  <img
+                    local-class="icon-option-image"
+                    src={{image-resource-url ascendancyOption.imagePath}}
+                    alt={{ascendancyOption.value}}
+                  >
+                </li>
+              {{/each}}
+            </ul>
+          </li>
+        {{/each}}
+      </ul>
+    </Form::Field>
+
+    <Button
+      type="submit"
+      @theme="gold"
+      @label={{t "bookmarks.folder-edition.save"}}
+      @icon="save"
+    />
   </Form::Container>
 </Modal>

@@ -6,7 +6,11 @@ import {action} from "@ember/object";
 import {inject as service} from '@ember/service';
 
 // Types
-import {BookmarksFolderStruct, BookmarksTradeStruct} from "better-trading/types/bookmarks";
+import {
+  BookmarkFolderItemIcon,
+  BookmarksFolderStruct,
+  BookmarksTradeStruct
+} from "better-trading/types/bookmarks";
 import Location from "better-trading/services/location";
 import Bookmarks from "better-trading/services/bookmarks";
 
@@ -32,6 +36,18 @@ export default class BookmarksFolder extends Component<Args> {
 
   @tracked
   trades: BookmarksTradeStruct[] = this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+
+  get iconPath() {
+    if (!this.args.folder.icon) return;
+
+    return `bookmark-folder/${this.args.folder.icon}.png`;
+  }
+
+  get iconIsItem() {
+    if (!this.args.folder.icon) return false;
+
+    return (Object.values(BookmarkFolderItemIcon) as string[]).includes(this.args.folder.icon);
+  }
 
   @action
   toggleExpansion() {

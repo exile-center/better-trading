@@ -3,6 +3,14 @@
     {{on "click" (fn this.toggleExpansion)}}
     local-class="header"
   >
+    {{#if @folder.icon}}
+      <img
+        local-class="header-icon {{if this.iconIsItem "is-item" "is-ascendancy"}}"
+        src={{image-resource-url this.iconPath}}
+        alt={{@folder.icon}}
+      >
+    {{/if}}
+
     {{@folder.title}}
   </div>
 

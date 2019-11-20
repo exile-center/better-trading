@@ -17,6 +17,20 @@
   }
 }
 
+.header-icon {
+  width: auto;
+
+  &.is-item {
+    margin: 0 7px 0 0;
+    height: 25px;
+  }
+
+  &.is-ascendancy {
+    margin: -5px 7px -5px -5px;
+    height: 40px;
+  }
+}
+
 .body {
   overflow: hidden;
 }

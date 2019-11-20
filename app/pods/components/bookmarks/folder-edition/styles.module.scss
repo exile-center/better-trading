@@ -1,4 +1,34 @@
-.actions {
-  display: block;
-  margin-top: 15px;
+.icon-options {
+  display: grid;
+  grid-gap: 8px;
+
+  + .icon-options {
+    margin-top: 10px;
+  }
+
+  &.with-ascendancies {
+    grid-template-columns: repeat(auto-fill, 75px);
+  }
+
+  &.with-items {
+    grid-template-columns: repeat(auto-fill, 50px);
+  }
+}
+
+.icon-option {
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: 0.2s ease;
+  transition-property: border-color, background-color;
+  background-color: transparent;
+
+  &.is-selected {
+    border-color: $gold-alt;
+    background-color: rgba($gold, 0.5);
+  }
+}
+
+.icon-option-image {
+  height: auto;
+  width: 100%;
 }

@@ -7,6 +7,8 @@ bookmarks:
     fields:
       title:
         label: Title
+      icon:
+        label: Icon
   trade-edition:
     title: Bookmark trade
     save: Save
