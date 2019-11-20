@@ -1,11 +1,56 @@
-.head {
+.container {
+  border: 1px solid $blue-alt;
+}
+
+.header{
   background-color: $blue;
   padding: 5px;
   font-family: $primary-font;
   color: $white;
   cursor: pointer;
+  font-size: 15px;
+  transition: background-color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background-color: lighten($blue, 5%);
+  }
 }
 
 .body {
   overflow: hidden;
+}
+
+.trades {
+  border-top: 1px solid $blue-alt;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.trade {
+  border-bottom: 1px solid rgba($blue-alt, 0.4);
+  cursor: pointer;
+  padding: 2px 5px;
+  color: $white;
+  background-color: transparent;
+  transition: background-color 0.2s ease;
+  font-family: $primary-font;
+
+
+  &:hover,
+  &:focus {
+    background-color: rgba($gold-alt, 0.4);
+  }
+}
+
+.folder-actions {
+  width: calc(100% - 10px);
+  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.folder-actions-new-trade {
+  flex: 1 1 auto;
 }

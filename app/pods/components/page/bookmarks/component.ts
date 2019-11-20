@@ -24,13 +24,18 @@ export default class PageBookmarks extends Component {
   }
 
   @action
+  handleEdit(folder: BookmarksFolderStruct) {
+    this.stagedFolder = folder;
+  }
+
+  @action
   unstageFolder() {
     this.stagedFolder = null;
   }
 
   @action
-  handleFolderSave(folder: BookmarksFolderStruct) {
-    this.folders = [...this.folders, folder];
+  handleFolderSave() {
+    this.folders = this.bookmarks.fetchFolders();
     this.unstageFolder();
   }
 }

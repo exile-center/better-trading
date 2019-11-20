@@ -1,7 +1,7 @@
 <div local-class="container">
   <div
     {{on "click" (fn this.toggleExpansion)}}
-    local-class="head"
+    local-class="header"
   >
     {{@folder.title}}
   </div>
@@ -10,19 +10,32 @@
     <AnimatedContainer>
       {{#animated-if this.isExpanded use=this.fadeTransition duration=200}}
         <ul local-class="trades">
-          {{#each this.trades as |trade|}}
-            <li local-class="trade">
+          {{#each this.trades key="@index" as |trade|}}
+            <li
+              {{on "click" (fn this.navigateToTrade trade)}}
+              local-class="trade"
+            >
               {{trade.title}}
             </li>
           {{/each}}
         </ul>
 
-        <Button
-          type="button"
-          @theme="blue"
-          @label={{t "bookmarks.folder.create-trade"}}
-          @onClick={{fn this.createTrade}}
-        />
+        <div local-class="folder-actions">
+          <Button
+            type="button"
+            local-class="folder-actions-new-trade"
+            @theme="gold"
+            @label={{t "bookmarks.folder.create-trade"}}
+            @onClick={{fn this.createTrade}}
+          />
+
+          <Button
+            type="button"
+            @theme="blue"
+            @icon="pen"
+            @onClick={{fn this.editFolder}}
+          />
+        </div>
       {{/animated-if}}
     </AnimatedContainer>
   </div>

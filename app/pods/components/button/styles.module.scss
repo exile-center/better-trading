@@ -11,6 +11,7 @@
   color: $white;
   outline: none;
   transition: background-color 0.2s ease;
+  cursor: pointer;
 
   &.is-blue {
     border-color: $blue-alt;
@@ -32,7 +33,13 @@
     }
   }
 
+  &.with-icon {
+    .label {
+      margin-left: 5px;
+    }
+  }
+
   + .button {
-    margin-left: 10px;
+    margin-left: 5px;
   }
 }

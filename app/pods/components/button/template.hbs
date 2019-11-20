@@ -1,7 +1,18 @@
 <button
   {{on "click" (fn this.handleClick)}}
-  local-class="button is-{{@theme}} {{if this.isIconOnly "is-icon-only"}}"
+  local-class="button is-{{@theme}} {{if @icon "with-icon"}}"
   ...attributes
 >
-  {{@label}}
+  {{#if @icon}}
+    <FaIcon
+      @icon={{@icon}}
+      local-class="icon"
+    />
+  {{/if}}
+
+  {{#if @label}}
+    <span local-class="label ">
+      {{@label}}
+    </span>
+  {{/if}}
 </button>

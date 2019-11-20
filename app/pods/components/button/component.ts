@@ -4,6 +4,7 @@ import {action} from '@ember/object';
 
 interface Args {
   label?: string;
+  icon?: string;
   theme: 'blue' | 'gold';
   onClick?: () => {};
 }

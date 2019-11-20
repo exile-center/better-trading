@@ -1,15 +1,20 @@
 <Button
   type="button"
+  local-class="create-folder-button"
   @theme="gold"
   @label={{t "page.bookmarks.create-button"}}
+  @icon="folder-plus"
   @onClick={{fn this.createFolder}}
 />
 
-{{#each this.folders as |folder|}}
-  <Bookmarks::Folder
-    @folder={{folder}}
-  />
-{{/each}}
+<div local-class="folders-wrapper">
+  {{#each this.folders key="@index" as |folder|}}
+    <Bookmarks::Folder
+      @folder={{folder}}
+      @onEdit={{fn this.handleEdit}}
+    />
+  {{/each}}
+</div>
 
 {{#if this.stagedFolder}}
   <Bookmarks::FolderEdition
