@@ -28,9 +28,7 @@ export default class ItemResults extends Service.extend({
     const tradeAppElement = window.document.getElementById('trade');
     if (!tradeAppElement || !tradeAppElement.parentElement) return;
 
-    this.resultsObserver = new MutationObserver(() =>
-      this.enhanceResultsTask.perform()
-    );
+    this.resultsObserver = new MutationObserver(() => this.enhanceResultsTask.perform());
 
     this.resultsObserver.observe(tradeAppElement.parentElement, {
       childList: true,
@@ -43,9 +41,7 @@ export default class ItemResults extends Service.extend({
   }
 
   private async enhance(): Promise<void> {
-    const unenhancedElements = window.document.querySelectorAll(
-      '.resultset > :not([bt-enhanced])'
-    );
+    const unenhancedElements = window.document.querySelectorAll('.resultset > :not([bt-enhanced])');
 
     if (!unenhancedElements.length) return;
 

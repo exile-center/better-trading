@@ -71,18 +71,6 @@ module.exports = {
       }
     },
     {
-      files: ['service-worker/index.js'],
-      parserOptions: {
-        sourceType: 'script',
-        ecmaVersion: 2015
-      },
-      env: {
-        browser: false,
-        worker: true
-      },
-      extends: ['plugin:mirego/recommended', 'prettier']
-    },
-    {
       files: [
         '.ember-cli.js',
         '.eslintrc.js',
@@ -105,6 +93,8 @@ module.exports = {
       plugins: ['node'],
       rules: {
         '@typescript-eslint/no-require-imports': 0,
+        'no-process-exit': 0,
+        'node/no-extraneous-require': 0,
 
         // this can be removed once the following is fixed
         // https://github.com/mysticatea/eslint-plugin-node/issues/77

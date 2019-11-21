@@ -20,7 +20,7 @@ export default class BookmarksState extends Service {
     if (bookmarkFolderIdIndex > -1) {
       this.expandedFolderIds.splice(bookmarkFolderIdIndex, 1);
     } else {
-      this.expandedFolderIds.push(bookmarkFolderId)
+      this.expandedFolderIds.push(bookmarkFolderId);
     }
 
     this.persistExpandedFolderIds();

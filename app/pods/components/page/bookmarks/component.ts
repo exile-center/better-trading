@@ -5,8 +5,8 @@ import Component from '@glimmer/component';
 import {tracked} from '@glimmer/tracking';
 
 // Types
-import Bookmarks from "better-trading/services/bookmarks";
-import {BookmarksFolderStruct} from "better-trading/types/bookmarks";
+import Bookmarks from 'better-trading/services/bookmarks';
+import {BookmarksFolderStruct} from 'better-trading/types/bookmarks';
 
 export default class PageBookmarks extends Component {
   @service('bookmarks')

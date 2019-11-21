@@ -3,18 +3,22 @@ import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
 import Component from '@glimmer/component';
 import {tracked} from '@glimmer/tracking';
-import {dropTask} from "ember-concurrency-decorators";
+import {dropTask} from 'ember-concurrency-decorators';
 
 // Types
-import Bookmarks from "better-trading/services/bookmarks";
+import Bookmarks from 'better-trading/services/bookmarks';
 import {
-  BookmarkFolderAscendancyDuelistIcon, BookmarkFolderAscendancyIcon,
-  BookmarkFolderAscendancyMarauderIcon, BookmarkFolderAscendancyRangerIcon,
+  BookmarkFolderAscendancyDuelistIcon,
+  BookmarkFolderAscendancyIcon,
+  BookmarkFolderAscendancyMarauderIcon,
+  BookmarkFolderAscendancyRangerIcon,
   BookmarkFolderAscendancyScionIcon,
-  BookmarkFolderAscendancyShadowIcon, BookmarkFolderAscendancyTemplarIcon, BookmarkFolderAscendancyWitchIcon,
+  BookmarkFolderAscendancyShadowIcon,
+  BookmarkFolderAscendancyTemplarIcon,
+  BookmarkFolderAscendancyWitchIcon,
   BookmarkFolderItemIcon,
   BookmarksFolderStruct
-} from "better-trading/types/bookmarks";
+} from 'better-trading/types/bookmarks';
 
 interface Args {
   folder: BookmarksFolderStruct;
@@ -38,7 +42,7 @@ export default class BookmarksFolderEdition extends Component<Args> {
       Object.values(BookmarkFolderAscendancyRangerIcon).map(this.iconOptionFromIcon),
       Object.values(BookmarkFolderAscendancyTemplarIcon).map(this.iconOptionFromIcon),
       Object.values(BookmarkFolderAscendancyScionIcon).map(this.iconOptionFromIcon)
-    ]
+    ];
   }
 
   get iconItemOptions() {

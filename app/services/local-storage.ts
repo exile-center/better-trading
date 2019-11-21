@@ -18,12 +18,7 @@ export default class LocalStorage extends Service {
     this.write(key, value, league);
   }
 
-  setEphemeralValue(
-    key: LocalStorageKey,
-    value: string,
-    durationMs: number,
-    league: string | null = null
-  ): void {
+  setEphemeralValue(key: LocalStorageKey, value: string, durationMs: number, league: string | null = null): void {
     this.write(key, value, league);
 
     const currentTimestamp = new Date().getTime();

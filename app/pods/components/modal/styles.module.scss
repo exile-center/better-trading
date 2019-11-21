@@ -5,27 +5,27 @@
 }
 
 .header {
-  margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .header-title {
-  color: $white;
+  text-transform: uppercase;
   font-family: $primary-font;
   font-size: 15px;
   letter-spacing: 0.5px;
-  text-transform: uppercase;
+  color: $white;
 }
 
 .header-close {
-  color: $white;
   transform: scale(1);
-  background: none;
-  border: 0;
-  padding: 0;
-  height: 25px;
   width: 20px;
+  height: 25px;
+  padding: 0;
+  border: 0;
+  background: none;
   font-size: 17px;
+  color: $white;
 }

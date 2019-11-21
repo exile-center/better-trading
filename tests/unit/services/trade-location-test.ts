@@ -66,9 +66,7 @@ describe('Unit | Services | Trade location', () => {
 
       service.navigateToTrade('foobar');
 
-      expect(replaceSpy).to.have.been.calledOnceWith(
-        'https://www.pathofexile.com/trade/search/Legion/foobar'
-      );
+      expect(replaceSpy).to.have.been.calledOnceWith('https://www.pathofexile.com/trade/search/Legion/foobar');
     });
   });
 });

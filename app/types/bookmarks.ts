@@ -57,7 +57,14 @@ export enum BookmarkFolderAscendancyScionIcon {
   ASCENDANT = 'ascendant'
 }
 
-export type BookmarkFolderAscendancyIcon = BookmarkFolderAscendancyDuelistIcon | BookmarkFolderAscendancyShadowIcon | BookmarkFolderAscendancyMarauderIcon | BookmarkFolderAscendancyWitchIcon | BookmarkFolderAscendancyRangerIcon | BookmarkFolderAscendancyTemplarIcon | BookmarkFolderAscendancyScionIcon;
+export type BookmarkFolderAscendancyIcon =
+  | BookmarkFolderAscendancyDuelistIcon
+  | BookmarkFolderAscendancyShadowIcon
+  | BookmarkFolderAscendancyMarauderIcon
+  | BookmarkFolderAscendancyWitchIcon
+  | BookmarkFolderAscendancyRangerIcon
+  | BookmarkFolderAscendancyTemplarIcon
+  | BookmarkFolderAscendancyScionIcon;
 
 export enum BookmarkFolderItemIcon {
   ALCHEMY = 'alchemy',

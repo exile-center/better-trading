@@ -2,18 +2,18 @@
 import Service, {inject as service} from '@ember/service';
 
 // Utilities
-import {uniqueId} from "better-trading/utilities/unique-id";
+import {uniqueId} from 'better-trading/utilities/unique-id';
 
 // Types
 import LocalStorage from 'better-trading/services/local-storage';
-import {BookmarksFolderStruct, BookmarksTradeStruct} from "better-trading/types/bookmarks";
+import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 
 interface BookmarksFoldersMap {
-  [id: string]: BookmarksFolderStruct
+  [id: string]: BookmarksFolderStruct;
 }
 
 interface BookmarksTradesMap {
-  [id: string]: BookmarksTradeStruct
+  [id: string]: BookmarksTradeStruct;
 }
 
 export default class BookmarksStorage extends Service {
@@ -25,9 +25,7 @@ export default class BookmarksStorage extends Service {
   }
 
   fetchTradesByFolderId(folderId: string): BookmarksTradeStruct[] {
-    return Object.values(this.fetchTradesMap()).filter(
-      (trade) => trade.folderId === folderId
-    );
+    return Object.values(this.fetchTradesMap()).filter(trade => trade.folderId === folderId);
   }
 
   persistFolder(folder: BookmarksFolderStruct): BookmarksFolderStruct {

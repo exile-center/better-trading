@@ -3,7 +3,7 @@ import Service from '@ember/service';
 import window from 'ember-window-mock';
 
 // Types
-import {BookmarksTradeLocation} from "better-trading/types/bookmarks";
+import {BookmarksTradeLocation} from 'better-trading/types/bookmarks';
 
 // Constants
 const BASE_URL = 'https://www.pathofexile.com/trade';
@@ -41,9 +41,7 @@ export default class Location extends Service {
   }
 
   private parseCurrentPath(): ParsedPath {
-    const [type, league, slug] = window.location.pathname
-      .replace('/trade/', '')
-      .split('/');
+    const [type, league, slug] = window.location.pathname.replace('/trade/', '').split('/');
 
     return {type, league, slug};
   }
@@ -51,6 +49,6 @@ export default class Location extends Service {
 
 declare module '@ember/service' {
   interface Registry {
-    'location': Location;
+    location: Location;
   }
 }

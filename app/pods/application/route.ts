@@ -16,7 +16,7 @@ export default class ApplicationRoute extends Route {
   @service('item-results')
   itemResults: ItemResults;
 
-  async beforeModel() {
+  beforeModel() {
     this.intl.setLocale(DEFAULT_LOCALE);
     this.itemResults.watchResults();
   }

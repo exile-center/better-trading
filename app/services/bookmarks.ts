@@ -2,9 +2,9 @@
 import Service, {inject as service} from '@ember/service';
 
 // Types
-import BookmarksState from "better-trading/services/bookmarks/state";
-import BookmarksStorage from "better-trading/services/bookmarks/storage";
-import {BookmarksFolderStruct, BookmarksTradeLocation, BookmarksTradeStruct} from "better-trading/types/bookmarks";
+import BookmarksState from 'better-trading/services/bookmarks/state';
+import BookmarksStorage from 'better-trading/services/bookmarks/storage';
+import {BookmarksFolderStruct, BookmarksTradeLocation, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 
 export default class Bookmarks extends Service {
   @service('bookmarks/storage')
@@ -34,7 +34,7 @@ export default class Bookmarks extends Service {
       icon: null,
       id: '',
       title: ''
-    }
+    };
   }
 
   initializeTradeStructFrom(location: BookmarksTradeLocation, folderId: string): BookmarksTradeStruct {

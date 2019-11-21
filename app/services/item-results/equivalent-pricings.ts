@@ -9,8 +9,7 @@ import Location from 'better-trading/services/location';
 import PoeNinja, {PoeNinjaCurrenciesRatios} from 'better-trading/services/poe-ninja';
 
 // Constants
-const CHAOS_IMAGE_URL =
-  'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png';
+const CHAOS_IMAGE_URL = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png';
 const CHAOS_ALT = 'chaos';
 const PRICING_CONTAINER_SELECTOR = '.price';
 const CURRENCY_NAME_SELECTOR = '[data-field="price"] .currency-text span';
@@ -28,22 +27,17 @@ export default class ItemResultsEquivalentPricings extends Service {
   private chaosRatios: PoeNinjaCurrenciesRatios | null;
 
   async prepare(): Promise<void> {
-    this.chaosRatios = await this.poeNinja.fetchChaosRatiosFor(
-      this.location.league
-    );
+    this.chaosRatios = await this.poeNinja.fetchChaosRatiosFor(this.location.league);
   }
 
+  // eslint-disable-next-line complexity
   process(result: HTMLElement): void {
     if (!this.chaosRatios) return;
 
-    const pricingContainerElement = result.querySelector(
-      PRICING_CONTAINER_SELECTOR
-    );
+    const pricingContainerElement = result.querySelector(PRICING_CONTAINER_SELECTOR);
     const currencyNameElement = result.querySelector(CURRENCY_NAME_SELECTOR);
     const currencyValueElement = result.querySelector(CURRENCY_VALUE_SELECTOR);
-    const currencyImageElement = result.querySelector(
-      CURRENCY_IMAGE_SELECTOR
-    ) as HTMLImageElement;
+    const currencyImageElement = result.querySelector(CURRENCY_IMAGE_SELECTOR) as HTMLImageElement;
 
     if (!currencyNameElement) return;
     if (!pricingContainerElement) return;
@@ -56,16 +50,12 @@ export default class ItemResultsEquivalentPricings extends Service {
     if (!chaosValue || !currencyValue) return;
 
     const chaosEquivalentValue = Math.round(currencyValue * chaosValue);
-    pricingContainerElement.append(
-      this.renderChaosEquivalence(chaosEquivalentValue)
-    );
+    pricingContainerElement.append(this.renderChaosEquivalence(chaosEquivalentValue));
 
     const flooredCurrencyValue = Math.floor(currencyValue);
     if (flooredCurrencyValue === 0 || chaosValue < 1 || flooredCurrencyValue === currencyValue) return;
 
-    const chaosFractionValue = Math.round(
-      (currencyValue - flooredCurrencyValue) * chaosValue
-    );
+    const chaosFractionValue = Math.round((currencyValue - flooredCurrencyValue) * chaosValue);
     pricingContainerElement.append(
       this.renderChaosFraction(
         flooredCurrencyValue,

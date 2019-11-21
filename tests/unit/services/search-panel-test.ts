@@ -1,7 +1,7 @@
 // Vendor
 import {expect} from 'chai';
 import {setupTest} from 'ember-mocha';
-import {beforeEach, describe, it} from 'mocha';
+import {beforeEach, afterEach, describe, it} from 'mocha';
 
 // HTML Samples
 import AnonItem from '../../html-samples/search-panel/anon-ele-res-max-life';
@@ -33,9 +33,7 @@ describe('Unit | Services | Search panel', () => {
     it('should return the name of a named search', () => {
       sampleContainer.insertAdjacentHTML('afterbegin', UniqueItem);
 
-      expect(service.recommendTitle()).to.equal(
-        'Belly of the Beast Full Wyrmscale'
-      );
+      expect(service.recommendTitle()).to.equal('Belly of the Beast Full Wyrmscale');
     });
 
     it('should fallback on the item type/rarity', () => {

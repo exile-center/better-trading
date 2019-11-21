@@ -37,46 +37,28 @@ export default class PoeNinja extends Service {
     if (cachedRatios) return cachedRatios;
 
     const uri = `${CURRENCIES_RESOURCE_URI}&league=${league}`;
-    const payload = await this.extensionBackground.fetchPoeNinjaResource(uri);
+    const payload = (await this.extensionBackground.fetchPoeNinjaResource(uri)) as PoeNinjaCurrenciesPayload;
 
-    const ratios = this.parseChaosRatios(payload as PoeNinjaCurrenciesPayload);
+    const ratios = this.parseChaosRatios(payload);
     this.cacheChaosRatiosFor(league, ratios);
 
     return ratios;
   }
 
-  private lookupCachedChaosRatiosFor(
-    league: string
-  ): PoeNinjaCurrenciesRatios | null {
-    const rawCachedRatios = this.localStorage.getValue(
-      'poe-ninja-chaos-ratios-cache',
-      league
-    );
+  private lookupCachedChaosRatiosFor(league: string): PoeNinjaCurrenciesRatios | null {
+    const rawCachedRatios = this.localStorage.getValue('poe-ninja-chaos-ratios-cache', league);
     if (!rawCachedRatios) return null;
 
     return JSON.parse(rawCachedRatios);
   }
 
-  private cacheChaosRatiosFor(
-    league: string,
-    ratios: PoeNinjaCurrenciesRatios
-  ): void {
-    this.localStorage.setEphemeralValue(
-      'poe-ninja-chaos-ratios-cache',
-      JSON.stringify(ratios),
-      SIX_HOURS,
-      league
-    );
+  private cacheChaosRatiosFor(league: string, ratios: PoeNinjaCurrenciesRatios): void {
+    this.localStorage.setEphemeralValue('poe-ninja-chaos-ratios-cache', JSON.stringify(ratios), SIX_HOURS, league);
   }
 
-  private parseChaosRatios(
-    payload: PoeNinjaCurrenciesPayload
-  ): PoeNinjaCurrenciesRatios {
+  private parseChaosRatios(payload: PoeNinjaCurrenciesPayload): PoeNinjaCurrenciesRatios {
     return payload.lines.reduce(
-      (
-        acc: PoeNinjaCurrenciesRatios,
-        {currencyTypeName, chaosEquivalent}: PoeNinjaCurrenciesPayloadLine
-      ) => {
+      (acc: PoeNinjaCurrenciesRatios, {currencyTypeName, chaosEquivalent}: PoeNinjaCurrenciesPayloadLine) => {
         acc[slugify(currencyTypeName)] = chaosEquivalent;
 
         return acc;

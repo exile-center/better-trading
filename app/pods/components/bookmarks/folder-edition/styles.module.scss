@@ -17,10 +17,10 @@
 
 .icon-option {
   border: 2px solid transparent;
-  cursor: pointer;
+  background-color: transparent;
   transition: 0.2s ease;
   transition-property: border-color, background-color;
-  background-color: transparent;
+  cursor: pointer;
 
   &.is-selected {
     border-color: $gold-alt;
@@ -29,6 +29,6 @@
 }
 
 .icon-option-image {
-  height: auto;
   width: 100%;
+  height: auto;
 }

@@ -25,14 +25,12 @@ export default class ItemResultsHighlightStatFilters extends Service {
   }
 
   process(result: HTMLElement): void {
-    result
-      .querySelectorAll(MODS_SELECTOR)
-      .forEach((modElement: HTMLElement) => {
-        const modText = modElement.textContent || '';
-        if (!this.statNeedles.some(needle => needle.test(modText))) return;
+    result.querySelectorAll(MODS_SELECTOR).forEach((modElement: HTMLElement) => {
+      const modText = modElement.textContent || '';
+      if (!this.statNeedles.some(needle => needle.test(modText))) return;
 
-        modElement.classList.add('bt-highlight-stat-filters');
-      });
+      modElement.classList.add('bt-highlight-stat-filters');
+    });
   }
 }
 

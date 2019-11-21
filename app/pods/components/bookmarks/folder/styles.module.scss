@@ -2,16 +2,16 @@
   border: 1px solid $blue-alt;
 }
 
-.header{
+.header {
   display: flex;
   align-items: center;
-  background-color: $blue;
   padding: 5px;
+  background-color: $blue;
   font-family: $primary-font;
-  color: $white;
-  cursor: pointer;
   font-size: 15px;
+  color: $white;
   transition: background-color 0.2s ease;
+  cursor: pointer;
 
   &:hover,
   &:focus {
@@ -23,21 +23,21 @@
   width: auto;
 
   &.is-item {
-    margin: 0 7px 0 0;
     height: 25px;
+    margin: 0 7px 0 0;
   }
 
   &.is-ascendancy {
-    margin: -5px 7px -5px -5px;
     height: 40px;
+    margin: -5px 7px -5px -5px;
   }
 }
 
 .header-label {
   flex: 1 1 auto;
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .body {
@@ -45,15 +45,15 @@
 }
 
 .trades {
-  border-top: 1px solid $blue-alt;
-  list-style: none;
-  margin: 0;
   padding: 0;
+  border-top: 1px solid $blue-alt;
+  margin: 0;
+  list-style: none;
 }
 
 .trade {
-  border-bottom: 1px solid rgba($blue-alt, 0.4);
   display: flex;
+  border-bottom: 1px solid rgba($blue-alt, 0.4);
 
   &:hover {
     .trade-actions {
@@ -66,8 +66,8 @@
   position: relative;
   flex: 1 1 auto;
   padding: 2px 5px;
-  color: $white;
   font-family: $primary-font;
+  color: $white;
   cursor: pointer;
 
   &:hover,
@@ -78,16 +78,16 @@
   }
 
   &::before {
+    content: '';
     position: absolute;
+    z-index: -1;
     top: 0;
     left: 0;
-    content: '';
-    height: 100%;
-    width: 100%;
-    background: linear-gradient(to right, rgba($gold-alt, 0.4), rgba($gold-alt, 0));
     opacity: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, rgba($gold-alt, 0.4), rgba($gold-alt, 0));
     transition: opacity 0.2s ease;
-    z-index: -1;
   }
 }
 
@@ -97,10 +97,10 @@
 }
 
 .trade-action {
-  background-color: transparent;
   border: 0;
-  color: rgba($white, 0.8);
+  background-color: transparent;
   outline: none;
+  color: rgba($white, 0.8);
   transition: color 0.2s ease;
 
   &:hover,
@@ -110,10 +110,10 @@
 }
 
 .folder-actions {
-  width: calc(100% - 10px);
-  margin: 5px;
   display: flex;
   align-items: center;
+  width: calc(100% - 10px);
+  margin: 5px;
 }
 
 .folder-actions-new-trade {
