@@ -6,16 +6,12 @@ import window from 'ember-window-mock';
 // Types
 import ItemResultsEquivalentPricings from 'better-trading/services/item-results/equivalent-pricings';
 import ItemResultsHighlightStatFilters from 'better-trading/services/item-results/highlight-stat-filters';
-import Settings from 'better-trading/services/settings';
 
 export default class ItemResults extends Service.extend({
   enhanceResultsTask: task(function*(this: ItemResults) {
     yield this.enhance();
   }).enqueue()
 }) {
-  @service('settings')
-  settings: Settings;
-
   @service('item-results/highlight-stat-filters')
   itemResultsHighlightStatFilters: ItemResultsHighlightStatFilters;
 
@@ -49,13 +45,8 @@ export default class ItemResults extends Service.extend({
     await this.itemResultsEquivalentPricings.prepare();
 
     unenhancedElements.forEach((resultElement: HTMLElement) => {
-      if (this.settings.itemResultsHighlightStatFiltersEnabled) {
-        this.itemResultsHighlightStatFilters.process(resultElement);
-      }
-
-      if (this.settings.itemResultsEquivalentPricingsEnabled) {
-        this.itemResultsEquivalentPricings.process(resultElement);
-      }
+      this.itemResultsHighlightStatFilters.process(resultElement);
+      this.itemResultsEquivalentPricings.process(resultElement);
 
       resultElement.toggleAttribute('bt-enhanced', true);
     });

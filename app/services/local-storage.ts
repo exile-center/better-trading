@@ -10,7 +10,6 @@ type LocalStorageKey =
   | 'bookmark-folders-expansion'
   | 'bookmark-folders'
   | 'bookmark-trades'
-  | 'settings'
   | 'poe-ninja-chaos-ratios-cache';
 
 export default class LocalStorage extends Service {

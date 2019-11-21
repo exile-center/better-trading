@@ -24,7 +24,7 @@
     transition: transform 0.2s ease;
   }
 
-  &.active::before {
+  &.is-active::before {
     transform: scale(1);
   }
 }

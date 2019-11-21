@@ -1,0 +1,10 @@
+<label
+  {{on "click" (fn this.toggleValue)}}
+  local-class="wrapper"
+>
+  <div local-class="indicator {{if @value "is-active"}}"></div>
+
+  <span local-class="label">
+    {{@label}}
+  </span>
+</label>

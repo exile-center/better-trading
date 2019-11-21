@@ -19,20 +19,20 @@ describe('Unit | Services | Local storage', () => {
 
   describe('setValue', () => {
     it('should set the value with the proper prefix', () => {
-      service.setValue('favorites', 'foobar');
+      service.setValue('bookmark-folders-expansion', 'foobar');
 
-      expect(window.localStorage.getItem('bt-favorites')).to.equal('foobar');
+      expect(window.localStorage.getItem('bt-bookmark-folders-expansion')).to.equal('foobar');
     });
   });
 
   describe('setEphemeralValue', () => {
     it('should set the value and the expiry timestamp', () => {
       const estimatedExpiryTimestamp = new Date().getTime() + 1000;
-      service.setEphemeralValue('favorites', 'foobar', 1000);
+      service.setEphemeralValue('bookmark-folders-expansion', 'foobar', 1000);
 
-      expect(window.localStorage.getItem('bt-favorites')).to.equal('foobar');
+      expect(window.localStorage.getItem('bt-bookmark-folders-expansion')).to.equal('foobar');
 
-      const parsedExpiry = parseInt(window.localStorage.getItem('bt-favorites--expires-at') || '', 10);
+      const parsedExpiry = parseInt(window.localStorage.getItem('bt-bookmark-folders-expansion--expires-at') || '', 10);
       expect(parsedExpiry).to.be.greaterThan(estimatedExpiryTimestamp - 500);
       expect(parsedExpiry).to.be.lessThan(estimatedExpiryTimestamp + 500);
     });
@@ -40,23 +40,29 @@ describe('Unit | Services | Local storage', () => {
 
   describe('getValue', () => {
     it('should returns the stored value', () => {
-      window.localStorage.setItem('bt-favorites', 'foobar');
+      window.localStorage.setItem('bt-bookmark-folders-expansion', 'foobar');
 
-      expect(service.getValue('favorites')).to.equal('foobar');
+      expect(service.getValue('bookmark-folders-expansion')).to.equal('foobar');
     });
 
     it('should returns the unexpired ephemeral value', () => {
-      window.localStorage.setItem('bt-favorites', 'foobar');
-      window.localStorage.setItem('bt-favorites--expires-at', (new Date().getTime() + 10000).toString());
+      window.localStorage.setItem('bt-bookmark-folders-expansion', 'foobar');
+      window.localStorage.setItem(
+        'bt-bookmark-folders-expansion--expires-at',
+        (new Date().getTime() + 10000).toString()
+      );
 
-      expect(service.getValue('favorites')).to.equal('foobar');
+      expect(service.getValue('bookmark-folders-expansion')).to.equal('foobar');
     });
 
     it('should returns null for an expired ephemeral value', () => {
-      window.localStorage.setItem('bt-favorites', 'foobar');
-      window.localStorage.setItem('bt-favorites--expires-at', (new Date().getTime() - 10000).toString());
+      window.localStorage.setItem('bt-bookmark-folders-expansion', 'foobar');
+      window.localStorage.setItem(
+        'bt-bookmark-folders-expansion--expires-at',
+        (new Date().getTime() - 10000).toString()
+      );
 
-      expect(service.getValue('favorites')).to.be.null;
+      expect(service.getValue('bookmark-folders-expansion')).to.be.null;
     });
   });
 });

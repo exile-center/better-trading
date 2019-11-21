@@ -8,7 +8,7 @@ interface Args {
   onChange: (newValue: boolean) => void;
 }
 
-export default class Checkbox extends Component<Args> {
+export default class FormCheckbox extends Component<Args> {
   @action
   toggleValue() {
     this.args.onChange(!this.args.value);
