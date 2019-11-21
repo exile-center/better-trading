@@ -7,17 +7,6 @@
     "doc": "doc",
     "test": "tests"
   },
-  "scripts": {
-    "start": "ember server",
-    "build": "npm run enforce-engine-versions && ember build",
-    "dev": "npm run enforce-engine-versions && ember build --watch",
-    "dev-test": "npm run enforce-engine-versions && ember test --server",
-    "deploy": "npm run enforce-engine-versions && ember build --prod",
-    "enforce-engine-versions": "./scripts/enforce-engine-versions.js",
-    "preinstall": "npm run enforce-engine-versions",
-    "pretest": "npm run enforce-engine-versions",
-    "prestart": "npm run enforce-engine-versions"
-  },
   "repository": "https://github.com/poe-world/better-trading",
   "engine-strict": true,
   "engines": {

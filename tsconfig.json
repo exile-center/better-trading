@@ -41,6 +41,9 @@
     }
   },
   "include": [
+    "ember-cli-build.js",
+    "testem.js",
+    "scripts/**/*",
     "app/**/*",
     "tests/**/*",
     "types/**/*"

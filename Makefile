@@ -8,11 +8,9 @@ GIT_REVISION = `git rev-parse HEAD`
 # Linter and formatter configuration
 # ----------------------------------
 
-JAVASCRIPT_FILES_PATTERN = ember-cli-build.js testem.js app/ tests/ config/ scripts/
-PRETTIER_FILES_PATTERN = ember-cli-build.js testem.js '{app,tests,config,scripts}/**/*.{ts,js,scss}' '**/*.md'
+PRETTIER_FILES_PATTERN = ember-cli-build.js testem.js '{app,tests,config,scripts}/**/*.{ts,js,graphql,scss}' '**/*.md'
 STYLES_PATTERN = './app/**/*.scss'
 TEMPLATES_PATTERN = './app/**/*.hbs'
-TYPESCRIPT_FILES_PATTERN = '{app,tests,config}/**/*.ts'
 
 # Introspection targets
 # ---------------------
@@ -46,15 +44,28 @@ targets:
 
 .PHONY: dependencies
 dependencies: ## Install dependencies required by the application
+	node ./scripts/enforce-engine-versions.js
 	npm install
 
-.PHONY: build-app
-build-app:
+.PHONY: build
+build:
+	node ./scripts/enforce-engine-versions.js
 	npm run build
+
+.PHONY: dev
+dev:
+	node ./scripts/enforce-engine-versions.js
+	npx ember build --watch
 
 .PHONY: test
 test: ## Run the test suite
-	rm -rf ./coverage && COVERAGE=true npx ember exam --split 5 --parallel --reporter dot
+	node ./scripts/enforce-engine-versions.js
+	npx ember exam --reporter dot
+
+.PHONY: test-browser
+test-browser: ## Run the test suite
+	node ./scripts/enforce-engine-versions.js
+	npx ember test --server
 
 # Check, lint and format targets
 # ------------------------------
@@ -65,25 +76,22 @@ check-format:
 
 .PHONY: check-types
 check-types:
-	npx tsc
-
-.PHONY: check-code-overage
-check-code-coverage:
-	npx nyc check-coverage
+	# See https://github.com/glimmerjs/glimmer-vm/issues/946 for details about the
+	# --skipLibCheck flag
+	npx tsc --skipLibCheck
 
 .PHONY: format
 format: ## Format project files
 	- npx prettier --write $(PRETTIER_FILES_PATTERN)
-	- npx eslint --fix $(JAVASCRIPT_FILES_PATTERN)
-	- npx stylelint --fix $(STYLES_PATTERN)
+	- npx stylelint $(STYLES_PATTERN) --fix --quiet
+	- npx eslint --ext .js,.ts . --fix --quiet
 
 .PHONY: lint
 lint: lint-scripts lint-styles lint-templates ## Lint project files
 
 .PHONY: lint-scripts
 lint-scripts:
-	npx eslint $(JAVASCRIPT_FILES_PATTERN)
-	npx tslint $(TYPESCRIPT_FILES_PATTERN)
+	npx eslint --ext .js,.ts .
 
 .PHONY: lint-styles
 lint-styles:
