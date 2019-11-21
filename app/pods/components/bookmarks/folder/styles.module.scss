@@ -53,17 +53,59 @@
 
 .trade {
   border-bottom: 1px solid rgba($blue-alt, 0.4);
-  cursor: pointer;
+  display: flex;
+
+  &:hover {
+    .trade-actions {
+      opacity: 1;
+    }
+  }
+}
+
+.trade-link {
+  position: relative;
+  flex: 1 1 auto;
   padding: 2px 5px;
   color: $white;
-  background-color: transparent;
-  transition: background-color 0.2s ease;
   font-family: $primary-font;
-
+  cursor: pointer;
 
   &:hover,
   &:focus {
-    background-color: rgba($gold-alt, 0.4);
+    &::before {
+      opacity: 1;
+    }
+  }
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    content: '';
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to right, rgba($gold-alt, 0.4), rgba($gold-alt, 0));
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: -1;
+  }
+}
+
+.trade-actions {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.trade-action {
+  background-color: transparent;
+  border: 0;
+  color: rgba($white, 0.8);
+  outline: none;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: $white;
   }
 }
 

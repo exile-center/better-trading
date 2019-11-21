@@ -76,6 +76,11 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @action
+  editTrade(trade: BookmarksTradeStruct) {
+    this.stagedTrade = trade;
+  }
+
+  @action
   navigateToTrade(trade: BookmarksTradeStruct) {
     this.location.navigateToTradeLocation(trade.location)
   }

@@ -21,11 +21,23 @@
       {{#animated-if this.isExpanded use=this.fadeTransition duration=200}}
         <ul local-class="trades">
           {{#each this.trades key="@index" as |trade|}}
-            <li
-              {{on "click" (fn this.navigateToTrade trade)}}
-              local-class="trade"
-            >
-              {{trade.title}}
+            <li local-class="trade">
+              <div
+                {{on "click" (fn this.navigateToTrade trade)}}
+                local-class="trade-link"
+              >
+                {{trade.title}}
+              </div>
+
+              <div local-class="trade-actions">
+                <button
+                  {{on "click" (fn this.editTrade trade)}}
+                  type="button"
+                  local-class="trade-action"
+                >
+                  <FaIcon @icon="pen" />
+                </button>
+              </div>
             </li>
           {{/each}}
         </ul>
