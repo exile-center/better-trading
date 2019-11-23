@@ -30,12 +30,44 @@ export default class BookmarksStorage extends Service {
 
   persistFolder(folder: BookmarksFolderStruct): BookmarksFolderStruct {
     if (!folder.id) return this.persistNewFolder(folder);
+
     return this.persistExistingFolder(folder);
   }
 
   persistTrade(trade: BookmarksTradeStruct): BookmarksTradeStruct {
     if (!trade.id) return this.persistNewTrade(trade);
+
     return this.persistExistingTrade(trade);
+  }
+
+  persistTradeRanks(reorderedTrades: BookmarksTradeStruct[]): BookmarksTradeStruct[] {
+    const tradesMap = this.fetchTradesMap();
+
+    reorderedTrades.forEach((trade, index) => {
+      tradesMap[trade.id] = {
+        ...tradesMap[trade.id],
+        rank: index
+      };
+    });
+
+    this.localStorage.setValue('bookmark-trades', JSON.stringify(tradesMap));
+
+    return Object.values(tradesMap).filter(trade => trade.folderId === reorderedTrades[0].folderId);
+  }
+
+  persistFolderRanks(reorderedFolders: BookmarksFolderStruct[]): BookmarksFolderStruct[] {
+    const foldersMap = this.fetchFoldersMap();
+
+    reorderedFolders.forEach((folder, index) => {
+      foldersMap[folder.id] = {
+        ...foldersMap[folder.id],
+        rank: index
+      };
+    });
+
+    this.localStorage.setValue('bookmark-folders', JSON.stringify(foldersMap));
+
+    return Object.values(foldersMap);
   }
 
   private persistNewFolder(folder: BookmarksFolderStruct): BookmarksFolderStruct {

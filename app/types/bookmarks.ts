@@ -8,6 +8,7 @@ export interface BookmarksTradeStruct {
   title: string;
   color: string | null;
   location: BookmarksTradeLocation;
+  rank: number;
   folderId: string;
 }
 
@@ -15,6 +16,7 @@ export interface BookmarksFolderStruct {
   id: string;
   title: string;
   icon: BookmarkFolderAscendancyIcon | BookmarkFolderItemIcon | null;
+  rank: number;
 }
 
 export enum BookmarkFolderAscendancyDuelistIcon {

@@ -29,11 +29,20 @@ export default class Bookmarks extends Service {
     return this.bookmarksStorage.persistTrade(bookmarkTrade);
   }
 
+  reorderTrades(reorderedTrades: BookmarksTradeStruct[]) {
+    return this.bookmarksStorage.persistTradeRanks(reorderedTrades);
+  }
+
+  reorderFolders(reorderedFolders: BookmarksFolderStruct[]) {
+    return this.bookmarksStorage.persistFolderRanks(reorderedFolders);
+  }
+
   initializeFolderStruct(): BookmarksFolderStruct {
     return {
       icon: null,
       id: '',
-      title: ''
+      title: '',
+      rank: 0
     };
   }
 
@@ -43,7 +52,8 @@ export default class Bookmarks extends Service {
       folderId,
       color: null,
       id: '',
-      title: ''
+      title: '',
+      rank: 0
     };
   }
 

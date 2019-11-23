@@ -12,6 +12,7 @@ import Bookmarks from 'better-trading/services/bookmarks';
 
 interface Args {
   folder: BookmarksFolderStruct;
+  dragHandle: any;
   onEdit: (folder: BookmarksFolderStruct) => void;
 }
 
@@ -87,5 +88,10 @@ export default class BookmarksFolder extends Component<Args> {
   @action
   editFolder() {
     this.args.onEdit(this.args.folder);
+  }
+
+  @action
+  reorderTrades(reorderedTrades: BookmarksTradeStruct[]) {
+    this.trades = this.bookmarks.reorderTrades(reorderedTrades);
   }
 }

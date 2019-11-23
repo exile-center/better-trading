@@ -7,14 +7,30 @@
   @onClick={{fn this.createFolder}}
 />
 
-<div local-class="folders-wrapper">
-  {{#each this.folders key="@index" as |folder|}}
-    <Bookmarks::Folder
-      @folder={{folder}}
-      @onEdit={{fn this.handleEdit}}
-    />
+<SortableGroup
+  local-class="folders-wrapper"
+  @tagName="div"
+  @model={{this.folders}}
+  @onChange={{fn this.reorderFolders}}
+  as |group|
+>
+  {{#each (ranked this.folders) key="id" as |folder|}}
+    {{#component
+      group.item
+      local-class="folder-wrapper"
+      tagName="div"
+      model=folder
+    as |item|
+    }}
+      <Bookmarks::Folder
+        local-class="folder"
+        @folder={{folder}}
+        @dragHandle={{item.handle}}
+        @onEdit={{fn this.handleEdit}}
+      />
+    {{/component}}
   {{/each}}
-</div>
+</SortableGroup>
 
 {{#if this.stagedFolder}}
   <Bookmarks::FolderEdition

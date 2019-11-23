@@ -1,8 +1,5 @@
-<div local-class="container">
-  <div
-    {{on "click" (fn this.toggleExpansion)}}
-    local-class="header"
-  >
+<div local-class="container {{if this.isExpanded "is-expanded"}}" ...attributes>
+  <div local-class="header">
     {{#if @folder.icon}}
       <img
         local-class="header-icon {{if this.iconIsItem "is-item" "is-ascendancy"}}"
@@ -14,14 +11,45 @@
     <div local-class="header-label">
       {{@folder.title}}
     </div>
+
+    <div local-class="header-actions">
+      <button
+        {{on "click" (fn this.toggleExpansion)}}
+        type="button"
+        local-class="header-action"
+      >
+        <FaIcon @icon="chevron-down" local-class="expansion-indicator" />
+      </button>
+
+      {{#component
+        @dragHandle
+        tagName="button"
+        type="button"
+        local-class="header-action"
+      }}
+        <FaIcon @icon="bars" />
+      {{/component}}
+    </div>
   </div>
 
   <div local-class="body">
     <AnimatedContainer>
       {{#animated-if this.isExpanded use=this.fadeTransition duration=200}}
-        <ul local-class="trades">
-          {{#each this.trades key="@index" as |trade|}}
-            <li local-class="trade">
+        <SortableGroup
+          local-class="trades"
+          @tagName="ul"
+          @model={{this.trades}}
+          @onChange={{fn this.reorderTrades}}
+          as |group|
+        >
+          {{#each (ranked this.trades) key="id" as |trade|}}
+            {{#component
+              group.item
+              local-class="trade"
+              tagName="li"
+              model=trade
+            as |item|
+            }}
               <div
                 {{on "click" (fn this.navigateToTrade trade)}}
                 local-class="trade-link"
@@ -37,10 +65,19 @@
                 >
                   <FaIcon @icon="pen" />
                 </button>
+
+                {{#component
+                  item.handle
+                  tagName="button"
+                  type="button"
+                  local-class="trade-action"
+                }}
+                  <FaIcon @icon="bars" />
+                {{/component}}
               </div>
-            </li>
+            {{/component}}
           {{/each}}
-        </ul>
+        </SortableGroup>
 
         <div local-class="folder-actions">
           <Button

@@ -38,4 +38,9 @@ export default class PageBookmarks extends Component {
     this.folders = this.bookmarks.fetchFolders();
     this.unstageFolder();
   }
+
+  @action
+  reorderFolders(reorderedFolders: BookmarksFolderStruct[]) {
+    this.folders = this.bookmarks.reorderFolders(reorderedFolders);
+  }
 }

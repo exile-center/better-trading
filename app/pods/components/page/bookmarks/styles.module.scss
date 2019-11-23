@@ -4,8 +4,24 @@
 }
 
 .folders-wrapper {
-  display: grid;
-  margin-top: 10px;
-  grid-row-gap: 10px;
-  grid-template-columns: 100%;
+  margin-top: 5px;
+}
+
+.folder-wrapper {
+  position: relative;
+  z-index: 0;
+  padding: 5px;
+
+  .folder {
+    background-color: transparent;
+    transition: background-color 0.2s ease;
+  }
+
+  &:global(.is-dragging) {
+    z-index: 1;
+
+    .folder {
+      background-color: $blue;
+    }
+  }
 }
