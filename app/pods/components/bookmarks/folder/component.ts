@@ -14,6 +14,7 @@ interface Args {
   folder: BookmarksFolderStruct;
   dragHandle: any;
   onEdit: (folder: BookmarksFolderStruct) => void;
+  onDelete: (deletingFolder: BookmarksFolderStruct) => void;
 }
 
 export default class BookmarksFolder extends Component<Args> {
@@ -27,6 +28,12 @@ export default class BookmarksFolder extends Component<Args> {
 
   @tracked
   stagedTrade: BookmarksTradeStruct | null;
+
+  @tracked
+  stagedDeletingTrade: BookmarksTradeStruct | null;
+
+  @tracked
+  isStagedForDeletion: boolean;
 
   @tracked
   isExpanded: boolean = this.bookmarks.isFolderExpanded(this.args.folder.id);
@@ -78,6 +85,40 @@ export default class BookmarksFolder extends Component<Args> {
   @action
   editTrade(trade: BookmarksTradeStruct) {
     this.stagedTrade = trade;
+  }
+
+  @action
+  deleteTrade(trade: BookmarksTradeStruct) {
+    this.stagedDeletingTrade = trade;
+  }
+
+  @action
+  cancelTradeDeletion() {
+    this.stagedDeletingTrade = null;
+  }
+
+  @action
+  confirmTradeDeletion() {
+    if (!this.stagedDeletingTrade) return;
+
+    this.trades = this.bookmarks.deleteTrade(this.stagedDeletingTrade);
+    this.stagedDeletingTrade = null;
+  }
+
+  @action
+  deleteFolder() {
+    this.isStagedForDeletion = true;
+  }
+
+  @action
+  cancelFolderDeletion() {
+    this.isStagedForDeletion = false;
+  }
+
+  @action
+  confirmFolderDeletion() {
+    this.args.onDelete(this.args.folder);
+    this.isStagedForDeletion = false;
   }
 
   @action

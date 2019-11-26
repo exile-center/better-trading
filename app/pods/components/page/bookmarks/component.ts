@@ -40,6 +40,11 @@ export default class PageBookmarks extends Component {
   }
 
   @action
+  deleteFolder(deletingFolder: BookmarksFolderStruct) {
+    this.folders = this.bookmarks.deleteFolder(deletingFolder);
+  }
+
+  @action
   reorderFolders(reorderedFolders: BookmarksFolderStruct[]) {
     this.folders = this.bookmarks.reorderFolders(reorderedFolders);
   }

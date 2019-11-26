@@ -37,6 +37,14 @@ export default class Bookmarks extends Service {
     return this.bookmarksStorage.persistFolderRanks(reorderedFolders);
   }
 
+  deleteTrade(deletingTrade: BookmarksTradeStruct) {
+    return this.bookmarksStorage.deleteTrade(deletingTrade);
+  }
+
+  deleteFolder(deletingFolder: BookmarksFolderStruct) {
+    return this.bookmarksStorage.deleteFolder(deletingFolder);
+  }
+
   initializeFolderStruct(): BookmarksFolderStruct {
     return {
       icon: null,

@@ -1,6 +1,16 @@
 bookmarks:
   folder:
     create-trade: Register current trade
+    trade-deletion:
+      title: Confirm deletion
+      confirmation: 'Delete the bookmark <strong>{name}</strong> ?'
+      delete: Delete
+      cancel: Cancel
+    folder-deletion:
+      title: Confirm deletion
+      confirmation: 'Delete the bookmarks folder <strong>{name}</strong> {tradesCount, plural, =0 {} =1 {and its <strong>single bookmark</strong> } other {and its <strong># bookmarks</strong> }}?'
+      delete: Delete
+      cancel: Cancel
   folder-edition:
     title: Bookmark folder
     save: Save

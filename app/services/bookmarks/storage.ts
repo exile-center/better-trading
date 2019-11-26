@@ -70,6 +70,26 @@ export default class BookmarksStorage extends Service {
     return Object.values(foldersMap);
   }
 
+  deleteFolder(deletingFolder: BookmarksFolderStruct): BookmarksFolderStruct[] {
+    const foldersMap = this.fetchFoldersMap();
+    delete foldersMap[deletingFolder.id];
+
+    this.localStorage.setValue('bookmark-folders', JSON.stringify(foldersMap));
+
+    return Object.values(foldersMap);
+  }
+
+  deleteTrade(deletingTrade: BookmarksTradeStruct): BookmarksTradeStruct[] {
+    const folderId = deletingTrade.folderId;
+
+    const tradesMap = this.fetchTradesMap();
+    delete tradesMap[deletingTrade.id];
+
+    this.localStorage.setValue('bookmark-trades', JSON.stringify(tradesMap));
+
+    return Object.values(tradesMap).filter(trade => trade.folderId === folderId);
+  }
+
   private persistNewFolder(folder: BookmarksFolderStruct): BookmarksFolderStruct {
     const foldersMap = this.fetchFoldersMap();
     const newId = uniqueId();

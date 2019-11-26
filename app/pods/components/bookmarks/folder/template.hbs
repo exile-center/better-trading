@@ -66,6 +66,14 @@
                   <FaIcon @icon="pen" />
                 </button>
 
+                <button
+                  {{on "click" (fn this.deleteTrade trade)}}
+                  type="button"
+                  local-class="trade-action"
+                >
+                  <FaIcon @icon="trash-alt" />
+                </button>
+
                 {{#component
                   item.handle
                   tagName="button"
@@ -94,6 +102,13 @@
             @icon="pen"
             @onClick={{fn this.editFolder}}
           />
+
+          <Button
+            type="button"
+            @theme="red"
+            @icon="trash-alt"
+            @onClick={{fn this.deleteFolder}}
+          />
         </div>
       {{/animated-if}}
     </AnimatedContainer>
@@ -107,4 +122,64 @@
     @onCancel={{fn this.unstageTrade}}
     @onSave={{fn this.handleTradeSave}}
   />
+{{/if}}
+
+{{#if this.stagedDeletingTrade}}
+  <Modal
+    @title={{t "bookmarks.folder.trade-deletion.title"}}
+    @onClose={{fn this.cancelTradeDeletion}}
+  >
+    <p local-class="deletion-modal-confirmation">
+      {{html-safe
+        (t "bookmarks.folder.trade-deletion.confirmation" name=this.stagedDeletingTrade.title)
+      }}
+    </p>
+
+    <div local-class="deletion-modal-actions">
+      <Button
+        type="button"
+        @theme="red"
+        @label="{{t "bookmarks.folder.trade-deletion.delete"}}"
+        @onClick={{fn this.confirmTradeDeletion}}
+        @icon="trash-alt"
+      />
+
+      <Button
+        type="button"
+        @theme="blue"
+        @label="{{t "bookmarks.folder.trade-deletion.cancel"}}"
+        @onClick={{fn this.cancelTradeDeletion}}
+      />
+    </div>
+  </Modal>
+{{/if}}
+
+{{#if this.isStagedForDeletion}}
+  <Modal
+    @title={{t "bookmarks.folder.folder-deletion.title"}}
+    @onClose={{fn this.cancelFolderDeletion}}
+  >
+    <p local-class="deletion-modal-confirmation">
+      {{html-safe
+        (t "bookmarks.folder.folder-deletion.confirmation" name=@folder.title tradesCount=this.trades.length)
+      }}
+    </p>
+
+    <div local-class="deletion-modal-actions">
+      <Button
+        type="button"
+        @theme="red"
+        @label="{{t "bookmarks.folder.folder-deletion.delete"}}"
+        @onClick={{fn this.confirmFolderDeletion}}
+        @icon="trash-alt"
+      />
+
+      <Button
+        type="button"
+        @theme="blue"
+        @label="{{t "bookmarks.folder.folder-deletion.cancel"}}"
+        @onClick={{fn this.cancelFolderDeletion}}
+      />
+    </div>
+  </Modal>
 {{/if}}

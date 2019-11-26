@@ -33,6 +33,16 @@
     }
   }
 
+  &.is-red {
+    border-color: $red-alt;
+    background-color: $red;
+
+    &:hover,
+    &:focus {
+      background-color: lighten($red, 5%);
+    }
+  }
+
   &.with-icon {
     .label {
       margin-left: 5px;
