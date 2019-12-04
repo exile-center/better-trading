@@ -1,0 +1,13 @@
+@media (min-width: 1200px) and (max-width: #{1200px + $extension-width - 1px}) {
+  .col-lg-6,
+  #trade .search-bar .search-advanced-pane {
+    width: 100% !important;
+  }
+}
+
+@media (min-width: #{#1200px + $extension-width}) {
+  .col-lg-6,
+  #trade .search-bar .search-advanced-pane {
+    width: 50%;
+  }
+}
