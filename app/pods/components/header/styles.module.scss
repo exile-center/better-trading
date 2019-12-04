@@ -1,3 +1,33 @@
+.container {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+
+  &:hover {
+    .title-part.is-fading {
+      opacity: 1;
+      width: 50px;
+    }
+  }
+}
+
 .logo {
   height: 30px;
+}
+
+.title {
+  display: flex;
+  margin-left: 10px;
+  font-family: $primary-font;
+  font-size: 20px;
+  color: $white;
+}
+
+.title-part {
+  &.is-fading {
+    opacity: 0;
+    width: 0;
+    transition: 0.2s ease;
+    transition-property: opacity, width;
+  }
 }
