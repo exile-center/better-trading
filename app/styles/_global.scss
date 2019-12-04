@@ -13,6 +13,7 @@ body {
   top: 0;
   right: 0;
   bottom: 0;
+  overflow-y: auto;
   width: $extension-width;
   padding: 5px 10px;
   background-color: rgba(#0a0a0a, 0.8);
