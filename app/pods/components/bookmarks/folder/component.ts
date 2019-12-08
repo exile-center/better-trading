@@ -123,7 +123,7 @@ export default class BookmarksFolder extends Component<Args> {
 
   @action
   navigateToTrade(trade: BookmarksTradeStruct) {
-    this.location.navigateToTradeLocation(trade.location);
+    this.location.navigateTo(trade.location.type, trade.location.slug);
   }
 
   @action

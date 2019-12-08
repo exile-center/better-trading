@@ -2,9 +2,6 @@
 import Service from '@ember/service';
 import window from 'ember-window-mock';
 
-// Types
-import {BookmarksTradeLocation} from 'better-trading/types/bookmarks';
-
 // Constants
 const BASE_URL = 'https://www.pathofexile.com/trade';
 
@@ -33,9 +30,9 @@ export default class Location extends Service {
     return slug || null;
   }
 
-  navigateToTradeLocation(tradeLocation: BookmarksTradeLocation) {
+  navigateTo(type: string, slug: string) {
     const {league} = this.parseCurrentPath();
-    const newUrl = [BASE_URL, tradeLocation.type, league, tradeLocation.slug].join('/');
+    const newUrl = [BASE_URL, type, league, slug].join('/');
 
     window.location.replace(newUrl);
   }

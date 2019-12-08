@@ -8,14 +8,14 @@ import sinon from 'sinon';
 // Types
 import Location from 'better-trading/services/location';
 
-describe('Unit | Services | Trade location', () => {
+describe('Unit | Services | Location', () => {
   setupTest();
 
   let service: Location;
 
   beforeEach(function() {
     reset();
-    service = this.owner.lookup('service:trade-location');
+    service = this.owner.lookup('service:location');
   });
 
   describe('get league', () => {
@@ -58,13 +58,13 @@ describe('Unit | Services | Trade location', () => {
     });
   });
 
-  describe('navigateToTrade', () => {
+  describe('navigateTo', () => {
     it('should forge the proper URL and redirect to it', () => {
       const replaceSpy = sinon.spy();
       window.location.pathname = '/trade/search/Legion/q1w2e3r4t5';
       window.location.replace = replaceSpy;
 
-      service.navigateToTrade('foobar');
+      service.navigateTo('search', 'foobar');
 
       expect(replaceSpy).to.have.been.calledOnceWith('https://www.pathofexile.com/trade/search/Legion/foobar');
     });
