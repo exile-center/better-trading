@@ -43,12 +43,12 @@ targets:
 # -------------------
 
 .PHONY: dependencies
-dependencies:
+dependencies: ## Install required dependencies
 	node ./scripts/enforce-engine-versions.js
 	npm install
 
 .PHONY: build
-build:
+build: ## Build and bundle the extension for release
 	node ./scripts/enforce-engine-versions.js
 	rm -rf ./dist
 	npx ember build --environment production --output-path ./dist/ember-build
@@ -58,7 +58,7 @@ build:
 	cp ./extension/* ./dist/staged
 
 .PHONY: dev
-dev:
+dev: ## Build the extension for development purposes, watching files for update
 	node ./scripts/enforce-engine-versions.js
 	rm -rf ./dist
 	mkdir -p ./dist/dev
@@ -72,7 +72,7 @@ test: ## Run the test suite
 	npx ember exam --reporter dot
 
 .PHONY: test-browser
-test-browser: ## Run the test suite
+test-browser: ## Run the test suite within a browser
 	node ./scripts/enforce-engine-versions.js
 	npx ember test --server
 
@@ -80,11 +80,11 @@ test-browser: ## Run the test suite
 # ------------------------------
 
 .PHONY: check-format
-check-format:
+check-format: ## Verify prettier formatting
 	npx prettier --check $(PRETTIER_FILES_PATTERN)
 
 .PHONY: check-types
-check-types:
+check-types: ## Verify typescript typings
 	# See https://github.com/glimmerjs/glimmer-vm/issues/946 for details about the
 	# --skipLibCheck flag
 	npx tsc --skipLibCheck
