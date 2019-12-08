@@ -43,6 +43,10 @@ module.exports = function(defaults) {
 
     sourcemaps: {
       enabled: !IS_TEST_ENVIRONMENT
+    },
+
+    fingerprint: {
+      enabled: false
     }
   });
 

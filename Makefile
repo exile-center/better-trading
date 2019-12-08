@@ -43,19 +43,28 @@ targets:
 # -------------------
 
 .PHONY: dependencies
-dependencies: ## Install dependencies required by the application
+dependencies:
 	node ./scripts/enforce-engine-versions.js
 	npm install
 
 .PHONY: build
 build:
 	node ./scripts/enforce-engine-versions.js
-	npm run build
+	rm -rf ./dist
+	npx ember build --environment production --output-path ./dist/ember-build
+	mkdir -p ./dist/staged/assets
+	cp -R ./dist/ember-build/assets/{better-trading.js,better-trading.css,vendor.js,vendor.css,images} ./dist/staged/assets
+	node ./scripts/generate-manifest.js production
+	cp ./extension/* ./dist/staged
 
 .PHONY: dev
 dev:
 	node ./scripts/enforce-engine-versions.js
-	npx ember build --watch
+	rm -rf ./dist
+	mkdir -p ./dist/dev
+	node ./scripts/generate-manifest.js dev
+	cp ./extension/* ./dist/dev
+	npx ember build --watch --environment development --output-path ./dist/dev/ember-build
 
 .PHONY: test
 test: ## Run the test suite

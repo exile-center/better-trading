@@ -1,11 +1,18 @@
 {
   "name": "better-trading",
   "version": "0.0.1",
-  "description": "Small description for better-trading goes here",
   "private": true,
   "directories": {
     "doc": "doc",
     "test": "tests"
+  },
+  "manifest": {
+    "name": "Better PathOfExile trading",
+    "description": "",
+    "developer": {
+      "name": "Exile Center",
+      "url": "https://github.com/exile-center"
+    }
   },
   "repository": "https://github.com/poe-world/better-trading",
   "engine-strict": true,

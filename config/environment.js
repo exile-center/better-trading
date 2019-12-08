@@ -23,7 +23,8 @@ module.exports = function(environment) {
   };
 
   ENV.APP = {
-    version: PACKAGE.version
+    version: PACKAGE.version,
+    imageResourcePrefix: environment === 'development' ? 'ember-build/assets/images' : 'assets/images'
   };
 
   ENV.fontawesome = {

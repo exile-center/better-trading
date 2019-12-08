@@ -16,5 +16,6 @@ declare const config: {
 
   APP: {
     version: string;
+    imageResourcePrefix: string;
   };
 };
