@@ -10,7 +10,7 @@ document.body.appendChild(extensionContainer);
 
 const {modulePrefix, podModulePrefix} = config;
 const App = Application.extend({
-  rootElement: '#better-trading-container',
+  rootElement: extensionContainer,
   modulePrefix,
   podModulePrefix,
   Resolver
