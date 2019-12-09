@@ -8,11 +8,7 @@
   },
   "manifest": {
     "name": "Better PathOfExile trading",
-    "description": "",
-    "developer": {
-      "name": "Exile Center",
-      "url": "https://github.com/exile-center"
-    }
+    "description": ""
   },
   "repository": "https://github.com/poe-world/better-trading",
   "engine-strict": true,
