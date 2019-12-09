@@ -31,7 +31,7 @@ const manifest = Object.assign(
     ],
     background: {
       scripts: ['background.js'],
-      persistent: false
+      persistent: true
     },
     permissions: ['*://poe.ninja/*'],
     web_accessible_resources: [assetsPathFor('images/*')]
