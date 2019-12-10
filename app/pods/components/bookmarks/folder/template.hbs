@@ -1,26 +1,25 @@
 <div local-class="container {{if this.isExpanded "is-expanded"}}" ...attributes>
   <div local-class="header">
-    {{#if @folder.icon}}
-      <img
-        local-class="header-icon {{if this.iconIsItem "is-item" "is-ascendancy"}}"
-        src={{image-resource-url this.iconPath}}
-        alt={{@folder.icon}}
-      >
-    {{/if}}
+    <div
+      {{on "click" (fn this.toggleExpansion)}}
+      local-class="expansion-wrapper"
+    >
+      {{#if @folder.icon}}
+        <img
+          local-class="header-icon {{if this.iconIsItem "is-item" "is-ascendancy"}}"
+          src={{image-resource-url this.iconPath}}
+          alt={{@folder.icon}}
+        >
+      {{/if}}
 
-    <div local-class="header-label">
-      {{@folder.title}}
+      <div local-class="header-label">
+        {{@folder.title}}
+      </div>
+
+      <FaIcon @icon="chevron-down" local-class="expansion-indicator" />
     </div>
 
     <div local-class="header-actions">
-      <button
-        {{on "click" (fn this.toggleExpansion)}}
-        type="button"
-        local-class="header-action"
-      >
-        <FaIcon @icon="chevron-down" local-class="expansion-indicator" />
-      </button>
-
       {{#component
         @dragHandle
         tagName="button"

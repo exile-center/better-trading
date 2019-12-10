@@ -11,12 +11,27 @@
     .header-actions {
       opacity: 1;
     }
+
+    .expansion-indicator {
+      opacity: 1;
+    }
   }
 }
 
+.expansion-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  padding-right: 5px;
+  cursor: pointer;
+}
+
 .expansion-indicator {
+  opacity: 0;
   transform: rotate(0deg);
-  transition: transform 0.2s ease;
+  align-items: center;
+  transition: 0.2s ease;
+  transition-property: transform, opacity;
 }
 
 .header {
@@ -61,6 +76,7 @@
 .header-action {
   display: flex;
   align-items: center;
+  padding: 0 5px;
   border: 0;
   background-color: transparent;
   outline: none;
