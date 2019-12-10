@@ -1,0 +1,13 @@
+{{#if @icon}}
+  <FaIcon
+    @icon={{@icon}}
+    @prefix={{this.iconPrefix}}
+    local-class="icon"
+  />
+{{/if}}
+
+{{#if @label}}
+  <span local-class="label {{if @icon "with-icon"}}">
+    {{@label}}
+  </span>
+{{/if}}

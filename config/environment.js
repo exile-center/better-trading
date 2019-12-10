@@ -24,7 +24,10 @@ module.exports = function(environment) {
 
   ENV.APP = {
     version: PACKAGE.version,
-    imageResourcePrefix: environment === 'development' ? 'ember-build/assets/images' : 'assets/images'
+    imageResourcePrefix: environment === 'development' ? 'ember-build/assets/images' : 'assets/images',
+    discordUrl: 'http://discord.exile.center',
+    githubUrl: 'https://github.com/exile-center',
+    chaosRecipeOverlayUrl: 'https://github.com/exile-center/chaos-recipe-overlay'
   };
 
   ENV.fontawesome = {
@@ -41,8 +44,10 @@ module.exports = function(environment) {
         'bars',
         'cogs',
         'arrow-left',
-        'exclamation-circle'
-      ]
+        'exclamation-circle',
+        'info-circle'
+      ],
+      'free-brands-svg-icons': ['github', 'discord']
     }
   };
 

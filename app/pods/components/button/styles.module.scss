@@ -6,12 +6,18 @@
   padding: 0 10px;
   border: 1px solid;
   outline: none;
+  text-decoration: none;
   font-family: $primary-font;
   font-size: 13px;
   line-height: 1;
   color: $white;
   transition: background-color 0.2s ease;
   cursor: pointer;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
 
   &.is-blue {
     border-color: $blue-alt;
@@ -40,12 +46,6 @@
     &:hover,
     &:focus {
       background-color: lighten($red, 5%);
-    }
-  }
-
-  &.with-icon {
-    .label {
-      margin-left: 5px;
     }
   }
 

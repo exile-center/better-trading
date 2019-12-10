@@ -17,5 +17,8 @@ declare const config: {
   APP: {
     version: string;
     imageResourcePrefix: string;
+    discordUrl: string;
+    githubUrl: string;
+    chaosRecipeOverlayUrl: string;
   };
 };

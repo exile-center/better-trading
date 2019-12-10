@@ -1,18 +1,28 @@
 .container {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin: 5px 0;
+  margin: 5px 0 10px;
+}
 
-  &:hover {
-    .title-part.is-fading {
-      opacity: 1;
-      width: 50px;
+.brand {
+  display: flex;
+  align-items: center;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+
+    .logo {
+      transform: rotate(5deg);
     }
   }
 }
 
 .logo {
+  transform: rotate(0);
   height: 30px;
+  transition: transform 0.2s ease;
 }
 
 .title {
@@ -23,11 +33,13 @@
   color: $white;
 }
 
-.title-part {
-  &.is-fading {
-    opacity: 0;
-    width: 0;
-    transition: 0.2s ease;
-    transition-property: opacity, width;
+.navigation-item {
+  font-size: 22px;
+  color: $white;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: rgba($white, 0.8);
   }
 }

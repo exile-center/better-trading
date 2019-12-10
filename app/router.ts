@@ -8,6 +8,7 @@ class Router extends EmberRouter {
 
 Router.map(function() {
   this.route('bookmarks', {path: '/'});
+  this.route('about');
 });
 
 export default Router;

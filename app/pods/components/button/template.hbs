@@ -1,18 +1,25 @@
-<button
-  {{on "click" (fn this.handleClick)}}
-  local-class="button is-{{@theme}} {{if @icon "with-icon"}}"
-  ...attributes
->
-  {{#if @icon}}
-    <FaIcon
+{{#if @href}}
+  <a
+    href={{@href}}
+    target="_blank"
+    rel="noopener"
+    local-class="button is-{{@theme}}"
+    ...attributes
+  >
+    <Button::Content
+      @label={{@label}}
       @icon={{@icon}}
-      local-class="icon"
     />
-  {{/if}}
-
-  {{#if @label}}
-    <span local-class="label ">
-      {{@label}}
-    </span>
-  {{/if}}
-</button>
+  </a>
+{{else}}
+  <button
+    {{on "click" (fn this.handleClick)}}
+    local-class="button is-{{@theme}} {{if @icon "with-icon"}}"
+    ...attributes
+  >
+    <Button::Content
+      @label={{@label}}
+      @icon={{@icon}}
+    />
+  </button>
+{{/if}}

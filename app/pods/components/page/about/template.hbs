@@ -1,0 +1,62 @@
+<div local-class="sections">
+  <section local-class="section">
+    <h1 local-class="section-title">
+      {{t "page.about.discord.title"}}
+    </h1>
+
+    <p local-class="section-description">
+      {{t "page.about.discord.description"}}
+    </p>
+
+    <Button
+      @href={{this.discordUrl}}
+      @theme="blue"
+      @icon="discord"
+      @label={{t "page.about.discord.button"}}
+    />
+  </section>
+
+  <section local-class="section">
+    <h1 local-class="section-title">
+      {{t "page.about.github.title"}}
+    </h1>
+
+    <p local-class="section-description">
+      {{t "page.about.github.description"}}
+    </p>
+
+    <Button
+      @href={{this.githubUrl}}
+      @theme="blue"
+      @icon="github"
+      @label={{t "page.about.github.button"}}
+    />
+  </section>
+
+  <section local-class="section">
+    <h1 local-class="section-title">
+      {{t "page.about.chaos-recipe-overlay.title"}}
+    </h1>
+
+    <img
+      local-class="section-preview"
+      src={{image-resource-url "chaos-recipe-overlay.png"}}
+      alt={{t "page.about.chaos-recipe-overlay.preview-alt"}}
+    >
+
+    <p local-class="section-description">
+      {{t "page.about.chaos-recipe-overlay.description"}}
+    </p>
+
+    <Button
+      @href={{this.chaosRecipeOverlayUrl}}
+      @theme="blue"
+      @icon="github"
+      @label={{t "page.about.chaos-recipe-overlay.button"}}
+    />
+  </section>
+</div>
+
+<p local-class="disclaimer">
+  {{t "page.about.disclaimer"}}
+</p>
