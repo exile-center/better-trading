@@ -13,11 +13,18 @@
 }
 
 .header-title {
+  display: flex;
+  align-items: center;
   text-transform: uppercase;
   font-family: $primary-font;
   font-size: 15px;
   letter-spacing: 0.5px;
   color: $white;
+}
+
+.header-title-logo {
+  height: 20px;
+  margin-right: 10px;
 }
 
 .header-close {
