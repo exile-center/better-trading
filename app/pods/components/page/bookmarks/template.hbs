@@ -20,12 +20,12 @@
       local-class="folder-wrapper"
       tagName="div"
       model=folder
-    as |item|
+    as |dragItem|
     }}
       <Bookmarks::Folder
         local-class="folder"
         @folder={{folder}}
-        @dragHandle={{item.handle}}
+        @dragHandle={{dragItem.handle}}
         @onEdit={{fn this.handleEdit}}
         @onDelete={{fn this.deleteFolder}}
       />

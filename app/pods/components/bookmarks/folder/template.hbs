@@ -47,7 +47,7 @@
               local-class="trade"
               tagName="li"
               model=trade
-            as |item|
+            as |dragItem|
             }}
               <div
                 {{on "click" (fn this.navigateToTrade trade)}}
@@ -74,7 +74,7 @@
                 </button>
 
                 {{#component
-                  item.handle
+                  dragItem.handle
                   tagName="button"
                   type="button"
                   local-class="trade-action"
