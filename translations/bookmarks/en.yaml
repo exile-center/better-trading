@@ -12,6 +12,7 @@ bookmarks:
       delete: Delete
       cancel: Cancel
   folder-edition:
+
     title: Bookmark folder
     save: Save
     fields:

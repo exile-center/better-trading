@@ -7,7 +7,7 @@ import ItemResults from 'better-trading/services/item-results';
 import IntlService from 'ember-intl/services/intl';
 
 // Constants
-const DEFAULT_LOCALE = 'en-us';
+const DEFAULT_LOCALE = 'en';
 
 export default class ApplicationRoute extends Route {
   @service('intl')
