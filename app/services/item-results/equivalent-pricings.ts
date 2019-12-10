@@ -50,6 +50,8 @@ export default class ItemResultsEquivalentPricings extends Service {
     if (!chaosValue || !currencyValue) return;
 
     const chaosEquivalentValue = Math.round(currencyValue * chaosValue);
+    if (!chaosEquivalentValue) return;
+
     pricingContainerElement.append(this.renderChaosEquivalence(chaosEquivalentValue));
 
     const flooredCurrencyValue = Math.floor(currencyValue);
