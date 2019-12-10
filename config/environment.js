@@ -40,7 +40,8 @@ module.exports = function(environment) {
         'pen',
         'bars',
         'cogs',
-        'arrow-left'
+        'arrow-left',
+        'exclamation-circle'
       ]
     }
   };

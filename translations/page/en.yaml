@@ -1,3 +1,4 @@
 page:
   bookmarks:
     create-button: New bookmark folder
+    local-storage-warning: Bookmarks are stored locally in your browser's storage, be careful not wiping them by accident.

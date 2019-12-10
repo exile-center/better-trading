@@ -33,6 +33,11 @@
   {{/each}}
 </SortableGroup>
 
+<p local-class="local-storage-warning">
+  <FaIcon @icon="exclamation-circle" />
+  {{t "page.bookmarks.local-storage-warning"}}
+</p>
+
 {{#if this.stagedFolder}}
   <Bookmarks::FolderEdition
     @folder={{this.stagedFolder}}
