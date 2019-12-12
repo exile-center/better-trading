@@ -34,7 +34,13 @@ const manifest = Object.assign(
       persistent: true
     },
     permissions: ['*://poe.ninja/*'],
-    web_accessible_resources: [assetsPathFor('images/*')]
+    web_accessible_resources: [assetsPathFor('images/*')],
+    icons: {
+      16: 'icon16.png',
+      48: 'icon48.png',
+      64: 'icon64.png',
+      128: 'icon128.png'
+    }
   },
   packageJson.manifest
 );
