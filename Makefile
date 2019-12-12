@@ -56,6 +56,7 @@ build: ## Build and bundle the extension for release
 	cp -R ./dist/ember-build/assets/{better-trading.js,better-trading.css,vendor.js,vendor.css,images} ./dist/staged/assets
 	node ./scripts/generate-manifest.js production
 	cp ./extension/* ./dist/staged
+	(cd ./dist/staged/; zip -r ../chrome.zip *)
 
 .PHONY: dev
 dev: ## Build the extension for development purposes, watching files for update
