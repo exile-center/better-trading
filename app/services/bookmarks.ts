@@ -50,7 +50,7 @@ export default class Bookmarks extends Service {
       icon: null,
       id: '',
       title: '',
-      rank: 0
+      rank: -1
     };
   }
 
@@ -61,7 +61,7 @@ export default class Bookmarks extends Service {
       color: null,
       id: '',
       title: '',
-      rank: 0
+      rank: -1
     };
   }
 

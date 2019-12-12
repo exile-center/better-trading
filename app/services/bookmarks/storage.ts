@@ -96,7 +96,8 @@ export default class BookmarksStorage extends Service {
 
     foldersMap[newId] = {
       ...folder,
-      id: newId
+      id: newId,
+      rank: Object.values(foldersMap).length
     };
 
     this.localStorage.setValue('bookmark-folders', JSON.stringify(foldersMap));
@@ -123,7 +124,8 @@ export default class BookmarksStorage extends Service {
 
     tradesMap[newId] = {
       ...trade,
-      id: newId
+      id: newId,
+      rank: this.fetchTradesByFolderId(trade.folderId).length
     };
 
     this.localStorage.setValue('bookmark-trades', JSON.stringify(tradesMap));
