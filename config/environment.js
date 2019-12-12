@@ -26,7 +26,7 @@ module.exports = function(environment) {
     version: PACKAGE.version,
     imageResourcePrefix: environment === 'development' ? 'ember-build/assets/images' : 'assets/images',
     discordUrl: 'http://discord.exile.center',
-    githubUrl: 'https://github.com/exile-center',
+    githubUrl: 'https://github.com/exile-center/better-trading',
     chaosRecipeOverlayUrl: 'https://github.com/exile-center/chaos-recipe-overlay'
   };
 
