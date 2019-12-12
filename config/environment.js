@@ -37,13 +37,10 @@ module.exports = function(environment) {
         'folder-plus',
         'save',
         'trash-alt',
-        'compress-arrows-alt',
         'check',
         'times',
         'pen',
         'bars',
-        'cogs',
-        'arrow-left',
         'exclamation-circle',
         'info-circle'
       ],
