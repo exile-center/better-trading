@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "manifest": {
-    "name": "Better PathOfExile trading",
+    "name": "Better PathOfExile Trading",
     "description": ""
   },
   "repository": "https://github.com/poe-world/better-trading",
