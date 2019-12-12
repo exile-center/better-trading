@@ -1,3 +1,5 @@
+![logo](https://user-images.githubusercontent.com/4255460/70675096-29118280-1c56-11ea-8e58-c8e74423d0eb.png)
+
 # Better trading
 
 A browser extension that enhance the pathofexile.com/trade experience.
