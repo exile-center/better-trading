@@ -36,9 +36,6 @@ run make check-format
 header "Typecheck files…"
 run make check-types
 
-header "Build application…"
-run make build
-
 header "Run tests…"
 run make test
 
