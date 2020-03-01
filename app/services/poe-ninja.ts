@@ -23,7 +23,7 @@ export interface PoeNinjaCurrenciesRatios {
 
 // Constants
 const CURRENCIES_RESOURCE_URI = '/data/currencyoverview?type=Currency';
-const SIX_HOURS = 21600000;
+const ONE_HOUR_IN_MILLISECONDS = 3600000;
 
 export default class PoeNinja extends Service {
   @service('extension-background')
@@ -53,7 +53,12 @@ export default class PoeNinja extends Service {
   }
 
   private cacheChaosRatiosFor(league: string, ratios: PoeNinjaCurrenciesRatios): void {
-    this.localStorage.setEphemeralValue('poe-ninja-chaos-ratios-cache', JSON.stringify(ratios), SIX_HOURS, league);
+    this.localStorage.setEphemeralValue(
+      'poe-ninja-chaos-ratios-cache',
+      JSON.stringify(ratios),
+      ONE_HOUR_IN_MILLISECONDS,
+      league
+    );
   }
 
   private parseChaosRatios(payload: PoeNinjaCurrenciesPayload): PoeNinjaCurrenciesRatios {
