@@ -13,7 +13,7 @@ const CATEGORY_INPUT_SELECTOR =
   '.search-advanced-items .filter-group:nth-of-type(1) .filter-property:nth-of-type(1) input';
 const RARITY_INPUT_SELECTOR =
   '.search-advanced-items .filter-group:nth-of-type(1) .filter-property:nth-of-type(2) input';
-const STATS_SELECTOR = '.search-advanced-pane:last-child .filter-group-body .filter-title';
+const STATS_SELECTOR = '.search-advanced-pane:last-child .filter-group-body .filter:not(.disabled) .filter-title';
 
 interface ScrapedSearchPanel {
   name: string | null;
