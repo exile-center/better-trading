@@ -20,7 +20,7 @@ export default class ItemResultsHighlightStatFilters extends Service {
     const {stats} = this.searchPanel.scrape();
 
     this.statNeedles = stats.map((rawStat: string) => {
-      return new RegExp(escapeRegex(rawStat).replace(/#/g, '\\d+'), 'i');
+      return new RegExp(escapeRegex(rawStat).replace(/#/g, '[\\+\\-]?\\d+'), 'i');
     });
   }
 
