@@ -1,8 +1,14 @@
 <ModalDialog
   @translucentOverlay={{true}}
   @targetAttachment="center"
+  @onClose={{fn @onClose}}
 >
-  <div local-class="container" ...attributes>
+  <div
+    {{did-insert (fn this.bindEscapeKey)}}
+    {{will-destroy (fn this.unbindEscapeKey)}}
+    local-class="container"
+    ...attributes
+  >
     <header local-class="header">
       <h1 local-class="header-title">
         <img

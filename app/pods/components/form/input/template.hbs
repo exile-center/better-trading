@@ -1,5 +1,6 @@
 <Form::Field @label={{@label}}>
   <input
+    {{did-insert (fn this.autofocusInput)}}
     {{on "input" (fn this.handleInput)}}
     type="text"
     local-class="input"
