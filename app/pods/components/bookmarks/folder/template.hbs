@@ -1,4 +1,8 @@
-<div local-class="container {{if this.isExpanded "is-expanded"}}" ...attributes>
+<div
+  {{did-insert (perform this.refreshTradesTask)}}
+  local-class="container {{if this.isExpanded "is-expanded"}}"
+  ...attributes
+>
   <div local-class="header">
     <div
       {{on "click" (fn this.toggleExpansion)}}
@@ -31,9 +35,13 @@
     </div>
   </div>
 
-  <div local-class="body" {{did-insert (perform this.fetchTradesTask)}}>
+  <div local-class="body">
     <AnimatedContainer>
-      {{#animated-if this.isExpanded use=this.fadeTransition duration=200}}
+      {{#animated-if
+        (and this.isExpanded this.isLoaded)
+        use=this.fadeTransition
+        duration=200
+      }}
         <SortableGroup
           local-class="trades"
           @tagName="ul"
