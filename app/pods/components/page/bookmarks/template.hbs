@@ -1,17 +1,9 @@
-<Button
-  type="button"
-  local-class="create-folder-button"
-  @theme="gold"
-  @label={{t "page.bookmarks.create-button"}}
-  @icon="folder-plus"
-  @onClick={{fn this.createFolder}}
-/>
-
 <SortableGroup
+  {{did-insert (perform this.fetchFoldersTask)}}
   local-class="folders-wrapper"
   @tagName="div"
   @model={{this.folders}}
-  @onChange={{fn this.reorderFolders}}
+  @onChange={{perform this.reorderFoldersTask}}
   as |group|
 >
   {{#each (ranked this.folders) key="id" as |folder|}}
@@ -26,22 +18,26 @@
         local-class="folder"
         @folder={{folder}}
         @dragHandle={{dragItem.handle}}
-        @onEdit={{fn this.handleEdit}}
-        @onDelete={{fn this.deleteFolder}}
+        @onEdit={{fn this.stageFolder}}
+        @onDelete={{perform this.deleteFolderTask}}
       />
     {{/component}}
   {{/each}}
 </SortableGroup>
 
-<p local-class="local-storage-warning">
-  <FaIcon @icon="exclamation-circle" />
-  {{t "page.bookmarks.local-storage-warning"}}
-</p>
+<Button
+  type="button"
+  local-class="create-folder-button"
+  @theme="gold"
+  @label={{t "page.bookmarks.create-button"}}
+  @icon="folder-plus"
+  @onClick={{fn this.createFolder}}
+/>
 
 {{#if this.stagedFolder}}
   <Bookmarks::FolderEdition
     @folder={{this.stagedFolder}}
     @onCancel={{fn this.unstageFolder}}
-    @onSave={{fn this.handleFolderSave}}
+    @submitTask={{this.persistFolderTask}}
   />
 {{/if}}

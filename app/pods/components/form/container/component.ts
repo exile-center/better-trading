@@ -2,12 +2,11 @@
 import {action} from '@ember/object';
 import Component from '@glimmer/component';
 
-interface Task {
-  perform: () => void;
-}
-
 interface Args {
-  submitTask: Task;
+  submitTask: {
+    perform: (entity: object) => void;
+  };
+  entity: object;
 }
 
 export default class FormContainer extends Component<Args> {
@@ -15,6 +14,6 @@ export default class FormContainer extends Component<Args> {
   handleSubmit(event: Event) {
     event.preventDefault();
 
-    this.args.submitTask.perform();
+    this.args.submitTask.perform(this.args.entity);
   }
 }

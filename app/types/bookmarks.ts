@@ -4,16 +4,15 @@ export interface BookmarksTradeLocation {
 }
 
 export interface BookmarksTradeStruct {
-  id: string;
+  id?: number;
   title: string;
-  color: string | null;
   location: BookmarksTradeLocation;
   rank: number;
-  folderId: string;
+  folderId: number;
 }
 
 export interface BookmarksFolderStruct {
-  id: string;
+  id?: number;
   title: string;
   icon: BookmarkFolderAscendancyIcon | BookmarkFolderItemIcon | null;
   rank: number;

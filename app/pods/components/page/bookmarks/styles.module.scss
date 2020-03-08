@@ -3,7 +3,7 @@
 }
 
 .folders-wrapper {
-  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 .folder-wrapper {
@@ -23,13 +23,4 @@
       background-color: $blue;
     }
   }
-}
-
-.local-storage-warning {
-  padding: 5px 10px;
-  border: 1px solid $red-alt;
-  margin-top: 10px;
-  background-color: rgba($red, 0.5);
-  line-height: 1.5;
-  color: $white;
 }

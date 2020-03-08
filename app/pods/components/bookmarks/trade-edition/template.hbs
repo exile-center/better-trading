@@ -2,10 +2,13 @@
   @title={{t "bookmarks.trade-edition.title"}}
   @onClose={{fn @onCancel}}
 >
-  <Form::Container @submitTask={{this.persistTradeTask}}>
+  <Form::Container
+    @submitTask={{@submitTask}}
+    @entity={{this.trade}}
+  >
     <Form::Input
       @label={{t "bookmarks.trade-edition.fields.title.label"}}
-      @value={{@trade.title}}
+      @value={{this.trade.title}}
       @autofocus={{true}}
       @onChange={{fn this.changeTitle}}
     />

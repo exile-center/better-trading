@@ -8,13 +8,13 @@ export default class BookmarksState extends Service {
   @service('local-storage')
   localStorage: LocalStorage;
 
-  expandedFolderIds: string[] = this.computeExpandedFolderIds();
+  expandedFolderIds: number[] = this.computeExpandedFolderIds();
 
-  isFolderExpanded(bookmarkFolderId: string): boolean {
+  isFolderExpanded(bookmarkFolderId: number) {
     return this.expandedFolderIds.includes(bookmarkFolderId);
   }
 
-  toggleFolderExpansion(bookmarkFolderId: string): boolean {
+  toggleFolderExpansion(bookmarkFolderId: number) {
     const bookmarkFolderIdIndex = this.expandedFolderIds.indexOf(bookmarkFolderId);
 
     if (bookmarkFolderIdIndex > -1) {
@@ -28,14 +28,14 @@ export default class BookmarksState extends Service {
     return bookmarkFolderIdIndex === -1;
   }
 
-  private computeExpandedFolderIds(): string[] {
+  private computeExpandedFolderIds() {
     const rawIds = this.localStorage.getValue('bookmark-folders-expansion');
     if (!rawIds) return [];
 
-    return rawIds.split(',');
+    return rawIds.split(',').map(rawId => parseInt(rawId, 10));
   }
 
-  private persistExpandedFolderIds(): void {
+  private persistExpandedFolderIds() {
     this.localStorage.setValue('bookmark-folders-expansion', this.expandedFolderIds.join(','));
   }
 }

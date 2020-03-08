@@ -93,5 +93,7 @@
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.7.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "dexie": "2.0.4"
+  }
 }
