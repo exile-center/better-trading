@@ -6,6 +6,9 @@ import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
 import {dropTask} from 'ember-concurrency-decorators';
 
+// Utilities
+import performTask from 'better-trading/utilities/perform-task';
+
 // Types
 import {BookmarkFolderItemIcon, BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 import Location from 'better-trading/services/location';
@@ -40,6 +43,9 @@ export default class BookmarksFolder extends Component<Args> {
   isExpanded: boolean = this.bookmarks.isFolderExpanded(this.args.folder.id);
 
   @tracked
+  isLoaded: boolean = false;
+
+  @tracked
   trades: BookmarksTradeStruct[] = [];
 
   get iconPath() {
@@ -55,8 +61,11 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @dropTask
-  *fetchTradesTask() {
+  *refreshTradesTask() {
+    if (!this.isExpanded) return;
+
     this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+    this.isLoaded = true;
   }
 
   @dropTask
@@ -83,6 +92,7 @@ export default class BookmarksFolder extends Component<Args> {
   @action
   toggleExpansion() {
     this.isExpanded = this.bookmarks.toggleFolderExpansion(this.args.folder.id);
+    performTask(this.refreshTradesTask);
   }
 
   @action
