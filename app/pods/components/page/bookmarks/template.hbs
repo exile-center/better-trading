@@ -14,7 +14,7 @@
       model=folder
     as |dragItem|
     }}
-      <Bookmarks::Folder
+      <Page::Bookmarks::Folder
         local-class="folder"
         @folder={{folder}}
         @dragHandle={{dragItem.handle}}
@@ -35,7 +35,7 @@
 />
 
 {{#if this.stagedFolder}}
-  <Bookmarks::FolderEdition
+  <Page::Bookmarks::FolderEdition
     @folder={{this.stagedFolder}}
     @onCancel={{fn this.unstageFolder}}
     @submitTask={{this.persistFolderTask}}
