@@ -46,6 +46,7 @@ export default class BookmarksStorage extends Service {
 
     this.localStorage.delete('bookmark-folders');
     this.localStorage.delete('bookmark-trades');
+    this.localStorage.delete('bookmark-folders-expansion');
   }
 
   async fetchFolders() {
