@@ -31,14 +31,14 @@
     </div>
   </div>
 
-  <div local-class="body">
+  <div local-class="body" {{did-insert (perform this.fetchTradesTask)}}>
     <AnimatedContainer>
       {{#animated-if this.isExpanded use=this.fadeTransition duration=200}}
         <SortableGroup
           local-class="trades"
           @tagName="ul"
           @model={{this.trades}}
-          @onChange={{fn this.reorderTrades}}
+          @onChange={{perform this.reorderTradesTask}}
           as |group|
         >
           {{#each (ranked this.trades) key="id" as |trade|}}
@@ -119,7 +119,7 @@
     @trade={{this.stagedTrade}}
     @folderId={{@folder.id}}
     @onCancel={{fn this.unstageTrade}}
-    @onSave={{fn this.handleTradeSave}}
+    @submitTask={{this.persistTradeTask}}
   />
 {{/if}}
 
@@ -139,7 +139,7 @@
         type="button"
         @theme="red"
         @label="{{t "bookmarks.folder.trade-deletion.delete"}}"
-        @onClick={{fn this.confirmTradeDeletion}}
+        @onClick={{perform this.deleteTradeTask this.stagedDeletingTrade}}
         @icon="trash-alt"
       />
 

@@ -13,63 +13,81 @@ export default class Bookmarks extends Service {
   @service('bookmarks/state')
   bookmarksState: BookmarksState;
 
-  fetchFolders(): BookmarksFolderStruct[] {
+  async migrateFromLocalStorage() {
+    return this.bookmarksStorage.migrateFromLocalStorage();
+  }
+
+  async fetchFolders() {
     return this.bookmarksStorage.fetchFolders();
   }
 
-  fetchTradesByFolderId(folderId: string): BookmarksTradeStruct[] {
+  async fetchTradesByFolderId(folderId: number) {
     return this.bookmarksStorage.fetchTradesByFolderId(folderId);
   }
 
-  persistFolder(bookmarkFolder: BookmarksFolderStruct): BookmarksFolderStruct {
+  async persistFolder(bookmarkFolder: BookmarksFolderStruct) {
     return this.bookmarksStorage.persistFolder(bookmarkFolder);
   }
 
-  persistTrade(bookmarkTrade: BookmarksTradeStruct): BookmarksTradeStruct {
+  async persistFolders(bookmarkFolders: BookmarksFolderStruct[]) {
+    return this.bookmarksStorage.persistFolders(bookmarkFolders);
+  }
+
+  async persistTrade(bookmarkTrade: BookmarksTradeStruct) {
     return this.bookmarksStorage.persistTrade(bookmarkTrade);
   }
 
+  async persistTrades(bookmarkTrades: BookmarksTradeStruct[]) {
+    return this.bookmarksStorage.persistTrades(bookmarkTrades);
+  }
+
   reorderTrades(reorderedTrades: BookmarksTradeStruct[]) {
-    return this.bookmarksStorage.persistTradeRanks(reorderedTrades);
+    return reorderedTrades.map((trade, index) => ({
+      ...trade,
+      rank: index
+    }));
   }
 
   reorderFolders(reorderedFolders: BookmarksFolderStruct[]) {
-    return this.bookmarksStorage.persistFolderRanks(reorderedFolders);
+    return reorderedFolders.map((folder, index) => ({
+      ...folder,
+      rank: index
+    }));
   }
 
-  deleteTrade(deletingTrade: BookmarksTradeStruct) {
-    return this.bookmarksStorage.deleteTrade(deletingTrade);
+  async deleteTrade(deletingTrade: BookmarksTradeStruct) {
+    if (!deletingTrade.id) return;
+    return this.bookmarksStorage.deleteTrade(deletingTrade.id);
   }
 
-  deleteFolder(deletingFolder: BookmarksFolderStruct) {
-    return this.bookmarksStorage.deleteFolder(deletingFolder);
+  async deleteFolder(deletingFolder: BookmarksFolderStruct) {
+    if (!deletingFolder.id) return;
+    return this.bookmarksStorage.deleteFolder(deletingFolder.id);
   }
 
-  initializeFolderStruct(): BookmarksFolderStruct {
+  initializeFolderStruct(rank: number): BookmarksFolderStruct {
     return {
       icon: null,
-      id: '',
       title: '',
-      rank: -1
+      rank
     };
   }
 
-  initializeTradeStructFrom(location: BookmarksTradeLocation, folderId: string): BookmarksTradeStruct {
+  initializeTradeStructFrom(location: BookmarksTradeLocation, folderId: number, rank: number): BookmarksTradeStruct {
     return {
       location,
       folderId,
-      color: null,
-      id: '',
       title: '',
-      rank: -1
+      rank
     };
   }
 
-  isFolderExpanded(bookmarkFolderId: string): boolean {
+  isFolderExpanded(bookmarkFolderId?: number) {
+    if (!bookmarkFolderId) return false;
     return this.bookmarksState.isFolderExpanded(bookmarkFolderId);
   }
 
-  toggleFolderExpansion(bookmarkFolderId: string): boolean {
+  toggleFolderExpansion(bookmarkFolderId: number) {
     return this.bookmarksState.toggleFolderExpansion(bookmarkFolderId);
   }
 }

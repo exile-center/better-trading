@@ -37,6 +37,10 @@ export default class LocalStorage extends Service {
     return null;
   }
 
+  delete(key: LocalStorageKey, league: string | null = null) {
+    window.localStorage.removeItem(this.formattedKey(key, league));
+  }
+
   private write(key: string, value: string, league: string | null): void {
     window.localStorage.setItem(this.formattedKey(key, league), value);
   }

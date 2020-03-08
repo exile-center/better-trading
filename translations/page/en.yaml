@@ -1,7 +1,6 @@
 page:
   bookmarks:
     create-button: New bookmark folder
-    local-storage-warning: Bookmarks are stored locally in your browser's storage, be careful not wiping them by accident.
   about:
     disclaimer: This extension is fan-made and not affiliated with Grinding Gear Games in any way.
     discord:

@@ -3,6 +3,7 @@ import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
 import Component from '@glimmer/component';
 import {tracked} from '@glimmer/tracking';
+import {dropTask} from 'ember-concurrency-decorators';
 
 // Types
 import Bookmarks from 'better-trading/services/bookmarks';
@@ -16,36 +17,45 @@ export default class PageBookmarks extends Component {
   stagedFolder: BookmarksFolderStruct | null;
 
   @tracked
-  folders: BookmarksFolderStruct[] = this.bookmarks.fetchFolders();
+  folders: BookmarksFolderStruct[] = [];
 
-  @action
-  createFolder() {
-    this.stagedFolder = this.bookmarks.initializeFolderStruct();
+  @dropTask
+  *fetchFoldersTask() {
+    this.folders = yield this.bookmarks.fetchFolders();
+  }
+
+  @dropTask
+  *deleteFolderTask(deletingFolder: BookmarksFolderStruct) {
+    yield this.bookmarks.deleteFolder(deletingFolder);
+    this.folders = yield this.bookmarks.fetchFolders();
+  }
+
+  @dropTask
+  *reorderFoldersTask(reorderedFolders: BookmarksFolderStruct[]) {
+    this.folders = this.bookmarks.reorderFolders(reorderedFolders);
+
+    yield this.bookmarks.persistFolders(this.folders);
+  }
+
+  @dropTask
+  *persistFolderTask(folder: BookmarksFolderStruct) {
+    yield this.bookmarks.persistFolder(folder);
+    this.folders = yield this.bookmarks.fetchFolders();
+    this.stagedFolder = null;
   }
 
   @action
-  handleEdit(folder: BookmarksFolderStruct) {
+  createFolder() {
+    this.stagedFolder = this.bookmarks.initializeFolderStruct(this.folders.length);
+  }
+
+  @action
+  stageFolder(folder: BookmarksFolderStruct) {
     this.stagedFolder = folder;
   }
 
   @action
   unstageFolder() {
     this.stagedFolder = null;
-  }
-
-  @action
-  handleFolderSave() {
-    this.folders = this.bookmarks.fetchFolders();
-    this.unstageFolder();
-  }
-
-  @action
-  deleteFolder(deletingFolder: BookmarksFolderStruct) {
-    this.folders = this.bookmarks.deleteFolder(deletingFolder);
-  }
-
-  @action
-  reorderFolders(reorderedFolders: BookmarksFolderStruct[]) {
-    this.folders = this.bookmarks.reorderFolders(reorderedFolders);
   }
 }
