@@ -6,16 +6,6 @@
       transform: rotate(180deg);
     }
   }
-
-  &:hover {
-    .header-actions {
-      opacity: 1;
-    }
-
-    .expansion-indicator {
-      opacity: 1;
-    }
-  }
 }
 
 .expansion-wrapper {
@@ -27,11 +17,9 @@
 }
 
 .expansion-indicator {
-  opacity: 0;
   transform: rotate(0deg);
   align-items: center;
-  transition: 0.2s ease;
-  transition-property: transform, opacity;
+  transition: transform 0.2s ease;
 }
 
 .header {
@@ -68,9 +56,7 @@
 
 .header-actions {
   display: flex;
-  opacity: 0;
   align-items: center;
-  transition: opacity 0.2s ease;
 }
 
 .header-action {
@@ -96,17 +82,10 @@
 .trade {
   display: flex;
   position: relative;
-  z-index: 0;
   align-items: center;
   border-bottom: 1px solid rgba($blue-alt, 0.4);
   background-color: transparent;
   transition: background-color 0.2s ease;
-
-  &:hover {
-    .trade-actions {
-      opacity: 1;
-    }
-  }
 
   &:global(.is-dragging) {
     z-index: 1;
@@ -144,15 +123,14 @@
 }
 
 .trade-actions {
-  opacity: 0;
+  display: flex;
   padding-right: 2px;
-  transition: opacity 0.2s ease;
 }
 
 .trade-action {
   padding: 0;
   border: 0;
-  margin-right: 5px;
+  margin-right: 10px;
   background-color: transparent;
   outline: none;
   color: rgba($white, 0.8);

@@ -30,7 +30,7 @@
         type="button"
         local-class="header-action"
       }}
-        <FaIcon @icon="bars" />
+        <FaIcon @icon="sort" />
       {{/component}}
     </div>
   </div>
@@ -65,21 +65,16 @@
               </div>
 
               <div local-class="trade-actions">
-                <button
-                  {{on "click" (fn this.editTrade trade)}}
-                  type="button"
-                  local-class="trade-action"
-                >
-                  <FaIcon @icon="pen" />
-                </button>
-
-                <button
-                  {{on "click" (fn this.deleteTrade trade)}}
-                  type="button"
-                  local-class="trade-action"
-                >
-                  <FaIcon @icon="trash-alt" />
-                </button>
+                <ContextualMenu local-class="trade-action" as |MenuItem|>
+                  <MenuItem
+                    @label={{t "bookmarks.folder.edit-trade"}}
+                    @onClick={{fn this.editTrade trade}}
+                  />
+                  <MenuItem
+                    @label={{t "bookmarks.folder.delete-trade"}}
+                    @onClick={{fn this.deleteTrade trade}}
+                  />
+                </ContextualMenu>
 
                 {{#component
                   dragItem.handle
@@ -87,7 +82,7 @@
                   type="button"
                   local-class="trade-action"
                 }}
-                  <FaIcon @icon="bars" />
+                  <FaIcon @icon="sort"/>
                 {{/component}}
               </div>
             {{/component}}

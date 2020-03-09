@@ -40,9 +40,9 @@ module.exports = function(environment) {
         'check',
         'times',
         'pen',
-        'bars',
-        'exclamation-circle',
-        'info-circle'
+        'info-circle',
+        'ellipsis-h',
+        'sort'
       ],
       'free-brands-svg-icons': ['github', 'discord']
     }

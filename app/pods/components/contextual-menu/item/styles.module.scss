@@ -1,0 +1,12 @@
+.item {
+  display: block;
+  border: 0;
+  background: none;
+  color: $white;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: #cbcbcb;
+  }
+}

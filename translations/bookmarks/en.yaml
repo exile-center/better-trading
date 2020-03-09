@@ -1,6 +1,8 @@
 bookmarks:
   folder:
     create-trade: Register current trade
+    edit-trade: Edit
+    delete-trade: Delete
     trade-deletion:
       title: Confirm deletion
       confirmation: 'Delete the bookmark <strong>{name}</strong> ?'
@@ -12,7 +14,6 @@ bookmarks:
       delete: Delete
       cancel: Cancel
   folder-edition:
-
     title: Bookmark folder
     save: Save
     fields:
