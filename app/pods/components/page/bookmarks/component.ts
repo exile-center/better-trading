@@ -19,6 +19,9 @@ export default class PageBookmarks extends Component {
   @tracked
   folders: BookmarksFolderStruct[] = [];
 
+  @tracked
+  newFolderId: number | null = null;
+
   @dropTask
   *fetchFoldersTask() {
     this.folders = yield this.bookmarks.fetchFolders();
@@ -39,8 +42,12 @@ export default class PageBookmarks extends Component {
 
   @dropTask
   *persistFolderTask(folder: BookmarksFolderStruct) {
-    yield this.bookmarks.persistFolder(folder);
+    const isNewlyCreated = !folder.id;
+
+    const folderId = yield this.bookmarks.persistFolder(folder);
+
     this.folders = yield this.bookmarks.fetchFolders();
+    this.newFolderId = isNewlyCreated ? folderId : null;
     this.stagedFolder = null;
   }
 

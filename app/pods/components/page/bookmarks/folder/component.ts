@@ -18,6 +18,7 @@ import Bookmarks from 'better-trading/services/bookmarks';
 interface Args {
   folder: Required<BookmarksFolderStruct>;
   dragHandle: any;
+  forceExpansion: boolean;
   onEdit: (folder: BookmarksFolderStruct) => void;
   onDelete: (deletingFolder: BookmarksFolderStruct) => void;
 }
@@ -72,7 +73,13 @@ export default class BookmarksFolder extends Component<Args> {
 
   @dropTask
   *initialSetupTask() {
-    if (!this.bookmarks.isFolderExpanded(this.args.folder.id)) return;
+    let isExpanded = this.bookmarks.isFolderExpanded(this.args.folder.id);
+
+    if (this.args.forceExpansion && !isExpanded) {
+      isExpanded = this.bookmarks.toggleFolderExpansion(this.args.folder.id);
+    }
+
+    if (!isExpanded) return;
 
     this.isAnimating = true;
     this.isExpanded = true;

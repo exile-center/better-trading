@@ -18,6 +18,7 @@
         local-class="folder"
         @folder={{folder}}
         @dragHandle={{dragItem.handle}}
+        @forceExpansion={{eq this.newFolderId folder.id}}
         @onEdit={{fn this.stageFolder}}
         @onDelete={{perform this.deleteFolderTask}}
       />

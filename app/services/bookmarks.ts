@@ -57,11 +57,13 @@ export default class Bookmarks extends Service {
 
   async deleteTrade(deletingTrade: BookmarksTradeStruct) {
     if (!deletingTrade.id) return;
+
     return this.bookmarksStorage.deleteTrade(deletingTrade.id);
   }
 
   async deleteFolder(deletingFolder: BookmarksFolderStruct) {
     if (!deletingFolder.id) return;
+
     return this.bookmarksStorage.deleteFolder(deletingFolder.id);
   }
 
@@ -85,6 +87,7 @@ export default class Bookmarks extends Service {
 
   isFolderExpanded(bookmarkFolderId?: number) {
     if (!bookmarkFolderId) return false;
+
     return this.bookmarksState.isFolderExpanded(bookmarkFolderId);
   }
 
