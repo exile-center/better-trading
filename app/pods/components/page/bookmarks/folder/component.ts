@@ -5,6 +5,7 @@ import fade from 'ember-animated/transitions/fade';
 import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
 import {dropTask} from 'ember-concurrency-decorators';
+import {timeout} from 'ember-concurrency';
 
 // Utilities
 import performTask from 'better-trading/utilities/perform-task';
@@ -20,6 +21,9 @@ interface Args {
   onEdit: (folder: BookmarksFolderStruct) => void;
   onDelete: (deletingFolder: BookmarksFolderStruct) => void;
 }
+
+// Constants
+const EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS = 500;
 
 export default class BookmarksFolder extends Component<Args> {
   fadeTransition = fade;
@@ -44,6 +48,12 @@ export default class BookmarksFolder extends Component<Args> {
 
   @tracked
   isLoaded: boolean = false;
+
+  @tracked
+  isAnimating: boolean = false;
+
+  @tracked
+  isReorderingTrades: boolean = false;
 
   @tracked
   trades: BookmarksTradeStruct[] = [];
@@ -89,10 +99,30 @@ export default class BookmarksFolder extends Component<Args> {
     this.stagedTrade = null;
   }
 
-  @action
-  toggleExpansion() {
+  @dropTask
+  *updateTradeLocationTask(trade: BookmarksTradeStruct) {
+    if (!this.location.slug) return;
+
+    yield this.bookmarks.persistTrade({
+      ...trade,
+      location: {
+        slug: this.location.slug,
+        type: this.location.type
+      }
+    });
+
+    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+  }
+
+  @dropTask
+  *toggleExpansionTask() {
+    this.isAnimating = true;
     this.isExpanded = this.bookmarks.toggleFolderExpansion(this.args.folder.id);
-    performTask(this.refreshTradesTask);
+    yield performTask(this.refreshTradesTask);
+
+    yield timeout(EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS);
+
+    this.isAnimating = false;
   }
 
   @action
@@ -153,5 +183,15 @@ export default class BookmarksFolder extends Component<Args> {
   @action
   editFolder() {
     this.args.onEdit(this.args.folder);
+  }
+
+  @action
+  startTradesReordering() {
+    this.isReorderingTrades = true;
+  }
+
+  @action
+  stopTradesReordering() {
+    this.isReorderingTrades = false;
   }
 }

@@ -1,9 +1,12 @@
 .item {
+  text-align: left;
   display: block;
+  width: 100%;
   border: 0;
   background: none;
   color: $white;
   transition: color 0.2s ease;
+  white-space: nowrap;
 
   &:hover,
   &:focus {

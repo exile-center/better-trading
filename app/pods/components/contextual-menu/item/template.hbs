@@ -1,5 +1,5 @@
 <button
-  {{on "click" (fn @onClick)}}
+  {{on "click" (fn this.dispatchAction)}}
   type="button"
   local-class="item"
 >

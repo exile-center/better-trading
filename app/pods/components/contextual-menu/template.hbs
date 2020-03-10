@@ -6,9 +6,13 @@
     <FaIcon @icon="ellipsis-h" />
   </div>
 
-  {{#animated-if this.itemsAreVisible use=this.fadeTransition duration=200}}
+  {{#animated-if
+    this.itemsAreVisible
+    use=this.fadeTransition
+    duration=200
+  }}
     <div local-class="items" {{on "mouseleave" (fn this.hideItems)}}>
-      {{yield (component "contextual-menu/item")}}
+      {{yield (component "contextual-menu/item" didClick=(fn this.hideItems))}}
     </div>
   {{/animated-if}}
 </div>

@@ -69,7 +69,11 @@
 }
 
 .body {
-  overflow: hidden;
+  overflow: visible;
+
+  .is-animating {
+    overflow: hidden;
+  }
 }
 
 .trades {
@@ -77,6 +81,10 @@
   border-top: 1px solid $blue-alt;
   margin: 0;
   list-style: none;
+
+  &.is-reordering {
+    overflow: hidden;
+  }
 }
 
 .trade {
