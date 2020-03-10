@@ -79,7 +79,11 @@
                     @onClick={{perform this.updateTradeLocationTask trade}}
                   />
                   <MenuItem
-                    @label={{t (if trade.completedAt "bookmarks.folder.uncomplete-trade" "bookmarks.folder.complete-trade")}}
+                    @label={{if
+                      trade.completedAt
+                      (t "bookmarks.folder.uncomplete-trade")
+                      (t "bookmarks.folder.complete-trade")
+                    }}
                     @onClick={{perform this.toggleTradeCompletionTask trade}}
                   />
                   <MenuItem
