@@ -1,0 +1,15 @@
+.item {
+  display: block;
+  width: 100%;
+  border: 0;
+  background: none;
+  text-align: left;
+  white-space: nowrap;
+  color: $white;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    color: #cbcbcb;
+  }
+}

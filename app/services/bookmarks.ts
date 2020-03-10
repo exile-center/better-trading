@@ -78,6 +78,7 @@ export default class Bookmarks extends Service {
       location,
       folderId,
       title: '',
+      completedAt: null,
       rank
     };
   }

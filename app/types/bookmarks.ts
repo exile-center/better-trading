@@ -9,6 +9,7 @@ export interface BookmarksTradeStruct {
   location: BookmarksTradeLocation;
   rank: number;
   folderId: number;
+  completedAt: string | null;
 }
 
 export interface BookmarksFolderStruct {

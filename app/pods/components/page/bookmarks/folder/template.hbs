@@ -1,11 +1,11 @@
 <div
-  {{did-insert (perform this.refreshTradesTask)}}
+  {{did-insert (perform this.initialSetupTask)}}
   local-class="container {{if this.isExpanded "is-expanded"}}"
   ...attributes
 >
   <div local-class="header">
     <div
-      {{on "click" (fn this.toggleExpansion)}}
+      {{on "click" (perform this.toggleExpansionTask)}}
       local-class="expansion-wrapper"
     >
       {{#if @folder.icon}}
@@ -30,12 +30,12 @@
         type="button"
         local-class="header-action"
       }}
-        <FaIcon @icon="bars" />
+        <FaIcon @icon="sort" />
       {{/component}}
     </div>
   </div>
 
-  <div local-class="body">
+  <div local-class="body {{if this.isAnimating "is-animating"}}">
     <AnimatedContainer>
       {{#animated-if
         (and this.isExpanded this.isLoaded)
@@ -43,7 +43,7 @@
         duration=200
       }}
         <SortableGroup
-          local-class="trades"
+          local-class="trades {{if this.isReorderingTrades "is-reordering"}}"
           @tagName="ul"
           @model={{this.trades}}
           @onChange={{perform this.reorderTradesTask}}
@@ -55,31 +55,46 @@
               local-class="trade"
               tagName="li"
               model=trade
+              onDragStart=(fn this.startTradesReordering)
+              onDragStop=(fn this.stopTradesReordering)
             as |dragItem|
             }}
               <div
                 {{on "click" (fn this.navigateToTrade trade)}}
                 local-class="trade-link"
               >
+                {{#if trade.completedAt}}
+                  <span local-class="trade-link-completed">
+                    <FaIcon @icon="check"  />
+                  </span>
+                {{/if}}
+
                 {{trade.title}}
               </div>
 
               <div local-class="trade-actions">
-                <button
-                  {{on "click" (fn this.editTrade trade)}}
-                  type="button"
-                  local-class="trade-action"
-                >
-                  <FaIcon @icon="pen" />
-                </button>
-
-                <button
-                  {{on "click" (fn this.deleteTrade trade)}}
-                  type="button"
-                  local-class="trade-action"
-                >
-                  <FaIcon @icon="trash-alt" />
-                </button>
+                <ContextualMenu local-class="trade-action" as |MenuItem|>
+                  <MenuItem
+                    @label={{t "bookmarks.folder.update-trade-location"}}
+                    @onClick={{perform this.updateTradeLocationTask trade}}
+                  />
+                  <MenuItem
+                    @label={{if
+                      trade.completedAt
+                      (t "bookmarks.folder.uncomplete-trade")
+                      (t "bookmarks.folder.complete-trade")
+                    }}
+                    @onClick={{perform this.toggleTradeCompletionTask trade}}
+                  />
+                  <MenuItem
+                    @label={{t "bookmarks.folder.edit-trade"}}
+                    @onClick={{fn this.editTrade trade}}
+                  />
+                  <MenuItem
+                    @label={{t "bookmarks.folder.delete-trade"}}
+                    @onClick={{fn this.deleteTrade trade}}
+                  />
+                </ContextualMenu>
 
                 {{#component
                   dragItem.handle
@@ -87,7 +102,7 @@
                   type="button"
                   local-class="trade-action"
                 }}
-                  <FaIcon @icon="bars" />
+                  <FaIcon @icon="sort"/>
                 {{/component}}
               </div>
             {{/component}}
