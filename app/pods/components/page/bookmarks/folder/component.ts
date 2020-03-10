@@ -81,7 +81,7 @@ export default class BookmarksFolder extends Component<Args> {
   @dropTask
   *deleteTradeTask(deletingTrade: BookmarksTradeStruct) {
     yield this.bookmarks.deleteTrade(deletingTrade);
-    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+    this.trades = yield performTask(this.refreshTradesTask);
     this.stagedDeletingTrade = null;
   }
 
@@ -95,7 +95,7 @@ export default class BookmarksFolder extends Component<Args> {
   @dropTask
   *persistTradeTask(trade: BookmarksTradeStruct) {
     yield this.bookmarks.persistTrade(trade);
-    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+    this.trades = yield performTask(this.refreshTradesTask);
     this.stagedTrade = null;
   }
 
@@ -111,7 +111,17 @@ export default class BookmarksFolder extends Component<Args> {
       }
     });
 
-    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+    yield performTask(this.refreshTradesTask);
+  }
+
+  @dropTask
+  *toggleTradeCompletionTask(trade: BookmarksTradeStruct) {
+    yield this.bookmarks.persistTrade({
+      ...trade,
+      completedAt: trade.completedAt ? null : new Date().toUTCString()
+    });
+
+    yield performTask(this.refreshTradesTask);
   }
 
   @dropTask

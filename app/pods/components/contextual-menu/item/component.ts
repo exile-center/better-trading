@@ -1,6 +1,6 @@
 // Vendor
 import Component from '@glimmer/component';
-import {action} from "@ember/object";
+import {action} from '@ember/object';
 
 interface Args {
   label: string;

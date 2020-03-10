@@ -63,6 +63,12 @@
                 {{on "click" (fn this.navigateToTrade trade)}}
                 local-class="trade-link"
               >
+                {{#if trade.completedAt}}
+                  <span local-class="trade-link-completed">
+                    <FaIcon @icon="check"  />
+                  </span>
+                {{/if}}
+
                 {{trade.title}}
               </div>
 
@@ -71,6 +77,10 @@
                   <MenuItem
                     @label={{t "bookmarks.folder.update-trade-location"}}
                     @onClick={{perform this.updateTradeLocationTask trade}}
+                  />
+                  <MenuItem
+                    @label={{t (if trade.completedAt "bookmarks.folder.uncomplete-trade" "bookmarks.folder.complete-trade")}}
+                    @onClick={{perform this.toggleTradeCompletionTask trade}}
                   />
                   <MenuItem
                     @label={{t "bookmarks.folder.edit-trade"}}

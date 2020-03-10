@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/promise-function-async,@typescript-eslint/no-misused-promises */
+
 // Vendor
 import Service from '@ember/service';
 import Dexie from 'dexie';
@@ -12,8 +14,22 @@ export default class DexieService extends Service {
 
     this.db.version(1).stores({
       bookmarkFolders: '++id,title,icon,rank',
-      bookmarkTrades: '++id,title,location,rank,folderId'
+      bookmarkTrades: '++id,title,rank,folderId'
     });
+
+    this.db
+      .version(2)
+      .stores({
+        bookmarkTrades: '++id,title,rank,folderId,completedAt'
+      })
+      .upgrade((transaction: Dexie.Transaction) => {
+        return transaction
+          .table('bookmarkTrades')
+          .toCollection()
+          .modify(bookmarkTrade => {
+            bookmarkTrade.completedAt = null;
+          });
+      });
   }
 
   async fetch<T>(table: TableName, id: number): Promise<T | null> {
