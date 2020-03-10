@@ -8,35 +8,34 @@ export default class BookmarksState extends Service {
   @service('local-storage')
   localStorage: LocalStorage;
 
-  expandedFolderIds: number[] = this.computeExpandedFolderIds();
-
-  isFolderExpanded(bookmarkFolderId: number) {
-    return this.expandedFolderIds.includes(bookmarkFolderId);
-  }
-
-  toggleFolderExpansion(bookmarkFolderId: number) {
-    const bookmarkFolderIdIndex = this.expandedFolderIds.indexOf(bookmarkFolderId);
+  toggleFolderExpansion(expandedFolderIds: number[], bookmarkFolderId: number) {
+    const expandedFolderIdsCopy = [...expandedFolderIds];
+    const bookmarkFolderIdIndex = expandedFolderIdsCopy.indexOf(bookmarkFolderId);
 
     if (bookmarkFolderIdIndex > -1) {
-      this.expandedFolderIds.splice(bookmarkFolderIdIndex, 1);
+      expandedFolderIdsCopy.splice(bookmarkFolderIdIndex, 1);
     } else {
-      this.expandedFolderIds.push(bookmarkFolderId);
+      expandedFolderIdsCopy.push(bookmarkFolderId);
     }
 
-    this.persistExpandedFolderIds();
-
-    return bookmarkFolderIdIndex === -1;
+    return this.persistExpandedFolderIds(expandedFolderIdsCopy);
   }
 
-  private computeExpandedFolderIds() {
+  getExpandedFolderIds() {
     const rawIds = this.localStorage.getValue('bookmark-folders-expansion');
     if (!rawIds) return [];
 
     return rawIds.split(',').map(rawId => parseInt(rawId, 10));
   }
 
-  private persistExpandedFolderIds() {
-    this.localStorage.setValue('bookmark-folders-expansion', this.expandedFolderIds.join(','));
+  collapseAllFolderIds() {
+    return this.persistExpandedFolderIds([]);
+  }
+
+  private persistExpandedFolderIds(expandedFolderIds: number[]) {
+    this.localStorage.setValue('bookmark-folders-expansion', expandedFolderIds.join(','));
+
+    return expandedFolderIds;
   }
 }
 

@@ -18,9 +18,10 @@ import Bookmarks from 'better-trading/services/bookmarks';
 interface Args {
   folder: Required<BookmarksFolderStruct>;
   dragHandle: any;
-  forceExpansion: boolean;
+  expandedFolderIds: number[];
   onEdit: (folder: BookmarksFolderStruct) => void;
   onDelete: (deletingFolder: BookmarksFolderStruct) => void;
+  onExpansionToggle: (folderId: number) => void;
 }
 
 // Constants
@@ -45,9 +46,6 @@ export default class BookmarksFolder extends Component<Args> {
   isStagedForDeletion: boolean;
 
   @tracked
-  isExpanded: boolean = false;
-
-  @tracked
   isLoaded: boolean = false;
 
   @tracked
@@ -58,6 +56,10 @@ export default class BookmarksFolder extends Component<Args> {
 
   @tracked
   trades: BookmarksTradeStruct[] = [];
+
+  get isExpanded() {
+    return this.args.expandedFolderIds.includes(this.args.folder.id);
+  }
 
   get iconPath() {
     if (!this.args.folder.icon) return;
@@ -73,19 +75,11 @@ export default class BookmarksFolder extends Component<Args> {
 
   @dropTask
   *initialSetupTask() {
-    let isExpanded = this.bookmarks.isFolderExpanded(this.args.folder.id);
-
-    if (this.args.forceExpansion && !isExpanded) {
-      isExpanded = this.bookmarks.toggleFolderExpansion(this.args.folder.id);
-    }
-
-    if (!isExpanded) return;
+    if (!this.isExpanded) return;
 
     this.isAnimating = true;
-    this.isExpanded = true;
 
     yield performTask(this.refreshTradesTask);
-
     yield timeout(EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS);
 
     this.isAnimating = false;
@@ -114,7 +108,7 @@ export default class BookmarksFolder extends Component<Args> {
   @dropTask
   *persistTradeTask(trade: BookmarksTradeStruct) {
     yield this.bookmarks.persistTrade(trade);
-    this.trades = yield performTask(this.refreshTradesTask);
+    yield performTask(this.refreshTradesTask);
     this.stagedTrade = null;
   }
 
@@ -146,10 +140,9 @@ export default class BookmarksFolder extends Component<Args> {
   @dropTask
   *toggleExpansionTask() {
     this.isAnimating = true;
-    this.isExpanded = this.bookmarks.toggleFolderExpansion(this.args.folder.id);
+    this.args.onExpansionToggle(this.args.folder.id);
 
     yield performTask(this.refreshTradesTask);
-
     yield timeout(EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS);
 
     this.isAnimating = false;

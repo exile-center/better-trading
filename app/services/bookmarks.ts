@@ -85,14 +85,16 @@ export default class Bookmarks extends Service {
     };
   }
 
-  isFolderExpanded(bookmarkFolderId?: number) {
-    if (!bookmarkFolderId) return false;
-
-    return this.bookmarksState.isFolderExpanded(bookmarkFolderId);
+  toggleFolderExpansion(expandedFolderIds: number[], bookmarkFolderId: number) {
+    return this.bookmarksState.toggleFolderExpansion(expandedFolderIds, bookmarkFolderId);
   }
 
-  toggleFolderExpansion(bookmarkFolderId: number) {
-    return this.bookmarksState.toggleFolderExpansion(bookmarkFolderId);
+  getExpandedFolderIds() {
+    return this.bookmarksState.getExpandedFolderIds();
+  }
+
+  collapseAllFolderIds() {
+    return this.bookmarksState.collapseAllFolderIds();
   }
 }
 
