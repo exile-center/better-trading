@@ -71,7 +71,7 @@
 .body {
   overflow: visible;
 
-  .is-animating {
+  &.is-animating {
     overflow: hidden;
   }
 }

@@ -44,7 +44,7 @@ export default class BookmarksFolder extends Component<Args> {
   isStagedForDeletion: boolean;
 
   @tracked
-  isExpanded: boolean = this.bookmarks.isFolderExpanded(this.args.folder.id);
+  isExpanded: boolean = false;
 
   @tracked
   isLoaded: boolean = false;
@@ -71,9 +71,21 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @dropTask
-  *refreshTradesTask() {
-    if (!this.isExpanded) return;
+  *initialSetupTask() {
+    if (!this.bookmarks.isFolderExpanded(this.args.folder.id)) return;
 
+    this.isAnimating = true;
+    this.isExpanded = true;
+
+    yield performTask(this.refreshTradesTask);
+
+    yield timeout(EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS);
+
+    this.isAnimating = false;
+  }
+
+  @dropTask
+  *refreshTradesTask() {
     this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
     this.isLoaded = true;
   }
@@ -128,6 +140,7 @@ export default class BookmarksFolder extends Component<Args> {
   *toggleExpansionTask() {
     this.isAnimating = true;
     this.isExpanded = this.bookmarks.toggleFolderExpansion(this.args.folder.id);
+
     yield performTask(this.refreshTradesTask);
 
     yield timeout(EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS);
