@@ -1,5 +1,5 @@
 <Modal
-  @title={{t "bookmarks.trade-edition.title"}}
+  @title={{t "page.bookmarks.folder.trade-edition.title"}}
   @onClose={{fn @onCancel}}
 >
   <Form::Container
@@ -7,7 +7,7 @@
     @entity={{this.trade}}
   >
     <Form::Input
-      @label={{t "bookmarks.trade-edition.fields.title.label"}}
+      @label={{t "page.bookmarks.folder.trade-edition.fields.title.label"}}
       @value={{this.trade.title}}
       @autofocus={{true}}
       @onChange={{fn this.changeTitle}}
@@ -16,7 +16,7 @@
     <Button
       type="submit"
       @theme="gold"
-      @label={{t "bookmarks.trade-edition.save"}}
+      @label={{t "page.bookmarks.folder.trade-edition.save"}}
       @icon="save"
     />
   </Form::Container>

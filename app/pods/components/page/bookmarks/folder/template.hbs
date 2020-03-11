@@ -26,11 +26,11 @@
     <div local-class="header-actions">
       <ContextualMenu local-class="header-action" as |MenuItem|>
         <MenuItem
-          @label={{t "bookmarks.folder.edit-folder"}}
+          @label={{t "page.bookmarks.folder.edit-folder"}}
           @onClick={{fn this.editFolder}}
         />
         <MenuItem
-          @label={{t "bookmarks.folder.delete-folder"}}
+          @label={{t "page.bookmarks.folder.delete-folder"}}
           @onClick={{fn this.deleteFolder}}
         />
       </ContextualMenu>
@@ -86,23 +86,23 @@
               <div local-class="trade-actions">
                 <ContextualMenu local-class="trade-action" as |MenuItem|>
                   <MenuItem
-                    @label={{t "bookmarks.folder.update-trade-location"}}
+                    @label={{t "page.bookmarks.folder.update-trade-location"}}
                     @onClick={{perform this.updateTradeLocationTask trade}}
                   />
                   <MenuItem
                     @label={{if
                       trade.completedAt
-                      (t "bookmarks.folder.uncomplete-trade")
-                      (t "bookmarks.folder.complete-trade")
+                      (t "page.bookmarks.folder.uncomplete-trade")
+                      (t "page.bookmarks.folder.complete-trade")
                     }}
                     @onClick={{perform this.toggleTradeCompletionTask trade}}
                   />
                   <MenuItem
-                    @label={{t "bookmarks.folder.edit-trade"}}
+                    @label={{t "page.bookmarks.folder.edit-trade"}}
                     @onClick={{fn this.editTrade trade}}
                   />
                   <MenuItem
-                    @label={{t "bookmarks.folder.delete-trade"}}
+                    @label={{t "page.bookmarks.folder.delete-trade"}}
                     @onClick={{fn this.deleteTrade trade}}
                   />
                 </ContextualMenu>
@@ -125,7 +125,7 @@
             type="button"
             local-class="folder-actions-new-trade"
             @theme="gold"
-            @label={{t "bookmarks.folder.create-trade"}}
+            @label={{t "page.bookmarks.folder.create-trade"}}
             @onClick={{fn this.createTrade}}
           />
         </div>
@@ -145,12 +145,12 @@
 
 {{#if this.stagedDeletingTrade}}
   <Modal
-    @title={{t "bookmarks.folder.trade-deletion.title"}}
+    @title={{t "page.bookmarks.folder.trade-deletion.title"}}
     @onClose={{fn this.cancelTradeDeletion}}
   >
     <p local-class="deletion-modal-confirmation">
       {{html-safe
-        (t "bookmarks.folder.trade-deletion.confirmation" name=this.stagedDeletingTrade.title)
+        (t "page.bookmarks.folder.trade-deletion.confirmation" name=this.stagedDeletingTrade.title)
       }}
     </p>
 
@@ -158,7 +158,7 @@
       <Button
         type="button"
         @theme="red"
-        @label="{{t "bookmarks.folder.trade-deletion.delete"}}"
+        @label="{{t "page.bookmarks.folder.trade-deletion.delete"}}"
         @onClick={{perform this.deleteTradeTask this.stagedDeletingTrade}}
         @icon="trash-alt"
       />
@@ -166,7 +166,7 @@
       <Button
         type="button"
         @theme="blue"
-        @label="{{t "bookmarks.folder.trade-deletion.cancel"}}"
+        @label="{{t "page.bookmarks.folder.trade-deletion.cancel"}}"
         @onClick={{fn this.cancelTradeDeletion}}
       />
     </div>
@@ -175,12 +175,12 @@
 
 {{#if this.isStagedForDeletion}}
   <Modal
-    @title={{t "bookmarks.folder.folder-deletion.title"}}
+    @title={{t "page.bookmarks.folder.folder-deletion.title"}}
     @onClose={{fn this.cancelFolderDeletion}}
   >
     <p local-class="deletion-modal-confirmation">
       {{html-safe
-        (t "bookmarks.folder.folder-deletion.confirmation" name=@folder.title tradesCount=this.trades.length)
+        (t "page.bookmarks.folder.folder-deletion.confirmation" name=@folder.title tradesCount=this.trades.length)
       }}
     </p>
 
@@ -188,7 +188,7 @@
       <Button
         type="button"
         @theme="red"
-        @label="{{t "bookmarks.folder.folder-deletion.delete"}}"
+        @label="{{t "page.bookmarks.folder.folder-deletion.delete"}}"
         @onClick={{fn this.confirmFolderDeletion}}
         @icon="trash-alt"
       />
@@ -196,7 +196,7 @@
       <Button
         type="button"
         @theme="blue"
-        @label="{{t "bookmarks.folder.folder-deletion.cancel"}}"
+        @label="{{t "page.bookmarks.folder.folder-deletion.cancel"}}"
         @onClick={{fn this.cancelFolderDeletion}}
       />
     </div>

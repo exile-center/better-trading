@@ -1,5 +1,5 @@
 <Modal
-  @title={{t "bookmarks.folder-edition.title"}}
+  @title={{t "page.bookmarks.folder-edition.title"}}
   @onClose={{fn @onCancel}}
 >
   <Form::Container
@@ -7,13 +7,13 @@
     @entity={{this.folder}}
   >
     <Form::Input
-      @label={{t "bookmarks.folder-edition.fields.title.label"}}
+      @label={{t "page.bookmarks.folder-edition.fields.title.label"}}
       @value={{this.folder.title}}
       @autofocus={{true}}
       @onChange={{fn this.changeTitle}}
     />
 
-    <Form::Field @label={{t "bookmarks.folder-edition.fields.icon.label"}}>
+    <Form::Field @label={{t "page.bookmarks.folder-edition.fields.icon.label"}}>
       <ul local-class="icon-options with-items">
         {{#each this.iconItemOptions as |itemOption|}}
           <li
@@ -54,7 +54,7 @@
     <Button
       type="submit"
       @theme="gold"
-      @label={{t "bookmarks.folder-edition.save"}}
+      @label={{t "page.bookmarks.folder-edition.save"}}
       @icon="save"
     />
   </Form::Container>

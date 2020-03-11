@@ -2,6 +2,39 @@ page:
   bookmarks:
     create-button: New bookmark folder
     collapse-all: Collapse folders
+    folder:
+      edit-folder: Edit
+      delete-folder: Delete
+      create-trade: Register current trade
+      edit-trade: Edit
+      delete-trade: Delete
+      update-trade-location: Save active trade
+      complete-trade: Mark as complete
+      uncomplete-trade: Unmark as complete
+      trade-deletion:
+        title: Confirm deletion
+        confirmation: 'Delete the bookmark <strong>{name}</strong> ?'
+        delete: Delete
+        cancel: Cancel
+      folder-deletion:
+        title: Confirm deletion
+        confirmation: 'Delete the bookmarks folder <strong>{name}</strong> {tradesCount, plural, =0 {} =1 {and its <strong>single bookmark</strong> } other {and its <strong># bookmarks</strong> }}?'
+        delete: Delete
+        cancel: Cancel
+      trade-edition:
+        title: Bookmark trade
+        save: Save
+        fields:
+          title:
+            label: Title
+    folder-edition:
+      title: Bookmark folder
+      save: Save
+      fields:
+        title:
+          label: Title
+        icon:
+          label: Icon
   about:
     disclaimer: This extension is fan-made and not affiliated with Grinding Gear Games in any way.
     discord:
