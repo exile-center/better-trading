@@ -98,7 +98,7 @@ export default class BookmarksFolder extends Component<Args> {
   @dropTask
   *deleteTradeTask(deletingTrade: BookmarksTradeStruct) {
     yield this.bookmarks.deleteTrade(deletingTrade);
-    this.trades = yield performTask(this.refreshTradesTask);
+    yield performTask(this.refreshTradesTask);
     this.stagedDeletingTrade = null;
   }
 
