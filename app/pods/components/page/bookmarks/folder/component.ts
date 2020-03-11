@@ -14,6 +14,7 @@ import performTask from 'better-trading/utilities/perform-task';
 import {BookmarkFolderItemIcon, BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 import Location from 'better-trading/services/location';
 import Bookmarks from 'better-trading/services/bookmarks';
+import SearchPanel from 'better-trading/services/search-panel';
 
 interface Args {
   folder: Required<BookmarksFolderStruct>;
@@ -35,6 +36,9 @@ export default class BookmarksFolder extends Component<Args> {
 
   @service('bookmarks')
   bookmarks: Bookmarks;
+
+  @service('search-panel')
+  searchPanel: SearchPanel;
 
   @tracked
   stagedTrade: BookmarksTradeStruct | null;
@@ -157,7 +161,7 @@ export default class BookmarksFolder extends Component<Args> {
   createTrade() {
     if (!this.location.slug) return;
 
-    this.stagedTrade = this.bookmarks.initializeTradeStructFrom(
+    const initializedTrade = this.bookmarks.initializeTradeStructFrom(
       {
         slug: this.location.slug,
         type: this.location.type
@@ -165,6 +169,11 @@ export default class BookmarksFolder extends Component<Args> {
       this.args.folder.id,
       this.trades.length
     );
+
+    this.stagedTrade = {
+      ...initializedTrade,
+      title: this.searchPanel.recommendTitle()
+    };
   }
 
   @action

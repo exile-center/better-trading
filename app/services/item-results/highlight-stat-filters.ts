@@ -17,7 +17,7 @@ export default class ItemResultsHighlightStatFilters extends Service {
   statNeedles: RegExp[];
 
   prepare(): void {
-    const {stats} = this.searchPanel.scrape();
+    const stats = this.searchPanel.getStats();
 
     this.statNeedles = stats.map((rawStat: string) => {
       return new RegExp(escapeRegex(rawStat).replace(/#/g, '[\\+\\-]?\\d+'), 'i');

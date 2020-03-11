@@ -42,10 +42,10 @@ describe('Unit | Services | Search panel', () => {
       expect(service.recommendTitle()).to.equal('Any Jewel (Rare)');
     });
 
-    it('should default to shrug', () => {
+    it('should default to empty string', () => {
       sampleContainer.insertAdjacentHTML('afterbegin', AnonItem);
 
-      expect(service.recommendTitle()).to.equal('¯_(ツ)_/¯');
+      expect(service.recommendTitle()).to.equal('');
     });
   });
 });
