@@ -39,7 +39,6 @@ module.exports = function(environment) {
         'trash-alt',
         'check',
         'times',
-        'pen',
         'info-circle',
         'ellipsis-h',
         'sort',
