@@ -14,6 +14,15 @@
   align-items: center;
   padding-right: 5px;
   cursor: pointer;
+
+  &::after {
+    display: block;
+    content: '';
+    width: 1px;
+    height: 15px;
+    margin-left: 10px;
+    background-color: $blue-alt;
+  }
 }
 
 .expansion-indicator {

@@ -57,11 +57,13 @@ export default class Bookmarks extends Service {
 
   async deleteTrade(deletingTrade: BookmarksTradeStruct) {
     if (!deletingTrade.id) return;
+
     return this.bookmarksStorage.deleteTrade(deletingTrade.id);
   }
 
   async deleteFolder(deletingFolder: BookmarksFolderStruct) {
     if (!deletingFolder.id) return;
+
     return this.bookmarksStorage.deleteFolder(deletingFolder.id);
   }
 
@@ -83,13 +85,16 @@ export default class Bookmarks extends Service {
     };
   }
 
-  isFolderExpanded(bookmarkFolderId?: number) {
-    if (!bookmarkFolderId) return false;
-    return this.bookmarksState.isFolderExpanded(bookmarkFolderId);
+  toggleFolderExpansion(expandedFolderIds: number[], bookmarkFolderId: number) {
+    return this.bookmarksState.toggleFolderExpansion(expandedFolderIds, bookmarkFolderId);
   }
 
-  toggleFolderExpansion(bookmarkFolderId: number) {
-    return this.bookmarksState.toggleFolderExpansion(bookmarkFolderId);
+  getExpandedFolderIds() {
+    return this.bookmarksState.getExpandedFolderIds();
+  }
+
+  collapseAllFolderIds() {
+    return this.bookmarksState.collapseAllFolderIds();
   }
 }
 

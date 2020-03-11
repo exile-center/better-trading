@@ -2,8 +2,13 @@
   width: 100%;
 }
 
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .folders-wrapper {
-  margin-bottom: 5px;
+  margin: 5px 0;
 }
 
 .folder-wrapper {

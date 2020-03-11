@@ -19,6 +19,12 @@ export default class PageBookmarks extends Component {
   @tracked
   folders: BookmarksFolderStruct[] = [];
 
+  @tracked
+  newFolderId: number | null = null;
+
+  @tracked
+  expandedFolderIds: number[] = this.bookmarks.getExpandedFolderIds();
+
   @dropTask
   *fetchFoldersTask() {
     this.folders = yield this.bookmarks.fetchFolders();
@@ -39,7 +45,11 @@ export default class PageBookmarks extends Component {
 
   @dropTask
   *persistFolderTask(folder: BookmarksFolderStruct) {
-    yield this.bookmarks.persistFolder(folder);
+    const isNewlyCreated = !folder.id;
+
+    const folderId = yield this.bookmarks.persistFolder(folder);
+
+    if (isNewlyCreated) this.toggleFolderExpansion(folderId);
     this.folders = yield this.bookmarks.fetchFolders();
     this.stagedFolder = null;
   }
@@ -57,5 +67,15 @@ export default class PageBookmarks extends Component {
   @action
   unstageFolder() {
     this.stagedFolder = null;
+  }
+
+  @action
+  toggleFolderExpansion(folderId: number) {
+    this.expandedFolderIds = this.bookmarks.toggleFolderExpansion(this.expandedFolderIds, folderId);
+  }
+
+  @action
+  collapseAllFolderIds() {
+    this.expandedFolderIds = this.bookmarks.collapseAllFolderIds();
   }
 }

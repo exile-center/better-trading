@@ -1,5 +1,7 @@
 bookmarks:
   folder:
+    edit-folder: Edit
+    delete-folder: Delete
     create-trade: Register current trade
     edit-trade: Edit
     delete-trade: Delete

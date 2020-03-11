@@ -24,6 +24,17 @@
     </div>
 
     <div local-class="header-actions">
+      <ContextualMenu local-class="header-action" as |MenuItem|>
+        <MenuItem
+          @label={{t "bookmarks.folder.edit-folder"}}
+          @onClick={{fn this.editFolder}}
+        />
+        <MenuItem
+          @label={{t "bookmarks.folder.delete-folder"}}
+          @onClick={{fn this.deleteFolder}}
+        />
+      </ContextualMenu>
+
       {{#component
         @dragHandle
         tagName="button"
@@ -116,20 +127,6 @@
             @theme="gold"
             @label={{t "bookmarks.folder.create-trade"}}
             @onClick={{fn this.createTrade}}
-          />
-
-          <Button
-            type="button"
-            @theme="blue"
-            @icon="pen"
-            @onClick={{fn this.editFolder}}
-          />
-
-          <Button
-            type="button"
-            @theme="red"
-            @icon="trash-alt"
-            @onClick={{fn this.deleteFolder}}
           />
         </div>
       {{/animated-if}}

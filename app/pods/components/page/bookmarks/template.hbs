@@ -1,3 +1,13 @@
+<div local-class="header-actions">
+  <Button
+    type="button"
+    @theme="gold"
+    @label={{t "page.bookmarks.collapse-all"}}
+    @icon="compress-alt"
+    @onClick={{fn this.collapseAllFolderIds}}
+  />
+</div>
+
 <SortableGroup
   {{did-insert (perform this.fetchFoldersTask)}}
   local-class="folders-wrapper"
@@ -18,8 +28,10 @@
         local-class="folder"
         @folder={{folder}}
         @dragHandle={{dragItem.handle}}
+        @expandedFolderIds={{this.expandedFolderIds}}
         @onEdit={{fn this.stageFolder}}
         @onDelete={{perform this.deleteFolderTask}}
+        @onExpansionToggle={{fn this.toggleFolderExpansion}}
       />
     {{/component}}
   {{/each}}
