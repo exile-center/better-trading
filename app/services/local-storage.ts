@@ -5,6 +5,7 @@ import window from 'ember-window-mock';
 // Constants
 const KEY_PREFIX = 'bt-';
 const EXPIRY_SUFFIX = '--expires-at';
+const PAST_LEAGUES = ['Blight', 'Metamorph'];
 
 type LocalStorageKey =
   | 'bookmark-folders-expansion'
@@ -13,6 +14,10 @@ type LocalStorageKey =
   | 'poe-ninja-chaos-ratios-cache';
 
 export default class LocalStorage extends Service {
+  initialize() {
+    this.cleanupPastLeagues();
+  }
+
   setValue(key: LocalStorageKey, value: string, league: string | null = null): void {
     this.write(key, value, league);
   }
@@ -54,6 +59,20 @@ export default class LocalStorage extends Service {
     if (!league) return formattedKey;
 
     return `${formattedKey}@${league}`;
+  }
+
+  private cleanupPastLeagues() {
+    const pastLeaguesRegex = new RegExp(`@(${PAST_LEAGUES.join('|')})$`);
+
+    Object.keys(window.localStorage)
+      .filter(key => {
+        if (!key.startsWith(KEY_PREFIX)) return false;
+
+        return pastLeaguesRegex.test(key);
+      })
+      .forEach(keyToDelete => {
+        window.localStorage.removeItem(keyToDelete);
+      });
   }
 }
 
