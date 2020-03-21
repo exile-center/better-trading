@@ -208,11 +208,6 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @action
-  navigateToTrade(trade: BookmarksTradeStruct) {
-    this.location.navigateTo(trade.location.type, trade.location.slug);
-  }
-
-  @action
   editFolder() {
     this.args.onEdit(this.args.folder);
   }

@@ -70,10 +70,7 @@
               onDragStop=(fn this.stopTradesReordering)
             as |dragItem|
             }}
-              <div
-                {{on "click" (fn this.navigateToTrade trade)}}
-                local-class="trade-link"
-              >
+              <a href={{trade-url trade.location.type trade.location.slug}} local-class="trade-link">
                 {{#if trade.completedAt}}
                   <span local-class="trade-link-completed">
                     <FaIcon @icon="check"  />
@@ -81,7 +78,7 @@
                 {{/if}}
 
                 {{trade.title}}
-              </div>
+              </a>
 
               <div local-class="trade-actions">
                 <ContextualMenu local-class="trade-action" as |MenuItem|>

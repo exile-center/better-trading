@@ -30,11 +30,10 @@ export default class Location extends Service {
     return slug || null;
   }
 
-  navigateTo(type: string, slug: string) {
+  getTradeURL(type: string, slug: string) {
     const {league} = this.parseCurrentPath();
-    const newUrl = [BASE_URL, type, league, slug].join('/');
 
-    window.location.replace(newUrl);
+    return [BASE_URL, type, league, slug].join('/');
   }
 
   private parseCurrentPath(): ParsedPath {

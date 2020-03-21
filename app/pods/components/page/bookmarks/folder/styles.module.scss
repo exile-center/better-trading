@@ -113,13 +113,15 @@
 .trade-link {
   position: relative;
   flex: 1 1 auto;
-  padding: 4px 7px;
+  padding: 6px 7px;
   font-family: $primary-font;
   color: $white;
   cursor: pointer;
 
   &:hover,
   &:focus {
+    text-decoration: none;
+
     &::before {
       opacity: 1;
     }
