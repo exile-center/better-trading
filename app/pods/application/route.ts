@@ -24,10 +24,10 @@ export default class ApplicationRoute extends Route {
   @service('dexie')
   dexie: DexieService;
 
-  beforeModel() {
+  async beforeModel() {
     this.intl.setLocale(DEFAULT_LOCALE);
     this.itemResults.watchResults();
-    this.dexie.initialize();
+    await this.dexie.initialize();
   }
 
   async model() {

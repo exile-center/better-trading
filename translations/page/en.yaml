@@ -37,6 +37,7 @@ page:
           label: Icon
   about:
     disclaimer: This extension is fan-made and not affiliated with Grinding Gear Games in any way.
+    is-persisted: Data is safely persited in the browser.
     discord:
       title: On Discord
       description: Stay tuned about upcoming updates and discuss future features.

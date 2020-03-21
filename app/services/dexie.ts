@@ -7,9 +7,13 @@ import Dexie from 'dexie';
 type TableName = 'bookmarkTrades' | 'bookmarkFolders';
 
 export default class DexieService extends Service {
+  isPersisted: boolean = false;
   private db: Dexie;
 
-  initialize() {
+  async initialize() {
+    await window.navigator.storage.persist();
+    this.isPersisted = await window.navigator.storage.persisted();
+
     this.db = new Dexie('PoeBetterTrading');
 
     this.db.version(1).stores({
