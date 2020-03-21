@@ -4,14 +4,18 @@ import {action} from '@ember/object';
 
 interface Args {
   label: string;
-  onClick: () => Promise<any> | void;
+  href?: string;
+  onClick?: () => Promise<any> | void;
   didClick: () => {};
 }
 
 export default class ContextualMenuItem extends Component<Args> {
   @action
   async dispatchAction() {
-    await this.args.onClick();
+    if (typeof this.args.onClick === 'function') {
+      await this.args.onClick();
+    }
+
     this.args.didClick();
   }
 }

@@ -5,6 +5,7 @@ page:
     folder:
       edit-folder: Edit
       delete-folder: Delete
+      open-live-trade: Live search
       create-trade: Register current trade
       edit-trade: Edit
       delete-trade: Delete

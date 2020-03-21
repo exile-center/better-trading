@@ -1,7 +1,17 @@
-<button
-  {{on "click" (fn this.dispatchAction)}}
-  type="button"
-  local-class="item"
->
-  {{@label}}
-</button>
+{{#if @href}}
+  <a
+    {{on "click" (fn this.dispatchAction)}}
+    href={{@href}}
+    local-class="item"
+  >
+    {{@label}}
+  </a>
+{{else}}
+  <button
+    {{on "click" (fn this.dispatchAction)}}
+    type="button"
+    local-class="item"
+  >
+    {{@label}}
+  </button>
+{{/if}}
