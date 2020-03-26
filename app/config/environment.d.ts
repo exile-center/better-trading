@@ -20,5 +20,6 @@ declare const config: {
     discordUrl: string;
     githubUrl: string;
     chaosRecipeOverlayUrl: string;
+    browser: 'chrome' | 'firefox';
   };
 };

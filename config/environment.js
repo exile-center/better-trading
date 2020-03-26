@@ -27,7 +27,8 @@ module.exports = function(environment) {
     imageResourcePrefix: environment === 'development' ? 'ember-build/assets/images' : 'assets/images',
     discordUrl: 'http://discord.exile.center',
     githubUrl: 'https://github.com/exile-center/better-trading',
-    chaosRecipeOverlayUrl: 'https://github.com/exile-center/chaos-recipe-overlay'
+    chaosRecipeOverlayUrl: 'https://github.com/exile-center/chaos-recipe-overlay',
+    browser: process.env.BROWSER || 'chrome'
   };
 
   ENV.fontawesome = {
