@@ -16,7 +16,7 @@ body {
     overflow-y: auto;
     width: $extension-width;
     padding: 5px 10px;
-    background-color: $background;
+    background-color: rgba(#0a0a0a, 0.8);
     transition: right 0.2s ease;
   }
 
