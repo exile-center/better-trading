@@ -4,8 +4,11 @@ import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
 
 // Initialize the extension root container
+const isCollapsed = Boolean(window.localStorage.getItem('bt-side-panel-collapsed'));
 const extensionContainer = document.createElement('div');
 extensionContainer.id = 'better-trading-container';
+document.body.classList.add('bt-body');
+if (isCollapsed) document.body.classList.add('bt-is-collapsed');
 document.body.appendChild(extensionContainer);
 
 const {modulePrefix, podModulePrefix} = config;

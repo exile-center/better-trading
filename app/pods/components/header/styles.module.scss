@@ -33,7 +33,16 @@
   color: $white;
 }
 
-.navigation-item {
+.header-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background: transparent;
   font-size: 22px;
   color: $white;
   transition: color 0.2s ease;
@@ -42,4 +51,41 @@
   &:focus {
     color: rgba($white, 0.8);
   }
+}
+
+.expand-button {
+  display: flex;
+  position: fixed;
+  top: 50px;
+  right: 0;
+  opacity: 0;
+  align-items: center;
+  padding: 5px 10px;
+  border: 1px solid $blue-alt;
+  background-color: $blue;
+  outline: none;
+  font-size: 20px;
+  color: $white;
+  transition: opacity 0.2s ease;
+  border-right-width: 0;
+  pointer-events: none;
+
+  &:hover,
+  &:focus {
+    background-color: lighten($blue, 5%);
+
+    .expand-button-icon {
+      margin-right: 15px;
+    }
+  }
+
+  &.is-visible {
+    opacity: 1;
+    pointer-events: all;
+  }
+}
+
+.expand-button-icon {
+  margin-right: 10px;
+  transition: margin-right 0.2s ease;
 }

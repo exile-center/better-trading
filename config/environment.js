@@ -43,7 +43,9 @@ module.exports = function(environment) {
         'info-circle',
         'ellipsis-h',
         'sort',
-        'compress-alt'
+        'compress-alt',
+        'angle-right',
+        'angle-left'
       ],
       'free-brands-svg-icons': ['github', 'discord']
     }
