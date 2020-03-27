@@ -1,3 +1,10 @@
-.top-btn {
-  right: #{$extension-width + 20px} !important;
+.bt-body {
+  .top-btn {
+    right: #{$extension-width + 20px};
+    transition: right 0.2s ease;
+  }
+
+  &.bt-is-collapsed .top-btn {
+    right: 20px;
+  }
 }

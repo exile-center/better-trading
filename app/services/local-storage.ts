@@ -8,6 +8,7 @@ const EXPIRY_SUFFIX = '--expires-at';
 const PAST_LEAGUES = ['Blight', 'Metamorph'];
 
 type LocalStorageKey =
+  | 'side-panel-collapsed'
   | 'bookmark-folders-expansion'
   | 'bookmark-folders'
   | 'bookmark-trades'

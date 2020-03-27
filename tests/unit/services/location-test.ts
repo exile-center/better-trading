@@ -57,9 +57,11 @@ describe('Unit | Services | Location', () => {
     });
   });
 
-  describe('getTradeURL', () => {
+  describe('getTradeUrl', () => {
     it('should forge the proper URL', () => {
-      expect(service.getTradeURL('search', 'foobar')).to.be.equal(
+      window.location.pathname = '/trade/search/Legion/q1w2e3r4t5';
+
+      expect(service.getTradeUrl('search', 'foobar')).to.be.equal(
         'https://www.pathofexile.com/trade/search/Legion/foobar'
       );
     });

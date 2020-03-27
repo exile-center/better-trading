@@ -11,7 +11,7 @@ export default class TradeUrl extends Helper {
 
   compute(params: string[]) {
     const [type, slug, suffix] = params;
-    const tradeURL = this.location.getTradeURL(type, slug);
+    const tradeURL = this.location.getTradeUrl(type, slug);
 
     if (!suffix) return tradeURL;
 
