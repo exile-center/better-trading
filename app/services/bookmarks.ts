@@ -13,10 +13,6 @@ export default class Bookmarks extends Service {
   @service('bookmarks/state')
   bookmarksState: BookmarksState;
 
-  async migrateFromLocalStorage() {
-    return this.bookmarksStorage.migrateFromLocalStorage();
-  }
-
   async fetchFolders() {
     return this.bookmarksStorage.fetchFolders();
   }

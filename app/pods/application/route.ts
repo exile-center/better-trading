@@ -34,9 +34,4 @@ export default class ApplicationRoute extends Route {
     this.localStorage.initialize();
     await this.dexie.initialize();
   }
-
-  async model() {
-    // TODO: remove after Delirium league
-    return this.bookmarks.migrateFromLocalStorage();
-  }
 }
