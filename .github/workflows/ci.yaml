@@ -1,0 +1,30 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    env:
+      JOBS: 1 # See https://git.io/vdao3 for details
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 10.15
+
+      - uses: actions/cache@v1
+        id: npm-cache
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles(format('{0}/package-lock.json', github.workspace)) }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - run: make dependencies
+      - run: make lint
+      - run: make check-format
+      - run: make check-types
+      - run: make test
