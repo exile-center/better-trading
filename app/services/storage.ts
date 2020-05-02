@@ -36,7 +36,7 @@ export default class Storage extends Service {
     });
   }
 
-  async setEphemeralValue(key: string, value: string, expirationDate: Date, league: string | null = null) {
+  async setEphemeralValue(key: string, value: any, expirationDate: Date, league: string | null = null) {
     return this.write(this.formatKey(key, league), {
       expiresAt: expirationDate.toUTCString(),
       value
