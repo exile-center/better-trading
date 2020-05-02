@@ -44,10 +44,7 @@ export default class ItemResultsEquivalentPricings extends Service {
     const currencyValueElement = result.querySelector(CURRENCY_VALUE_SELECTOR) as HTMLElement;
     const currencyImageElement = result.querySelector(CURRENCY_IMAGE_SELECTOR) as HTMLImageElement;
 
-    if (!currencyNameElement) return;
-    if (!pricingContainerElement) return;
-    if (!currencyValueElement) return;
-    if (!currencyImageElement) return;
+    if (!pricingContainerElement || !currencyNameElement || !currencyValueElement || !currencyImageElement) return;
 
     const currencySlug = slugify(currencyNameElement.textContent || '');
     const currencyValue = parseFloat(currencyValueElement.textContent || '');
