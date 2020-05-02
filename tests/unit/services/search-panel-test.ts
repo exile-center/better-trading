@@ -4,9 +4,9 @@ import {setupTest} from 'ember-mocha';
 import {beforeEach, afterEach, describe, it} from 'mocha';
 
 // HTML Samples
-import AnonItem from '../../html-samples/search-panel/anon-ele-res-max-life';
-import UniqueItem from '../../html-samples/search-panel/belly-of-the-beast-6l-no-corrupt';
-import RareJewel from '../../html-samples/search-panel/rare-jewel';
+import AnonItem from 'better-trading/tests/html-samples/search-panel/anon-ele-res-max-life';
+import UniqueItem from 'better-trading/tests/html-samples/search-panel/belly-of-the-beast-6l-no-corrupt';
+import RareJewel from 'better-trading/tests/html-samples/search-panel/rare-jewel';
 
 // Types
 import SearchPanel from 'better-trading/services/search-panel';
