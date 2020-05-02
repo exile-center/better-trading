@@ -28,4 +28,3 @@ jobs:
       - run: make check-format
       - run: make check-types
       - run: make test
-      - run: make build
