@@ -50,12 +50,7 @@ export default class PoeNinja extends Service {
   }
 
   private async cacheChaosRatiosFor(league: string, ratios: PoeNinjaCurrenciesRatios): Promise<void> {
-    return this.storage.setEphemeralValue(
-      'poe-ninja-chaos-ratios-cache',
-      ratios,
-      this.cacheExpirationDate(),
-      league
-    );
+    return this.storage.setEphemeralValue('poe-ninja-chaos-ratios-cache', ratios, this.cacheExpirationDate(), league);
   }
 
   private parseChaosRatios(payload: PoeNinjaCurrenciesPayload): PoeNinjaCurrenciesRatios {
