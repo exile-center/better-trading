@@ -6,7 +6,7 @@ import {slugify} from 'better-trading/utilities/slugify';
 
 // Types
 import ExtensionBackground from 'better-trading/services/extension-background';
-import LocalStorage from 'better-trading/services/local-storage';
+import Storage from 'better-trading/services/storage';
 
 export interface PoeNinjaCurrenciesPayloadLine {
   currencyTypeName: string;
@@ -29,34 +29,31 @@ export default class PoeNinja extends Service {
   @service('extension-background')
   extensionBackground: ExtensionBackground;
 
-  @service('local-storage')
-  localStorage: LocalStorage;
+  @service('storage')
+  storage: Storage;
 
   async fetchChaosRatiosFor(league: string): Promise<PoeNinjaCurrenciesRatios> {
-    const cachedRatios = this.lookupCachedChaosRatiosFor(league);
+    const cachedRatios = await this.lookupCachedChaosRatiosFor(league);
     if (cachedRatios) return cachedRatios;
 
     const uri = `${CURRENCIES_RESOURCE_URI}&league=${league}`;
     const payload = (await this.extensionBackground.fetchPoeNinjaResource(uri)) as PoeNinjaCurrenciesPayload;
 
     const ratios = this.parseChaosRatios(payload);
-    this.cacheChaosRatiosFor(league, ratios);
+    await this.cacheChaosRatiosFor(league, ratios);
 
     return ratios;
   }
 
-  private lookupCachedChaosRatiosFor(league: string): PoeNinjaCurrenciesRatios | null {
-    const rawCachedRatios = this.localStorage.getValue('poe-ninja-chaos-ratios-cache', league);
-    if (!rawCachedRatios) return null;
-
-    return JSON.parse(rawCachedRatios);
+  private async lookupCachedChaosRatiosFor(league: string): Promise<PoeNinjaCurrenciesRatios | null> {
+    return this.storage.getValue('poe-ninja-chaos-ratios-cache', league);
   }
 
-  private cacheChaosRatiosFor(league: string, ratios: PoeNinjaCurrenciesRatios): void {
-    this.localStorage.setEphemeralValue(
+  private async cacheChaosRatiosFor(league: string, ratios: PoeNinjaCurrenciesRatios): Promise<void> {
+    return this.storage.setEphemeralValue(
       'poe-ninja-chaos-ratios-cache',
       JSON.stringify(ratios),
-      ONE_HOUR_IN_MILLISECONDS,
+      this.cacheExpirationDate(),
       league
     );
   }
@@ -70,6 +67,12 @@ export default class PoeNinja extends Service {
       },
       {}
     );
+  }
+
+  private cacheExpirationDate() {
+    const currentTimestamp = new Date().getTime();
+
+    return new Date(currentTimestamp + ONE_HOUR_IN_MILLISECONDS);
   }
 }
 

@@ -11,18 +11,18 @@ import {timeout} from 'ember-concurrency';
 import performTask from 'better-trading/utilities/perform-task';
 
 // Types
-import {BookmarkFolderItemIcon, BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
+import {BookmarkFolderItemIcon, BookmarkFolderStruct, BookmarkTradeStruct} from 'better-trading/types/bookmarks';
 import Location from 'better-trading/services/location';
 import Bookmarks from 'better-trading/services/bookmarks';
 import SearchPanel from 'better-trading/services/search-panel';
 
 interface Args {
-  folder: Required<BookmarksFolderStruct>;
+  folder: Required<BookmarkFolderStruct>;
   dragHandle: any;
-  expandedFolderIds: number[];
-  onEdit: (folder: BookmarksFolderStruct) => void;
-  onDelete: (deletingFolder: BookmarksFolderStruct) => void;
-  onExpansionToggle: (folderId: number) => void;
+  expandedFolderIds: string[];
+  onEdit: (folder: BookmarkFolderStruct) => void;
+  onDelete: (deletingFolder: BookmarkFolderStruct) => void;
+  onExpansionToggle: (folderId: string) => void;
 }
 
 // Constants
@@ -41,10 +41,10 @@ export default class BookmarksFolder extends Component<Args> {
   searchPanel: SearchPanel;
 
   @tracked
-  stagedTrade: BookmarksTradeStruct | null;
+  stagedTrade: BookmarkTradeStruct | null;
 
   @tracked
-  stagedDeletingTrade: BookmarksTradeStruct | null;
+  stagedDeletingTrade: BookmarkTradeStruct | null;
 
   @tracked
   isStagedForDeletion: boolean;
@@ -59,7 +59,11 @@ export default class BookmarksFolder extends Component<Args> {
   isReorderingTrades: boolean = false;
 
   @tracked
-  trades: BookmarksTradeStruct[] = [];
+  trades: BookmarkTradeStruct[] = [];
+
+  get folderId() {
+    return this.args.folder.id;
+  }
 
   get isExpanded() {
     return this.args.expandedFolderIds.includes(this.args.folder.id);
@@ -96,47 +100,53 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @dropTask
-  *deleteTradeTask(deletingTrade: BookmarksTradeStruct) {
-    yield this.bookmarks.deleteTrade(deletingTrade);
+  *deleteTradeTask(deletingTrade: BookmarkTradeStruct) {
+    yield this.bookmarks.deleteTrade(deletingTrade, this.folderId);
     yield performTask(this.refreshTradesTask);
     this.stagedDeletingTrade = null;
   }
 
   @dropTask
-  *reorderTradesTask(reorderedTrades: BookmarksTradeStruct[]) {
-    this.trades = this.bookmarks.reorderTrades(reorderedTrades);
+  *reorderTradesTask(reorderedTrades: BookmarkTradeStruct[]) {
+    this.trades = reorderedTrades;
 
-    yield this.bookmarks.persistTrades(this.trades);
+    yield this.bookmarks.persistTrades(this.trades, this.folderId);
   }
 
   @dropTask
-  *persistTradeTask(trade: BookmarksTradeStruct) {
-    yield this.bookmarks.persistTrade(trade);
+  *persistTradeTask(trade: BookmarkTradeStruct) {
+    yield this.bookmarks.persistTrade(trade, this.folderId);
     yield performTask(this.refreshTradesTask);
     this.stagedTrade = null;
   }
 
   @dropTask
-  *updateTradeLocationTask(trade: BookmarksTradeStruct) {
+  *updateTradeLocationTask(trade: BookmarkTradeStruct) {
     if (!this.location.slug) return;
 
-    yield this.bookmarks.persistTrade({
-      ...trade,
-      location: {
-        slug: this.location.slug,
-        type: this.location.type
-      }
-    });
+    yield this.bookmarks.persistTrade(
+      {
+        ...trade,
+        location: {
+          slug: this.location.slug,
+          type: this.location.type
+        }
+      },
+      this.folderId
+    );
 
     yield performTask(this.refreshTradesTask);
   }
 
   @dropTask
-  *toggleTradeCompletionTask(trade: BookmarksTradeStruct) {
-    yield this.bookmarks.persistTrade({
-      ...trade,
-      completedAt: trade.completedAt ? null : new Date().toUTCString()
-    });
+  *toggleTradeCompletionTask(trade: BookmarkTradeStruct) {
+    yield this.bookmarks.persistTrade(
+      {
+        ...trade,
+        completedAt: trade.completedAt ? null : new Date().toUTCString()
+      },
+      this.folderId
+    );
 
     yield performTask(this.refreshTradesTask);
   }
@@ -161,14 +171,10 @@ export default class BookmarksFolder extends Component<Args> {
   createTrade() {
     if (!this.location.slug) return;
 
-    const initializedTrade = this.bookmarks.initializeTradeStructFrom(
-      {
-        slug: this.location.slug,
-        type: this.location.type
-      },
-      this.args.folder.id,
-      this.trades.length
-    );
+    const initializedTrade = this.bookmarks.initializeTradeStructFrom({
+      slug: this.location.slug,
+      type: this.location.type
+    });
 
     this.stagedTrade = {
       ...initializedTrade,
@@ -177,12 +183,12 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @action
-  editTrade(trade: BookmarksTradeStruct) {
+  editTrade(trade: BookmarkTradeStruct) {
     this.stagedTrade = trade;
   }
 
   @action
-  deleteTrade(trade: BookmarksTradeStruct) {
+  deleteTrade(trade: BookmarkTradeStruct) {
     this.stagedDeletingTrade = trade;
   }
 

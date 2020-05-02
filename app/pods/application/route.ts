@@ -5,9 +5,9 @@ import {inject as service} from '@ember/service';
 // Types
 import ItemResults from 'better-trading/services/item-results';
 import IntlService from 'ember-intl/services/intl';
-import DexieService from 'better-trading/services/dexie';
 import Bookmarks from 'better-trading/services/bookmarks';
-import LocalStorage from 'better-trading/services/local-storage';
+import Storage from 'better-trading/services/storage';
+import BookmarksStorage from 'better-trading/services/bookmarks/storage';
 
 // Constants
 const DEFAULT_LOCALE = 'en';
@@ -22,16 +22,18 @@ export default class ApplicationRoute extends Route {
   @service('item-results')
   itemResults: ItemResults;
 
-  @service('dexie')
-  dexie: DexieService;
+  @service('storage')
+  storage: Storage;
 
-  @service('local-storage')
-  localStorage: LocalStorage;
+  @service('bookmarks/storage')
+  bookmarksStorage: BookmarksStorage;
 
   async beforeModel() {
     this.intl.setLocale(DEFAULT_LOCALE);
     this.itemResults.watchResults();
-    this.localStorage.initialize();
-    await this.dexie.initialize();
+    await this.storage.initialize();
+
+    // Temporary migration
+    await this.bookmarksStorage.migrateDexieToStorage();
   }
 }

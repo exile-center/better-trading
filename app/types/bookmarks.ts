@@ -1,22 +1,19 @@
-export interface BookmarksTradeLocation {
+export interface BookmarkTradeLocation {
   type: string;
   slug: string;
 }
 
-export interface BookmarksTradeStruct {
-  id?: number;
+export interface BookmarkTradeStruct {
+  id?: string;
   title: string;
-  location: BookmarksTradeLocation;
-  rank: number;
-  folderId: number;
+  location: BookmarkTradeLocation;
   completedAt: string | null;
 }
 
-export interface BookmarksFolderStruct {
-  id?: number;
+export interface BookmarkFolderStruct {
+  id?: string;
   title: string;
   icon: BookmarkFolderAscendancyIcon | BookmarkFolderItemIcon | null;
-  rank: number;
 }
 
 export enum BookmarkFolderAscendancyDuelistIcon {

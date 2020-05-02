@@ -7,23 +7,23 @@ import {dropTask} from 'ember-concurrency-decorators';
 
 // Types
 import Bookmarks from 'better-trading/services/bookmarks';
-import {BookmarksFolderStruct} from 'better-trading/types/bookmarks';
+import {BookmarkFolderStruct} from 'better-trading/types/bookmarks';
 
 export default class PageBookmarks extends Component {
   @service('bookmarks')
   bookmarks: Bookmarks;
 
   @tracked
-  stagedFolder: BookmarksFolderStruct | null;
+  stagedFolder: BookmarkFolderStruct | null;
 
   @tracked
-  folders: BookmarksFolderStruct[] = [];
+  folders: BookmarkFolderStruct[] = [];
 
   @tracked
   newFolderId: number | null = null;
 
   @tracked
-  expandedFolderIds: number[] = this.bookmarks.getExpandedFolderIds();
+  expandedFolderIds: string[] = this.bookmarks.getExpandedFolderIds();
 
   @dropTask
   *fetchFoldersTask() {
@@ -31,20 +31,20 @@ export default class PageBookmarks extends Component {
   }
 
   @dropTask
-  *deleteFolderTask(deletingFolder: BookmarksFolderStruct) {
+  *deleteFolderTask(deletingFolder: BookmarkFolderStruct) {
     yield this.bookmarks.deleteFolder(deletingFolder);
     this.folders = yield this.bookmarks.fetchFolders();
   }
 
   @dropTask
-  *reorderFoldersTask(reorderedFolders: BookmarksFolderStruct[]) {
-    this.folders = this.bookmarks.reorderFolders(reorderedFolders);
+  *reorderFoldersTask(reorderedFolders: BookmarkFolderStruct[]) {
+    this.folders = reorderedFolders;
 
     yield this.bookmarks.persistFolders(this.folders);
   }
 
   @dropTask
-  *persistFolderTask(folder: BookmarksFolderStruct) {
+  *persistFolderTask(folder: BookmarkFolderStruct) {
     const isNewlyCreated = !folder.id;
 
     const folderId = yield this.bookmarks.persistFolder(folder);
@@ -56,11 +56,11 @@ export default class PageBookmarks extends Component {
 
   @action
   createFolder() {
-    this.stagedFolder = this.bookmarks.initializeFolderStruct(this.folders.length);
+    this.stagedFolder = this.bookmarks.initializeFolderStruct();
   }
 
   @action
-  stageFolder(folder: BookmarksFolderStruct) {
+  stageFolder(folder: BookmarkFolderStruct) {
     this.stagedFolder = folder;
   }
 
@@ -70,7 +70,7 @@ export default class PageBookmarks extends Component {
   }
 
   @action
-  toggleFolderExpansion(folderId: number) {
+  toggleFolderExpansion(folderId: string) {
     this.expandedFolderIds = this.bookmarks.toggleFolderExpansion(this.expandedFolderIds, folderId);
   }
 

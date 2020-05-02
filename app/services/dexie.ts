@@ -4,17 +4,20 @@
 import Service from '@ember/service';
 import Dexie from 'dexie';
 
+// Constants
+const DATABASE_NAME = 'PoeBetterTrading';
+
 type TableName = 'bookmarkTrades' | 'bookmarkFolders';
 
 export default class DexieService extends Service {
   isPersisted: boolean = false;
-  private db: Dexie;
+  db: Dexie;
 
   async initialize() {
     await window.navigator.storage.persist();
     this.isPersisted = await window.navigator.storage.persisted();
 
-    this.db = new Dexie('PoeBetterTrading');
+    this.db = new Dexie(DATABASE_NAME);
 
     this.db.version(1).stores({
       bookmarkFolders: '++id,title,icon,rank',
@@ -34,6 +37,21 @@ export default class DexieService extends Service {
             bookmarkTrade.completedAt = null;
           });
       });
+  }
+
+  async teardown(): Promise<void> {
+    return new Promise((resolve, _reject) => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      Dexie.delete(DATABASE_NAME).then(resolve);
+    });
+  }
+
+  async exists(): Promise<boolean> {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    const databases = await window.indexedDB.databases();
+
+    return databases.some(({name}: {name: string}) => name === DATABASE_NAME);
   }
 
   async fetch<T>(table: TableName, id: number): Promise<T | null> {

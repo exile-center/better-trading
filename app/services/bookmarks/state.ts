@@ -2,13 +2,13 @@
 import Service, {inject as service} from '@ember/service';
 
 // Types
-import LocalStorage from 'better-trading/services/local-storage';
+import Storage from 'better-trading/services/storage';
 
 export default class BookmarksState extends Service {
-  @service('local-storage')
-  localStorage: LocalStorage;
+  @service('storage')
+  storage: Storage;
 
-  toggleFolderExpansion(expandedFolderIds: number[], bookmarkFolderId: number) {
+  toggleFolderExpansion(expandedFolderIds: string[], bookmarkFolderId: string) {
     const expandedFolderIdsCopy = [...expandedFolderIds];
     const bookmarkFolderIdIndex = expandedFolderIdsCopy.indexOf(bookmarkFolderId);
 
@@ -22,18 +22,18 @@ export default class BookmarksState extends Service {
   }
 
   getExpandedFolderIds() {
-    const rawIds = this.localStorage.getValue('bookmark-folders-expansion');
+    const rawIds = this.storage.getLocalValue('bookmark-folders-expansion');
     if (!rawIds) return [];
 
-    return rawIds.split(',').map(rawId => parseInt(rawId, 10));
+    return rawIds.split(',');
   }
 
   collapseAllFolderIds() {
     return this.persistExpandedFolderIds([]);
   }
 
-  private persistExpandedFolderIds(expandedFolderIds: number[]) {
-    this.localStorage.setValue('bookmark-folders-expansion', expandedFolderIds.join(','));
+  private persistExpandedFolderIds(expandedFolderIds: string[]) {
+    this.storage.setLocalValue('bookmark-folders-expansion', expandedFolderIds.join(','));
 
     return expandedFolderIds;
   }

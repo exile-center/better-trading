@@ -4,7 +4,7 @@ import Service, {inject as service} from '@ember/service';
 // Types
 import BookmarksState from 'better-trading/services/bookmarks/state';
 import BookmarksStorage from 'better-trading/services/bookmarks/storage';
-import {BookmarksFolderStruct, BookmarksTradeLocation, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
+import {BookmarkFolderStruct, BookmarkTradeLocation, BookmarkTradeStruct} from 'better-trading/types/bookmarks';
 
 export default class Bookmarks extends Service {
   @service('bookmarks/storage')
@@ -17,71 +17,54 @@ export default class Bookmarks extends Service {
     return this.bookmarksStorage.fetchFolders();
   }
 
-  async fetchTradesByFolderId(folderId: number) {
+  async fetchTradesByFolderId(folderId: string) {
     return this.bookmarksStorage.fetchTradesByFolderId(folderId);
   }
 
-  async persistFolder(bookmarkFolder: BookmarksFolderStruct) {
+  async persistFolder(bookmarkFolder: BookmarkFolderStruct) {
     return this.bookmarksStorage.persistFolder(bookmarkFolder);
   }
 
-  async persistFolders(bookmarkFolders: BookmarksFolderStruct[]) {
+  async persistFolders(bookmarkFolders: BookmarkFolderStruct[]) {
     return this.bookmarksStorage.persistFolders(bookmarkFolders);
   }
 
-  async persistTrade(bookmarkTrade: BookmarksTradeStruct) {
-    return this.bookmarksStorage.persistTrade(bookmarkTrade);
+  async persistTrade(bookmarkTrade: BookmarkTradeStruct, folderId: string) {
+    return this.bookmarksStorage.persistTrade(bookmarkTrade, folderId);
   }
 
-  async persistTrades(bookmarkTrades: BookmarksTradeStruct[]) {
-    return this.bookmarksStorage.persistTrades(bookmarkTrades);
+  async persistTrades(bookmarkTrades: BookmarkTradeStruct[], folderId: string) {
+    return this.bookmarksStorage.persistTrades(bookmarkTrades, folderId);
   }
 
-  reorderTrades(reorderedTrades: BookmarksTradeStruct[]) {
-    return reorderedTrades.map((trade, index) => ({
-      ...trade,
-      rank: index
-    }));
-  }
-
-  reorderFolders(reorderedFolders: BookmarksFolderStruct[]) {
-    return reorderedFolders.map((folder, index) => ({
-      ...folder,
-      rank: index
-    }));
-  }
-
-  async deleteTrade(deletingTrade: BookmarksTradeStruct) {
+  async deleteTrade(deletingTrade: BookmarkTradeStruct, folderId: string) {
     if (!deletingTrade.id) return;
 
-    return this.bookmarksStorage.deleteTrade(deletingTrade.id);
+    return this.bookmarksStorage.deleteTrade(deletingTrade.id, folderId);
   }
 
-  async deleteFolder(deletingFolder: BookmarksFolderStruct) {
+  async deleteFolder(deletingFolder: BookmarkFolderStruct) {
     if (!deletingFolder.id) return;
 
     return this.bookmarksStorage.deleteFolder(deletingFolder.id);
   }
 
-  initializeFolderStruct(rank: number): BookmarksFolderStruct {
+  initializeFolderStruct(): BookmarkFolderStruct {
     return {
       icon: null,
-      title: '',
-      rank
+      title: ''
     };
   }
 
-  initializeTradeStructFrom(location: BookmarksTradeLocation, folderId: number, rank: number): BookmarksTradeStruct {
+  initializeTradeStructFrom(location: BookmarkTradeLocation): BookmarkTradeStruct {
     return {
       location,
-      folderId,
       title: '',
-      completedAt: null,
-      rank
+      completedAt: null
     };
   }
 
-  toggleFolderExpansion(expandedFolderIds: number[], bookmarkFolderId: number) {
+  toggleFolderExpansion(expandedFolderIds: string[], bookmarkFolderId: string) {
     return this.bookmarksState.toggleFolderExpansion(expandedFolderIds, bookmarkFolderId);
   }
 
