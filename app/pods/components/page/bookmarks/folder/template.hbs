@@ -60,7 +60,7 @@
           @onChange={{perform this.reorderTradesTask}}
           as |group|
         >
-          {{#each (ranked this.trades) key="id" as |trade|}}
+          {{#each this.trades key="id" as |trade|}}
             {{#component
               group.item
               local-class="trade"

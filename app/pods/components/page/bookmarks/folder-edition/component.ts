@@ -16,11 +16,11 @@ import {
   BookmarkFolderAscendancyTemplarIcon,
   BookmarkFolderAscendancyWitchIcon,
   BookmarkFolderItemIcon,
-  BookmarksFolderStruct
+  BookmarkFolderStruct
 } from 'better-trading/types/bookmarks';
 
 interface Args {
-  folder: BookmarksFolderStruct;
+  folder: BookmarkFolderStruct;
   onCancel: () => void;
   submitTask: any;
 }
@@ -30,7 +30,7 @@ export default class BookmarksFolderEdition extends Component<Args> {
   bookmarks: Bookmarks;
 
   @tracked
-  folder: BookmarksFolderStruct = this.args.folder;
+  folder: BookmarkFolderStruct = this.args.folder;
 
   get iconAscendancyOptions() {
     return [

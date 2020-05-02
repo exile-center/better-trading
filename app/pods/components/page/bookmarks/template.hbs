@@ -16,7 +16,7 @@
   @onChange={{perform this.reorderFoldersTask}}
   as |group|
 >
-  {{#each (ranked this.folders) key="id" as |folder|}}
+  {{#each this.folders key="id" as |folder|}}
     {{#component
       group.item
       local-class="folder-wrapper"

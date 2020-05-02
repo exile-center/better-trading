@@ -24,7 +24,7 @@ const manifest = Object.assign(
     manifest_version: 2,
     content_scripts: [
       {
-        matches: ['*://www.pathofexile.com/trade/*'],
+        matches: ['*://www.pathofexile.com/trade*'],
         js: [assetsPathFor('vendor.js'), assetsPathFor('better-trading.js')],
         css: [assetsPathFor('vendor.css'), assetsPathFor('better-trading.css')]
       }
@@ -33,7 +33,7 @@ const manifest = Object.assign(
       scripts: ['background.js'],
       persistent: true
     },
-    permissions: ['*://poe.ninja/*'],
+    permissions: ['storage', '*://poe.ninja/*'],
     web_accessible_resources: [assetsPathFor('images/*')],
     icons: {
       16: 'icon16.png',
