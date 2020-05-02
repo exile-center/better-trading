@@ -29,7 +29,7 @@ export default class ItemResultsEquivalentPricings extends Service {
   @service('location')
   location: Location;
 
-  private chaosRatios: PoeNinjaCurrenciesRatios | null;
+  chaosRatios: PoeNinjaCurrenciesRatios | null;
 
   async prepare(): Promise<void> {
     this.chaosRatios = await this.poeNinja.fetchChaosRatiosFor(this.location.league);
