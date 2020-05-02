@@ -52,6 +52,8 @@ build: ## Build and bundle the extension for release
 	node ./scripts/enforce-engine-versions.js
 	rm -rf ./dist
 	npx ember build --environment production --output-path ./dist/ember-build
+	## Patch the vendor.js to prevent a check from failing on Firefox
+	sed -i "" -E 's/var t="object"==typeof self&&null!==self&&self.Object===Object&&"undefined"!=typeof Window&&self.constructor===Window&&"object"==typeof document&&null!==document&&self.document===document&&"object"==typeof location&&null!==location&&self.location===location&&"object"==typeof history&&null!==history&&self.history===history&&"object"==typeof navigator&&null!==navigator&&self.navigator===navigator&&"string"==typeof navigator.userAgent/var t=true/g' ./dist/ember-build/assets/vendor.js
 	mkdir -p ./dist/staged/assets
 	cp -R ./dist/ember-build/assets/{better-trading.js,better-trading.css,vendor.js,vendor.css,images} ./dist/staged/assets
 	node ./scripts/generate-manifest.js production
