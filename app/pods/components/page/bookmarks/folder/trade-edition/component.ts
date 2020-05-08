@@ -6,11 +6,11 @@ import {tracked} from '@glimmer/tracking';
 
 // Types
 import Bookmarks from 'better-trading/services/bookmarks';
-import {BookmarkTradeStruct} from 'better-trading/types/bookmarks';
+import {BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 
 interface Args {
   folderId: string;
-  trade: BookmarkTradeStruct;
+  trade: BookmarksTradeStruct;
   onCancel: () => void;
   submitTask: any;
 }
@@ -20,7 +20,7 @@ export default class BookmarksTradeEdition extends Component<Args> {
   bookmarks: Bookmarks;
 
   @tracked
-  trade: BookmarkTradeStruct = this.args.trade;
+  trade: BookmarksTradeStruct = this.args.trade;
 
   @action
   changeTitle(title: string) {

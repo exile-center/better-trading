@@ -11,17 +11,17 @@ import {timeout} from 'ember-concurrency';
 import performTask from 'better-trading/utilities/perform-task';
 
 // Types
-import {BookmarkFolderItemIcon, BookmarkFolderStruct, BookmarkTradeStruct} from 'better-trading/types/bookmarks';
+import {BookmarksFolderItemIcon, BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 import Location from 'better-trading/services/location';
 import Bookmarks from 'better-trading/services/bookmarks';
 import SearchPanel from 'better-trading/services/search-panel';
 
 interface Args {
-  folder: Required<BookmarkFolderStruct>;
+  folder: Required<BookmarksFolderStruct>;
   dragHandle: any;
   expandedFolderIds: string[];
-  onEdit: (folder: BookmarkFolderStruct) => void;
-  onDelete: (deletingFolder: BookmarkFolderStruct) => void;
+  onEdit: (folder: BookmarksFolderStruct) => void;
+  onDelete: (deletingFolder: BookmarksFolderStruct) => void;
   onExpansionToggle: (folderId: string) => void;
 }
 
@@ -41,10 +41,10 @@ export default class BookmarksFolder extends Component<Args> {
   searchPanel: SearchPanel;
 
   @tracked
-  stagedTrade: BookmarkTradeStruct | null;
+  stagedTrade: BookmarksTradeStruct | null;
 
   @tracked
-  stagedDeletingTrade: BookmarkTradeStruct | null;
+  stagedDeletingTrade: BookmarksTradeStruct | null;
 
   @tracked
   isStagedForDeletion: boolean;
@@ -59,7 +59,7 @@ export default class BookmarksFolder extends Component<Args> {
   isReorderingTrades: boolean = false;
 
   @tracked
-  trades: BookmarkTradeStruct[] = [];
+  trades: BookmarksTradeStruct[] = [];
 
   get folderId() {
     return this.args.folder.id;
@@ -78,7 +78,7 @@ export default class BookmarksFolder extends Component<Args> {
   get iconIsItem() {
     if (!this.args.folder.icon) return false;
 
-    return (Object.values(BookmarkFolderItemIcon) as string[]).includes(this.args.folder.icon);
+    return (Object.values(BookmarksFolderItemIcon) as string[]).includes(this.args.folder.icon);
   }
 
   @dropTask
@@ -100,28 +100,28 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @dropTask
-  *deleteTradeTask(deletingTrade: BookmarkTradeStruct) {
+  *deleteTradeTask(deletingTrade: BookmarksTradeStruct) {
     yield this.bookmarks.deleteTrade(deletingTrade, this.folderId);
     yield performTask(this.refreshTradesTask);
     this.stagedDeletingTrade = null;
   }
 
   @dropTask
-  *reorderTradesTask(reorderedTrades: BookmarkTradeStruct[]) {
+  *reorderTradesTask(reorderedTrades: BookmarksTradeStruct[]) {
     this.trades = reorderedTrades;
 
     yield this.bookmarks.persistTrades(this.trades, this.folderId);
   }
 
   @dropTask
-  *persistTradeTask(trade: BookmarkTradeStruct) {
+  *persistTradeTask(trade: BookmarksTradeStruct) {
     yield this.bookmarks.persistTrade(trade, this.folderId);
     yield performTask(this.refreshTradesTask);
     this.stagedTrade = null;
   }
 
   @dropTask
-  *updateTradeLocationTask(trade: BookmarkTradeStruct) {
+  *updateTradeLocationTask(trade: BookmarksTradeStruct) {
     if (!this.location.slug) return;
 
     yield this.bookmarks.persistTrade(
@@ -139,7 +139,7 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @dropTask
-  *toggleTradeCompletionTask(trade: BookmarkTradeStruct) {
+  *toggleTradeCompletionTask(trade: BookmarksTradeStruct) {
     yield this.bookmarks.persistTrade(
       {
         ...trade,
@@ -183,12 +183,12 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @action
-  editTrade(trade: BookmarkTradeStruct) {
+  editTrade(trade: BookmarksTradeStruct) {
     this.stagedTrade = trade;
   }
 
   @action
-  deleteTrade(trade: BookmarkTradeStruct) {
+  deleteTrade(trade: BookmarksTradeStruct) {
     this.stagedDeletingTrade = trade;
   }
 

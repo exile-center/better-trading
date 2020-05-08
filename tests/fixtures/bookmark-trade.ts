@@ -2,9 +2,9 @@
 import {uniqueId} from 'better-trading/utilities/unique-id';
 
 // Types
-import {BookmarkTradeStruct} from 'better-trading/types/bookmarks';
+import {BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 
-export default function(overrides: Partial<BookmarkTradeStruct>) {
+export default function(overrides: Partial<BookmarksTradeStruct>) {
   return {
     id: uniqueId(),
     location: {

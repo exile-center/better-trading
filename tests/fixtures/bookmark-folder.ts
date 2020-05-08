@@ -2,12 +2,12 @@
 import {uniqueId} from 'better-trading/utilities/unique-id';
 
 // Types
-import {BookmarkFolderAscendancyScionIcon, BookmarkFolderStruct} from 'better-trading/types/bookmarks';
+import {BookmarksFolderAscendancyScionIcon, BookmarksFolderStruct} from 'better-trading/types/bookmarks';
 
-export default function(overrides: Partial<BookmarkFolderStruct>) {
+export default function(overrides: Partial<BookmarksFolderStruct>) {
   return {
     id: uniqueId(),
-    icon: BookmarkFolderAscendancyScionIcon.ASCENDANT,
+    icon: BookmarksFolderAscendancyScionIcon.ASCENDANT,
     title: 'Fake folder',
     ...overrides
   };

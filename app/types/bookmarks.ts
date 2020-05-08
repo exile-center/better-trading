@@ -1,71 +1,71 @@
-export interface BookmarkTradeLocation {
+export interface BookmarksTradeLocation {
   type: string;
   slug: string;
 }
 
-export interface BookmarkTradeStruct {
+export interface BookmarksTradeStruct {
   id?: string;
   title: string;
-  location: BookmarkTradeLocation;
+  location: BookmarksTradeLocation;
   completedAt: string | null;
 }
 
-export interface BookmarkFolderStruct {
+export interface BookmarksFolderStruct {
   id?: string;
   title: string;
-  icon: BookmarkFolderAscendancyIcon | BookmarkFolderItemIcon | null;
+  icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon | null;
 }
 
-export enum BookmarkFolderAscendancyDuelistIcon {
+export enum BookmarksFolderAscendancyDuelistIcon {
   SLAYER = 'slayer',
   GLADIATOR = 'gladiator',
   CHAMPION = 'champion'
 }
 
-export enum BookmarkFolderAscendancyShadowIcon {
+export enum BookmarksFolderAscendancyShadowIcon {
   ASSASSIN = 'assassin',
   SABOTEUR = 'saboteur',
   TRICKSTER = 'trickster'
 }
 
-export enum BookmarkFolderAscendancyMarauderIcon {
+export enum BookmarksFolderAscendancyMarauderIcon {
   JUGGERNAUT = 'juggernaut',
   BERSERKER = 'berserker',
   CHIEFTAIN = 'chieftain'
 }
 
-export enum BookmarkFolderAscendancyWitchIcon {
+export enum BookmarksFolderAscendancyWitchIcon {
   NECROMANCER = 'necromancer',
   ELEMENTALIST = 'elementalist',
   OCCULTIST = 'occultist'
 }
 
-export enum BookmarkFolderAscendancyRangerIcon {
+export enum BookmarksFolderAscendancyRangerIcon {
   DEADEYE = 'deadeye',
   RAIDER = 'raider',
   PATHFINDER = 'pathfinder'
 }
 
-export enum BookmarkFolderAscendancyTemplarIcon {
+export enum BookmarksFolderAscendancyTemplarIcon {
   GUARDIAN = 'guardian',
   HIEROPHANT = 'hierophant',
   INQUISITOR = 'inquisitor'
 }
 
-export enum BookmarkFolderAscendancyScionIcon {
+export enum BookmarksFolderAscendancyScionIcon {
   ASCENDANT = 'ascendant'
 }
 
-export type BookmarkFolderAscendancyIcon =
-  | BookmarkFolderAscendancyDuelistIcon
-  | BookmarkFolderAscendancyShadowIcon
-  | BookmarkFolderAscendancyMarauderIcon
-  | BookmarkFolderAscendancyWitchIcon
-  | BookmarkFolderAscendancyRangerIcon
-  | BookmarkFolderAscendancyTemplarIcon
-  | BookmarkFolderAscendancyScionIcon;
+export type BookmarksFolderAscendancyIcon =
+  | BookmarksFolderAscendancyDuelistIcon
+  | BookmarksFolderAscendancyShadowIcon
+  | BookmarksFolderAscendancyMarauderIcon
+  | BookmarksFolderAscendancyWitchIcon
+  | BookmarksFolderAscendancyRangerIcon
+  | BookmarksFolderAscendancyTemplarIcon
+  | BookmarksFolderAscendancyScionIcon;
 
-export enum BookmarkFolderItemIcon {
+export enum BookmarksFolderItemIcon {
   ALCHEMY = 'alchemy',
   CHAOS = 'chaos',
   EXALT = 'exalt',

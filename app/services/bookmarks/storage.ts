@@ -3,11 +3,11 @@ import Service, {inject as service} from '@ember/service';
 
 // Types
 import {
-  BookmarkFolderAscendancyIcon,
-  BookmarkFolderItemIcon,
-  BookmarkFolderStruct,
-  BookmarkTradeLocation,
-  BookmarkTradeStruct
+  BookmarksFolderAscendancyIcon,
+  BookmarksFolderItemIcon,
+  BookmarksFolderStruct,
+  BookmarksTradeLocation,
+  BookmarksTradeStruct
 } from 'better-trading/types/bookmarks';
 import Storage from 'better-trading/services/storage';
 import DexieService from 'better-trading/services/dexie';
@@ -26,7 +26,7 @@ const TRADES_PREFIX_KEY = 'bookmark-trades';
 interface DexieBookmarkTradeStruct {
   id?: number;
   title: string;
-  location: BookmarkTradeLocation;
+  location: BookmarksTradeLocation;
   rank: number;
   folderId: number;
   completedAt: string | null;
@@ -35,7 +35,7 @@ interface DexieBookmarkTradeStruct {
 interface DexieBookmarkFolderStruct {
   id?: number;
   title: string;
-  icon: BookmarkFolderAscendancyIcon | BookmarkFolderItemIcon | null;
+  icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon | null;
   rank: number;
 }
 
@@ -57,7 +57,7 @@ export default class BookmarksStorage extends Service {
       (entityA, entityB) => entityA.rank - entityB.rank
     );
 
-    const updatedFolders: BookmarkFolderStruct[] = [];
+    const updatedFolders: BookmarksFolderStruct[] = [];
 
     // tslint:disable-next-line:prefer-for-of
     for (let folderIndex = 0; folderIndex < folders.length; folderIndex++) {
@@ -107,14 +107,14 @@ export default class BookmarksStorage extends Service {
     return trades;
   }
 
-  async persistFolder(folderToPersist: BookmarkFolderStruct) {
+  async persistFolder(folderToPersist: BookmarksFolderStruct) {
     const folders = (await this.fetchFolders()) || [];
     let updatedFolders;
 
     if (!folderToPersist.id) {
       updatedFolders = [...folders, {...folderToPersist, id: uniqueId()}];
     } else {
-      updatedFolders = folders.map((folder: BookmarkFolderStruct) => {
+      updatedFolders = folders.map((folder: BookmarksFolderStruct) => {
         if (folder.id !== folderToPersist.id) return folder;
 
         return {
@@ -127,14 +127,14 @@ export default class BookmarksStorage extends Service {
     return this.persistFolders(updatedFolders);
   }
 
-  async persistTrade(tradeToPersist: BookmarkTradeStruct, folderId: string) {
+  async persistTrade(tradeToPersist: BookmarksTradeStruct, folderId: string) {
     const trades = await this.fetchTradesByFolderId(folderId);
     let updatedTrades;
 
     if (!tradeToPersist.id) {
       updatedTrades = [...trades, {...tradeToPersist, id: uniqueId()}];
     } else {
-      updatedTrades = trades.map((trade: BookmarkTradeStruct) => {
+      updatedTrades = trades.map((trade: BookmarksTradeStruct) => {
         if (trade.id !== tradeToPersist.id) return trade;
 
         return {
@@ -147,18 +147,18 @@ export default class BookmarksStorage extends Service {
     return this.persistTrades(updatedTrades, folderId);
   }
 
-  async persistTrades(bookmarkTrades: BookmarkTradeStruct[], folderId: string) {
+  async persistTrades(bookmarkTrades: BookmarksTradeStruct[], folderId: string) {
     return this.storage.setValue(`${TRADES_PREFIX_KEY}--${folderId}`, bookmarkTrades);
   }
 
-  async persistFolders(bookmarkFolders: BookmarkFolderStruct[]) {
+  async persistFolders(bookmarkFolders: BookmarksFolderStruct[]) {
     return this.storage.setValue(FOLDERS_KEY, bookmarkFolders);
   }
 
   async deleteFolder(folderId: string) {
     const folders = await this.fetchFolders();
 
-    const updatedFolders = folders.filter((folder: BookmarkFolderStruct) => {
+    const updatedFolders = folders.filter((folder: BookmarksFolderStruct) => {
       return folder.id !== folderId;
     });
 
@@ -170,7 +170,7 @@ export default class BookmarksStorage extends Service {
   async deleteTrade(tradeId: string, folderId: string) {
     const trades = await this.fetchTradesByFolderId(folderId);
 
-    const updatedTrades = trades.filter((trade: BookmarkTradeStruct) => {
+    const updatedTrades = trades.filter((trade: BookmarksTradeStruct) => {
       return trade.id !== tradeId;
     });
 

@@ -4,7 +4,7 @@ import Service, {inject as service} from '@ember/service';
 // Types
 import BookmarksState from 'better-trading/services/bookmarks/state';
 import BookmarksStorage from 'better-trading/services/bookmarks/storage';
-import {BookmarkFolderStruct, BookmarkTradeLocation, BookmarkTradeStruct} from 'better-trading/types/bookmarks';
+import {BookmarksFolderStruct, BookmarksTradeLocation, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 
 export default class Bookmarks extends Service {
   @service('bookmarks/storage')
@@ -21,42 +21,42 @@ export default class Bookmarks extends Service {
     return this.bookmarksStorage.fetchTradesByFolderId(folderId);
   }
 
-  async persistFolder(bookmarkFolder: BookmarkFolderStruct) {
+  async persistFolder(bookmarkFolder: BookmarksFolderStruct) {
     return this.bookmarksStorage.persistFolder(bookmarkFolder);
   }
 
-  async persistFolders(bookmarkFolders: BookmarkFolderStruct[]) {
+  async persistFolders(bookmarkFolders: BookmarksFolderStruct[]) {
     return this.bookmarksStorage.persistFolders(bookmarkFolders);
   }
 
-  async persistTrade(bookmarkTrade: BookmarkTradeStruct, folderId: string) {
+  async persistTrade(bookmarkTrade: BookmarksTradeStruct, folderId: string) {
     return this.bookmarksStorage.persistTrade(bookmarkTrade, folderId);
   }
 
-  async persistTrades(bookmarkTrades: BookmarkTradeStruct[], folderId: string) {
+  async persistTrades(bookmarkTrades: BookmarksTradeStruct[], folderId: string) {
     return this.bookmarksStorage.persistTrades(bookmarkTrades, folderId);
   }
 
-  async deleteTrade(deletingTrade: BookmarkTradeStruct, folderId: string) {
+  async deleteTrade(deletingTrade: BookmarksTradeStruct, folderId: string) {
     if (!deletingTrade.id) return;
 
     return this.bookmarksStorage.deleteTrade(deletingTrade.id, folderId);
   }
 
-  async deleteFolder(deletingFolder: BookmarkFolderStruct) {
+  async deleteFolder(deletingFolder: BookmarksFolderStruct) {
     if (!deletingFolder.id) return;
 
     return this.bookmarksStorage.deleteFolder(deletingFolder.id);
   }
 
-  initializeFolderStruct(): BookmarkFolderStruct {
+  initializeFolderStruct(): BookmarksFolderStruct {
     return {
       icon: null,
       title: ''
     };
   }
 
-  initializeTradeStructFrom(location: BookmarkTradeLocation): BookmarkTradeStruct {
+  initializeTradeStructFrom(location: BookmarksTradeLocation): BookmarksTradeStruct {
     return {
       location,
       title: '',

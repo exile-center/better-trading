@@ -7,20 +7,20 @@ import {tracked} from '@glimmer/tracking';
 // Types
 import Bookmarks from 'better-trading/services/bookmarks';
 import {
-  BookmarkFolderAscendancyDuelistIcon,
-  BookmarkFolderAscendancyIcon,
-  BookmarkFolderAscendancyMarauderIcon,
-  BookmarkFolderAscendancyRangerIcon,
-  BookmarkFolderAscendancyScionIcon,
-  BookmarkFolderAscendancyShadowIcon,
-  BookmarkFolderAscendancyTemplarIcon,
-  BookmarkFolderAscendancyWitchIcon,
-  BookmarkFolderItemIcon,
-  BookmarkFolderStruct
+  BookmarksFolderAscendancyDuelistIcon,
+  BookmarksFolderAscendancyIcon,
+  BookmarksFolderAscendancyMarauderIcon,
+  BookmarksFolderAscendancyRangerIcon,
+  BookmarksFolderAscendancyScionIcon,
+  BookmarksFolderAscendancyShadowIcon,
+  BookmarksFolderAscendancyTemplarIcon,
+  BookmarksFolderAscendancyWitchIcon,
+  BookmarksFolderItemIcon,
+  BookmarksFolderStruct
 } from 'better-trading/types/bookmarks';
 
 interface Args {
-  folder: BookmarkFolderStruct;
+  folder: BookmarksFolderStruct;
   onCancel: () => void;
   submitTask: any;
 }
@@ -30,22 +30,22 @@ export default class BookmarksFolderEdition extends Component<Args> {
   bookmarks: Bookmarks;
 
   @tracked
-  folder: BookmarkFolderStruct = this.args.folder;
+  folder: BookmarksFolderStruct = this.args.folder;
 
   get iconAscendancyOptions() {
     return [
-      Object.values(BookmarkFolderAscendancyDuelistIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarkFolderAscendancyShadowIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarkFolderAscendancyMarauderIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarkFolderAscendancyWitchIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarkFolderAscendancyRangerIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarkFolderAscendancyTemplarIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarkFolderAscendancyScionIcon).map(this.iconOptionFromIcon)
+      Object.values(BookmarksFolderAscendancyDuelistIcon).map(this.iconOptionFromIcon),
+      Object.values(BookmarksFolderAscendancyShadowIcon).map(this.iconOptionFromIcon),
+      Object.values(BookmarksFolderAscendancyMarauderIcon).map(this.iconOptionFromIcon),
+      Object.values(BookmarksFolderAscendancyWitchIcon).map(this.iconOptionFromIcon),
+      Object.values(BookmarksFolderAscendancyRangerIcon).map(this.iconOptionFromIcon),
+      Object.values(BookmarksFolderAscendancyTemplarIcon).map(this.iconOptionFromIcon),
+      Object.values(BookmarksFolderAscendancyScionIcon).map(this.iconOptionFromIcon)
     ];
   }
 
   get iconItemOptions() {
-    return Object.values(BookmarkFolderItemIcon).map(this.iconOptionFromIcon);
+    return Object.values(BookmarksFolderItemIcon).map(this.iconOptionFromIcon);
   }
 
   @action
@@ -54,14 +54,14 @@ export default class BookmarksFolderEdition extends Component<Args> {
   }
 
   @action
-  toggleIcon(icon: BookmarkFolderAscendancyIcon | BookmarkFolderItemIcon) {
+  toggleIcon(icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon) {
     this.folder = {
       ...this.folder,
       icon: icon !== this.folder.icon ? icon : null
     };
   }
 
-  private iconOptionFromIcon(icon: BookmarkFolderAscendancyIcon | BookmarkFolderItemIcon) {
+  private iconOptionFromIcon(icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon) {
     return {
       value: icon,
       imagePath: `bookmark-folder/${icon}.png`

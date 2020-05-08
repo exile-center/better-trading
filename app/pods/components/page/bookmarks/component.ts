@@ -7,17 +7,17 @@ import {dropTask} from 'ember-concurrency-decorators';
 
 // Types
 import Bookmarks from 'better-trading/services/bookmarks';
-import {BookmarkFolderStruct} from 'better-trading/types/bookmarks';
+import {BookmarksFolderStruct} from 'better-trading/types/bookmarks';
 
 export default class PageBookmarks extends Component {
   @service('bookmarks')
   bookmarks: Bookmarks;
 
   @tracked
-  stagedFolder: BookmarkFolderStruct | null;
+  stagedFolder: BookmarksFolderStruct | null;
 
   @tracked
-  folders: BookmarkFolderStruct[] = [];
+  folders: BookmarksFolderStruct[] = [];
 
   @tracked
   newFolderId: number | null = null;
@@ -31,20 +31,20 @@ export default class PageBookmarks extends Component {
   }
 
   @dropTask
-  *deleteFolderTask(deletingFolder: BookmarkFolderStruct) {
+  *deleteFolderTask(deletingFolder: BookmarksFolderStruct) {
     yield this.bookmarks.deleteFolder(deletingFolder);
     this.folders = yield this.bookmarks.fetchFolders();
   }
 
   @dropTask
-  *reorderFoldersTask(reorderedFolders: BookmarkFolderStruct[]) {
+  *reorderFoldersTask(reorderedFolders: BookmarksFolderStruct[]) {
     this.folders = reorderedFolders;
 
     yield this.bookmarks.persistFolders(this.folders);
   }
 
   @dropTask
-  *persistFolderTask(folder: BookmarkFolderStruct) {
+  *persistFolderTask(folder: BookmarksFolderStruct) {
     const isNewlyCreated = !folder.id;
 
     const folderId = yield this.bookmarks.persistFolder(folder);
@@ -60,7 +60,7 @@ export default class PageBookmarks extends Component {
   }
 
   @action
-  stageFolder(folder: BookmarkFolderStruct) {
+  stageFolder(folder: BookmarksFolderStruct) {
     this.stagedFolder = folder;
   }
 
