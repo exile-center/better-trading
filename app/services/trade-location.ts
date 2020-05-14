@@ -5,11 +5,9 @@ import {restartableTask} from 'ember-concurrency-decorators';
 import {timeout} from 'ember-concurrency';
 import Evented from '@ember/object/evented';
 
-// Utilities
-import performTask from 'better-trading/utilities/perform-task';
-
 // Types
 import {TradeLocationChangeEvent, TradeLocationStruct} from 'better-trading/types/trade-location';
+import {Task} from 'better-trading/types/ember-concurrency';
 
 // Constants
 const BASE_URL = 'https://www.pathofexile.com/trade';
@@ -65,11 +63,21 @@ export default class TradeLocation extends Service.extend(Evented) {
     }
 
     yield timeout(LOCATION_POLLING_INTERVAL_IN_MILLISECONDS);
-    performTask(this.locationPollingTask);
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    (this.locationPollingTask as Task).perform();
   }
 
-  watchTradeLocation() {
-    performTask(this.locationPollingTask);
+  initialize() {
+    window.addEventListener('focus', this.startLocationPolling.bind(this));
+    window.addEventListener('blur', this.stopLocationPolling.bind(this));
+
+    this.startLocationPolling();
+  }
+
+  teardown() {
+    window.removeEventListener('focus', this.startLocationPolling);
+    window.removeEventListener('blur', this.stopLocationPolling);
   }
 
   getTradeUrl(type: string, slug: string, league: string) {
@@ -86,6 +94,17 @@ export default class TradeLocation extends Service.extend(Evented) {
     const [type, league, slug] = window.location.pathname.replace('/trade/', '').split('/');
 
     return {type, league, slug};
+  }
+
+  private startLocationPolling() {
+    if (!window.document.hasFocus()) return;
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    (this.locationPollingTask as Task).perform();
+  }
+
+  private stopLocationPolling() {
+    (this.locationPollingTask as Task).cancelAll();
   }
 }
 

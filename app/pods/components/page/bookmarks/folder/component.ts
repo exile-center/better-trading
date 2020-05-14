@@ -7,15 +7,13 @@ import {inject as service} from '@ember/service';
 import {dropTask} from 'ember-concurrency-decorators';
 import {timeout} from 'ember-concurrency';
 
-// Utilities
-import performTask from 'better-trading/utilities/perform-task';
-
 // Types
 import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 import TradeLocation from 'better-trading/services/trade-location';
 import Bookmarks from 'better-trading/services/bookmarks';
 import SearchPanel from 'better-trading/services/search-panel';
 import {TradeLocationChangeEvent} from 'better-trading/types/trade-location';
+import {Task} from 'better-trading/types/ember-concurrency';
 
 interface Args {
   folder: Required<BookmarksFolderStruct>;
@@ -86,7 +84,7 @@ export default class BookmarksFolder extends Component<Args> {
 
     this.isAnimating = true;
 
-    yield performTask(this.refreshTradesTask);
+    yield (this.refreshTradesTask as Task).perform();
     yield timeout(EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS);
 
     this.isAnimating = false;
@@ -101,7 +99,7 @@ export default class BookmarksFolder extends Component<Args> {
   @dropTask
   *deleteTradeTask(deletingTrade: BookmarksTradeStruct) {
     yield this.bookmarks.deleteTrade(deletingTrade, this.folderId);
-    yield performTask(this.refreshTradesTask);
+    yield (this.refreshTradesTask as Task).perform();
     this.stagedDeletingTrade = null;
   }
 
@@ -115,7 +113,7 @@ export default class BookmarksFolder extends Component<Args> {
   @dropTask
   *persistTradeTask(trade: BookmarksTradeStruct) {
     yield this.bookmarks.persistTrade(trade, this.folderId);
-    yield performTask(this.refreshTradesTask);
+    yield (this.refreshTradesTask as Task).perform();
     this.stagedTrade = null;
   }
 
@@ -134,7 +132,7 @@ export default class BookmarksFolder extends Component<Args> {
       this.folderId
     );
 
-    yield performTask(this.refreshTradesTask);
+    yield (this.refreshTradesTask as Task).perform();
   }
 
   @dropTask
@@ -147,7 +145,7 @@ export default class BookmarksFolder extends Component<Args> {
       this.folderId
     );
 
-    yield performTask(this.refreshTradesTask);
+    yield (this.refreshTradesTask as Task).perform();
   }
 
   @dropTask
@@ -155,7 +153,7 @@ export default class BookmarksFolder extends Component<Args> {
     this.isAnimating = true;
     this.args.onExpansionToggle(this.args.folder.id);
 
-    yield performTask(this.refreshTradesTask);
+    yield (this.refreshTradesTask as Task).perform();
     yield timeout(EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS);
 
     this.isAnimating = false;

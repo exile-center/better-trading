@@ -35,10 +35,14 @@ export default class ApplicationRoute extends Route {
   async beforeModel() {
     this.intl.setLocale(DEFAULT_LOCALE);
     this.itemResults.watchResults();
-    this.tradeLocation.watchTradeLocation();
+    this.tradeLocation.initialize();
     await this.storage.initialize();
 
     // Temporary migration
     await this.bookmarksStorage.migrateDexieToStorage();
+  }
+
+  deactivate() {
+    this.tradeLocation.teardown();
   }
 }
