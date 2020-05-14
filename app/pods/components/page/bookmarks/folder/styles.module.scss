@@ -166,17 +166,3 @@
 .folder-actions-new-trade {
   flex: 1 1 auto;
 }
-
-.deletion-modal-confirmation {
-  line-height: 1.7;
-
-  strong {
-    color: $white;
-  }
-}
-
-.deletion-modal-actions {
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
-}

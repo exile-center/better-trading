@@ -15,7 +15,7 @@ interface Args {
   submitTask: any;
 }
 
-export default class BookmarksTradeEdition extends Component<Args> {
+export default class TradeEdition extends Component<Args> {
   @service('bookmarks')
   bookmarks: Bookmarks;
 

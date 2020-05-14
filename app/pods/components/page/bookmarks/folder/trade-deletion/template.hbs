@@ -1,0 +1,27 @@
+<Modal
+  @title={{t "page.bookmarks.folder.trade-deletion.modal-title"}}
+  @onClose={{fn @onCancel}}
+>
+  <p local-class="confirmation">
+    {{html-safe
+      (t "page.bookmarks.folder.trade-deletion.confirmation" name=@trade.title)
+    }}
+  </p>
+
+  <div local-class="actions">
+    <Button
+      type="button"
+      @theme="red"
+      @label={{t "page.bookmarks.folder.trade-deletion.delete"}}
+      @onClick={{perform @submitTask @trade}}
+      @icon="trash-alt"
+    />
+
+    <Button
+      type="button"
+      @theme="blue"
+      @label={{t "page.bookmarks.folder.trade-deletion.cancel"}}
+      @onClick={{fn @onCancel}}
+    />
+  </div>
+</Modal>

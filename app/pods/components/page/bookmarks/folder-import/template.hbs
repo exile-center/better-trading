@@ -12,30 +12,31 @@
       @autofocus={{true}}
       @onChange={{fn this.handleInput}}
     />
-      {{#if this.stagedFolder}}
-        <div local-class="import-preview">
-          {{#if this.stagedFolder.icon}}
-            <BookmarkFolderIcon @icon={{this.stagedFolder.icon}}/>
-          {{/if}}
 
-          <div local-class="import-preview-title">
-            {{t
-              "page.bookmarks.folder-import.preview"
-              name=this.stagedFolder.title
-              tradesCount=this.stagedTrades.length
-            }}
-          </div>
-        </div>
-      {{else if this.isInvalid}}
-        <div local-class="invalid-code">
-          <FaIcon
-            @icon="exclamation-circle"
-            local-class="invalid-code-icon"
-          />
+    {{#if this.stagedFolder}}
+      <div local-class="import-preview">
+        {{#if this.stagedFolder.icon}}
+          <BookmarkFolderIcon @icon={{this.stagedFolder.icon}}/>
+        {{/if}}
 
-          {{t "page.bookmarks.folder-import.invalid-code"}}
+        <div local-class="import-preview-title">
+          {{t
+            "page.bookmarks.folder-import.preview"
+            name=this.stagedFolder.title
+            tradesCount=this.stagedTrades.length
+          }}
         </div>
-      {{/if}}
+      </div>
+    {{else if this.isInvalid}}
+      <div local-class="invalid-code">
+        <FaIcon
+          @icon="exclamation-circle"
+          local-class="invalid-code-icon"
+        />
+
+        {{t "page.bookmarks.folder-import.invalid-code"}}
+      </div>
+    {{/if}}
 
     <Button
       type="submit"

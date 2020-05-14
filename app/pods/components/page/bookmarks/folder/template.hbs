@@ -148,63 +148,20 @@
 {{/if}}
 
 {{#if this.stagedDeletingTrade}}
-  <Modal
-    @title={{t "page.bookmarks.folder.trade-deletion.modal-title"}}
-    @onClose={{fn this.cancelTradeDeletion}}
-  >
-    <p local-class="deletion-modal-confirmation">
-      {{html-safe
-        (t "page.bookmarks.folder.trade-deletion.confirmation" name=this.stagedDeletingTrade.title)
-      }}
-    </p>
-
-    <div local-class="deletion-modal-actions">
-      <Button
-        type="button"
-        @theme="red"
-        @label="{{t "page.bookmarks.folder.trade-deletion.delete"}}"
-        @onClick={{perform this.deleteTradeTask this.stagedDeletingTrade}}
-        @icon="trash-alt"
-      />
-
-      <Button
-        type="button"
-        @theme="blue"
-        @label="{{t "page.bookmarks.folder.trade-deletion.cancel"}}"
-        @onClick={{fn this.cancelTradeDeletion}}
-      />
-    </div>
-  </Modal>
+  <Page::Bookmarks::Folder::TradeDeletion
+    @trade={{this.stagedDeletingTrade}}
+    @onCancel={{fn this.cancelTradeDeletion}}
+    @submitTask={{this.deleteTradeTask}}
+  />
 {{/if}}
 
 {{#if this.isStagedForDeletion}}
-  <Modal
-    @title={{t "page.bookmarks.folder.folder-deletion.modal-title"}}
-    @onClose={{fn this.cancelFolderDeletion}}
-  >
-    <p local-class="deletion-modal-confirmation">
-      {{html-safe
-        (t "page.bookmarks.folder.folder-deletion.confirmation" name=@folder.title tradesCount=this.trades.length)
-      }}
-    </p>
-
-    <div local-class="deletion-modal-actions">
-      <Button
-        type="button"
-        @theme="red"
-        @label="{{t "page.bookmarks.folder.folder-deletion.delete"}}"
-        @onClick={{fn this.confirmFolderDeletion}}
-        @icon="trash-alt"
-      />
-
-      <Button
-        type="button"
-        @theme="blue"
-        @label="{{t "page.bookmarks.folder.folder-deletion.cancel"}}"
-        @onClick={{fn this.cancelFolderDeletion}}
-      />
-    </div>
-  </Modal>
+  <Page::Bookmarks::Folder::FolderDeletion
+    @folder={{@folder}}
+    @tradesCount={{this.trades.length}}
+    @onCancel={{fn this.cancelFolderDeletion}}
+    @onConfirm={{fn this.confirmFolderDeletion}}
+  />
 {{/if}}
 
 {{#if this.isExporting}}

@@ -11,7 +11,7 @@
   <Button
     type="button"
     @theme="gold"
-    @label="{{t (if this.hasCopied "components.clipboard-textarea.button-copied" "components.clipboard-textarea.button")}}"
+    @label={{this.copyButtonLabel}}
     @onClick={{fn this.copyToClipboard}}
     @icon="clipboard"
     local-class="clipboard-button"
