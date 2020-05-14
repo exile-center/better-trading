@@ -1,41 +1,22 @@
 // Vendor
 import Helper from '@ember/component/helper';
 import {inject as service} from '@ember/service';
-import {task} from 'ember-concurrency-decorators';
-import {timeout} from 'ember-concurrency';
 
 // Types
-import Location from 'better-trading/services/location';
-import performTask from 'better-trading/utilities/perform-task';
+import TradeLocation from 'better-trading/services/trade-location';
 
-// Constants
-const URL_REFRESH_DELAY_IN_MILLISECONDS = 1000;
+type PositionalParams = [{slug: string; type: string}];
+interface NamedParams {
+  suffix?: string;
+  league: string;
+}
 
 export default class TradeUrl extends Helper {
-  @service('location')
-  location: Location;
+  @service('trade-location')
+  tradeLocation: TradeLocation;
 
-  @task
-  *urlUpdateTask() {
-    yield timeout(URL_REFRESH_DELAY_IN_MILLISECONDS);
-
-    if (document.hasFocus()) {
-      this.recompute();
-    }
-
-    performTask(this.urlUpdateTask);
-  }
-
-  init() {
-    super.init();
-
-    // TODO: maybe rework with better url tracking
-    performTask(this.urlUpdateTask);
-  }
-
-  compute(params: string[]) {
-    const [type, slug, suffix] = params;
-    const tradeURL = this.location.getTradeUrl(type, slug);
+  compute([{type, slug}]: PositionalParams, {suffix, league}: NamedParams) {
+    const tradeURL = this.tradeLocation.getTradeUrl(type, slug, league);
 
     if (!suffix) return tradeURL;
 

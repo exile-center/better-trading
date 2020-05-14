@@ -5,7 +5,7 @@ import Service, {inject as service} from '@ember/service';
 import {slugify} from 'better-trading/utilities/slugify';
 
 // Types
-import Location from 'better-trading/services/location';
+import TradeLocation from 'better-trading/services/trade-location';
 import PoeNinja, {PoeNinjaCurrenciesRatios} from 'better-trading/services/poe-ninja';
 
 // Constants
@@ -26,13 +26,14 @@ export default class ItemResultsEquivalentPricings extends Service {
   @service('poe-ninja')
   poeNinja: PoeNinja;
 
-  @service('location')
-  location: Location;
+  @service('trade-location')
+  tradeLocation: TradeLocation;
 
   chaosRatios: PoeNinjaCurrenciesRatios | null;
 
   async prepare(): Promise<void> {
-    this.chaosRatios = await this.poeNinja.fetchChaosRatiosFor(this.location.league);
+    const currentLeague = this.tradeLocation.league;
+    this.chaosRatios = currentLeague ? await this.poeNinja.fetchChaosRatiosFor(currentLeague) : null;
   }
 
   // eslint-disable-next-line complexity

@@ -12,9 +12,10 @@ import performTask from 'better-trading/utilities/perform-task';
 
 // Types
 import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
-import Location from 'better-trading/services/location';
+import TradeLocation from 'better-trading/services/trade-location';
 import Bookmarks from 'better-trading/services/bookmarks';
 import SearchPanel from 'better-trading/services/search-panel';
+import {TradeLocationChangeEvent} from 'better-trading/types/trade-location';
 
 interface Args {
   folder: Required<BookmarksFolderStruct>;
@@ -31,14 +32,17 @@ const EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS = 500;
 export default class BookmarksFolder extends Component<Args> {
   fadeTransition = fade;
 
-  @service('location')
-  location: Location;
+  @service('trade-location')
+  tradeLocation: TradeLocation;
 
   @service('bookmarks')
   bookmarks: Bookmarks;
 
   @service('search-panel')
   searchPanel: SearchPanel;
+
+  @tracked
+  currentLeague: string | null = this.tradeLocation.league;
 
   @tracked
   stagedTrade: BookmarksTradeStruct | null;
@@ -70,6 +74,10 @@ export default class BookmarksFolder extends Component<Args> {
 
   get isExpanded() {
     return this.args.expandedFolderIds.includes(this.args.folder.id);
+  }
+
+  get tradesAreVisible() {
+    return Boolean(this.currentLeague) && this.isExpanded && this.isLoaded;
   }
 
   @dropTask
@@ -113,14 +121,14 @@ export default class BookmarksFolder extends Component<Args> {
 
   @dropTask
   *updateTradeLocationTask(trade: BookmarksTradeStruct) {
-    if (!this.location.slug) return;
+    if (!this.tradeLocation.slug || !this.tradeLocation.type) return;
 
     yield this.bookmarks.persistTrade(
       {
         ...trade,
         location: {
-          slug: this.location.slug,
-          type: this.location.type
+          slug: this.tradeLocation.slug,
+          type: this.tradeLocation.type
         }
       },
       this.folderId
@@ -160,11 +168,11 @@ export default class BookmarksFolder extends Component<Args> {
 
   @action
   createTrade() {
-    if (!this.location.slug) return;
+    if (!this.tradeLocation.slug || !this.tradeLocation.type) return;
 
     const initializedTrade = this.bookmarks.initializeTradeStructFrom({
-      slug: this.location.slug,
-      type: this.location.type
+      slug: this.tradeLocation.slug,
+      type: this.tradeLocation.type
     });
 
     this.stagedTrade = {
@@ -227,5 +235,22 @@ export default class BookmarksFolder extends Component<Args> {
   @action
   cancelExportFolder() {
     this.isExporting = false;
+  }
+
+  @action
+  watchLeagueChange() {
+    this.tradeLocation.on('change', this.handleTradeLocationChange.bind(this));
+  }
+
+  @action
+  teardownLeagueChange() {
+    this.tradeLocation.off('change', this.handleTradeLocationChange);
+  }
+
+  handleTradeLocationChange({newTradeLocation}: TradeLocationChangeEvent) {
+    if (!newTradeLocation.league) return;
+    if (newTradeLocation.league === this.currentLeague) return;
+
+    this.currentLeague = newTradeLocation.league;
   }
 }
