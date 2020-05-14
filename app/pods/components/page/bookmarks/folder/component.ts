@@ -11,7 +11,7 @@ import {timeout} from 'ember-concurrency';
 import performTask from 'better-trading/utilities/perform-task';
 
 // Types
-import {BookmarksFolderItemIcon, BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
+import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 import Location from 'better-trading/services/location';
 import Bookmarks from 'better-trading/services/bookmarks';
 import SearchPanel from 'better-trading/services/search-panel';
@@ -61,24 +61,15 @@ export default class BookmarksFolder extends Component<Args> {
   @tracked
   trades: BookmarksTradeStruct[] = [];
 
+  @tracked
+  isExporting: boolean = false;
+
   get folderId() {
     return this.args.folder.id;
   }
 
   get isExpanded() {
     return this.args.expandedFolderIds.includes(this.args.folder.id);
-  }
-
-  get iconPath() {
-    if (!this.args.folder.icon) return;
-
-    return `bookmark-folder/${this.args.folder.icon}.png`;
-  }
-
-  get iconIsItem() {
-    if (!this.args.folder.icon) return false;
-
-    return (Object.values(BookmarksFolderItemIcon) as string[]).includes(this.args.folder.icon);
   }
 
   @dropTask
@@ -226,5 +217,15 @@ export default class BookmarksFolder extends Component<Args> {
   @action
   stopTradesReordering() {
     this.isReorderingTrades = false;
+  }
+
+  @action
+  exportFolder() {
+    this.isExporting = true;
+  }
+
+  @action
+  cancelExportFolder() {
+    this.isExporting = false;
   }
 }

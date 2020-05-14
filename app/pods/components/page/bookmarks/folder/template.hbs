@@ -9,11 +9,10 @@
       local-class="expansion-wrapper"
     >
       {{#if @folder.icon}}
-        <img
-          local-class="header-icon {{if this.iconIsItem "is-item" "is-ascendancy"}}"
-          src={{image-resource-url this.iconPath}}
-          alt={{@folder.icon}}
-        >
+        <BookmarkFolderIcon
+          @icon={{@folder.icon}}
+          local-class="header-icon"
+        />
       {{/if}}
 
       <div local-class="header-label">
@@ -32,6 +31,10 @@
         <MenuItem
           @label={{t "page.bookmarks.folder.delete-folder"}}
           @onClick={{fn this.deleteFolder}}
+        />
+        <MenuItem
+          @label={{t "page.bookmarks.folder.export-folder"}}
+          @onClick={{fn this.exportFolder}}
         />
       </ContextualMenu>
 
@@ -202,4 +205,12 @@
       />
     </div>
   </Modal>
+{{/if}}
+
+{{#if this.isExporting}}
+  <Page::Bookmarks::Folder::FolderExport
+    @folder={{@folder}}
+    @trades={{this.trades}}
+    @onCancel={{fn this.cancelExportFolder}}
+  />
 {{/if}}

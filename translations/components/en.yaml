@@ -1,0 +1,4 @@
+components:
+  clipboard-textarea:
+    button: Copy to clipboard
+    button-copied: Copied

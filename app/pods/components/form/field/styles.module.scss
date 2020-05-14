@@ -1,5 +1,6 @@
-.container {
+.form-field {
   width: 100%;
+  margin: 0;
 }
 
 .label {
@@ -8,4 +9,11 @@
   font-size: 15px;
   letter-spacing: 0.5px;
   color: $beige;
+}
+
+.helper {
+  margin: 5px 0 0;
+  font-size: 12px;
+  font-weight: normal;
+  color: rgba($beige, 0.8);
 }

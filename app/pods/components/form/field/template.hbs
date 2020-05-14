@@ -1,7 +1,13 @@
-<label local-class="container">
+<label local-class="form-field">
   <div local-class="label">
     {{@label}}
   </div>
 
   {{yield}}
+
+  {{#if @helper}}
+    <p local-class="helper">
+      {{@helper}}
+    </p>
+  {{/if}}
 </label>

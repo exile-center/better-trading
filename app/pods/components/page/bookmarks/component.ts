@@ -7,7 +7,7 @@ import {dropTask} from 'ember-concurrency-decorators';
 
 // Types
 import Bookmarks from 'better-trading/services/bookmarks';
-import {BookmarksFolderStruct} from 'better-trading/types/bookmarks';
+import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 
 export default class PageBookmarks extends Component {
   @service('bookmarks')
@@ -24,6 +24,9 @@ export default class PageBookmarks extends Component {
 
   @tracked
   expandedFolderIds: string[] = this.bookmarks.getExpandedFolderIds();
+
+  @tracked
+  isImportingFolder: boolean = false;
 
   @dropTask
   *fetchFoldersTask() {
@@ -54,6 +57,16 @@ export default class PageBookmarks extends Component {
     this.stagedFolder = null;
   }
 
+  @dropTask
+  *persistImportedFolderTask({folder, trades}: {folder: BookmarksFolderStruct; trades: BookmarksTradeStruct[]}) {
+    const folderId = yield this.bookmarks.persistFolder(folder);
+    yield this.bookmarks.persistTrades(trades, folderId);
+
+    this.toggleFolderExpansion(folderId);
+    this.folders = yield this.bookmarks.fetchFolders();
+    this.isImportingFolder = false;
+  }
+
   @action
   createFolder() {
     this.stagedFolder = this.bookmarks.initializeFolderStruct();
@@ -77,5 +90,15 @@ export default class PageBookmarks extends Component {
   @action
   collapseAllFolderIds() {
     this.expandedFolderIds = this.bookmarks.collapseAllFolderIds();
+  }
+
+  @action
+  importFolder() {
+    this.isImportingFolder = true;
+  }
+
+  @action
+  cancelImportFolder() {
+    this.isImportingFolder = false;
   }
 }

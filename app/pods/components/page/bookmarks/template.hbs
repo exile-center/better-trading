@@ -37,19 +37,37 @@
   {{/each}}
 </SortableGroup>
 
-<Button
-  type="button"
-  local-class="create-folder-button"
-  @theme="gold"
-  @label={{t "page.bookmarks.create-button"}}
-  @icon="folder-plus"
-  @onClick={{fn this.createFolder}}
-/>
+<div local-class="actions">
+  <Button
+    type="button"
+    local-class="create-folder-button"
+    @theme="gold"
+    @label={{t "page.bookmarks.create-folder"}}
+    @icon="folder-plus"
+    @onClick={{fn this.createFolder}}
+  />
+
+  <Button
+    type="button"
+    local-class="create-folder-button"
+    @theme="gold"
+    @label={{t "page.bookmarks.import-folder"}}
+    @icon="file-import"
+    @onClick={{fn this.importFolder}}
+  />
+</div>
 
 {{#if this.stagedFolder}}
   <Page::Bookmarks::FolderEdition
     @folder={{this.stagedFolder}}
     @onCancel={{fn this.unstageFolder}}
     @submitTask={{this.persistFolderTask}}
+  />
+{{/if}}
+
+{{#if this.isImportingFolder}}
+  <Page::Bookmarks::FolderImport
+    @onCancel={{fn this.cancelImportFolder}}
+    @submitTask={{this.persistImportedFolderTask}}
   />
 {{/if}}

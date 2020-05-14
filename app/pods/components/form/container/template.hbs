@@ -1,6 +1,6 @@
 <form
   {{on "submit" (fn this.handleSubmit)}}
-  local-class="container"
+  local-class="form-container {{unless this.canSubmit "is-disabled"}}"
 >
   {{yield}}
 </form>

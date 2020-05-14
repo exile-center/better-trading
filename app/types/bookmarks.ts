@@ -13,8 +13,10 @@ export interface BookmarksTradeStruct {
 export interface BookmarksFolderStruct {
   id?: string;
   title: string;
-  icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon | null;
+  icon: BookmarksFolderIcon | null;
 }
+
+export type BookmarksFolderIcon = BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon;
 
 export enum BookmarksFolderAscendancyDuelistIcon {
   SLAYER = 'slayer',

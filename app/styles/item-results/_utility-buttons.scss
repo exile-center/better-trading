@@ -3,8 +3,8 @@
   button.copy,
   button.searchBy {
     display: block !important;
-    transition: opacity 0.2s ease;
     opacity: 0.6;
+    transition: opacity 0.2s ease;
 
     &:hover,
     &:focus {

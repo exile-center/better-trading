@@ -110,9 +110,11 @@ export default class BookmarksStorage extends Service {
   async persistFolder(folderToPersist: BookmarksFolderStruct) {
     const folders = (await this.fetchFolders()) || [];
     let updatedFolders;
+    let persistingId = folderToPersist.id;
 
-    if (!folderToPersist.id) {
-      updatedFolders = [...folders, {...folderToPersist, id: uniqueId()}];
+    if (!persistingId) {
+      persistingId = uniqueId();
+      updatedFolders = [...folders, {...folderToPersist, id: persistingId}];
     } else {
       updatedFolders = folders.map((folder: BookmarksFolderStruct) => {
         if (folder.id !== folderToPersist.id) return folder;
@@ -124,15 +126,19 @@ export default class BookmarksStorage extends Service {
       });
     }
 
-    return this.persistFolders(updatedFolders);
+    await this.persistFolders(updatedFolders);
+
+    return persistingId;
   }
 
   async persistTrade(tradeToPersist: BookmarksTradeStruct, folderId: string) {
     const trades = await this.fetchTradesByFolderId(folderId);
     let updatedTrades;
+    let persistingId = tradeToPersist.id;
 
     if (!tradeToPersist.id) {
-      updatedTrades = [...trades, {...tradeToPersist, id: uniqueId()}];
+      persistingId = uniqueId();
+      updatedTrades = [...trades, {...tradeToPersist, id: persistingId}];
     } else {
       updatedTrades = trades.map((trade: BookmarksTradeStruct) => {
         if (trade.id !== tradeToPersist.id) return trade;
@@ -144,7 +150,9 @@ export default class BookmarksStorage extends Service {
       });
     }
 
-    return this.persistTrades(updatedTrades, folderId);
+    await this.persistTrades(updatedTrades, folderId);
+
+    return persistingId;
   }
 
   async persistTrades(bookmarkTrades: BookmarksTradeStruct[], folderId: string) {

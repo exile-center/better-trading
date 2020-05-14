@@ -1,4 +1,11 @@
-.container {
+.form-container {
   display: grid;
   grid-gap: 15px;
+
+  &.is-disabled {
+    button[type='submit'] {
+      opacity: 0.6;
+      pointer-events: none;
+    }
+  }
 }

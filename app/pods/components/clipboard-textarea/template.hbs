@@ -1,0 +1,21 @@
+<div local-class="textarea-wrapper">
+  <textarea
+    {{did-insert (fn this.textareaDidInsert)}}
+    {{on "focus" (fn this.selectAll)}}
+    local-class="textarea"
+    readonly
+    value={{@value}}
+    ...attributes
+  />
+
+  <Button
+    type="button"
+    @theme="gold"
+    @label="{{t (if this.hasCopied "components.clipboard-textarea.button-copied" "components.clipboard-textarea.button")}}"
+    @onClick={{fn this.copyToClipboard}}
+    @icon="clipboard"
+    local-class="clipboard-button"
+  />
+</div>
+
+

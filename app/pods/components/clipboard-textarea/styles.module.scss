@@ -1,0 +1,20 @@
+.textarea-wrapper {
+  position: relative;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 75px;
+  max-height: 150px;
+  border: 1px solid $gold-alt;
+  background: transparent;
+  font-weight: normal;
+  color: rgba(#fff, 0.7);
+  resize: vertical;
+}
+
+.clipboard-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

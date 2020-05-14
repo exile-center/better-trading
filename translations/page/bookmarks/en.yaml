@@ -1,10 +1,12 @@
 page:
   bookmarks:
-    create-button: New bookmark folder
+    create-folder: New folder
+    import-folder: Import folder
     collapse-all: Collapse folders
     folder:
       edit-folder: Edit
       delete-folder: Delete
+      export-folder: Export/Share
       open-live-trade: Live search
       create-trade: Register current trade
       edit-trade: Edit
@@ -22,6 +24,15 @@ page:
         confirmation: 'Delete the bookmarks folder <strong>{name}</strong> {tradesCount, plural, =0 {} =1 {and its <strong>single bookmark</strong> } other {and its <strong># bookmarks</strong> }}?'
         delete: Delete
         cancel: Cancel
+      folder-export:
+        title: Bookmark folder export
+        preview-url: Preview page
+        preview-url-button: Open in a new tab
+        export-code: Export code
+        export-code-helper: This code can be used to restore a folder. It can be used for backup and sharing purposes.
+        embed-code: Embed code snippet
+        embed-code-helper: Use this snippet to include the folder's preview in your website.
+        cancel: Cancel
       trade-edition:
         title: Bookmark trade
         save: Save
@@ -36,3 +47,10 @@ page:
           label: Title
         icon:
           label: Icon
+    folder-import:
+      title: Import bookmark folder
+      import-code:
+        label: Import code
+      preview: '{name} {tradesCount, plural, =0 {} =1 {(1 bookmark)} other {(# bookmarks)}}'
+      invalid-code: The entered code seems invalid, try another one.
+      save: Save

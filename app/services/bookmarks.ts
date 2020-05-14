@@ -4,6 +4,7 @@ import Service, {inject as service} from '@ember/service';
 // Types
 import BookmarksState from 'better-trading/services/bookmarks/state';
 import BookmarksStorage from 'better-trading/services/bookmarks/storage';
+import BookmarksShare from 'better-trading/services/bookmarks/share';
 import {BookmarksFolderStruct, BookmarksTradeLocation, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 
 export default class Bookmarks extends Service {
@@ -12,6 +13,9 @@ export default class Bookmarks extends Service {
 
   @service('bookmarks/state')
   bookmarksState: BookmarksState;
+
+  @service('bookmarks/share')
+  bookmarksShare: BookmarksShare;
 
   async fetchFolders() {
     return this.bookmarksStorage.fetchFolders();
@@ -74,6 +78,14 @@ export default class Bookmarks extends Service {
 
   collapseAllFolderIds() {
     return this.bookmarksState.collapseAllFolderIds();
+  }
+
+  serializeFolder(folder: BookmarksFolderStruct, trades: BookmarksTradeStruct[]) {
+    return this.bookmarksShare.serialize(folder, trades);
+  }
+
+  deserializeFolder(serializedFolder: string) {
+    return this.bookmarksShare.deserialize(serializedFolder);
   }
 }
 

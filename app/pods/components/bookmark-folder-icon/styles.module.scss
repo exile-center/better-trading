@@ -1,0 +1,14 @@
+.bookmark-folder-icon {
+  width: auto;
+
+  &.is-item {
+    width: 34px;
+    height: 34px;
+    margin: 3px 8px;
+  }
+
+  &.is-ascendancy {
+    width: 50px;
+    height: 40px;
+  }
+}
