@@ -149,7 +149,7 @@
 
 {{#if this.stagedDeletingTrade}}
   <Modal
-    @title={{t "page.bookmarks.folder.trade-deletion.title"}}
+    @title={{t "page.bookmarks.folder.trade-deletion.modal-title"}}
     @onClose={{fn this.cancelTradeDeletion}}
   >
     <p local-class="deletion-modal-confirmation">
@@ -179,7 +179,7 @@
 
 {{#if this.isStagedForDeletion}}
   <Modal
-    @title={{t "page.bookmarks.folder.folder-deletion.title"}}
+    @title={{t "page.bookmarks.folder.folder-deletion.modal-title"}}
     @onClose={{fn this.cancelFolderDeletion}}
   >
     <p local-class="deletion-modal-confirmation">

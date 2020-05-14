@@ -1,5 +1,5 @@
 <Modal
-  @title={{t "page.bookmarks.folder.folder-export.title"}}
+  @title={{t "page.bookmarks.folder.folder-export.modal-title"}}
   @onClose={{fn @onCancel}}
 >
   <div local-class="folder-export-container">
@@ -37,7 +37,7 @@
     <Button
       type="button"
       @theme="blue"
-      @label="{{t "page.bookmarks.folder.folder-export.cancel"}}"
+      @label="{{t "page.bookmarks.folder.folder-export.close"}}"
       @onClick={{fn @onCancel}}
     />
   </div>

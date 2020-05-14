@@ -15,40 +15,35 @@ page:
       complete-trade: Mark as complete
       uncomplete-trade: Unmark as complete
       trade-deletion:
-        title: Confirm deletion
+        modal-title: Confirm deletion
         confirmation: 'Delete the bookmark <strong>{name}</strong> ?'
         delete: Delete
         cancel: Cancel
       folder-deletion:
-        title: Confirm deletion
+        modal-title: Confirm deletion
         confirmation: 'Delete the bookmarks folder <strong>{name}</strong> {tradesCount, plural, =0 {} =1 {and its <strong>single bookmark</strong> } other {and its <strong># bookmarks</strong> }}?'
         delete: Delete
         cancel: Cancel
       folder-export:
-        title: Bookmark folder export
+        modal-title: Bookmark folder export
         preview-url: Preview page
         preview-url-button: Open in a new tab
         export-code: Export code
         export-code-helper: This code can be used to restore a folder. It can be used for backup and sharing purposes.
         embed-code: Embed code snippet
         embed-code-helper: Use this snippet to include the folder's preview in your website.
-        cancel: Cancel
+        close: Close
       trade-edition:
-        title: Bookmark trade
+        modal-title: Bookmark trade
+        title-label: Title
         save: Save
-        fields:
-          title:
-            label: Title
     folder-edition:
-      title: Bookmark folder
+      modal-title: Bookmark folder
+      title-label: Title
+      icon-label: Icon
       save: Save
-      fields:
-        title:
-          label: Title
-        icon:
-          label: Icon
     folder-import:
-      title: Import bookmark folder
+      modal-title: Import bookmark folder
       import-code:
         label: Import code
       preview: '{name} {tradesCount, plural, =0 {} =1 {(1 bookmark)} other {(# bookmarks)}}'

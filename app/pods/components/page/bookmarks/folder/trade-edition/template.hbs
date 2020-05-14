@@ -1,5 +1,5 @@
 <Modal
-  @title={{t "page.bookmarks.folder.trade-edition.title"}}
+  @title={{t "page.bookmarks.folder.trade-edition.modal-title"}}
   @onClose={{fn @onCancel}}
 >
   <Form::Container
@@ -8,7 +8,7 @@
     @canSubmit={{this.canSubmit}}
   >
     <Form::Input
-      @label={{t "page.bookmarks.folder.trade-edition.fields.title.label"}}
+      @label={{t "page.bookmarks.folder.trade-edition.title-label"}}
       @value={{this.trade.title}}
       @autofocus={{true}}
       @onChange={{fn this.changeTitle}}
