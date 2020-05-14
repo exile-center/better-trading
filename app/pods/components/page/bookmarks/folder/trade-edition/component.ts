@@ -22,6 +22,10 @@ export default class BookmarksTradeEdition extends Component<Args> {
   @tracked
   trade: BookmarksTradeStruct = this.args.trade;
 
+  get canSubmit() {
+    return Boolean(this.trade.title);
+  }
+
   @action
   changeTitle(title: string) {
     this.trade = {...this.trade, title};

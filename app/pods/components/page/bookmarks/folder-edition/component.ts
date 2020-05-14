@@ -48,6 +48,10 @@ export default class BookmarksFolderEdition extends Component<Args> {
     return Object.values(BookmarksFolderItemIcon).map(this.iconOptionFromIcon);
   }
 
+  get canSubmit() {
+    return Boolean(this.folder.title);
+  }
+
   @action
   changeTitle(title: string) {
     this.folder = {...this.folder, title};
