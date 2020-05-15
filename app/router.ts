@@ -7,7 +7,7 @@ class Router extends EmberRouter {
 }
 
 Router.map(function() {
-  this.route('bookmarks', {path: '/'});
+  this.route('root', {path: '/'});
   this.route('about');
 });
 

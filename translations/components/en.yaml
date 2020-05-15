@@ -2,3 +2,6 @@ components:
   clipboard-textarea:
     button: Copy to clipboard
     button-copied: Copied
+  root-page-menu:
+    bookmarks: Bookmarks
+    history: History

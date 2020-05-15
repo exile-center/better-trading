@@ -237,12 +237,12 @@ export default class BookmarksFolder extends Component<Args> {
 
   @action
   watchLeagueChange() {
-    this.tradeLocation.on('change', this.handleTradeLocationChange.bind(this));
+    this.tradeLocation.on('change', this, this.handleTradeLocationChange);
   }
 
   @action
   teardownLeagueChange() {
-    this.tradeLocation.off('change', this.handleTradeLocationChange);
+    this.tradeLocation.off('change', this, this.handleTradeLocationChange);
   }
 
   handleTradeLocationChange({newTradeLocation}: TradeLocationChangeEvent) {

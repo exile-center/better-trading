@@ -1,0 +1,12 @@
+<ul local-class="root-page-menu" data-active-index={{this.activeItemIndex}}>
+  {{#each this.menuItems as |menuItem|}}
+    <li
+      local-class="menu-item"
+      {{on "click" (fn @onChange menuItem.page)}}
+    >
+      <FaIcon @icon={{menuItem.icon}}/>
+
+      {{menuItem.label}}
+    </li>
+  {{/each}}
+</ul>
