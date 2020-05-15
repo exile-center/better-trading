@@ -1,0 +1,13 @@
+<div ...attributes>
+  {{#if this.isLoading}}
+    <div local-class="loader">
+      <FaIcon
+        local-class="loader"
+        @icon="circle-notch"
+        @spin={{true}}
+      />
+    </div>
+  {{else}}
+    {{yield}}
+  {{/if}}
+</div>

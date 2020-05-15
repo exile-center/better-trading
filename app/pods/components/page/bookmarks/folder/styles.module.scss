@@ -1,4 +1,5 @@
-.container {
+.folder {
+  @include fade-in;
   border: 1px solid $blue-alt;
 
   &.is-expanded {

@@ -53,7 +53,8 @@ module.exports = function(environment) {
         'file-import',
         'exclamation-circle',
         'history',
-        'folder-open'
+        'folder-open',
+        'circle-notch'
       ],
       'free-brands-svg-icons': ['github', 'discord']
     }

@@ -1,43 +1,28 @@
-$menu-item-count: 2;
-
 .root-page-menu {
   display: flex;
   position: relative;
   width: 100%;
   margin-bottom: 10px;
-
-  &::before {
-    display: block;
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: #{100% / $menu-item-count};
-    height: 2px;
-    background-color: $gold-alt;
-
-    transition: left 0.2s ease;
-  }
-
-  @for $i from 0 to $menu-item-count {
-    &[data-active-index='#{$i}']::before {
-      left: #{$i * (100% / $menu-item-count)};
-    }
-  }
 }
 
 .menu-item {
-  width: #{100% / $menu-item-count};
-  padding: 5px 0 7px;
+  width: 50%;
+  padding: 5px 0;
+  border-bottom: 2px solid transparent;
   margin: 0;
   background-color: transparent;
   text-align: center;
   color: $white;
-  transition: background-color 0.2s ease;
+  transition: 0.2s ease;
+  transition-property: background-color, border-color;
   cursor: pointer;
 
   &:hover,
   &:focus {
     background-color: rgba($gold, 0.2);
+  }
+
+  &.is-active {
+    border-color: $gold-alt;
   }
 }

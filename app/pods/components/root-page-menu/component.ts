@@ -15,6 +15,7 @@ interface MenuItem {
   page: RootPage;
   icon: string;
   label: string;
+  isActive: boolean;
 }
 
 export default class RootPageMenu extends Component<Args> {
@@ -26,17 +27,15 @@ export default class RootPageMenu extends Component<Args> {
       {
         page: RootPage.BOOKMARKS,
         icon: 'folder-open',
-        label: this.intl.t('components.root-page-menu.bookmarks')
+        label: this.intl.t('components.root-page-menu.bookmarks'),
+        isActive: RootPage.BOOKMARKS === this.args.currentPage
       },
       {
         page: RootPage.HISTORY,
         icon: 'history',
-        label: this.intl.t('components.root-page-menu.history')
+        label: this.intl.t('components.root-page-menu.history'),
+        isActive: RootPage.HISTORY === this.args.currentPage
       }
     ];
-  }
-
-  get activeItemIndex() {
-    return this.menuItems.findIndex(menuItem => menuItem.page === this.args.currentPage);
   }
 }
