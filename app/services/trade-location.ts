@@ -1,5 +1,5 @@
 // Vendor
-import Service from '@ember/service';
+import Service, {inject as service} from '@ember/service';
 import window from 'ember-window-mock';
 import {restartableTask} from 'ember-concurrency-decorators';
 import {timeout} from 'ember-concurrency';
@@ -8,10 +8,13 @@ import Evented from '@ember/object/evented';
 // Types
 import {TradeLocationChangeEvent, TradeLocationStruct} from 'better-trading/types/trade-location';
 import {Task} from 'better-trading/types/ember-concurrency';
+import TradeLocationHistory from 'better-trading/services/trade-location/history';
+
+// Config
+import config from 'better-trading/config/environment';
 
 // Constants
 const BASE_URL = 'https://www.pathofexile.com/trade';
-const LOCATION_POLLING_INTERVAL_IN_MILLISECONDS = 500;
 
 interface ParsedPath {
   type: string;
@@ -20,6 +23,9 @@ interface ParsedPath {
 }
 
 export default class TradeLocation extends Service.extend(Evented) {
+  @service('trade-location/history')
+  tradeLocationHistory: TradeLocationHistory;
+
   lastTradeLocation: TradeLocationStruct = this.currentTradeLocation;
 
   get type(): string | null {
@@ -58,11 +64,12 @@ export default class TradeLocation extends Service.extend(Evented) {
         newTradeLocation: currentTradeLocation
       };
 
+      yield this.tradeLocationHistory.maybeLogTradeLocation(currentTradeLocation);
       this.trigger('change', changeEvent);
       this.lastTradeLocation = currentTradeLocation;
     }
 
-    yield timeout(LOCATION_POLLING_INTERVAL_IN_MILLISECONDS);
+    yield timeout(config.APP.locationPollingIntervalInMilliseconds);
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     (this.locationPollingTask as Task).perform();

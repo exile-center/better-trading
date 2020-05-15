@@ -43,7 +43,7 @@ export default class Storage extends Service {
     });
   }
 
-  async getValue(key: string, league: string | null = null) {
+  async getValue<T>(key: string, league: string | null = null): Promise<T | null> {
     const payload = await this.read(this.formatKey(key, league));
     if (!payload) return null;
 

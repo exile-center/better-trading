@@ -28,7 +28,9 @@ module.exports = function(environment) {
     discordUrl: 'http://discord.exile.center',
     githubUrl: 'https://github.com/exile-center/better-trading',
     chaosRecipeOverlayUrl: 'https://github.com/exile-center/chaos-recipe-overlay',
-    browser: process.env.BROWSER || 'chrome'
+    browser: process.env.BROWSER || 'chrome',
+    locationPollingIntervalInMilliseconds: 500,
+    maximumHistoryLength: 50
   };
 
   ENV.fontawesome = {
@@ -60,6 +62,9 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    ENV.APP.locationPollingIntervalInMilliseconds = 50;
+    ENV.APP.maximumHistoryLength = 5;
   }
 
   return ENV;

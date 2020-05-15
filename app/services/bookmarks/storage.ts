@@ -94,14 +94,14 @@ export default class BookmarksStorage extends Service {
   }
 
   async fetchFolders() {
-    const folders = await this.storage.getValue(FOLDERS_KEY);
+    const folders = await this.storage.getValue<BookmarksFolderStruct[]>(FOLDERS_KEY);
     if (!folders) return [];
 
     return folders;
   }
 
   async fetchTradesByFolderId(folderId: string) {
-    const trades = await this.storage.getValue(`${TRADES_PREFIX_KEY}--${folderId}`);
+    const trades = await this.storage.getValue<BookmarksTradeStruct[]>(`${TRADES_PREFIX_KEY}--${folderId}`);
     if (!trades) return [];
 
     return trades;

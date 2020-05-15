@@ -21,5 +21,7 @@ declare const config: {
     githubUrl: string;
     chaosRecipeOverlayUrl: string;
     browser: 'chrome' | 'firefox';
+    locationPollingIntervalInMilliseconds: number;
+    maximumHistoryLength: number;
   };
 };
