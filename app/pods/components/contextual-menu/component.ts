@@ -2,21 +2,42 @@
 import Component from '@glimmer/component';
 import {action} from '@ember/object';
 import {tracked} from '@glimmer/tracking';
-import fade from 'ember-animated/transitions/fade';
+import {restartableTask} from 'ember-concurrency-decorators';
+import {timeout} from 'ember-concurrency';
+import {Task} from 'better-trading/types/ember-concurrency';
+
+// Constants
+const HIDE_DEBOUNCE_DELAY_IN_MILLISECONDS = 500;
 
 export default class ContextualMenu extends Component {
   @tracked
-  itemsAreVisible: boolean = false;
+  positionStyles: object | null = null;
 
-  fadeTransition = fade;
+  get itemsAreVisible() {
+    return Boolean(this.positionStyles);
+  }
+
+  @restartableTask
+  *debouncedHideItemsTask() {
+    yield timeout(HIDE_DEBOUNCE_DELAY_IN_MILLISECONDS);
+    this.hideItems();
+  }
 
   @action
-  showItems() {
-    this.itemsAreVisible = true;
+  showItems(event: MouseEvent) {
+    this.positionStyles = {
+      top: `${event.clientY}px`,
+      left: `${event.clientX}px`
+    };
   }
 
   @action
   hideItems() {
-    this.itemsAreVisible = false;
+    this.positionStyles = null;
+  }
+
+  @action
+  cancelDebouncedHideItemsTask() {
+    (this.debouncedHideItemsTask as Task).cancelAll();
   }
 }

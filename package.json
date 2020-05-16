@@ -77,6 +77,7 @@
     "ember-template-lint": "1.8.2",
     "ember-truth-helpers": "2.1.0",
     "ember-window-mock": "0.5.4",
+    "ember-wormhole": "0.5.5",
     "eslint": "6.6.0",
     "eslint-config-prettier": "6.5.0",
     "eslint-plugin-ember": "7.2.0",

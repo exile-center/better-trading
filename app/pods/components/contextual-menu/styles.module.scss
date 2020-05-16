@@ -1,8 +1,4 @@
 .contextual-menu {
-  position: relative;
-}
-
-.trigger {
   display: flex;
   z-index: 1;
   justify-content: center;
@@ -11,13 +7,11 @@
   cursor: pointer;
 }
 
-.items {
-  position: absolute;
-  z-index: 2;
-  top: 50%;
-  right: 0;
-  transform: translateY(-50%);
-  padding: 5px 20px 5px 5px;
+.contextual-menu-items {
+  position: fixed;
+  z-index: 10000;
+  transform: translate(-190px, -10px);
+  width: 200px;
   border: 1px solid $gray-alt;
   background-color: $gray;
 }

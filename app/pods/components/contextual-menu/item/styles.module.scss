@@ -1,7 +1,8 @@
 .item {
+  @include gradient-hover($gray-alt);
   display: block;
   width: 100%;
-  padding: 2px 7px;
+  padding: 4px 8px;
   border: 0;
   background: none;
   text-align: left;
@@ -15,8 +16,6 @@
 
   &:hover,
   &:focus {
-    padding-left: 7px;
     text-decoration: none;
-    color: #cbcbcb;
   }
 }

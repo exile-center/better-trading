@@ -1,18 +1,20 @@
-<div local-class="contextual-menu" ...attributes>
-  <div
-    {{on "click" (fn this.showItems)}}
-    local-class="trigger"
-  >
-    <FaIcon @icon="ellipsis-h" />
-  </div>
+<div
+  {{on "click" (fn this.showItems)}}
+  local-class="contextual-menu"
+  ...attributes
+>
+  <FaIcon @icon="ellipsis-h" />
+</div>
 
-  {{#animated-if
-    this.itemsAreVisible
-    use=this.fadeTransition
-    duration=200
-  }}
-    <div local-class="items" {{on "mouseleave" (fn this.hideItems)}}>
+{{#if this.itemsAreVisible}}
+  <EmberWormhole @to="contextual-menu-items">
+    <div
+      {{on "mouseleave" (perform this.debouncedHideItemsTask)}}
+      {{on "mouseenter" (fn this.cancelDebouncedHideItemsTask)}}
+      style={{safe-styles this.positionStyles}}
+      local-class="contextual-menu-items"
+    >
       {{yield (component "contextual-menu/item" didClick=(fn this.hideItems))}}
     </div>
-  {{/animated-if}}
-</div>
+  </EmberWormhole>
+{{/if}}
