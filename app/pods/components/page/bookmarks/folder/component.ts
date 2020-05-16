@@ -1,11 +1,9 @@
 // Vendor
 import Component from '@glimmer/component';
 import {tracked} from '@glimmer/tracking';
-import fade from 'ember-animated/transitions/fade';
 import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
 import {dropTask} from 'ember-concurrency-decorators';
-import {timeout} from 'ember-concurrency';
 
 // Types
 import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
@@ -13,7 +11,6 @@ import TradeLocation from 'better-trading/services/trade-location';
 import Bookmarks from 'better-trading/services/bookmarks';
 import SearchPanel from 'better-trading/services/search-panel';
 import {TradeLocationChangeEvent} from 'better-trading/types/trade-location';
-import {Task} from 'better-trading/types/ember-concurrency';
 
 interface Args {
   folder: Required<BookmarksFolderStruct>;
@@ -24,12 +21,7 @@ interface Args {
   onExpansionToggle: (folderId: string) => void;
 }
 
-// Constants
-const EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS = 500;
-
 export default class BookmarksFolder extends Component<Args> {
-  fadeTransition = fade;
-
   @service('trade-location')
   tradeLocation: TradeLocation;
 
@@ -52,16 +44,10 @@ export default class BookmarksFolder extends Component<Args> {
   isStagedForDeletion: boolean;
 
   @tracked
-  isLoaded: boolean = false;
-
-  @tracked
-  isAnimating: boolean = false;
-
-  @tracked
   isReorderingTrades: boolean = false;
 
   @tracked
-  trades: BookmarksTradeStruct[] = [];
+  trades: BookmarksTradeStruct[] | null = null;
 
   @tracked
   isExporting: boolean = false;
@@ -74,32 +60,15 @@ export default class BookmarksFolder extends Component<Args> {
     return this.args.expandedFolderIds.includes(this.args.folder.id);
   }
 
-  get tradesAreVisible() {
-    return Boolean(this.currentLeague) && this.isExpanded && this.isLoaded;
-  }
-
   @dropTask
-  *initialSetupTask() {
-    if (!this.isExpanded) return;
-
-    this.isAnimating = true;
-
-    yield (this.refreshTradesTask as Task).perform();
-    yield timeout(EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS);
-
-    this.isAnimating = false;
-  }
-
-  @dropTask
-  *refreshTradesTask() {
+  *initialLoadTradesTask() {
     this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
-    this.isLoaded = true;
   }
 
   @dropTask
   *deleteTradeTask(deletingTrade: BookmarksTradeStruct) {
     yield this.bookmarks.deleteTrade(deletingTrade, this.folderId);
-    yield (this.refreshTradesTask as Task).perform();
+    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
     this.stagedDeletingTrade = null;
   }
 
@@ -113,7 +82,7 @@ export default class BookmarksFolder extends Component<Args> {
   @dropTask
   *persistTradeTask(trade: BookmarksTradeStruct) {
     yield this.bookmarks.persistTrade(trade, this.folderId);
-    yield (this.refreshTradesTask as Task).perform();
+    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
     this.stagedTrade = null;
   }
 
@@ -132,7 +101,7 @@ export default class BookmarksFolder extends Component<Args> {
       this.folderId
     );
 
-    yield (this.refreshTradesTask as Task).perform();
+    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
   }
 
   @dropTask
@@ -145,18 +114,7 @@ export default class BookmarksFolder extends Component<Args> {
       this.folderId
     );
 
-    yield (this.refreshTradesTask as Task).perform();
-  }
-
-  @dropTask
-  *toggleExpansionTask() {
-    this.isAnimating = true;
-    this.args.onExpansionToggle(this.args.folder.id);
-
-    yield (this.refreshTradesTask as Task).perform();
-    yield timeout(EXPANSION_ANIMATION_DURATION_IN_MILLISECONDS);
-
-    this.isAnimating = false;
+    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
   }
 
   @action

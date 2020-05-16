@@ -8,6 +8,7 @@
 }
 
 .contextual-menu-items {
+  @include fade-in;
   position: fixed;
   z-index: 10000;
   transform: translate(-190px, -10px);

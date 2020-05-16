@@ -1,6 +1,6 @@
 <div ...attributes>
   {{#if this.isLoading}}
-    <div local-class="loader">
+    <div local-class="loader is-{{@size}}">
       <FaIcon
         local-class="loader"
         @icon="circle-notch"
@@ -8,6 +8,8 @@
       />
     </div>
   {{else}}
-    {{yield}}
+    <div local-class="loader-container">
+      {{yield}}
+    </div>
   {{/if}}
 </div>

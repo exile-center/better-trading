@@ -1,8 +1,40 @@
+@keyframes delayed-fade-in-keyframes {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 .loader {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 30px 0;
+  width: 100%;
+  margin: 10px 0;
   font-size: 25px;
   color: $white;
+  animation: delayed-fade-in-keyframes 0.2s ease forwards;
+
+  &.is-small {
+    margin: 5px 0;
+    font-size: 15px;
+  }
+
+  &.is-large {
+    margin: 20px 0;
+    font-size: 25px;
+  }
+}
+
+.loader-container {
+  @include fade-in;
+  width: 100%;
+  height: 100%;
 }

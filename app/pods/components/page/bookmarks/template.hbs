@@ -1,6 +1,7 @@
 <LoadingContainer
   {{did-insert (perform this.fetchFoldersTask)}}
   @task={{this.fetchFoldersTask}}
+  @size="large"
 >
   <div local-class="header-actions">
     <Button

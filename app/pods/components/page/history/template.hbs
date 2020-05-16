@@ -2,6 +2,7 @@
   {{did-insert (fn this.handleDidInsert)}}
   {{will-destroy (fn this.handleWillDestroy)}}
   @task={{this.initialFetchHistoryTask}}
+  @size="large"
 >
   {{#if this.historyEntries}}
     {{#each this.historyEntries as |historyEntry|}}
