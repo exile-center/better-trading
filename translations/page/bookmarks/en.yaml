@@ -31,7 +31,7 @@ page:
         export-code: Export code
         export-code-helper: This code can be used to restore a folder. It can be used for backup and sharing purposes.
         embed-code: Embed code snippet
-        embed-code-helper: Use this snippet to include the folder's preview in your website.
+        embed-code-helper: Code snippet that can be used to include the folder's preview into a website.
         close: Close
       trade-edition:
         modal-title: Bookmark trade

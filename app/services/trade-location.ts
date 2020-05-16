@@ -97,6 +97,14 @@ export default class TradeLocation extends Service.extend(Evented) {
     );
   }
 
+  async fetchHistoryEntries() {
+    return this.tradeLocationHistory.fetchHistoryEntries();
+  }
+
+  async clearHistoryEntries() {
+    return this.tradeLocationHistory.clearHistoryEntries();
+  }
+
   private parseCurrentPath(): ParsedPath {
     const [type, league, slug] = window.location.pathname.replace('/trade/', '').split('/');
 

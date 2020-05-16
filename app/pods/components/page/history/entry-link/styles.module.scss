@@ -1,0 +1,30 @@
+.entry-link {
+  @include gradient-hover($gold-alt);
+  display: block;
+  padding: 3px 5px;
+  color: $white;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+  }
+}
+
+.title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+}
+
+.slug {
+  font-size: 10px;
+  color: rgba($white, 0.6);
+}

@@ -1,0 +1,4 @@
+page:
+  history:
+    clear: Clear history
+    empty: The search history is currently empty.

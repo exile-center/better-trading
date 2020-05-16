@@ -1,0 +1,13 @@
+<a href={{trade-url @historyEntry league=@historyEntry.league}} local-class="entry-link">
+  <div local-class="title">
+    {{@historyEntry.title}}
+  </div>
+  <div local-class="details">
+    <div local-class="slug">
+      {{this.formattedSlug}}
+    </div>
+    <div>
+      {{this.formattedCreatedAt}}
+    </div>
+  </div>
+</a>

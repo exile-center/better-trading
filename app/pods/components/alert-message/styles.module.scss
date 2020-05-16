@@ -1,0 +1,20 @@
+.alert-message {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  color: $white;
+
+  &.is-error {
+    border: 1px solid $red-alt;
+    background-color: $red;
+  }
+
+  &.is-warning {
+    border: 1px solid $yellow-alt;
+    background-color: $yellow;
+  }
+}
+
+.icon {
+  margin-right: 6px;
+}

@@ -1,1 +1,25 @@
-<img src="https://www.placecage.com/c/200/300" alt="">
+<LoadingContainer
+  {{did-insert (fn this.handleDidInsert)}}
+  {{will-destroy (fn this.handleWillDestroy)}}
+  @task={{this.initialFetchHistoryTask}}
+>
+  {{#if this.historyEntries}}
+    {{#each this.historyEntries as |historyEntry|}}
+      <Page::History::EntryLink @historyEntry={{historyEntry}}/>
+    {{/each}}
+
+    <Button
+      type="button"
+      @theme="gold"
+      @label={{t "page.history.clear"}}
+      @onClick={{perform this.clearHistoryTask}}
+      @icon="times"
+      local-class="clear-button"
+    />
+  {{else}}
+    <AlertMessage
+      @message={{t "page.history.empty"}}
+      @theme="warning"
+    />
+  {{/if}}
+</LoadingContainer>

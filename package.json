@@ -43,6 +43,8 @@
     "broccoli-file-creator": "2.1.1",
     "chai": "4.2.0",
     "chai-dom": "1.8.1",
+    "date-fns": "2.13.0",
+    "dexie": "2.0.4",
     "ember-animated": "0.9.0",
     "ember-auto-import": "1.5.3",
     "ember-cli": "3.14.0",
@@ -92,8 +94,5 @@
     "tslint": "5.16.0",
     "tslint-config-prettier": "1.18.0",
     "typescript": "3.7.3"
-  },
-  "dependencies": {
-    "dexie": "2.0.4"
   }
 }

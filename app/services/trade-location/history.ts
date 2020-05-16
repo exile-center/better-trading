@@ -50,6 +50,10 @@ export default class TradeLocationHistory extends Service {
 
     return history;
   }
+
+  async clearHistoryEntries() {
+    return this.storage.deleteValue(HISTORY_KEY);
+  }
 }
 
 declare module '@ember/service' {

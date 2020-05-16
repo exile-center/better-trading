@@ -28,14 +28,10 @@
         </div>
       </div>
     {{else if this.isInvalid}}
-      <div local-class="invalid-code">
-        <FaIcon
-          @icon="exclamation-circle"
-          local-class="invalid-code-icon"
-        />
-
-        {{t "page.bookmarks.folder-import.invalid-code"}}
-      </div>
+      <AlertMessage
+        @message={{t "page.bookmarks.folder-import.invalid-code"}}
+        @theme="error"
+      />
     {{/if}}
 
     <Button
