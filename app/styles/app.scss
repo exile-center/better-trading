@@ -7,16 +7,14 @@
 // Vendor
 @import 'vendor/ember-modal-dialog';
 
-// Item results
-@import 'item-results/equivalent-pricings';
-@import 'item-results/highlight-stat-filters';
-@import 'item-results/utility-buttons';
+// Globals
+@import 'globals/base';
+@import 'globals/equivalent-pricings';
+@import 'globals/header';
+@import 'globals/highlight-stat-filters';
+@import 'globals/search-panel';
+@import 'globals/top-button';
+@import 'globals/utility-buttons';
 
-// General
+// Components
 @import 'pods';
-@import 'global';
-
-// Overrides
-@import 'overrides/header';
-@import 'overrides/search-panel';
-@import 'overrides/top-button';
