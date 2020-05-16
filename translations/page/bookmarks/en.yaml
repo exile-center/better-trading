@@ -3,6 +3,7 @@ page:
     create-folder: New folder
     import-folder: Import folder
     collapse-all: Collapse folders
+    folders-warning: Having a lot of folders can slow down the website.<br>Backup unnecessary folders using the export feature, then delete them.
     folder:
       edit-folder: Edit
       delete-folder: Delete

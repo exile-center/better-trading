@@ -9,6 +9,9 @@ import {dropTask} from 'ember-concurrency-decorators';
 import Bookmarks from 'better-trading/services/bookmarks';
 import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 
+// Constants
+const FOLDERS_WARNING_THRESHOLD = 10;
+
 export default class PageBookmarks extends Component {
   @service('bookmarks')
   bookmarks: Bookmarks;
@@ -27,6 +30,10 @@ export default class PageBookmarks extends Component {
 
   @tracked
   isImportingFolder: boolean = false;
+
+  get foldersWarningIsVisible() {
+    return this.folders.length >= FOLDERS_WARNING_THRESHOLD;
+  }
 
   @dropTask
   *fetchFoldersTask() {

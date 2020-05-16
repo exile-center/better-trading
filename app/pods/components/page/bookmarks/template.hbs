@@ -59,6 +59,14 @@
       @onClick={{fn this.importFolder}}
     />
   </div>
+
+  {{#if this.foldersWarningIsVisible}}
+    <AlertMessage
+      local-class="folders-warning"
+      @theme="warning"
+      @message={{t "page.bookmarks.folders-warning"}}
+    />
+  {{/if}}
 </LoadingContainer>
 
 {{#if this.stagedFolder}}
