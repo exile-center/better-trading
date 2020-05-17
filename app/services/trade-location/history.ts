@@ -37,7 +37,8 @@ export default class TradeLocationHistory extends Service {
     historyEntries.unshift({
       ...newTradeLocation,
       id: uniqueId(),
-      title: this.searchPanel.recommendTitle()
+      title: this.searchPanel.recommendTitle(),
+      createdAt: new Date().toISOString()
     });
     historyEntries.splice(config.APP.maximumHistoryLength);
 

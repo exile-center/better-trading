@@ -1,7 +1,6 @@
 // Vendor
 import Component from '@glimmer/component';
 import formatDistance from 'date-fns/formatDistance';
-import subDays from 'date-fns/subDays';
 import enUS from 'date-fns/locale/en-US';
 
 // Types
@@ -14,7 +13,11 @@ interface Args {
 export default class EntryLink extends Component<Args> {
   get formattedCreatedAt() {
     // eslint-disable-next-line no-magic-numbers
-    return formatDistance(subDays(new Date(), 3), new Date(), {addSuffix: true, includeSeconds: true, locale: enUS});
+    return formatDistance(new Date(this.args.historyEntry.createdAt), new Date(), {
+      addSuffix: true,
+      includeSeconds: true,
+      locale: enUS
+    });
   }
 
   get formattedSlug() {

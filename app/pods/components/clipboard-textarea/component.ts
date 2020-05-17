@@ -15,6 +15,9 @@ export default class ClipboardTextarea extends Component<Args> {
   @service('intl')
   intl: IntlService;
 
+  @tracked
+  hasCopied: boolean = false;
+
   textareaElement: HTMLInputElement;
 
   get copyButtonLabel() {
@@ -22,9 +25,6 @@ export default class ClipboardTextarea extends Component<Args> {
 
     return this.intl.t('components.clipboard-textarea.button');
   }
-
-  @tracked
-  hasCopied: boolean = false;
 
   @action
   textareaDidInsert(textareaElement: HTMLInputElement) {

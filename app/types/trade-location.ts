@@ -12,4 +12,5 @@ export interface TradeLocationChangeEvent {
 export interface TradeLocationHistoryStruct extends Required<TradeLocationStruct> {
   id: string;
   title: string;
+  createdAt: string;
 }
