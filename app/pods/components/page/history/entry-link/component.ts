@@ -1,7 +1,8 @@
 // Vendor
 import Component from '@glimmer/component';
-import {formatDistance, subDays} from 'date-fns';
-import {enUS} from 'date-fns/locale';
+import formatDistance from 'date-fns/formatDistance';
+import subDays from 'date-fns/subDays';
+import enUS from 'date-fns/locale/en-US';
 
 // Types
 import {TradeLocationHistoryStruct} from 'better-trading/types/trade-location';
