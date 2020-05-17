@@ -51,7 +51,6 @@
     "ember-cli-babel": "~7.13.0",
     "ember-cli-babel-polyfills": "~2.0.1",
     "ember-cli-chai": "~0.5.0",
-    "ember-cli-code-coverage": "github:charlesdemers/ember-cli-code-coverage#6961be288d5666e0c8eae4d1988bbfac3773b433",
     "ember-cli-content-security-policy": "~1.1.1",
     "ember-cli-dependency-checker": "~3.2.0",
     "ember-cli-htmlbars": "~4.0.9",
@@ -83,7 +82,6 @@
     "eslint-plugin-mirego": "~0.0.1",
     "eslint-plugin-node": "~10.0.0",
     "loader.js": "~4.7.0",
-    "nyc": "~13.3.0",
     "prettier": "~1.17.1",
     "sass": "~1.20.1",
     "sinon": "~7.3.2",
@@ -93,6 +91,6 @@
     "stylelint-order": "~3.0.0",
     "tslint": "~5.16.0",
     "tslint-config-prettier": "~1.18.0",
-    "typescript": "~3.7.3"
+    "typescript": "~3.9.2"
   }
 }

@@ -1,7 +1,6 @@
 // Vendor
 import Service from '@ember/service';
 import {extensionApi} from 'better-trading/utilities/extension-api';
-import {Promise} from 'rsvp';
 import window from 'ember-window-mock';
 
 // Constants

@@ -1,6 +1,5 @@
 // Vendor
 import Service from '@ember/service';
-import {Promise} from 'rsvp';
 
 // Utilities
 import {extensionApi} from 'better-trading/utilities/extension-api';
