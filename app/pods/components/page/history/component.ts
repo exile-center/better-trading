@@ -42,7 +42,7 @@ export default class PageHistory extends Component {
 
   @action
   handleWillDestroy() {
-    this.tradeLocation.on('change', this, this.handleTradeLocationChange);
+    this.tradeLocation.off('change', this, this.handleTradeLocationChange);
   }
 
   private handleTradeLocationChange() {
