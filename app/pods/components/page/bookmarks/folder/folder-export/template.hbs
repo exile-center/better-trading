@@ -2,43 +2,48 @@
   @title={{t "page.bookmarks.folder.folder-export.modal-title"}}
   @onClose={{fn @onCancel}}
 >
-  <div local-class="folder-export-container">
-    {{#if this.canPreview}}
+  <LoadingContainer
+    @task={{this.serializeFolderTask}}
+    @size="large"
+  >
+    <div local-class="folder-export-container">
+      {{#if this.canPreview}}
+        <Form::Field
+          @label={{t "page.bookmarks.folder.folder-export.preview-url"}}
+        >
+          <Button
+            @href={{this.previewUrl}}
+            @theme="blue"
+            @icon="link"
+            @label={{t "page.bookmarks.folder.folder-export.preview-url-button"}}
+            target="_blank"
+            rel="noreferrer noopener"
+          />
+        </Form::Field>
+      {{/if}}
+
       <Form::Field
-        @label={{t "page.bookmarks.folder.folder-export.preview-url"}}
+        @label={{t "page.bookmarks.folder.folder-export.export-code"}}
+        @helper={{t "page.bookmarks.folder.folder-export.export-code-helper"}}
       >
-        <Button
-          @href={{this.previewUrl}}
-          @theme="blue"
-          @icon="link"
-          @label={{t "page.bookmarks.folder.folder-export.preview-url-button"}}
-          target="_blank"
-          rel="noreferrer noopener"
-        />
+        <ClipboardTextarea @value={{this.serializedFolder}} />
       </Form::Field>
-    {{/if}}
 
-    <Form::Field
-      @label={{t "page.bookmarks.folder.folder-export.export-code"}}
-      @helper={{t "page.bookmarks.folder.folder-export.export-code-helper"}}
-    >
-      <ClipboardTextarea @value={{this.serializedFolder}} />
-    </Form::Field>
+      {{#if this.canPreview}}
+        <Form::Field
+          @label={{t "page.bookmarks.folder.folder-export.embed-code"}}
+          @helper={{t "page.bookmarks.folder.folder-export.embed-code-helper"}}
+        >
+          <ClipboardTextarea @value={{this.embedCode}} />
+        </Form::Field>
+      {{/if}}
 
-    {{#if this.canPreview}}
-      <Form::Field
-        @label={{t "page.bookmarks.folder.folder-export.embed-code"}}
-        @helper={{t "page.bookmarks.folder.folder-export.embed-code-helper"}}
-      >
-        <ClipboardTextarea @value={{this.embedCode}} />
-      </Form::Field>
-    {{/if}}
-
-    <Button
-      type="button"
-      @theme="blue"
-      @label={{t "page.bookmarks.folder.folder-export.close"}}
-      @onClick={{fn @onCancel}}
-    />
-  </div>
+      <Button
+        type="button"
+        @theme="blue"
+        @label={{t "page.bookmarks.folder.folder-export.close"}}
+        @onClick={{fn @onCancel}}
+      />
+    </div>
+  </LoadingContainer>
 </Modal>

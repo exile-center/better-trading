@@ -48,14 +48,12 @@ export default class PageHistory extends Component {
   }
 
   @action
-  handleDidInsert() {
+  subscribeToLocationChange() {
     this.tradeLocation.on('change', this, this.handleTradeLocationChange);
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    (this.initialFetchHistoryTask as Task).perform();
   }
 
   @action
-  handleWillDestroy() {
+  unsubscribeToLocationChange() {
     this.tradeLocation.off('change', this, this.handleTradeLocationChange);
   }
 

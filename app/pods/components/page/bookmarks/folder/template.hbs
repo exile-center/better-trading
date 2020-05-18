@@ -50,7 +50,6 @@
 
   {{#if this.isExpanded}}
     <LoadingContainer
-      {{did-insert (perform this.initialLoadTradesTask)}}
       @task={{this.initialLoadTradesTask}}
       @size="small"
     >
@@ -166,7 +165,6 @@
 {{#if this.isExporting}}
   <Page::Bookmarks::Folder::FolderExport
     @folder={{@folder}}
-    @trades={{this.trades}}
     @onCancel={{fn this.cancelExportFolder}}
   />
 {{/if}}

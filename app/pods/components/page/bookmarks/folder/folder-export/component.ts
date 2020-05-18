@@ -1,18 +1,19 @@
 // Vendor
 import {inject as service} from '@ember/service';
 import Component from '@glimmer/component';
+import {dropTask} from 'ember-concurrency-decorators';
 
 // Types
 import Bookmarks from 'better-trading/services/bookmarks';
-import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
+import {BookmarksFolderStruct} from 'better-trading/types/bookmarks';
+import {tracked} from '@glimmer/tracking';
 
 // Constants
 const PREVIEW_BASE_URL = 'https://exile.center/bookmarks-preview';
 const PREVIEW_URL_MAX_LENGTH = 7500;
 
 interface Args {
-  folder: BookmarksFolderStruct;
-  trades: BookmarksTradeStruct[];
+  folder: Required<BookmarksFolderStruct>;
   onCancel: () => void;
 }
 
@@ -20,9 +21,8 @@ export default class FolderExport extends Component<Args> {
   @service('bookmarks')
   bookmarks: Bookmarks;
 
-  get serializedFolder() {
-    return this.bookmarks.serializeFolder(this.args.folder, this.args.trades);
-  }
+  @tracked
+  serializedFolder: string = '';
 
   get previewUrl() {
     return `${PREVIEW_BASE_URL}?b64=${this.serializedFolder}`;
@@ -41,5 +41,13 @@ export default class FolderExport extends Component<Args> {
     ];
 
     return `<iframe ${iframeAttributes.join(' ')}></iframe>`;
+  }
+
+  @dropTask
+  *serializeFolderTask() {
+    const folder = this.args.folder;
+    const trades = yield this.bookmarks.fetchTradesByFolderId(folder.id);
+
+    this.serializedFolder = this.bookmarks.serializeFolder(folder, trades);
   }
 }

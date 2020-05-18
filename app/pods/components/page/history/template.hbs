@@ -1,6 +1,6 @@
 <LoadingContainer
-  {{did-insert (fn this.handleDidInsert)}}
-  {{will-destroy (fn this.handleWillDestroy)}}
+  {{did-insert (fn this.subscribeToLocationChange)}}
+  {{will-destroy (fn this.unsubscribeToLocationChange)}}
   @task={{this.initialFetchHistoryTask}}
   @size="large"
 >
