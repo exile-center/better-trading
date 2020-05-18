@@ -8,6 +8,8 @@ import {dropTask} from 'ember-concurrency-decorators';
 // Types
 import Bookmarks from 'better-trading/services/bookmarks';
 import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
+import FlashMessages from 'ember-cli-flash/services/flash-messages';
+import IntlService from 'ember-intl/services/intl';
 
 // Constants
 const FOLDERS_WARNING_THRESHOLD = 10;
@@ -15,6 +17,12 @@ const FOLDERS_WARNING_THRESHOLD = 10;
 export default class PageBookmarks extends Component {
   @service('bookmarks')
   bookmarks: Bookmarks;
+
+  @service('flash-messages')
+  flashMessages: FlashMessages;
+
+  @service('intl')
+  intl: IntlService;
 
   @tracked
   stagedFolder: BookmarksFolderStruct | null;
@@ -42,8 +50,16 @@ export default class PageBookmarks extends Component {
 
   @dropTask
   *deleteFolderTask(deletingFolder: BookmarksFolderStruct) {
-    yield this.bookmarks.deleteFolder(deletingFolder);
-    this.folders = yield this.bookmarks.fetchFolders();
+    try {
+      yield this.bookmarks.deleteFolder(deletingFolder);
+      this.folders = yield this.bookmarks.fetchFolders();
+
+      this.flashMessages.success(
+        this.intl.t('page.bookmarks.delete-folder-success-flash', {title: deletingFolder.title})
+      );
+    } catch (_error) {
+      this.flashMessages.alert(this.intl.t('general.generic-alert-flash'));
+    }
   }
 
   @dropTask
@@ -55,23 +71,36 @@ export default class PageBookmarks extends Component {
 
   @dropTask
   *persistFolderTask(folder: BookmarksFolderStruct) {
-    const isNewlyCreated = !folder.id;
+    try {
+      const isNewlyCreated = !folder.id;
 
-    const folderId = yield this.bookmarks.persistFolder(folder);
+      const folderId = yield this.bookmarks.persistFolder(folder);
+      if (isNewlyCreated) this.toggleFolderExpansion(folderId);
+      this.folders = yield this.bookmarks.fetchFolders();
 
-    if (isNewlyCreated) this.toggleFolderExpansion(folderId);
-    this.folders = yield this.bookmarks.fetchFolders();
-    this.stagedFolder = null;
+      this.flashMessages.success(this.intl.t('page.bookmarks.persist-folder-success-flash', {title: folder.title}));
+    } catch (_error) {
+      this.flashMessages.alert(this.intl.t('general.generic-alert-flash'));
+    } finally {
+      this.stagedFolder = null;
+    }
   }
 
   @dropTask
   *persistImportedFolderTask({folder, trades}: {folder: BookmarksFolderStruct; trades: BookmarksTradeStruct[]}) {
-    const folderId = yield this.bookmarks.persistFolder(folder);
-    yield this.bookmarks.persistTrades(trades, folderId);
+    try {
+      const folderId = yield this.bookmarks.persistFolder(folder);
+      yield this.bookmarks.persistTrades(trades, folderId);
 
-    this.toggleFolderExpansion(folderId);
-    this.folders = yield this.bookmarks.fetchFolders();
-    this.isImportingFolder = false;
+      this.toggleFolderExpansion(folderId);
+      this.folders = yield this.bookmarks.fetchFolders();
+
+      this.flashMessages.success(this.intl.t('page.bookmarks.import-folder-success-flash', {title: folder.title}));
+    } catch (_error) {
+      this.flashMessages.alert(this.intl.t('general.generic-alert-flash'));
+    } finally {
+      this.isImportingFolder = false;
+    }
   }
 
   @action

@@ -4,6 +4,9 @@ page:
     import-folder: Import folder
     collapse-all: Collapse folders
     folders-warning: Having a lot of folders can slow down the website.<br>Backup unnecessary folders using the export feature, then delete them.
+    delete-folder-success-flash: 'The folder "{title}" has been deleted.'
+    persist-folder-success-flash: 'The folder "{title}" has been updated.'
+    import-folder-success-flash: 'The folder "{title}" has been imported.'
     folder:
       edit-folder: Edit
       delete-folder: Delete
@@ -15,6 +18,9 @@ page:
       update-trade-location: Save active trade
       complete-trade: Mark as complete
       uncomplete-trade: Unmark as complete
+      delete-trade-success-flash: 'The trade "{title}" has been deleted.'
+      persist-trade-success-flash: 'The trade "{title}" has been updated.'
+      persist-trade-location-success-flash: 'The trade location for "{title}" has been updated.'
       trade-deletion:
         modal-title: Confirm deletion
         confirmation: 'Delete the bookmark <strong>{name}</strong> ?'

@@ -11,6 +11,8 @@ import TradeLocation from 'better-trading/services/trade-location';
 import Bookmarks from 'better-trading/services/bookmarks';
 import SearchPanel from 'better-trading/services/search-panel';
 import {TradeLocationChangeEvent} from 'better-trading/types/trade-location';
+import FlashMessages from 'ember-cli-flash/services/flash-messages';
+import IntlService from 'ember-intl/services/intl';
 
 interface Args {
   folder: Required<BookmarksFolderStruct>;
@@ -30,6 +32,12 @@ export default class BookmarksFolder extends Component<Args> {
 
   @service('search-panel')
   searchPanel: SearchPanel;
+
+  @service('flash-messages')
+  flashMessages: FlashMessages;
+
+  @service('intl')
+  intl: IntlService;
 
   @tracked
   currentLeague: string | null = this.tradeLocation.league;
@@ -67,9 +75,18 @@ export default class BookmarksFolder extends Component<Args> {
 
   @dropTask
   *deleteTradeTask(deletingTrade: BookmarksTradeStruct) {
-    yield this.bookmarks.deleteTrade(deletingTrade, this.folderId);
-    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
-    this.stagedDeletingTrade = null;
+    try {
+      yield this.bookmarks.deleteTrade(deletingTrade, this.folderId);
+      this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+
+      this.flashMessages.success(
+        this.intl.t('page.bookmarks.folder.delete-trade-success-flash', {title: deletingTrade.title})
+      );
+    } catch (_error) {
+      this.flashMessages.alert(this.intl.t('general.generic-alert-flash'));
+    } finally {
+      this.stagedDeletingTrade = null;
+    }
   }
 
   @dropTask
@@ -81,27 +98,46 @@ export default class BookmarksFolder extends Component<Args> {
 
   @dropTask
   *persistTradeTask(trade: BookmarksTradeStruct) {
-    yield this.bookmarks.persistTrade(trade, this.folderId);
-    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
-    this.stagedTrade = null;
+    try {
+      yield this.bookmarks.persistTrade(trade, this.folderId);
+      this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+
+      this.flashMessages.success(
+        this.intl.t('page.bookmarks.folder.persist-trade-success-flash', {title: trade.title})
+      );
+    } catch (_error) {
+      this.flashMessages.alert(this.intl.t('general.generic-alert-flash'));
+    } finally {
+      this.stagedTrade = null;
+    }
   }
 
   @dropTask
   *updateTradeLocationTask(trade: BookmarksTradeStruct) {
     if (!this.tradeLocation.slug || !this.tradeLocation.type) return;
 
-    yield this.bookmarks.persistTrade(
-      {
-        ...trade,
-        location: {
-          slug: this.tradeLocation.slug,
-          type: this.tradeLocation.type
-        }
-      },
-      this.folderId
-    );
+    try {
+      yield this.bookmarks.persistTrade(
+        {
+          ...trade,
+          location: {
+            slug: this.tradeLocation.slug,
+            type: this.tradeLocation.type
+          }
+        },
+        this.folderId
+      );
 
-    this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+      this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
+
+      this.flashMessages.success(
+        this.intl.t('page.bookmarks.folder.persist-trade-location-success-flash', {title: trade.title})
+      );
+    } catch (_error) {
+      this.flashMessages.alert(this.intl.t('general.generic-alert-flash'));
+    } finally {
+      this.stagedTrade = null;
+    }
   }
 
   @dropTask

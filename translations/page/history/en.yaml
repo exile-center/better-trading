@@ -2,3 +2,4 @@ page:
   history:
     clear: Clear history
     empty: The search history is currently empty.
+    clear-success-flash: The search history has been cleared.

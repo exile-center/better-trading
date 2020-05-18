@@ -1,0 +1,14 @@
+<div local-class="flash-messages">
+  {{#each @flashMessages as |flash|}}
+    <div
+      {{on "click" (fn this.dismissFlashMessage flash)}}
+      local-class="message-wrapper {{if flash.exiting "is-exiting"}}"
+    >
+      <AlertMessage
+        @message={{flash.message}}
+        @type={{flash.type}}
+        local-class="message"
+      />
+    </div>
+  {{/each}}
+</div>

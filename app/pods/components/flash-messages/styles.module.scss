@@ -1,0 +1,22 @@
+.flash-messages {
+  display: grid;
+  position: fixed;
+  z-index: 100000;
+  right: 30px;
+  bottom: 20px;
+  grid-gap: 10px;
+}
+
+.message-wrapper {
+  @include slide-fade-in;
+
+  &.is-exiting {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+}
+
+.message {
+  max-width: 400px;
+  cursor: pointer;
+}

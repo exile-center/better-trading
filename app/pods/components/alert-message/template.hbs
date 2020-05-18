@@ -1,6 +1,6 @@
-<div local-class="alert-message is-{{@theme}}" ...attributes>
+<div local-class="alert-message is-{{@type}}" ...attributes>
   <FaIcon
-    @icon="exclamation-circle"
+    @icon={{this.icon}}
     local-class="icon"
   />
 

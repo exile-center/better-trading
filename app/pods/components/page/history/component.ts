@@ -9,10 +9,18 @@ import {action} from '@ember/object';
 import TradeLocation from 'better-trading/services/trade-location';
 import {TradeLocationHistoryStruct} from 'better-trading/types/trade-location';
 import {Task} from 'better-trading/types/ember-concurrency';
+import FlashMessages from 'ember-cli-flash/services/flash-messages';
+import IntlService from 'ember-intl/services/intl';
 
 export default class PageHistory extends Component {
   @service('trade-location')
   tradeLocation: TradeLocation;
+
+  @service('flash-messages')
+  flashMessages: FlashMessages;
+
+  @service('intl')
+  intl: IntlService;
 
   @tracked
   historyEntries: TradeLocationHistoryStruct[] = [];
@@ -29,8 +37,14 @@ export default class PageHistory extends Component {
 
   @dropTask
   *clearHistoryTask() {
-    this.historyEntries = [];
-    yield this.tradeLocation.clearHistoryEntries();
+    try {
+      this.historyEntries = [];
+      yield this.tradeLocation.clearHistoryEntries();
+
+      this.flashMessages.success(this.intl.t('page.history.clear-success-flash'));
+    } catch (_error) {
+      this.flashMessages.alert(this.intl.t('general.generic-alert-flash'));
+    }
   }
 
   @action

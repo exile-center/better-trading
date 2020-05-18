@@ -4,7 +4,7 @@
   padding: 8px;
   color: $white;
 
-  &.is-error {
+  &.is-alert {
     border: 1px solid $red-alt;
     background-color: $red;
   }
@@ -12,6 +12,11 @@
   &.is-warning {
     border: 1px solid $yellow-alt;
     background-color: $yellow;
+  }
+
+  &.is-success {
+    border: 1px solid $green-alt;
+    background-color: $green;
   }
 }
 

@@ -33,6 +33,12 @@ module.exports = function(environment) {
     maximumHistoryLength: 50
   };
 
+  ENV.flashMessageDefaults = {
+    extendedTimeout: 200,
+    timeout: 4500,
+    types: ['alert', 'success', 'warning']
+  };
+
   ENV.fontawesome = {
     icons: {
       'free-solid-svg-icons': [
@@ -54,7 +60,8 @@ module.exports = function(environment) {
         'exclamation-circle',
         'history',
         'folder-open',
-        'circle-notch'
+        'circle-notch',
+        'check-circle'
       ],
       'free-brands-svg-icons': ['github', 'discord']
     }
