@@ -34,7 +34,7 @@ export default class ApplicationRoute extends Route {
 
   async beforeModel() {
     this.intl.setLocale(DEFAULT_LOCALE);
-    this.itemResults.watchResults();
+    await this.itemResults.initialize();
     this.tradeLocation.initialize();
     await this.storage.initialize();
 
@@ -44,5 +44,6 @@ export default class ApplicationRoute extends Route {
 
   deactivate() {
     this.tradeLocation.teardown();
+    this.itemResults.teardown();
   }
 }

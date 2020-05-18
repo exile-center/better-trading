@@ -7,6 +7,7 @@ import {slugify} from 'better-trading/utilities/slugify';
 // Types
 import TradeLocation from 'better-trading/services/trade-location';
 import PoeNinja, {PoeNinjaCurrenciesRatios} from 'better-trading/services/poe-ninja';
+import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
 
 // Constants
 const CHAOS_IMAGE_URL = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png';
@@ -22,7 +23,7 @@ const CURRENCY_IMAGE_SELECTOR = '[data-field="price"] .currency-image img';
 const CURRENCY_VALUE_SELECTOR = '[data-field="price"] > br + span';
 const EQUAL_HTML = '<span class="bt-equivalent-pricings-equals">=</span>';
 
-export default class ItemResultsEquivalentPricings extends Service {
+export default class ItemResultsEnhancersEquivalentPricings extends Service implements ItemResultsEnhancerService {
   @service('poe-ninja')
   poeNinja: PoeNinja;
 
@@ -31,13 +32,13 @@ export default class ItemResultsEquivalentPricings extends Service {
 
   chaosRatios: PoeNinjaCurrenciesRatios | null;
 
-  async prepare(): Promise<void> {
+  async prepare() {
     const currentLeague = this.tradeLocation.league;
     this.chaosRatios = currentLeague ? await this.poeNinja.fetchChaosRatiosFor(currentLeague) : null;
   }
 
   // eslint-disable-next-line complexity
-  process(result: HTMLElement): void {
+  enhance(result: HTMLElement) {
     if (!this.chaosRatios) return;
 
     const pricingContainerElement = result.querySelector(PRICING_CONTAINER_SELECTOR) as HTMLElement;
@@ -132,6 +133,6 @@ export default class ItemResultsEquivalentPricings extends Service {
 
 declare module '@ember/service' {
   interface Registry {
-    'item-results/equivalent-pricings': ItemResultsEquivalentPricings;
+    'item-results/enhancers/equivalent-pricings': ItemResultsEnhancersEquivalentPricings;
   }
 }

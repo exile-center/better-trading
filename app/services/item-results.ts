@@ -1,55 +1,72 @@
 // Vendor
 import Service, {inject as service} from '@ember/service';
-import {task} from 'ember-concurrency';
 import window from 'ember-window-mock';
+import {enqueueTask} from 'ember-concurrency-decorators';
 
 // Types
-import ItemResultsEquivalentPricings from 'better-trading/services/item-results/equivalent-pricings';
-import ItemResultsHighlightStatFilters from 'better-trading/services/item-results/highlight-stat-filters';
+import ItemResultsEnhancersEquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
+import ItemResultsEnhancersHighlightStatFilters from 'better-trading/services/item-results/enhancers/highlight-stat-filters';
+import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
 
-export default class ItemResults extends Service.extend({
-  enhanceResultsTask: task(function*(this: ItemResults) {
-    yield this.enhance();
-  }).enqueue()
-}) {
-  @service('item-results/highlight-stat-filters')
-  itemResultsHighlightStatFilters: ItemResultsHighlightStatFilters;
+// Utilities
+import {asyncLoop} from 'better-trading/utilities/async-loop';
+import {Task} from 'better-trading/types/ember-concurrency';
 
-  @service('item-results/equivalent-pricings')
-  itemResultsEquivalentPricings: ItemResultsEquivalentPricings;
+export default class ItemResults extends Service {
+  @service('item-results/enhancers/highlight-stat-filters')
+  itemResultsEnhancersHighlightStatFilters: ItemResultsEnhancersHighlightStatFilters;
+
+  @service('item-results/enhancers/equivalent-pricings')
+  itemResultsEnhancersEquivalentPricings: ItemResultsEnhancersEquivalentPricings;
 
   resultsObserver: MutationObserver;
 
-  watchResults() {
+  get enhancersSequence(): ItemResultsEnhancerService[] {
+    return [this.itemResultsEnhancersHighlightStatFilters, this.itemResultsEnhancersEquivalentPricings];
+  }
+
+  @enqueueTask
+  *enhanceTask() {
+    const unenhancedElements = Array.prototype.slice.call(
+      window.document.querySelectorAll('.resultset > :not([bt-enhanced])')
+    );
+
+    if (!unenhancedElements.length) return;
+
+    yield asyncLoop<ItemResultsEnhancerService>(
+      this.enhancersSequence,
+      enhancer => enhancer.prepare && enhancer.prepare()
+    );
+
+    yield asyncLoop<HTMLElement>(unenhancedElements, async unenhancedElement => {
+      return asyncLoop<ItemResultsEnhancerService>(this.enhancersSequence, enhancer => {
+        return enhancer.enhance(unenhancedElement);
+      });
+    });
+  }
+
+  async initialize() {
     const tradeAppElement = window.document.getElementById('trade');
     if (!tradeAppElement || !tradeAppElement.parentElement) return;
 
-    this.resultsObserver = new MutationObserver(() => this.enhanceResultsTask.perform());
+    this.resultsObserver = new MutationObserver(() => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      (this.enhanceTask as Task).perform();
+    });
 
     this.resultsObserver.observe(tradeAppElement.parentElement, {
       childList: true,
       subtree: true
     });
+
+    await asyncLoop<ItemResultsEnhancerService>(
+      this.enhancersSequence,
+      enhancer => enhancer.initialize && enhancer.initialize()
+    );
   }
 
-  willDestroy(): void {
+  teardown(): void {
     this.resultsObserver.disconnect();
-  }
-
-  private async enhance(): Promise<void> {
-    const unenhancedElements = window.document.querySelectorAll('.resultset > :not([bt-enhanced])');
-
-    if (!unenhancedElements.length) return;
-
-    this.itemResultsHighlightStatFilters.prepare();
-    await this.itemResultsEquivalentPricings.prepare();
-
-    unenhancedElements.forEach((resultElement: HTMLElement) => {
-      this.itemResultsHighlightStatFilters.process(resultElement);
-      this.itemResultsEquivalentPricings.process(resultElement);
-
-      resultElement.toggleAttribute('bt-enhanced', true);
-    });
   }
 }
 

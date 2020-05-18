@@ -10,16 +10,16 @@ import FlushExaltElement from 'better-trading/tests/html-samples/item-results/fl
 import FractionExaltElement from 'better-trading/tests/html-samples/item-results/fraction-exalt';
 
 // Types
-import ItemResultsEquivalentPricings from 'better-trading/services/item-results/equivalent-pricings';
+import ItemResultsEnhancersEquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
 
-describe('Unit | Services | ItemResults | EquivalentPricings', () => {
+describe('Unit | Services | ItemResults | Enhancers | EquivalentPricings', () => {
   setupTest();
 
-  let service: ItemResultsEquivalentPricings;
+  let service: ItemResultsEnhancersEquivalentPricings;
   let resultsContainer: HTMLDivElement;
 
   beforeEach(function() {
-    service = this.owner.lookup('service:item-results/equivalent-pricings');
+    service = this.owner.lookup('service:item-results/enhancers/equivalent-pricings');
 
     service.chaosRatios = {
       'exalted-orb': 150
@@ -34,10 +34,10 @@ describe('Unit | Services | ItemResults | EquivalentPricings', () => {
     resultsContainer.remove();
   });
 
-  describe('process', () => {
+  describe('enhance', () => {
     it('should display the exalt equivalence for valuable chaos items', () => {
       resultsContainer.insertAdjacentHTML('afterbegin', HundredChaosElement);
-      service.process(resultsContainer.querySelector('div') as HTMLDivElement);
+      service.enhance(resultsContainer.querySelector('div') as HTMLDivElement);
 
       const priceElement = resultsContainer.querySelector('.details .price') as HTMLDivElement;
       expect(priceElement.innerText.trim()).to.equal('Exact Price: 100×Chaos Orb=0.7×');
@@ -48,7 +48,7 @@ describe('Unit | Services | ItemResults | EquivalentPricings', () => {
 
     it('should display the chaos equivalence for non-chaos items', () => {
       resultsContainer.insertAdjacentHTML('afterbegin', FlushExaltElement);
-      service.process(resultsContainer.querySelector('div') as HTMLDivElement);
+      service.enhance(resultsContainer.querySelector('div') as HTMLDivElement);
 
       const priceElement = resultsContainer.querySelector('.details .price') as HTMLDivElement;
       expect(priceElement.innerText.trim()).to.equal('Exact Price: 1×Exalted Orb=150×');
@@ -59,7 +59,7 @@ describe('Unit | Services | ItemResults | EquivalentPricings', () => {
 
     it('should also display the non-chaos fraction if the result is not flush', () => {
       resultsContainer.insertAdjacentHTML('afterbegin', FractionExaltElement);
-      service.process(resultsContainer.querySelector('div') as HTMLDivElement);
+      service.enhance(resultsContainer.querySelector('div') as HTMLDivElement);
 
       const priceElement = resultsContainer.querySelector('.details .price') as HTMLDivElement;
       expect(priceElement.innerText.trim()).to.equal('Exact Price: 1.1×Exalted Orb=165×=1×+15×');
