@@ -1,0 +1,4 @@
+item-results:
+  pinnable:
+    pin: Pin
+    unpin: Unpin

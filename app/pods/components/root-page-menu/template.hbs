@@ -4,7 +4,7 @@
       local-class="menu-item {{if menuItem.isActive "is-active"}}"
       {{on "click" (fn @onChange menuItem.page)}}
     >
-      <FaIcon @icon={{menuItem.icon}}/>
+      <FaIcon @icon={{menuItem.icon}} local-class="menu-item-icon"/>
 
       {{menuItem.label}}
     </li>

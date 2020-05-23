@@ -1,0 +1,74 @@
+@keyframes pinned-glow-keyframes {
+  0% {
+    box-shadow: inset 0 0 10px 2px $blue-alt;
+  }
+
+  25% {
+    box-shadow: inset 0 0 20px 10px $blue-alt;
+  }
+
+  50% {
+    box-shadow: inset 0 0 10px 2px $blue-alt;
+  }
+
+  75% {
+    box-shadow: inset 0 0 20px 10px $blue-alt;
+  }
+
+  100% {
+    box-shadow: inset 0 0 10px 2px $blue-alt;
+  }
+}
+
+.results.compact {
+  .bt-pin-button {
+    height: 18px;
+    border-color: #444;
+    line-height: 16px;
+  }
+}
+
+.bt-pin-button {
+  padding: 1px 5px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  margin: 8px 0 0;
+  background-color: #222;
+  text-align: center;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.5;
+  color: #e9cf9f;
+  cursor: pointer;
+  vertical-align: middle;
+
+  &:focus,
+  &:hover {
+    border-color: #444;
+    background-color: #090909;
+  }
+
+  .bt-pin-button-pinned {
+    display: none;
+  }
+
+  .bt-pin-button-unpinned {
+    display: block;
+  }
+}
+
+.bt-pinned {
+  box-shadow: inset 0 0 10px 2px $blue-alt;
+
+  .bt-pin-button-pinned {
+    display: block;
+  }
+
+  .bt-pin-button-unpinned {
+    display: none;
+  }
+}
+
+.bt-pinned-glow {
+  animation: pinned-glow-keyframes 1s ease;
+}

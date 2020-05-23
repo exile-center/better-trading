@@ -4,6 +4,8 @@ import {action} from '@ember/object';
 import {tracked} from '@glimmer/tracking';
 import {restartableTask} from 'ember-concurrency-decorators';
 import {timeout} from 'ember-concurrency';
+
+// Types
 import {Task} from 'better-trading/types/ember-concurrency';
 
 // Constants

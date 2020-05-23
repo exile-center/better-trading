@@ -82,11 +82,6 @@ export default class TradeLocation extends Service.extend(Evented) {
     this.startLocationPolling();
   }
 
-  teardown() {
-    window.removeEventListener('focus', this.startLocationPolling);
-    window.removeEventListener('blur', this.stopLocationPolling);
-  }
-
   getTradeUrl(type: string, slug: string, league: string) {
     return [BASE_URL, type, league, slug].join('/');
   }

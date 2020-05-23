@@ -1,0 +1,55 @@
+<div
+  {{did-insert (fn this.subscribeToPinnedItemsChange)}}
+  {{did-insert (fn this.getPinnedItems)}}
+  {{will-destroy (fn this.unsubscribeFromPinnedItemsChange)}}
+  local-class="pinned-items"
+>
+  {{#if this.sortedPinnedItems}}
+    {{#each this.sortedPinnedItems as |pinnedItem|}}
+      <div local-class="item-wrapper">
+        {{pinnedItem.detailsElement}}
+
+        <div local-class="sockets-wrapper">
+          {{pinnedItem.socketsElement}}
+        </div>
+
+        {{pinnedItem.pricingElement}}
+
+        <div local-class="item-actions">
+          <Button
+            type="button"
+            @theme="blue"
+            @label={{t "page.pinned-items.scroll-to-item"}}
+            @onClick={{perform this.scrollToItemTask pinnedItem.id}}
+            local-class="item-scroll"
+          />
+
+          <Button
+            type="button"
+            @theme="blue"
+            @label={{t "page.pinned-items.unpin-item"}}
+            @onClick={{fn this.unpinItem pinnedItem.id}}
+          />
+        </div>
+      </div>
+    {{/each}}
+
+    <Button
+      type="button"
+      @theme="gold"
+      @label={{t "page.pinned-items.clear"}}
+      @onClick={{fn this.clearPinnedItems}}
+      @icon="times"
+    />
+
+    <AlertMessage
+      @message={{t "page.pinned-items.warning"}}
+      @type="warning"
+    />
+  {{else}}
+    <AlertMessage
+      @message={{t "page.pinned-items.empty"}}
+      @type="warning"
+    />
+  {{/if}}
+</div>

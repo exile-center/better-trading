@@ -2,27 +2,36 @@
 import Service, {inject as service} from '@ember/service';
 import window from 'ember-window-mock';
 import {enqueueTask} from 'ember-concurrency-decorators';
+import Evented from '@ember/object/evented';
 
 // Types
 import ItemResultsEnhancersEquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
 import ItemResultsEnhancersHighlightStatFilters from 'better-trading/services/item-results/enhancers/highlight-stat-filters';
 import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
+import {Task} from 'better-trading/types/ember-concurrency';
+import ItemResultsEnhancersPinnable from 'better-trading/services/item-results/enhancers/pinnable';
 
 // Utilities
 import {asyncLoop} from 'better-trading/utilities/async-loop';
-import {Task} from 'better-trading/types/ember-concurrency';
 
-export default class ItemResults extends Service {
+export default class ItemResults extends Service.extend(Evented) {
   @service('item-results/enhancers/highlight-stat-filters')
   itemResultsEnhancersHighlightStatFilters: ItemResultsEnhancersHighlightStatFilters;
 
   @service('item-results/enhancers/equivalent-pricings')
   itemResultsEnhancersEquivalentPricings: ItemResultsEnhancersEquivalentPricings;
 
+  @service('item-results/enhancers/pinnable')
+  itemResultsEnhancersPinnable: ItemResultsEnhancersPinnable;
+
   resultsObserver: MutationObserver;
 
   get enhancersSequence(): ItemResultsEnhancerService[] {
-    return [this.itemResultsEnhancersHighlightStatFilters, this.itemResultsEnhancersEquivalentPricings];
+    return [
+      this.itemResultsEnhancersHighlightStatFilters,
+      this.itemResultsEnhancersEquivalentPricings,
+      this.itemResultsEnhancersPinnable
+    ];
   }
 
   @enqueueTask
@@ -39,9 +48,11 @@ export default class ItemResults extends Service {
     );
 
     yield asyncLoop<HTMLElement>(unenhancedElements, async unenhancedElement => {
-      return asyncLoop<ItemResultsEnhancerService>(this.enhancersSequence, enhancer => {
+      await asyncLoop<ItemResultsEnhancerService>(this.enhancersSequence, enhancer => {
         return enhancer.enhance(unenhancedElement);
       });
+
+      unenhancedElement.toggleAttribute('bt-enhanced', true);
     });
   }
 
@@ -65,8 +76,16 @@ export default class ItemResults extends Service {
     );
   }
 
-  teardown(): void {
-    this.resultsObserver.disconnect();
+  clearPinnedItems() {
+    return this.itemResultsEnhancersPinnable.clear();
+  }
+
+  unpinItemById(itemId: string) {
+    return this.itemResultsEnhancersPinnable.unpinItemById(itemId);
+  }
+
+  getPinnedItems() {
+    return this.itemResultsEnhancersPinnable.getPinnedItems();
   }
 }
 

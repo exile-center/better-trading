@@ -3,4 +3,9 @@
   @onChange={{fn this.changeCurrentPage}}
 />
 
-{{component this.currentPageComponentName}}
+<div
+  {{did-insert (fn this.subscribeToPinnedItemsChange)}}
+  {{will-destroy (fn this.unsubscribeFromPinnedItemsChange)}}
+>
+  {{component this.currentPageComponentName}}
+</div>

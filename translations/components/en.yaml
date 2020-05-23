@@ -5,3 +5,4 @@ components:
   root-page-menu:
     bookmarks: Bookmarks
     history: History
+    pinned-items: Pinned items

@@ -1,0 +1,12 @@
+.results.compact.two,
+.results:not(.compact) {
+  .pull-left,
+  .pull-right {
+    display: block;
+    float: unset !important;
+  }
+
+  .pull-right {
+    margin-top: 7px;
+  }
+}

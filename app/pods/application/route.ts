@@ -41,9 +41,4 @@ export default class ApplicationRoute extends Route {
     // Temporary migration
     await this.bookmarksStorage.migrateDexieToStorage();
   }
-
-  deactivate() {
-    this.tradeLocation.teardown();
-    this.itemResults.teardown();
-  }
 }
