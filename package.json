@@ -1,6 +1,6 @@
 {
   "name": "better-trading",
-  "version": "1.1.1",
+  "version": "1.2.0-rc.0",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -57,6 +57,7 @@
     "ember-cli-htmlbars": "^4.0.9",
     "ember-cli-htmlbars-inline-precompile": "^3.0.1",
     "ember-cli-sass": "^10.0.1",
+    "ember-cli-showdown": "^4.5.0",
     "ember-cli-typescript": "^3.0.0",
     "ember-cli-uglify": "^3.0.0",
     "ember-concurrency": "^1.1.3",

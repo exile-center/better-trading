@@ -1,0 +1,33 @@
+{{#if this.bannerIsVisible}}
+  <div local-class="changelog-banner">
+    {{t "components.changelog-banner.notice" version=this.currentVersion}}
+
+    <Button
+      type="button"
+      @theme="blue"
+      @label={{t "components.changelog-banner.modal-button"}}
+      @onClick={{fn this.openChangelog}}
+      @icon="info-circle"
+    />
+  </div>
+{{/if}}
+
+{{#if this.modalChangelogIsVisible}}
+  <Modal
+    @title={{t "components.changelog-banner.modal-title" version=this.currentVersion}}
+    @onClose={{fn this.dismiss}}
+  >
+    <div local-class="changelog-wrapper">
+      {{markdown-to-html this.currentChangelog}}
+    </div>
+
+    <Button
+      local-class="dismiss-button"
+      type="button"
+      @theme="gold"
+      @label={{t "components.changelog-banner.dismiss-button"}}
+      @onClick={{fn this.dismiss}}
+      @icon="times"
+    />
+  </Modal>
+{{/if}}

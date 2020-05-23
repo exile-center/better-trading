@@ -16,6 +16,7 @@ declare const config: {
 
   APP: {
     version: string;
+    changelog: string | null;
     imageResourcePrefix: string;
     discordUrl: string;
     githubUrl: string;

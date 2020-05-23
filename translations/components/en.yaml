@@ -1,4 +1,9 @@
 components:
+  changelog-banner:
+    notice: 'Version {version} is now installed.'
+    modal-title: 'Version {version} changelog'
+    modal-button: Changelog
+    dismiss-button: Dismiss
   clipboard-textarea:
     button: Copy to clipboard
     button-copied: Copied

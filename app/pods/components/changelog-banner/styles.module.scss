@@ -1,0 +1,22 @@
+.changelog-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid $gold-alt;
+  margin: #{-1 * $extension-y-padding} #{-1 * $extension-x-padding} 10px;
+  background-color: $gold;
+  color: $white;
+}
+
+.changelog-wrapper {
+  h1,
+  h2 {
+    color: $white;
+  }
+}
+
+.dismiss-button {
+  width: 100%;
+  margin-top: 10px;
+}
