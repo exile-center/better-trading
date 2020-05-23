@@ -36,14 +36,12 @@ export default class ItemResultsEnhancersPinnable extends Service implements Ite
 
   clear() {
     this.pinnedItems = {};
-    this.updatePinnedCSS();
-    this.itemResults.trigger('pinned-items-change');
+    this.hasChanged();
   }
 
   unpinItemById(itemId: string) {
     delete this.pinnedItems[itemId];
-    this.updatePinnedCSS();
-    this.itemResults.trigger('pinned-items-change');
+    this.hasChanged();
   }
 
   // eslint-disable-next-line complexity
@@ -66,8 +64,7 @@ export default class ItemResultsEnhancersPinnable extends Service implements Ite
       }
     }
 
-    this.updatePinnedCSS();
-    this.itemResults.trigger('pinned-items-change');
+    this.hasChanged();
   }
 
   private renderPinButton(): HTMLElement {
@@ -110,6 +107,11 @@ export default class ItemResultsEnhancersPinnable extends Service implements Ite
 
       itemResult.classList.toggle('bt-pinned', pinnedIds.includes(itemResult.dataset.id));
     });
+  }
+
+  private hasChanged() {
+    this.updatePinnedCSS();
+    this.itemResults.trigger('pinned-items-change');
   }
 }
 
