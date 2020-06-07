@@ -5,18 +5,6 @@
 const npmPackage = require('../package.json');
 const fs = require('fs');
 
-const sanitizedVersion = () => {
-  return npmPackage.version.split('-').shift();
-};
-
-const fetchCurrentChangelog = () => {
-  const changelogPath = `./changelogs/${sanitizedVersion().replace(/\./g, '_')}.md`;
-
-  if (!fs.existsSync(changelogPath)) return null;
-
-  return fs.readFileSync(changelogPath, 'utf-8');
-};
-
 // eslint-disable-next-line complexity
 module.exports = function(environment) {
   const ENV = {
@@ -36,8 +24,13 @@ module.exports = function(environment) {
   };
 
   ENV.APP = {
-    version: sanitizedVersion(),
-    changelog: fetchCurrentChangelog(),
+    version: npmPackage.version,
+    changelog: npmPackage.changelog
+      ? {
+          markdown: fs.readFileSync(`./changelogs/${npmPackage.changelog}.md`, 'utf-8'),
+          slug: npmPackage.changelog
+        }
+      : null,
     imageResourcePrefix: environment === 'development' ? 'ember-build/assets/images' : 'assets/images',
     discordUrl: 'http://discord.exile.center',
     githubUrl: 'https://github.com/exile-center/better-trading',

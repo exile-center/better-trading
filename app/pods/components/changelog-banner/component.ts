@@ -33,10 +33,10 @@ export default class ChangelogBanner extends Component {
 
   get bannerIsVisible() {
     if (this.isDismissed) return false;
-    if (!Boolean(this.currentChangelog)) return false;
+    if (!this.currentChangelog) return false;
 
     const dismissedChangelog = this.storage.getLocalValue(DISMISSED_CHANGELOG_STORAGE_KEY);
-    if (dismissedChangelog && dismissedChangelog >= this.currentVersion) return false;
+    if (dismissedChangelog && dismissedChangelog === this.currentChangelog.slug) return false;
 
     return true;
   }
@@ -48,7 +48,9 @@ export default class ChangelogBanner extends Component {
 
   @action
   dismiss() {
-    this.storage.setLocalValue(DISMISSED_CHANGELOG_STORAGE_KEY, this.currentVersion);
+    if (!this.currentChangelog) return;
+
+    this.storage.setLocalValue(DISMISSED_CHANGELOG_STORAGE_KEY, this.currentChangelog.slug);
     this.isDismissed = true;
     this.modalChangelogIsVisible = false;
   }

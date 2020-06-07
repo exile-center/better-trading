@@ -1,7 +1,7 @@
 components:
   changelog-banner:
-    notice: 'Version {version} is now installed.'
-    modal-title: 'Version {version} changelog'
+    notice: 'New version {version} is now installed.'
+    modal-title: '{version} changelog'
     modal-button: Changelog
     dismiss-button: Dismiss
   clipboard-textarea:

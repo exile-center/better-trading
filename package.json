@@ -1,6 +1,7 @@
 {
   "name": "better-trading",
-  "version": "1.2.0-rc.0",
+  "version": "1.2.0",
+  "changelog": "1-2-0-pre-harvest",
   "private": true,
   "directories": {
     "doc": "doc",
