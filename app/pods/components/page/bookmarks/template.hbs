@@ -2,43 +2,45 @@
   @task={{this.fetchFoldersTask}}
   @size="large"
 >
-  <div local-class="header-actions">
-    <Button
-      type="button"
-      @theme="gold"
-      @label={{t "page.bookmarks.collapse-all"}}
-      @icon="compress-alt"
-      @onClick={{fn this.collapseAllFolderIds}}
-    />
-  </div>
+  {{#if this.folders}}
+    <div local-class="header-actions">
+      <Button
+        type="button"
+        @theme="gold"
+        @label={{t "page.bookmarks.collapse-all"}}
+        @icon="compress-alt"
+        @onClick={{fn this.collapseAllFolderIds}}
+      />
+    </div>
 
-  <SortableGroup
-    local-class="folders-wrapper"
-    @tagName="div"
-    @model={{this.folders}}
-    @onChange={{perform this.reorderFoldersTask}}
-    as |group|
-  >
-    {{#each this.folders key="id" as |folder|}}
-      {{#component
-        group.item
-        local-class="folder-wrapper"
-        tagName="div"
-        model=folder
-      as |dragItem|
-      }}
-        <Page::Bookmarks::Folder
-          local-class="folder"
-          @folder={{folder}}
-          @dragHandle={{dragItem.handle}}
-          @expandedFolderIds={{this.expandedFolderIds}}
-          @onEdit={{fn this.stageFolder}}
-          @onDelete={{perform this.deleteFolderTask}}
-          @onExpansionToggle={{fn this.toggleFolderExpansion}}
-        />
-      {{/component}}
-    {{/each}}
-  </SortableGroup>
+    <SortableGroup
+      local-class="folders-wrapper"
+      @tagName="div"
+      @model={{this.folders}}
+      @onChange={{perform this.reorderFoldersTask}}
+      as |group|
+    >
+      {{#each this.folders key="id" as |folder|}}
+        {{#component
+          group.item
+          local-class="folder-wrapper"
+          tagName="div"
+          model=folder
+        as |dragItem|
+        }}
+          <Page::Bookmarks::Folder
+            local-class="folder"
+            @folder={{folder}}
+            @dragHandle={{dragItem.handle}}
+            @expandedFolderIds={{this.expandedFolderIds}}
+            @onEdit={{fn this.stageFolder}}
+            @onDelete={{perform this.deleteFolderTask}}
+            @onExpansionToggle={{fn this.toggleFolderExpansion}}
+          />
+        {{/component}}
+      {{/each}}
+    </SortableGroup>
+  {{/if}}
 
   <div local-class="actions">
     <Button
