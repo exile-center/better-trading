@@ -35,6 +35,8 @@ export default class ItemResultsEnhancersPinnable extends Service implements Ite
   }
 
   clear() {
+    if (Object.keys(this.pinnedItems).length === 0) return;
+
     this.pinnedItems = {};
     this.hasChanged();
   }
