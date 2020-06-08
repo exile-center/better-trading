@@ -8,7 +8,7 @@ GIT_REVISION = `git rev-parse HEAD`
 # Linter and formatter configuration
 # ----------------------------------
 
-PRETTIER_FILES_PATTERN = ember-cli-build.js testem.js '{app,tests,config,scripts}/**/*.{ts,js,graphql,scss}' '**/*.md'
+PRETTIER_FILES_PATTERN = ember-cli-build.js testem.js '{app,tests,config,scripts}/**/*.{ts,js,graphql,scss}'
 STYLES_PATTERN = './app/**/*.scss'
 TEMPLATES_PATTERN = './app/**/*.hbs'
 

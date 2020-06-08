@@ -4,14 +4,14 @@
 
 - Firefox support
 - Search history
-  - List the last 50 trades
-  - Can be cleared
+    - List the last 50 trades
+    - Can be cleared
 - Bookmarks folders export and import
 - Pinnable item results
-  - Added a "pin" button on item results
-  - Pinned items can be shown in the right panel
-  - Useful to better compare and navigate while having a lot of results
-  - Pinned items are automatically cleared when the search scope changes
+    - Added a "pin" button on item results
+    - Pinned items can be shown in the right panel
+    - Useful to better compare and navigate while having a lot of results
+    - Pinned items are automatically cleared when the search scope changes
 
 ## Improvements 💅
 
