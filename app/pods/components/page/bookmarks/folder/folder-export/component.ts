@@ -10,7 +10,7 @@ import {tracked} from '@glimmer/tracking';
 
 // Constants
 const PREVIEW_BASE_URL = 'https://exile.center/bookmarks-preview';
-const PREVIEW_URL_MAX_LENGTH = 7500;
+// const PREVIEW_URL_MAX_LENGTH = 7500;
 
 interface Args {
   folder: Required<BookmarksFolderStruct>;
@@ -29,7 +29,10 @@ export default class FolderExport extends Component<Args> {
   }
 
   get canPreview() {
-    return this.previewUrl.length < PREVIEW_URL_MAX_LENGTH;
+    return false;
+
+    // Feature disabled until the page actually exists
+    // return this.previewUrl.length < PREVIEW_URL_MAX_LENGTH;
   }
 
   get embedCode() {
