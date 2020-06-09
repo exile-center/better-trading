@@ -1,4 +1,10 @@
 <div local-class="sections">
+  {{#if this.currentChangelog}}
+    <section local-class="section">
+      <MarkdownChangelog @markdown={{this.currentChangelog.markdown}}/>
+    </section>
+  {{/if}}
+
   <section local-class="section">
     <h1 local-class="section-title">
       {{t "page.about.discord.title"}}

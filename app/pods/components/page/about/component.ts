@@ -9,4 +9,5 @@ export default class PageAbout extends Component {
   githubUrl = config.APP.githubUrl;
   discordUrl = config.APP.discordUrl;
   chaosRecipeOverlayUrl = config.APP.chaosRecipeOverlayUrl;
+  currentChangelog = config.APP.changelog;
 }

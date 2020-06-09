@@ -17,9 +17,7 @@
     @title={{t "components.changelog-banner.modal-title" version=this.currentVersion}}
     @onClose={{fn this.dismiss}}
   >
-    <div local-class="changelog-wrapper">
-      {{markdown-to-html this.currentChangelog.markdown}}
-    </div>
+    <MarkdownChangelog @markdown={{this.currentChangelog.markdown}}/>
 
     <Button
       local-class="dismiss-button"
