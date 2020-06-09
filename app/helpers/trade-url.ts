@@ -16,10 +16,10 @@ export default class TradeUrl extends Helper {
   tradeLocation: TradeLocation;
 
   compute([{type, slug}]: PositionalParams, {suffix, league}: NamedParams) {
-    const tradeURL = this.tradeLocation.getTradeUrl(type, slug, league);
+    const tradeUrl = this.tradeLocation.getTradeUrl(type, slug, league);
 
-    if (!suffix) return tradeURL;
+    if (!suffix) return tradeUrl;
 
-    return tradeURL + suffix;
+    return tradeUrl + suffix;
   }
 }

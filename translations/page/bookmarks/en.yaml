@@ -13,6 +13,8 @@ page:
       export-folder: Export/Share
       open-live-trade: Live search
       create-trade: Register current trade
+      copy-trade-to-clipboard: Copy URL to clipboard
+      copy-trade-to-clipboard-success-flash: 'Trade URL for "{title}" has been copied to the clipboard.'
       edit-trade: Edit
       delete-trade: Delete
       update-trade-location: Save active trade

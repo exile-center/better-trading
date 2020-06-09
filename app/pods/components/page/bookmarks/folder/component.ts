@@ -5,6 +5,9 @@ import {action} from '@ember/object';
 import {inject as service} from '@ember/service';
 import {dropTask} from 'ember-concurrency-decorators';
 
+// Utilities
+import {copyToClipboard} from 'better-trading/utilities/copy-to-clipboard';
+
 // Types
 import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 import TradeLocation from 'better-trading/services/trade-location';
@@ -237,6 +240,18 @@ export default class BookmarksFolder extends Component<Args> {
   @action
   teardownLeagueChange() {
     this.tradeLocation.off('change', this, this.handleTradeLocationChange);
+  }
+
+  @action
+  copyToClipboard(trade: BookmarksTradeStruct) {
+    if (!this.currentLeague) return;
+
+    const tradeUrl = this.tradeLocation.getTradeUrl(trade.location.type, trade.location.slug, this.currentLeague);
+    copyToClipboard(tradeUrl);
+
+    this.flashMessages.success(
+      this.intl.t('page.bookmarks.folder.copy-trade-to-clipboard-success-flash', {title: trade.title})
+    );
   }
 
   handleTradeLocationChange({newTradeLocation}: TradeLocationChangeEvent) {

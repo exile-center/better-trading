@@ -4,6 +4,9 @@ import Component from '@glimmer/component';
 import {tracked} from '@glimmer/tracking';
 import {inject as service} from '@ember/service';
 
+// Utilities
+import {copyToClipboard} from 'better-trading/utilities/copy-to-clipboard';
+
 // Types
 import IntlService from 'ember-intl/services/intl';
 
@@ -18,17 +21,10 @@ export default class ClipboardTextarea extends Component<Args> {
   @tracked
   hasCopied: boolean = false;
 
-  textareaElement: HTMLInputElement;
-
   get copyButtonLabel() {
     if (this.hasCopied) return this.intl.t('components.clipboard-textarea.button-copied');
 
     return this.intl.t('components.clipboard-textarea.button');
-  }
-
-  @action
-  textareaDidInsert(textareaElement: HTMLInputElement) {
-    this.textareaElement = textareaElement;
   }
 
   @action
@@ -38,8 +34,7 @@ export default class ClipboardTextarea extends Component<Args> {
 
   @action
   copyToClipboard() {
-    this.textareaElement.select();
-    document.execCommand('copy');
+    copyToClipboard(this.args.value);
     this.hasCopied = true;
   }
 }

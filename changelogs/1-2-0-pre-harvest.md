@@ -18,6 +18,7 @@
 - Better feedback for bookmarks save success/error
 - Prevent "..." menus from closing too quickly
 - Exalt value for items listed in big Chaos value
+- Trade URL can be copied to clipboard via the trade "..." menu
 
 ## Bug fixes 🐛
 

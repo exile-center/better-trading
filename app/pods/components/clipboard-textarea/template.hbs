@@ -1,6 +1,5 @@
 <div local-class="textarea-wrapper">
   <textarea
-    {{did-insert (fn this.textareaDidInsert)}}
     {{on "focus" (fn this.selectAll)}}
     local-class="textarea"
     readonly
@@ -17,5 +16,3 @@
     local-class="clipboard-button"
   />
 </div>
-
-
