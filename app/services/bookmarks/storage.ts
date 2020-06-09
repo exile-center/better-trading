@@ -156,7 +156,12 @@ export default class BookmarksStorage extends Service {
   }
 
   async persistTrades(bookmarkTrades: BookmarksTradeStruct[], folderId: string) {
-    return this.storage.setValue(`${TRADES_PREFIX_KEY}--${folderId}`, bookmarkTrades);
+    const safeBookmarkTrades = bookmarkTrades.map(bookmarkTrade => ({
+      ...bookmarkTrade,
+      id: bookmarkTrade.id || uniqueId()
+    }));
+
+    return this.storage.setValue(`${TRADES_PREFIX_KEY}--${folderId}`, safeBookmarkTrades);
   }
 
   async persistFolders(bookmarkFolders: BookmarksFolderStruct[]) {
