@@ -13,10 +13,12 @@ A browser extension that enhance the pathofexile.com/trade experience.
 
 ## Contributing
 
-1. Make sure Node.js and NPM are installed;
+1. Make sure Node.js (v10.15.x) and NPM (v6.4.x) are installed;
 2. Install the dependencies with `make dependencies`;
 3. Build the project with `make dev`;
 4. Install the local extension located at `./dist/dev`.
+
+The command `make package` can be used to generated the store-ready zip files (chrome and firefox).
 
 Don't forget to run `make help` to know more about the other commands.
 

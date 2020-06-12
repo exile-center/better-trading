@@ -24,7 +24,5 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
       - run: make dependencies
-      - run: make lint
-      - run: make check-format
-      - run: make check-types
+      - run: make verify
       - run: make test

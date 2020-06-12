@@ -47,18 +47,38 @@ dependencies: ## Install required dependencies
 	node ./scripts/enforce-engine-versions.js
 	npm install
 
+.PHONY: package
+package: package-chrome package-firefox ## Package the extension for every browsers
+
+.PHONY: package-chrome
+package-chrome: ## Package the chrome extension
+	node ./scripts/enforce-engine-versions.js
+	rm -f ./dist-packages/chrome.zip
+	export TARGET_BROWSER=chrome
+	make build
+	mkdir -p ./dist-packages
+	(cd ./dist/staged/; zip -r ../../dist-packages/chrome.zip *)
+
+.PHONY: package-firefox
+package-firefox: ## Package the firefox extension
+	node ./scripts/enforce-engine-versions.js
+	rm -f ./dist-packages/firefox.zip
+	export TARGET_BROWSER=firefox
+	make build
+	## Patch the vendor.js to prevent a check from failing on Firefox
+	sed -i "" -E 's/var t="object"==typeof self&&null!==self&&self.Object===Object&&"undefined"!=typeof Window&&self.constructor===Window&&"object"==typeof document&&null!==document&&self.document===document&&"object"==typeof location&&null!==location&&self.location===location&&"object"==typeof history&&null!==history&&self.history===history&&"object"==typeof navigator&&null!==navigator&&self.navigator===navigator&&"string"==typeof navigator.userAgent/var t=true/g' ./dist/staged/assets/vendor.js
+	mkdir -p ./dist-packages
+	(cd ./dist/staged/; zip -r ../../dist-packages/firefox.zip *)
+
 .PHONY: build
-build: ## Build and bundle the extension for release
+build: ## Build and prepare the extension
 	node ./scripts/enforce-engine-versions.js
 	rm -rf ./dist
 	npx ember build --environment production --output-path ./dist/ember-build
-	## Patch the vendor.js to prevent a check from failing on Firefox
-	sed -i "" -E 's/var t="object"==typeof self&&null!==self&&self.Object===Object&&"undefined"!=typeof Window&&self.constructor===Window&&"object"==typeof document&&null!==document&&self.document===document&&"object"==typeof location&&null!==location&&self.location===location&&"object"==typeof history&&null!==history&&self.history===history&&"object"==typeof navigator&&null!==navigator&&self.navigator===navigator&&"string"==typeof navigator.userAgent/var t=true/g' ./dist/ember-build/assets/vendor.js
 	mkdir -p ./dist/staged/assets
 	cp -R ./dist/ember-build/assets/{better-trading.js,better-trading.css,vendor.js,vendor.css,images} ./dist/staged/assets
 	node ./scripts/generate-manifest.js production
 	cp ./extension/* ./dist/staged
-	(cd ./dist/staged/; zip -r ../chrome.zip *)
 
 .PHONY: dev
 dev: ## Build the extension for development purposes, watching files for update
@@ -82,6 +102,15 @@ test-browser: ## Run the test suite within a browser
 # Check, lint and format targets
 # ------------------------------
 
+.PHONY: format
+format: ## Format project files
+	npx prettier --write $(PRETTIER_FILES_PATTERN)
+	npx stylelint $(STYLES_PATTERN) --fix --quiet
+	npx eslint --ext .js,.ts . --fix --quiet
+
+.PHONY: verify
+verify: lint-scripts lint-styles lint-templates check-format check-types ## verify project files
+
 .PHONY: check-format
 check-format: ## Verify prettier formatting
 	npx prettier --check $(PRETTIER_FILES_PATTERN)
@@ -91,15 +120,6 @@ check-types: ## Verify typescript typings
 	# See https://github.com/glimmerjs/glimmer-vm/issues/946 for details about the
 	# --skipLibCheck flag
 	npx tsc --skipLibCheck
-
-.PHONY: format
-format: ## Format project files
-	- npx prettier --write $(PRETTIER_FILES_PATTERN)
-	- npx stylelint $(STYLES_PATTERN) --fix --quiet
-	- npx eslint --ext .js,.ts . --fix --quiet
-
-.PHONY: lint
-lint: lint-scripts lint-styles lint-templates ## Lint project files
 
 .PHONY: lint-scripts
 lint-scripts:
@@ -112,3 +132,7 @@ lint-styles:
 .PHONY: lint-templates
 lint-templates:
 	npx ember-template-lint $(TEMPLATES_PATTERN)
+
+.PHONY: lint-firefox
+lint-firefox:
+	npx addons-linter ./dist-packages/firefox.zip

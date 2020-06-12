@@ -35,7 +35,7 @@ module.exports = function(environment) {
     discordUrl: 'http://discord.exile.center',
     githubUrl: 'https://github.com/exile-center/better-trading',
     chaosRecipeOverlayUrl: 'https://github.com/exile-center/chaos-recipe-overlay',
-    browser: process.env.BROWSER || 'chrome',
+    browser: process.env.TARGET_BROWSER || 'chrome',
     locationPollingIntervalInMilliseconds: 500,
     maximumHistoryLength: 50
   };
