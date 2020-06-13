@@ -68,6 +68,9 @@ export default class ItemResultsEnhance extends Service {
   }
 
   private async enhanceItems(unenhancedElements: HTMLElement[]) {
+    if (unenhancedElements.length === 0) return;
+    if (unenhancedElements[0].classList.contains('exchange')) return;
+
     await asyncLoop<ItemResultsEnhancerService>(
       this.enhancersSequence,
       enhancer => enhancer.prepare && enhancer.prepare()
