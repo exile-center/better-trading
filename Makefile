@@ -54,8 +54,12 @@ package: package-chrome package-firefox ## Package the extension for every brows
 package-chrome: ## Package the chrome extension
 	node ./scripts/enforce-engine-versions.js
 	rm -f ./dist-packages/chrome.zip
-	export TARGET_BROWSER=chrome
-	make build
+	rm -rf ./dist
+	export TARGET_BROWSER=chrome; npx ember build --environment production --output-path ./dist/ember-build
+	mkdir -p ./dist/staged/assets
+	cp -R ./dist/ember-build/assets/{better-trading.js,better-trading.css,vendor.js,vendor.css,images} ./dist/staged/assets
+	node ./scripts/generate-manifest.js production
+	cp ./extension/* ./dist/staged
 	mkdir -p ./dist-packages
 	(cd ./dist/staged/; zip -r ../../dist-packages/chrome.zip *)
 
@@ -63,22 +67,16 @@ package-chrome: ## Package the chrome extension
 package-firefox: ## Package the firefox extension
 	node ./scripts/enforce-engine-versions.js
 	rm -f ./dist-packages/firefox.zip
-	export TARGET_BROWSER=firefox
-	make build
-	## Patch the vendor.js to prevent a check from failing on Firefox
-	sed -i "" -E 's/var t="object"==typeof self&&null!==self&&self.Object===Object&&"undefined"!=typeof Window&&self.constructor===Window&&"object"==typeof document&&null!==document&&self.document===document&&"object"==typeof location&&null!==location&&self.location===location&&"object"==typeof history&&null!==history&&self.history===history&&"object"==typeof navigator&&null!==navigator&&self.navigator===navigator&&"string"==typeof navigator.userAgent/var t=true/g' ./dist/staged/assets/vendor.js
-	mkdir -p ./dist-packages
-	(cd ./dist/staged/; zip -r ../../dist-packages/firefox.zip *)
-
-.PHONY: build
-build: ## Build and prepare the extension
-	node ./scripts/enforce-engine-versions.js
 	rm -rf ./dist
-	npx ember build --environment production --output-path ./dist/ember-build
+	export TARGET_BROWSER=firefox; npx ember build --environment production --output-path ./dist/ember-build
 	mkdir -p ./dist/staged/assets
 	cp -R ./dist/ember-build/assets/{better-trading.js,better-trading.css,vendor.js,vendor.css,images} ./dist/staged/assets
 	node ./scripts/generate-manifest.js production
 	cp ./extension/* ./dist/staged
+	## Patch the vendor.js to prevent a check from failing on Firefox
+	sed -i "" -E 's/var t="object"==typeof self&&null!==self&&self.Object===Object&&"undefined"!=typeof Window&&self.constructor===Window&&"object"==typeof document&&null!==document&&self.document===document&&"object"==typeof location&&null!==location&&self.location===location&&"object"==typeof history&&null!==history&&self.history===history&&"object"==typeof navigator&&null!==navigator&&self.navigator===navigator&&"string"==typeof navigator.userAgent/var t=true/g' ./dist/staged/assets/vendor.js
+	mkdir -p ./dist-packages
+	(cd ./dist/staged/; zip -r ../../dist-packages/firefox.zip *)
 
 .PHONY: dev
 dev: ## Build the extension for development purposes, watching files for update
