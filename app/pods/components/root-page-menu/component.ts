@@ -25,16 +25,16 @@ export default class RootPageMenu extends Component<Args> {
   get menuItems(): MenuItem[] {
     return [
       {
-        page: RootPage.PINNED_ITEMS,
-        icon: 'thumbtack',
-        label: this.intl.t('components.root-page-menu.pinned-items'),
-        isActive: RootPage.PINNED_ITEMS === this.args.currentPage
-      },
-      {
         page: RootPage.BOOKMARKS,
         icon: 'folder-open',
         label: this.intl.t('components.root-page-menu.bookmarks'),
         isActive: RootPage.BOOKMARKS === this.args.currentPage
+      },
+      {
+        page: RootPage.PINNED_ITEMS,
+        icon: 'thumbtack',
+        label: this.intl.t('components.root-page-menu.pinned-items'),
+        isActive: RootPage.PINNED_ITEMS === this.args.currentPage
       },
       {
         page: RootPage.HISTORY,
