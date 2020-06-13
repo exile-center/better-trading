@@ -2,22 +2,23 @@
 
 ## New features ✨
 
-- Firefox support
+- Available on Mozilla Firefox
 - Search history
-    - List the last 50 trades
+    - Keep the last 50 trades
     - Can be cleared
-- Bookmarks folders export and import
-- Pinnable item results
-    - Added a "pin" button on item results
-    - Pinned items can be shown in the right panel
-    - Useful to better compare and navigate while having a lot of results
-    - Pinned items are automatically cleared when the search scope changes
+- Export and import the bookmarks folders
+- Pin item results to compare them
+    - Added a "pin" button within item results tiles
+    - Pinned items are shown in the right panel
+    - Useful to compare and navigate while having a lot of results
+    - Pinned items are cleared when the search/page changes
 
 ## Improvements 💅
 
 - Better feedback for bookmarks save success/error
 - Prevent "..." menus from closing too quickly
-- Exalt value for items listed in big Chaos value
+- Convert high Chaos values in Exalts
+- Always show the "Refresh", "Copy item" and "Filter by Item Stats" buttons
 - Trade URL can be copied to clipboard via the trade "..." menu
 
 ## Bug fixes 🐛
