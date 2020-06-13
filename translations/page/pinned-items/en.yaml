@@ -1,7 +1,7 @@
 page:
   pinned-items:
-    warning: Items will remain pinned as long as they are within the current results.
+    warning: Items will remain pinned as long as they are within the current results. Changing the search or refreshing the results will reset the pins.
     clear: Clear pinned itmes
-    empty: Items can be pinned here by clicking the "pin" button beside the "whisper" button.
+    empty: Items can be pinned here by clicking the "pin" button near the "whisper" button.
     unpin-item: Unpin
     scroll-to-item: Scroll to the item result

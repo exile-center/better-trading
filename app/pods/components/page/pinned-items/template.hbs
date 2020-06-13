@@ -41,15 +41,15 @@
       @onClick={{fn this.clearPinnedItems}}
       @icon="times"
     />
-
-    <AlertMessage
-      @message={{t "page.pinned-items.warning"}}
-      @type="warning"
-    />
   {{else}}
     <AlertMessage
       @message={{t "page.pinned-items.empty"}}
       @type="warning"
     />
   {{/if}}
+
+  <AlertMessage
+    @message={{t "page.pinned-items.warning"}}
+    @type="warning"
+  />
 </div>
