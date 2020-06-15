@@ -1,12 +1,14 @@
 .results.compact.two,
 .results:not(.compact) {
-  .pull-left,
-  .pull-right {
-    display: block;
-    float: unset !important;
-  }
+  .resultset:not(.exchange) {
+    .pull-left,
+    .pull-right {
+      display: block;
+      float: unset !important;
+    }
 
-  .pull-right {
-    margin-top: 7px;
+    .pull-right {
+      margin-top: 7px;
+    }
   }
 }
