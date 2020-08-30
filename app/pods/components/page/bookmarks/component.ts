@@ -78,7 +78,10 @@ export default class PageBookmarks extends Component {
       if (isNewlyCreated) this.toggleFolderExpansion(folderId);
       this.folders = yield this.bookmarks.fetchFolders();
 
-      this.flashMessages.success(this.intl.t('page.bookmarks.persist-folder-success-flash', {title: folder.title}));
+      const successTranslationKey = isNewlyCreated
+        ? 'page.bookmarks.create-folder-success-flash'
+        : 'page.bookmarks.update-folder-success-flash';
+      this.flashMessages.success(this.intl.t(successTranslationKey, {title: folder.title}));
     } catch (_error) {
       this.flashMessages.alert(this.intl.t('general.generic-alert-flash'));
     } finally {

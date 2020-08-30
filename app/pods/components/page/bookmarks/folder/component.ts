@@ -102,12 +102,14 @@ export default class BookmarksFolder extends Component<Args> {
   @dropTask
   *persistTradeTask(trade: BookmarksTradeStruct) {
     try {
+      const isNewlyCreated = !trade.id;
       yield this.bookmarks.persistTrade(trade, this.folderId);
       this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
 
-      this.flashMessages.success(
-        this.intl.t('page.bookmarks.folder.persist-trade-success-flash', {title: trade.title})
-      );
+      const successTranslationKey = isNewlyCreated
+        ? 'page.bookmarks.folder.create-trade-success-flash'
+        : 'page.bookmarks.folder.update-trade-success-flash';
+      this.flashMessages.success(this.intl.t(successTranslationKey, {title: trade.title}));
     } catch (_error) {
       this.flashMessages.alert(this.intl.t('general.generic-alert-flash'));
     } finally {
