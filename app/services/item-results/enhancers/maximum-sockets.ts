@@ -20,6 +20,9 @@ export default class MaximumSockets extends Service implements ItemResultsEnhanc
   statNeedles: RegExp[];
 
   enhance(result: HTMLElement) {
+    // Check for non-socketable items
+    if (result.querySelector('.numSockets0')) return;
+
     const ilvlElement = result.querySelector('.itemLevel');
 
     const ilvlMatch = ilvlElement?.textContent?.match(/(\d+)/);
