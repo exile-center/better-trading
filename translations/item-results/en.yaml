@@ -2,3 +2,5 @@ item-results:
   pinnable:
     pin: Pin
     unpin: Unpin
+  maximum-sockets:
+    warning: 'Max. {maximum} sockets'

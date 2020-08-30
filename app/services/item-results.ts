@@ -3,7 +3,7 @@ import Service, {inject as service} from '@ember/service';
 import Evented from '@ember/object/evented';
 
 // Types
-import ItemResultsEnhancersPinnable from 'better-trading/services/item-results/enhancers/pinnable';
+import Pinnable from 'better-trading/services/item-results/enhancers/pinnable';
 
 // Utilities
 import ItemResultsEnhance from 'better-trading/services/item-results/enhance';
@@ -13,7 +13,7 @@ export default class ItemResults extends Service.extend(Evented) {
   itemResultsEnhance: ItemResultsEnhance;
 
   @service('item-results/enhancers/pinnable')
-  itemResultsEnhancersPinnable: ItemResultsEnhancersPinnable;
+  itemResultsEnhancersPinnable: Pinnable;
 
   async initialize() {
     await this.itemResultsEnhance.initialize();

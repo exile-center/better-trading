@@ -5,9 +5,10 @@ import window from 'ember-window-mock';
 
 // Types
 import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
-import ItemResultsEnhancersHighlightStatFilters from 'better-trading/services/item-results/enhancers/highlight-stat-filters';
-import ItemResultsEnhancersEquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
-import ItemResultsEnhancersPinnable from 'better-trading/services/item-results/enhancers/pinnable';
+import HighlightStatFilters from 'better-trading/services/item-results/enhancers/highlight-stat-filters';
+import EquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
+import Pinnable from 'better-trading/services/item-results/enhancers/pinnable';
+import MaximumSockets from 'better-trading/services/item-results/enhancers/maximum-sockets';
 import {Task} from 'better-trading/types/ember-concurrency';
 
 // Utilities
@@ -15,13 +16,16 @@ import {asyncLoop} from 'better-trading/utilities/async-loop';
 
 export default class ItemResultsEnhance extends Service {
   @service('item-results/enhancers/highlight-stat-filters')
-  itemResultsEnhancersHighlightStatFilters: ItemResultsEnhancersHighlightStatFilters;
+  itemResultsEnhancersHighlightStatFilters: HighlightStatFilters;
 
   @service('item-results/enhancers/equivalent-pricings')
-  itemResultsEnhancersEquivalentPricings: ItemResultsEnhancersEquivalentPricings;
+  itemResultsEnhancersEquivalentPricings: EquivalentPricings;
 
   @service('item-results/enhancers/pinnable')
-  itemResultsEnhancersPinnable: ItemResultsEnhancersPinnable;
+  itemResultsEnhancersPinnable: Pinnable;
+
+  @service('item-results/enhancers/maximum-sockets')
+  itemResultsEnhancersMaximumSockets: MaximumSockets;
 
   resultsObserver: MutationObserver;
 
@@ -29,7 +33,8 @@ export default class ItemResultsEnhance extends Service {
     return [
       this.itemResultsEnhancersHighlightStatFilters,
       this.itemResultsEnhancersEquivalentPricings,
-      this.itemResultsEnhancersPinnable
+      this.itemResultsEnhancersPinnable,
+      this.itemResultsEnhancersMaximumSockets
     ];
   }
 
