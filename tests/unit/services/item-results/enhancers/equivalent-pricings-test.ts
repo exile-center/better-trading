@@ -10,12 +10,12 @@ import FlushExaltElement from 'better-trading/tests/html-samples/item-results/fl
 import FractionExaltElement from 'better-trading/tests/html-samples/item-results/fraction-exalt';
 
 // Types
-import ItemResultsEnhancersEquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
+import EquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
 
 describe('Unit | Services | ItemResults | Enhancers | EquivalentPricings', () => {
   setupTest();
 
-  let service: ItemResultsEnhancersEquivalentPricings;
+  let service: EquivalentPricings;
   let resultsContainer: HTMLDivElement;
 
   beforeEach(function() {

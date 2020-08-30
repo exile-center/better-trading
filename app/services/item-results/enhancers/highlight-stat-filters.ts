@@ -11,7 +11,7 @@ import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
 // Constants
 const MODS_SELECTOR = '.explicitMod,.pseudoMod,.implicitMod';
 
-export default class ItemResultsEnhancersHighlightStatFilters extends Service implements ItemResultsEnhancerService {
+export default class HighlightStatFilters extends Service implements ItemResultsEnhancerService {
   @service('search-panel')
   searchPanel: SearchPanel;
 
@@ -37,6 +37,6 @@ export default class ItemResultsEnhancersHighlightStatFilters extends Service im
 
 declare module '@ember/service' {
   interface Registry {
-    'item-results/enhancers/highlight-stat-filters': ItemResultsEnhancersHighlightStatFilters;
+    'item-results/enhancers/highlight-stat-filters': HighlightStatFilters;
   }
 }

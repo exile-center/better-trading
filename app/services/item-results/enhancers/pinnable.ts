@@ -11,7 +11,7 @@ interface PinnedItemsMap {
   [id: string]: ItemResultsPinnedItem;
 }
 
-export default class ItemResultsEnhancersPinnable extends Service implements ItemResultsEnhancerService {
+export default class Pinnable extends Service implements ItemResultsEnhancerService {
   @service('item-results')
   itemResults: ItemResults;
 
@@ -119,6 +119,6 @@ export default class ItemResultsEnhancersPinnable extends Service implements Ite
 
 declare module '@ember/service' {
   interface Registry {
-    'item-results/enhancers/pinnable': ItemResultsEnhancersPinnable;
+    'item-results/enhancers/pinnable': Pinnable;
   }
 }

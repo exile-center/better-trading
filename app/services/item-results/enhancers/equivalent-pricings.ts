@@ -23,7 +23,7 @@ const CURRENCY_IMAGE_SELECTOR = '[data-field="price"] .currency-image img';
 const CURRENCY_VALUE_SELECTOR = '[data-field="price"] > br + span';
 const EQUAL_HTML = '<span class="bt-equivalent-pricings-equals">=</span>';
 
-export default class ItemResultsEnhancersEquivalentPricings extends Service implements ItemResultsEnhancerService {
+export default class EquivalentPricings extends Service implements ItemResultsEnhancerService {
   @service('poe-ninja')
   poeNinja: PoeNinja;
 
@@ -133,6 +133,6 @@ export default class ItemResultsEnhancersEquivalentPricings extends Service impl
 
 declare module '@ember/service' {
   interface Registry {
-    'item-results/enhancers/equivalent-pricings': ItemResultsEnhancersEquivalentPricings;
+    'item-results/enhancers/equivalent-pricings': EquivalentPricings;
   }
 }
