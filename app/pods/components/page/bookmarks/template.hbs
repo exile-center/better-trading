@@ -1,5 +1,6 @@
 <LoadingContainer
-  @task={{this.fetchFoldersTask}}
+  {{on-window-focus (perform this.refetchFoldersTask)}}
+  @task={{this.initialFetchFoldersTask}}
   @size="large"
 >
   {{#if this.folders}}

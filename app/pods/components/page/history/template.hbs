@@ -1,6 +1,7 @@
 <LoadingContainer
   {{did-insert (fn this.subscribeToLocationChange)}}
   {{will-destroy (fn this.unsubscribeToLocationChange)}}
+  {{on-window-focus (perform this.refetchHistoryTask)}}
   @task={{this.initialFetchHistoryTask}}
   @size="large"
 >

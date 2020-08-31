@@ -2,7 +2,7 @@
   {{did-insert (perform @task)}}
   ...attributes
 >
-  {{#if this.isLoading}}
+  {{#if @task.isRunning}}
     <div local-class="loader is-{{@size}}">
       <FaIcon
         local-class="loader"
