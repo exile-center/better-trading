@@ -9,8 +9,4 @@ interface Args {
   size: 'small' | 'large';
 }
 
-export default class LoadingContainer extends Component<Args> {
-  get isLoading(): boolean {
-    return this.args.task.isRunning;
-  }
-}
+export default class LoadingContainer extends Component<Args> {}
