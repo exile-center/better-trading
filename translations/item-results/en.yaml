@@ -4,3 +4,5 @@ item-results:
     unpin: Unpin
   maximum-sockets:
     warning: 'Max. {maximum} sockets'
+  regroup-similars:
+    button: '{count, plural, =0 {} =1 {1 similar result} other {# similar results}}'

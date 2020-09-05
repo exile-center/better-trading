@@ -1,0 +1,15 @@
+.results {
+  .row {
+    background: rgba(#202020, 0.8) !important;
+  }
+
+  &:not(.compact) {
+    .row {
+      border-bottom: 2px solid rgba($white, 0.1);
+    }
+  }
+
+  &.compact.two .row {
+    border: 1px solid #333 !important;
+  }
+}

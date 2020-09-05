@@ -6,9 +6,23 @@
       display: block;
       float: unset !important;
     }
+  }
+}
 
+.results {
+  .btns {
+    line-height: 2;
+    //min-height: 25px;
+
+    .pull-left,
     .pull-right {
-      margin-top: 7px;
+      height: auto !important;
+    }
+
+    .pull-left {
+      .status {
+        display: inline !important;
+      }
     }
   }
 }
