@@ -7,6 +7,7 @@ import window from 'ember-window-mock';
 import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
 import HighlightStatFilters from 'better-trading/services/item-results/enhancers/highlight-stat-filters';
 import EquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
+import RegroupSimilars from 'better-trading/services/item-results/enhancers/regroup-similars';
 import Pinnable from 'better-trading/services/item-results/enhancers/pinnable';
 import MaximumSockets from 'better-trading/services/item-results/enhancers/maximum-sockets';
 import {Task} from 'better-trading/types/ember-concurrency';
@@ -27,6 +28,9 @@ export default class ItemResultsEnhance extends Service {
   @service('item-results/enhancers/maximum-sockets')
   itemResultsEnhancersMaximumSockets: MaximumSockets;
 
+  @service('item-results/enhancers/regroup-similars')
+  itemResultsEnhancersRegroupSimilars: RegroupSimilars;
+
   resultsObserver: MutationObserver;
 
   get enhancersSequence(): ItemResultsEnhancerService[] {
@@ -34,7 +38,8 @@ export default class ItemResultsEnhance extends Service {
       this.itemResultsEnhancersHighlightStatFilters,
       this.itemResultsEnhancersEquivalentPricings,
       this.itemResultsEnhancersPinnable,
-      this.itemResultsEnhancersMaximumSockets
+      this.itemResultsEnhancersMaximumSockets,
+      this.itemResultsEnhancersRegroupSimilars
     ];
   }
 
@@ -42,7 +47,7 @@ export default class ItemResultsEnhance extends Service {
   *enhanceTask() {
     const itemElementsCount = window.document.querySelectorAll('.resultset > div.row').length;
     const unenhancedElements = Array.prototype.slice.call(
-      window.document.querySelectorAll('.resultset > div.row:not([bt-enhanced])')
+      window.document.querySelectorAll('.resultset > div.row[data-id]:not([bt-enhanced])')
     );
 
     if (unenhancedElements.length) {
