@@ -62,7 +62,7 @@
 .header-action {
   display: flex;
   align-items: center;
-  padding: 0 5px;
+  padding: 5px;
   border: 0;
   background-color: transparent;
   outline: none;
@@ -119,9 +119,8 @@
 }
 
 .trade-action {
-  padding: 0;
+  padding: 5px;
   border: 0;
-  margin-right: 10px;
   background-color: transparent;
   outline: none;
   color: rgba($white, 0.8);
