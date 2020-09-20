@@ -19,9 +19,14 @@ export default class MaximumSockets extends Service implements ItemResultsEnhanc
 
   statNeedles: RegExp[];
 
+  // eslint-disable-next-line complexity
   enhance(result: HTMLElement) {
-    // Check for non-socketable items
-    if (result.querySelector('.numSockets0')) return;
+    const currentSocketsCount = result.querySelectorAll('.sockets .socket').length || 0;
+    if (currentSocketsCount === 0) return;
+
+    const iconElement = result.querySelector('.icon img') as HTMLImageElement | undefined;
+    if (!iconElement) return;
+    if (!/BodyArmours/.test(iconElement.src)) return;
 
     const ilvlElement = result.querySelector('.itemLevel');
 
@@ -32,10 +37,12 @@ export default class MaximumSockets extends Service implements ItemResultsEnhanc
     const applicableThreshold = ILVL_THRESHOLDS.find(threshold => ilvl <= threshold.ilvl);
     if (!applicableThreshold) return;
 
-    const iconElement = result.querySelector('.itemRendered');
-    if (!iconElement) return;
+    if (applicableThreshold.maxSockets <= currentSocketsCount) return;
 
-    iconElement.prepend(this.renderWarning(applicableThreshold.maxSockets));
+    const itemFrameElement = result.querySelector('.itemRendered');
+    if (!itemFrameElement) return;
+
+    itemFrameElement.prepend(this.renderWarning(applicableThreshold.maxSockets));
   }
 
   private renderWarning(maximumSockets: number) {
