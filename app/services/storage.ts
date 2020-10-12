@@ -4,7 +4,7 @@ import {extensionApi} from 'better-trading/utilities/extension-api';
 import window from 'ember-window-mock';
 
 // Constants
-const PAST_LEAGUES = ['blight', 'metamorph'];
+const PAST_LEAGUES = ['blight', 'metamorph', 'delirium'];
 
 interface StoragePayload {
   value: any;
