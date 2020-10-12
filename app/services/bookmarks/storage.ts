@@ -2,96 +2,19 @@
 import Service, {inject as service} from '@ember/service';
 
 // Types
-import {
-  BookmarksFolderAscendancyIcon,
-  BookmarksFolderItemIcon,
-  BookmarksFolderStruct,
-  BookmarksTradeLocation,
-  BookmarksTradeStruct
-} from 'better-trading/types/bookmarks';
+import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 import Storage from 'better-trading/services/storage';
-import DexieService from 'better-trading/services/dexie';
 
 // Utilities
 import {uniqueId} from 'better-trading/utilities/unique-id';
-
-// Config
-import config from 'better-trading/config/environment';
 
 // Constants
 const FOLDERS_KEY = 'bookmark-folders';
 const TRADES_PREFIX_KEY = 'bookmark-trades';
 
-// Dexie legacy types
-interface DexieBookmarkTradeStruct {
-  id?: number;
-  title: string;
-  location: BookmarksTradeLocation;
-  rank: number;
-  folderId: number;
-  completedAt: string | null;
-}
-
-interface DexieBookmarkFolderStruct {
-  id?: number;
-  title: string;
-  icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon | null;
-  rank: number;
-}
-
 export default class BookmarksStorage extends Service {
   @service('storage')
   storage: Storage;
-
-  @service('dexie')
-  dexie: DexieService;
-
-  async migrateDexieToStorage() {
-    if (config.APP.browser !== 'chrome') return;
-    const dbExists = await this.dexie.exists();
-    if (!dbExists) return;
-
-    await this.dexie.initialize();
-
-    const folders = (await this.dexie.fetchAll<DexieBookmarkFolderStruct>('bookmarkFolders')).sort(
-      (entityA, entityB) => entityA.rank - entityB.rank
-    );
-
-    const updatedFolders: BookmarksFolderStruct[] = [];
-
-    // tslint:disable-next-line:prefer-for-of
-    for (let folderIndex = 0; folderIndex < folders.length; folderIndex++) {
-      const folder = folders[folderIndex];
-
-      const newFolderId = uniqueId();
-
-      const updatedFolder = {
-        title: folder.title,
-        icon: folder.icon,
-        id: newFolderId
-      };
-
-      const trades = await this.dexie.searchQuery<DexieBookmarkTradeStruct>('bookmarkTrades', 'folderId', folder.id);
-
-      const updatedTrades = trades
-        .sort((entityA, entityB) => entityA.rank - entityB.rank)
-        .map(trade => ({
-          title: trade.title,
-          location: trade.location,
-          completedAt: trade.completedAt,
-          id: uniqueId()
-        }));
-
-      await this.persistTrades(updatedTrades, newFolderId);
-      updatedFolders.push(updatedFolder);
-    }
-
-    const existingFolders = await this.fetchFolders();
-
-    await this.persistFolders([...existingFolders, ...updatedFolders]);
-
-    await this.dexie.teardown();
-  }
 
   async fetchFolders() {
     const folders = await this.storage.getValue<BookmarksFolderStruct[]>(FOLDERS_KEY);

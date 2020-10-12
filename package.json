@@ -45,7 +45,6 @@
     "chai": "^4.2.0",
     "chai-dom": "^1.8.1",
     "date-fns": "^2.14.0",
-    "dexie": "^2.0.4",
     "ember-auto-import": "^1.5.3",
     "ember-cli": "^3.14.0",
     "ember-cli-autoprefixer": "^0.8.1",
