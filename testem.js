@@ -17,8 +17,8 @@ module.exports = {
         '--disable-dev-shm-usage',
         '--disable-software-rasterizer',
         '--mute-audio',
-        '--remote-debugging-port=9222'
-      ].filter(Boolean)
-    }
-  }
+        '--remote-debugging-port=9222',
+      ].filter(Boolean),
+    },
+  },
 };

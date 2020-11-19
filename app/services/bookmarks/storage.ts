@@ -44,7 +44,7 @@ export default class BookmarksStorage extends Service {
 
         return {
           ...folder,
-          ...folderToPersist
+          ...folderToPersist,
         };
       });
     }
@@ -68,7 +68,7 @@ export default class BookmarksStorage extends Service {
 
         return {
           ...trade,
-          ...tradeToPersist
+          ...tradeToPersist,
         };
       });
     }
@@ -79,9 +79,9 @@ export default class BookmarksStorage extends Service {
   }
 
   async persistTrades(bookmarkTrades: BookmarksTradeStruct[], folderId: string) {
-    const safeBookmarkTrades = bookmarkTrades.map(bookmarkTrade => ({
+    const safeBookmarkTrades = bookmarkTrades.map((bookmarkTrade) => ({
       ...bookmarkTrade,
-      id: bookmarkTrade.id || uniqueId()
+      id: bookmarkTrade.id || uniqueId(),
     }));
 
     return this.storage.setValue(`${TRADES_PREFIX_KEY}--${folderId}`, safeBookmarkTrades);

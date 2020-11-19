@@ -39,7 +39,7 @@ export default class ItemResultsEnhance extends Service {
       this.itemResultsEnhancersEquivalentPricings,
       this.itemResultsEnhancersPinnable,
       this.itemResultsEnhancersMaximumSockets,
-      this.itemResultsEnhancersRegroupSimilars
+      this.itemResultsEnhancersRegroupSimilars,
     ];
   }
 
@@ -68,12 +68,12 @@ export default class ItemResultsEnhance extends Service {
 
     this.resultsObserver.observe(tradeAppElement.parentElement, {
       childList: true,
-      subtree: true
+      subtree: true,
     });
 
     await asyncLoop<ItemResultsEnhancerService>(
       this.enhancersSequence,
-      enhancer => enhancer.initialize && enhancer.initialize()
+      (enhancer) => enhancer.initialize && enhancer.initialize()
     );
   }
 
@@ -83,11 +83,11 @@ export default class ItemResultsEnhance extends Service {
 
     await asyncLoop<ItemResultsEnhancerService>(
       this.enhancersSequence,
-      enhancer => enhancer.prepare && enhancer.prepare()
+      (enhancer) => enhancer.prepare && enhancer.prepare()
     );
 
-    await asyncLoop<HTMLElement>(unenhancedElements, async unenhancedElement => {
-      await asyncLoop<ItemResultsEnhancerService>(this.enhancersSequence, enhancer => {
+    await asyncLoop<HTMLElement>(unenhancedElements, async (unenhancedElement) => {
+      await asyncLoop<ItemResultsEnhancerService>(this.enhancersSequence, (enhancer) => {
         return enhancer.enhance(unenhancedElement);
       });
 
@@ -96,7 +96,10 @@ export default class ItemResultsEnhance extends Service {
   }
 
   private async clearEnhancedItems() {
-    await asyncLoop<ItemResultsEnhancerService>(this.enhancersSequence, enhancer => enhancer.clear && enhancer.clear());
+    await asyncLoop<ItemResultsEnhancerService>(
+      this.enhancersSequence,
+      (enhancer) => enhancer.clear && enhancer.clear()
+    );
   }
 }
 

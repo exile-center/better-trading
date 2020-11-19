@@ -24,7 +24,7 @@ const App = Application.extend({
   rootElement: extensionContainer,
   modulePrefix,
   podModulePrefix,
-  Resolver
+  Resolver,
 });
 
 loadInitializers(App, modulePrefix);

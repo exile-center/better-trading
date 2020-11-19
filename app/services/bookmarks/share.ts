@@ -18,10 +18,10 @@ export default class BookmarksShare extends Service {
     const payload: ExportedFolderStruct = {
       icn: folder.icon as string,
       tit: folder.title,
-      trs: trades.map(trade => ({
+      trs: trades.map((trade) => ({
         tit: trade.title,
-        loc: `${trade.location.type}:${trade.location.slug}`
-      }))
+        loc: `${trade.location.type}:${trade.location.slug}`,
+      })),
     };
 
     return btoa(JSON.stringify(payload));
@@ -33,10 +33,10 @@ export default class BookmarksShare extends Service {
 
       const folder: BookmarksFolderStruct = {
         icon: potentialPayload.icn as BookmarksFolderIcon,
-        title: potentialPayload.tit
+        title: potentialPayload.tit,
       };
 
-      const trades: BookmarksTradeStruct[] = potentialPayload.trs.map(trade => {
+      const trades: BookmarksTradeStruct[] = potentialPayload.trs.map((trade) => {
         const [type, slug] = trade.loc.split(':');
 
         return {
@@ -44,8 +44,8 @@ export default class BookmarksShare extends Service {
           completedAt: null,
           location: {
             type,
-            slug
-          }
+            slug,
+          },
         };
       });
 

@@ -6,21 +6,21 @@ const npmPackage = require('../package.json');
 const fs = require('fs');
 
 // eslint-disable-next-line complexity
-module.exports = function(environment) {
+module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'better-trading',
     podModulePrefix: 'better-trading/pods',
     environment,
     locationType: 'hash',
-    rootURL: '/'
+    rootURL: '/',
   };
 
   ENV.EmberENV = {
     LOG_VERSION: false,
     EXTEND_PROTOTYPES: false,
     FEATURES: {
-      EMBER_METAL_TRACKED_PROPERTIES: true
-    }
+      EMBER_METAL_TRACKED_PROPERTIES: true,
+    },
   };
 
   ENV.APP = {
@@ -28,7 +28,7 @@ module.exports = function(environment) {
     changelog: npmPackage.changelog
       ? {
           markdown: fs.readFileSync(`./changelogs/${npmPackage.changelog}.md`, 'utf-8'),
-          slug: npmPackage.changelog
+          slug: npmPackage.changelog,
         }
       : null,
     imageResourcePrefix: environment === 'development' ? 'ember-build/assets/images' : 'assets/images',
@@ -37,13 +37,13 @@ module.exports = function(environment) {
     chaosRecipeOverlayUrl: 'https://github.com/exile-center/chaos-recipe-overlay',
     browser: process.env.TARGET_BROWSER || 'chrome',
     locationPollingIntervalInMilliseconds: 500,
-    maximumHistoryLength: 50
+    maximumHistoryLength: 50,
   };
 
   ENV.flashMessageDefaults = {
     extendedTimeout: 200,
     timeout: 4500,
-    types: ['alert', 'success', 'warning']
+    types: ['alert', 'success', 'warning'],
   };
 
   ENV.fontawesome = {
@@ -69,10 +69,10 @@ module.exports = function(environment) {
         'folder-open',
         'circle-notch',
         'check-circle',
-        'thumbtack'
+        'thumbtack',
       ],
-      'free-brands-svg-icons': ['github', 'discord']
-    }
+      'free-brands-svg-icons': ['github', 'discord'],
+    },
   };
 
   if (environment === 'test') {

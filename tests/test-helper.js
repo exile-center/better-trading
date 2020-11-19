@@ -10,7 +10,7 @@ chai.use(sinonChai);
 
 mocha.setup({
   slow: 500,
-  timeout: 2000
+  timeout: 2000,
 });
 
 setApplication(Application.create(config.APP));

@@ -7,47 +7,47 @@ const targets = require('./config/targets');
 
 const IS_TEST_ENVIRONMENT = EmberApp.env() === 'test';
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   const app = new EmberApp(defaults, {
     hinting: false,
     storeConfigInMeta: false,
     tests: IS_TEST_ENVIRONMENT,
 
     vendorFiles: {
-      'jquery.js': null
+      'jquery.js': null,
     },
 
     // SCSS compilation
     autoprefixer: {
       browsers: targets.browsers,
-      sourcemap: false
+      sourcemap: false,
     },
 
     cssModules: {
       intermediateOutputPath: 'app/styles/_pods.scss',
       extension: 'module.scss',
       postcssOptions: {
-        syntax: require('postcss-scss')
-      }
+        syntax: require('postcss-scss'),
+      },
     },
 
     // JavaScript compilation
     babel: {
       plugins: [require('ember-auto-import/babel-plugin'), 'transform-object-rest-spread'],
-      sourceMaps: 'inline'
+      sourceMaps: 'inline',
     },
 
     'ember-cli-babel': {
-      includePolyfill: true
+      includePolyfill: true,
     },
 
     sourcemaps: {
-      enabled: !IS_TEST_ENVIRONMENT
+      enabled: !IS_TEST_ENVIRONMENT,
     },
 
     fingerprint: {
-      enabled: false
-    }
+      enabled: false,
+    },
   });
 
   return app.toTree();

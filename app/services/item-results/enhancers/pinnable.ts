@@ -97,7 +97,7 @@ export default class Pinnable extends Service implements ItemResultsEnhancerServ
       detailsElement: detailsElement.cloneNode(true) as HTMLElement,
       socketsElement: socketsElement.cloneNode(true) as HTMLElement,
       pricingElement: pricingElement.cloneNode(true) as HTMLElement,
-      pinnedAt: new Date().toISOString()
+      pinnedAt: new Date().toISOString(),
     };
   }
 

@@ -127,8 +127,8 @@ export default class BookmarksFolder extends Component<Args> {
           ...trade,
           location: {
             slug: this.tradeLocation.slug,
-            type: this.tradeLocation.type
-          }
+            type: this.tradeLocation.type,
+          },
         },
         this.folderId
       );
@@ -150,7 +150,7 @@ export default class BookmarksFolder extends Component<Args> {
     yield this.bookmarks.persistTrade(
       {
         ...trade,
-        completedAt: trade.completedAt ? null : new Date().toUTCString()
+        completedAt: trade.completedAt ? null : new Date().toUTCString(),
       },
       this.folderId
     );
@@ -169,12 +169,12 @@ export default class BookmarksFolder extends Component<Args> {
 
     const initializedTrade = this.bookmarks.initializeTradeStructFrom({
       slug: this.tradeLocation.slug,
-      type: this.tradeLocation.type
+      type: this.tradeLocation.type,
     });
 
     this.stagedTrade = {
       ...initializedTrade,
-      title: this.searchPanel.recommendTitle()
+      title: this.searchPanel.recommendTitle(),
     };
   }
 

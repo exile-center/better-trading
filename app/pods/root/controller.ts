@@ -14,7 +14,7 @@ const CURRENT_PAGE_KEY = 'current-page';
 export enum RootPage {
   BOOKMARKS = 'bookmarks',
   HISTORY = 'history',
-  PINNED_ITEMS = 'pinned-items'
+  PINNED_ITEMS = 'pinned-items',
 }
 
 export default class RootController extends Controller {

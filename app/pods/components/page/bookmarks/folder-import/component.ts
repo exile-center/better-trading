@@ -33,7 +33,7 @@ export default class FolderImport extends Component<Args> {
   get submitEntity() {
     return {
       folder: this.stagedFolder,
-      trades: this.stagedTrades
+      trades: this.stagedTrades,
     };
   }
 

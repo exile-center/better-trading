@@ -28,20 +28,20 @@ export default class RootPageMenu extends Component<Args> {
         page: RootPage.BOOKMARKS,
         icon: 'folder-open',
         label: this.intl.t('components.root-page-menu.bookmarks'),
-        isActive: RootPage.BOOKMARKS === this.args.currentPage
+        isActive: RootPage.BOOKMARKS === this.args.currentPage,
       },
       {
         page: RootPage.PINNED_ITEMS,
         icon: 'thumbtack',
         label: this.intl.t('components.root-page-menu.pinned-items'),
-        isActive: RootPage.PINNED_ITEMS === this.args.currentPage
+        isActive: RootPage.PINNED_ITEMS === this.args.currentPage,
       },
       {
         page: RootPage.HISTORY,
         icon: 'history',
         label: this.intl.t('components.root-page-menu.history'),
-        isActive: RootPage.HISTORY === this.args.currentPage
-      }
+        isActive: RootPage.HISTORY === this.args.currentPage,
+      },
     ];
   }
 }

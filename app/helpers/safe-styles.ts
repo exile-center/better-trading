@@ -10,7 +10,7 @@ interface Styles {
 }
 
 export const safeStyles = ([styles]: [Styles]): SafeString => {
-  const styleRules = Object.keys(styles).map(attribute => {
+  const styleRules = Object.keys(styles).map((attribute) => {
     return `${attribute}: ${styles[attribute]};`;
   });
 

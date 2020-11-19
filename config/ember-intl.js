@@ -2,7 +2,7 @@
 
 'use strict';
 
-module.exports = function() {
+module.exports = function () {
   return {
     /**
      * The locales that our application supports.
@@ -60,6 +60,6 @@ module.exports = function() {
      * @type {String}
      * @default "translations"
      */
-    inputPath: 'translations'
+    inputPath: 'translations',
   };
 };

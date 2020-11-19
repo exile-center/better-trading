@@ -16,7 +16,7 @@ import {
   BookmarksFolderAscendancyTemplarIcon,
   BookmarksFolderAscendancyWitchIcon,
   BookmarksFolderItemIcon,
-  BookmarksFolderStruct
+  BookmarksFolderStruct,
 } from 'better-trading/types/bookmarks';
 
 interface Args {
@@ -40,7 +40,7 @@ export default class BookmarksFolderEdition extends Component<Args> {
       Object.values(BookmarksFolderAscendancyWitchIcon).map(this.iconOptionFromIcon),
       Object.values(BookmarksFolderAscendancyRangerIcon).map(this.iconOptionFromIcon),
       Object.values(BookmarksFolderAscendancyTemplarIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarksFolderAscendancyScionIcon).map(this.iconOptionFromIcon)
+      Object.values(BookmarksFolderAscendancyScionIcon).map(this.iconOptionFromIcon),
     ];
   }
 
@@ -61,14 +61,14 @@ export default class BookmarksFolderEdition extends Component<Args> {
   toggleIcon(icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon) {
     this.folder = {
       ...this.folder,
-      icon: icon !== this.folder.icon ? icon : null
+      icon: icon !== this.folder.icon ? icon : null,
     };
   }
 
   private iconOptionFromIcon(icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon) {
     return {
       value: icon,
-      imagePath: `bookmark-folder/${icon}.png`
+      imagePath: `bookmark-folder/${icon}.png`,
     };
   }
 }

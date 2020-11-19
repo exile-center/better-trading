@@ -18,11 +18,11 @@ describe('Unit | Services | ItemResults | Enhancers | EquivalentPricings', () =>
   let service: EquivalentPricings;
   let resultsContainer: HTMLDivElement;
 
-  beforeEach(function() {
+  beforeEach(function () {
     service = this.owner.lookup('service:item-results/enhancers/equivalent-pricings');
 
     service.chaosRatios = {
-      'exalted-orb': 150
+      'exalted-orb': 150,
     };
 
     resultsContainer = window.document.createElement('div');

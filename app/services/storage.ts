@@ -31,14 +31,14 @@ export default class Storage extends Service {
   async setValue(key: string, value: any, league: string | null = null) {
     return this.write(this.formatKey(key, league), {
       expiresAt: null,
-      value
+      value,
     });
   }
 
   async setEphemeralValue(key: string, value: any, expirationDate: Date, league: string | null = null) {
     return this.write(this.formatKey(key, league), {
       expiresAt: expirationDate.toUTCString(),
-      value
+      value,
     });
   }
 
@@ -78,7 +78,7 @@ export default class Storage extends Service {
 
   private async fetchAllKeys(): Promise<string[]> {
     return new Promise((resolve, _reject) => {
-      extensionApi().storage.local.get(null, result => {
+      extensionApi().storage.local.get(null, (result) => {
         resolve(Object.keys(result));
       });
     });
@@ -86,7 +86,7 @@ export default class Storage extends Service {
 
   private async read(key: string): Promise<StoragePayload | null> {
     return new Promise((resolve, _reject) => {
-      extensionApi().storage.local.get([key], result => {
+      extensionApi().storage.local.get([key], (result) => {
         if (result[key]) {
           resolve(result[key]);
         } else {

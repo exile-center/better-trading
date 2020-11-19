@@ -16,7 +16,7 @@ export default class EntryLink extends Component<Args> {
     return formatDistance(new Date(this.args.historyEntry.createdAt), new Date(), {
       addSuffix: true,
       includeSeconds: true,
-      locale: enUS
+      locale: enUS,
     });
   }
 

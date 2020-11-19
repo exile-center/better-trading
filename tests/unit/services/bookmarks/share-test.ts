@@ -15,18 +15,18 @@ describe('Unit | Services | Bookmarks | Share', () => {
 
   let service: BookmarksShare;
 
-  beforeEach(function() {
+  beforeEach(function () {
     service = this.owner.lookup('service:bookmarks/share');
   });
 
   describe('serialize/deserialize', () => {
     it('should be able to encode and decode back a folder and its trades', () => {
       const folder = fakeBookmarkFolder({
-        title: 'Some folder'
+        title: 'Some folder',
       });
 
       const trade = fakeBookmarkTrade({
-        title: 'Some trade'
+        title: 'Some trade',
       });
 
       const encoded = service.serialize(folder, [trade]);
@@ -49,7 +49,7 @@ describe('Unit | Services | Bookmarks | Share', () => {
         service.deserialize(
           btoa(
             JSON.stringify({
-              title: 'incomplete payload'
+              title: 'incomplete payload',
             })
           )
         )

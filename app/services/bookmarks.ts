@@ -56,7 +56,7 @@ export default class Bookmarks extends Service {
   initializeFolderStruct(): BookmarksFolderStruct {
     return {
       icon: null,
-      title: ''
+      title: '',
     };
   }
 
@@ -64,7 +64,7 @@ export default class Bookmarks extends Service {
     return {
       location,
       title: '',
-      completedAt: null
+      completedAt: null,
     };
   }
 

@@ -16,7 +16,7 @@ describe('Unit | Services | TradeLocation | History', () => {
   let service: TradeLocationHistory;
   let storageMock: sinon.SinonMock;
 
-  beforeEach(function() {
+  beforeEach(function () {
     service = this.owner.lookup('service:trade-location/history');
     storageMock = sinon.mock(service.storage);
   });
@@ -51,10 +51,7 @@ describe('Unit | Services | TradeLocation | History', () => {
         .once()
         .returns(Promise.resolve([fakeTradeLocationHistory({slug: 'last-entry', league: 'foo', type: 'search'})]));
 
-      const setValueCall = storageMock
-        .expects('setValue')
-        .once()
-        .returns(Promise.resolve());
+      const setValueCall = storageMock.expects('setValue').once().returns(Promise.resolve());
 
       await service.maybeLogTradeLocation({slug: 'bang', league: 'foo', type: 'search'});
 
@@ -77,14 +74,11 @@ describe('Unit | Services | TradeLocation | History', () => {
             fakeTradeLocationHistory({slug: '4'}),
             fakeTradeLocationHistory({slug: 'will-overflow-5'}),
             fakeTradeLocationHistory({slug: 'will-overflow-6'}),
-            fakeTradeLocationHistory({slug: 'will-overflow-7'})
+            fakeTradeLocationHistory({slug: 'will-overflow-7'}),
           ])
         );
 
-      const setValueCall = storageMock
-        .expects('setValue')
-        .once()
-        .returns(Promise.resolve());
+      const setValueCall = storageMock.expects('setValue').once().returns(Promise.resolve());
 
       await service.maybeLogTradeLocation({slug: '0', league: 'foo', type: 'search'});
 
@@ -101,11 +95,7 @@ describe('Unit | Services | TradeLocation | History', () => {
 
   describe('fetchHistoryEntries', () => {
     it('should returns an empty array when there is no history', async () => {
-      storageMock
-        .expects('getValue')
-        .once()
-        .withArgs('trade-history')
-        .returns(Promise.resolve(null));
+      storageMock.expects('getValue').once().withArgs('trade-history').returns(Promise.resolve(null));
 
       const historyEntries = await service.fetchHistoryEntries();
 
@@ -120,7 +110,7 @@ describe('Unit | Services | TradeLocation | History', () => {
         .returns(
           Promise.resolve([
             fakeTradeLocationHistory({title: 'First history'}),
-            fakeTradeLocationHistory({title: 'Second history'})
+            fakeTradeLocationHistory({title: 'Second history'}),
           ])
         );
 

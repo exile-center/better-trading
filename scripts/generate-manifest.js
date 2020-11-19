@@ -6,12 +6,12 @@ const [target] = process.argv.slice(2);
 
 const outputPath = {
   dev: './dist/dev/manifest.json',
-  production: './dist/staged/manifest.json'
+  production: './dist/staged/manifest.json',
 }[target];
 
 const packageJson = JSON.parse(fs.readFileSync('./package.json'));
 
-const assetsPathFor = assetsRelativePath => {
+const assetsPathFor = (assetsRelativePath) => {
   const path = `assets/${assetsRelativePath}`;
 
   if (target === 'production') return path;
@@ -26,12 +26,12 @@ const manifest = Object.assign(
       {
         matches: ['*://www.pathofexile.com/trade*'],
         js: [assetsPathFor('vendor.js'), assetsPathFor('better-trading.js')],
-        css: [assetsPathFor('vendor.css'), assetsPathFor('better-trading.css')]
-      }
+        css: [assetsPathFor('vendor.css'), assetsPathFor('better-trading.css')],
+      },
     ],
     background: {
       scripts: ['background.js'],
-      persistent: true
+      persistent: true,
     },
     permissions: ['storage', '*://poe.ninja/*'],
     web_accessible_resources: [assetsPathFor('images/*')],
@@ -39,8 +39,8 @@ const manifest = Object.assign(
       16: 'icon16.png',
       48: 'icon48.png',
       64: 'icon64.png',
-      128: 'icon128.png'
-    }
+      128: 'icon128.png',
+    },
   },
   packageJson.manifest
 );

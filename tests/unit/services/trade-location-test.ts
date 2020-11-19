@@ -16,7 +16,7 @@ describe('Unit | Services | TradeLocation', () => {
   let service: TradeLocation;
   let tradeLocationHistoryMock: sinon.SinonMock;
 
-  beforeEach(function() {
+  beforeEach(function () {
     window.location.pathname = '/trade/search/initial-league/initial-trade';
     service = this.owner.lookup('service:trade-location');
     tradeLocationHistoryMock = sinon.mock(service.tradeLocationHistory);
@@ -94,7 +94,7 @@ describe('Unit | Services | TradeLocation', () => {
           .withArgs({
             type: 'search',
             slug: 'new-trade',
-            league: 'new-league'
+            league: 'new-league',
           })
           .returns(Promise.resolve());
 
@@ -109,13 +109,13 @@ describe('Unit | Services | TradeLocation', () => {
           oldTradeLocation: {
             type: 'search',
             slug: 'initial-trade',
-            league: 'initial-league'
+            league: 'initial-league',
           },
           newTradeLocation: {
             type: 'search',
             slug: 'new-trade',
-            league: 'new-league'
-          }
+            league: 'new-league',
+          },
         });
       });
     });

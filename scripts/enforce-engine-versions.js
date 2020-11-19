@@ -16,10 +16,7 @@ try {
 const {node: expectedNodeVersion, npm: expectedNpmVersion} = require('../package.json').engines;
 const actualNodeVersion = process.versions.node;
 
-const actualNpmVersion = require('child_process')
-  .execSync('npm -v')
-  .toString()
-  .replace(/\n/, '');
+const actualNpmVersion = require('child_process').execSync('npm -v').toString().replace(/\n/, '');
 
 console.info(`Node.js ${actualNodeVersion}`);
 console.info(`NPM ${actualNpmVersion}`);

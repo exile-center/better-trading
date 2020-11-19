@@ -10,7 +10,7 @@ const ILVL_THRESHOLDS = [
   {maxSockets: 2, ilvl: 1},
   {maxSockets: 3, ilvl: 24},
   {maxSockets: 4, ilvl: 34},
-  {maxSockets: 5, ilvl: 49}
+  {maxSockets: 5, ilvl: 49},
 ];
 
 export default class MaximumSockets extends Service implements ItemResultsEnhancerService {
@@ -34,7 +34,7 @@ export default class MaximumSockets extends Service implements ItemResultsEnhanc
     if (!ilvlMatch) return;
 
     const ilvl = parseInt(ilvlMatch[0], 10);
-    const applicableThreshold = ILVL_THRESHOLDS.find(threshold => ilvl <= threshold.ilvl);
+    const applicableThreshold = ILVL_THRESHOLDS.find((threshold) => ilvl <= threshold.ilvl);
     if (!applicableThreshold) return;
 
     if (applicableThreshold.maxSockets <= currentSocketsCount) return;

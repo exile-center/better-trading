@@ -40,7 +40,7 @@ export default class FolderExport extends Component<Args> {
       `title="${this.args.folder.title}"`,
       'width="350"',
       'height="500"',
-      `src="${this.previewUrl}"`
+      `src="${this.previewUrl}"`,
     ];
 
     return `<iframe ${iframeAttributes.join(' ')}></iframe>`;

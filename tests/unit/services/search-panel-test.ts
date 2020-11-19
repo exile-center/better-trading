@@ -17,7 +17,7 @@ describe('Unit | Services | Search panel', () => {
   let service: SearchPanel;
   let sampleContainer: HTMLDivElement;
 
-  beforeEach(function() {
+  beforeEach(function () {
     service = this.owner.lookup('service:search-panel');
 
     sampleContainer = window.document.createElement('div');

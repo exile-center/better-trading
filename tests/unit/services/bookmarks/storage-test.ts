@@ -17,7 +17,7 @@ describe('Unit | Services | Bookmarks | Storage', () => {
   let service: BookmarksStorage;
   let storageMock: sinon.SinonMock;
 
-  beforeEach(function() {
+  beforeEach(function () {
     service = this.owner.lookup('service:bookmarks/storage');
     storageMock = sinon.mock(service.storage);
   });
@@ -28,11 +28,7 @@ describe('Unit | Services | Bookmarks | Storage', () => {
 
   describe('fetchFolders', () => {
     it('should returns an empty array when there is no folders', async () => {
-      storageMock
-        .expects('getValue')
-        .once()
-        .withArgs('bookmark-folders')
-        .returns(Promise.resolve(null));
+      storageMock.expects('getValue').once().withArgs('bookmark-folders').returns(Promise.resolve(null));
 
       const folders = await service.fetchFolders();
 
@@ -58,11 +54,7 @@ describe('Unit | Services | Bookmarks | Storage', () => {
 
   describe('fetchTradesByFolderId', () => {
     it('should returns an empty array when there is no trades', async () => {
-      storageMock
-        .expects('getValue')
-        .once()
-        .withArgs('bookmark-trades--fake-folder')
-        .returns(Promise.resolve(null));
+      storageMock.expects('getValue').once().withArgs('bookmark-trades--fake-folder').returns(Promise.resolve(null));
 
       const trades = await service.fetchTradesByFolderId('fake-folder');
 
@@ -94,10 +86,7 @@ describe('Unit | Services | Bookmarks | Storage', () => {
         .withArgs('bookmark-folders')
         .returns(Promise.resolve([fakeBookmarkFolder({title: 'Existing folder'})]));
 
-      const receivedSetValue = storageMock
-        .expects('setValue')
-        .once()
-        .returns(Promise.resolve());
+      const receivedSetValue = storageMock.expects('setValue').once().returns(Promise.resolve());
 
       await service.persistFolder(fakeBookmarkFolder(fakeBookmarkFolder({title: 'New folder', id: undefined})));
 
@@ -118,14 +107,11 @@ describe('Unit | Services | Bookmarks | Storage', () => {
         .withArgs('bookmark-folders')
         .returns(Promise.resolve([folder]));
 
-      const receivedSetValue = storageMock
-        .expects('setValue')
-        .once()
-        .returns(Promise.resolve());
+      const receivedSetValue = storageMock.expects('setValue').once().returns(Promise.resolve());
 
       await service.persistFolder({
         ...folder,
-        title: 'Updated title'
+        title: 'Updated title',
       });
 
       const [[storageKey, persistedFolders]] = receivedSetValue.args;
@@ -144,17 +130,9 @@ describe('Unit | Services | Bookmarks | Storage', () => {
         .withArgs('bookmark-folders')
         .returns(Promise.resolve([fakeBookmarkFolder({id: 'fake-folder', title: 'Existing folder'})]));
 
-      storageMock
-        .expects('setValue')
-        .once()
-        .withArgs('bookmark-folders', [])
-        .returns(Promise.resolve());
+      storageMock.expects('setValue').once().withArgs('bookmark-folders', []).returns(Promise.resolve());
 
-      storageMock
-        .expects('deleteValue')
-        .once()
-        .withArgs('bookmark-trades--fake-folder')
-        .returns(Promise.resolve());
+      storageMock.expects('deleteValue').once().withArgs('bookmark-trades--fake-folder').returns(Promise.resolve());
 
       await service.deleteFolder('fake-folder');
     });
@@ -168,11 +146,7 @@ describe('Unit | Services | Bookmarks | Storage', () => {
         .withArgs('bookmark-trades--fake-folder')
         .returns(Promise.resolve([fakeBookmarkTrade({id: 'fake-trade'})]));
 
-      storageMock
-        .expects('setValue')
-        .once()
-        .withArgs('bookmark-trades--fake-folder', [])
-        .returns(Promise.resolve());
+      storageMock.expects('setValue').once().withArgs('bookmark-trades--fake-folder', []).returns(Promise.resolve());
 
       await service.deleteTrade('fake-trade', 'fake-folder');
     });

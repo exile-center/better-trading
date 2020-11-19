@@ -39,13 +39,7 @@ export default class RegroupSimilars extends Service implements ItemResultsEnhan
     const price = result.querySelector('.price')?.textContent;
 
     const hash = btoa(
-      encodeURIComponent(
-        [seller, itemName, price]
-          .filter(Boolean)
-          .join('')
-          .replace(/\s/g, '')
-          .toLowerCase()
-      )
+      encodeURIComponent([seller, itemName, price].filter(Boolean).join('').replace(/\s/g, '').toLowerCase())
     );
     result.setAttribute('bt-regroup-hash', hash);
 

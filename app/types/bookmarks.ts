@@ -21,41 +21,41 @@ export type BookmarksFolderIcon = BookmarksFolderAscendancyIcon | BookmarksFolde
 export enum BookmarksFolderAscendancyDuelistIcon {
   SLAYER = 'slayer',
   GLADIATOR = 'gladiator',
-  CHAMPION = 'champion'
+  CHAMPION = 'champion',
 }
 
 export enum BookmarksFolderAscendancyShadowIcon {
   ASSASSIN = 'assassin',
   SABOTEUR = 'saboteur',
-  TRICKSTER = 'trickster'
+  TRICKSTER = 'trickster',
 }
 
 export enum BookmarksFolderAscendancyMarauderIcon {
   JUGGERNAUT = 'juggernaut',
   BERSERKER = 'berserker',
-  CHIEFTAIN = 'chieftain'
+  CHIEFTAIN = 'chieftain',
 }
 
 export enum BookmarksFolderAscendancyWitchIcon {
   NECROMANCER = 'necromancer',
   ELEMENTALIST = 'elementalist',
-  OCCULTIST = 'occultist'
+  OCCULTIST = 'occultist',
 }
 
 export enum BookmarksFolderAscendancyRangerIcon {
   DEADEYE = 'deadeye',
   RAIDER = 'raider',
-  PATHFINDER = 'pathfinder'
+  PATHFINDER = 'pathfinder',
 }
 
 export enum BookmarksFolderAscendancyTemplarIcon {
   GUARDIAN = 'guardian',
   HIEROPHANT = 'hierophant',
-  INQUISITOR = 'inquisitor'
+  INQUISITOR = 'inquisitor',
 }
 
 export enum BookmarksFolderAscendancyScionIcon {
-  ASCENDANT = 'ascendant'
+  ASCENDANT = 'ascendant',
 }
 
 export type BookmarksFolderAscendancyIcon =
@@ -76,5 +76,5 @@ export enum BookmarksFolderItemIcon {
   ESSENCE = 'essence',
   FOSSIL = 'fossil',
   MAP = 'map',
-  SCARAB = 'scarab'
+  SCARAB = 'scarab',
 }

@@ -29,7 +29,7 @@ export default class ContextualMenu extends Component {
   showItems(event: MouseEvent) {
     this.positionStyles = {
       top: `${event.clientY}px`,
-      left: `${event.clientX}px`
+      left: `${event.clientX}px`,
     };
   }
 

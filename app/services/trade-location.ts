@@ -50,7 +50,7 @@ export default class TradeLocation extends Service.extend(Evented) {
     return {
       slug: this.slug,
       type: this.type,
-      league: this.league
+      league: this.league,
     };
   }
 
@@ -61,7 +61,7 @@ export default class TradeLocation extends Service.extend(Evented) {
     if (!this.compareTradeLocations(this.lastTradeLocation, currentTradeLocation)) {
       const changeEvent: TradeLocationChangeEvent = {
         oldTradeLocation: this.lastTradeLocation,
-        newTradeLocation: currentTradeLocation
+        newTradeLocation: currentTradeLocation,
       };
 
       yield this.tradeLocationHistory.maybeLogTradeLocation(currentTradeLocation);
