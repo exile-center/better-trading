@@ -8,6 +8,7 @@ import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
 import HighlightStatFilters from 'better-trading/services/item-results/enhancers/highlight-stat-filters';
 import EquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
 import RegroupSimilars from 'better-trading/services/item-results/enhancers/regroup-similars';
+import ScamPrevention from 'better-trading/services/item-results/enhancers/scam-prevention';
 import Pinnable from 'better-trading/services/item-results/enhancers/pinnable';
 import MaximumSockets from 'better-trading/services/item-results/enhancers/maximum-sockets';
 import {Task} from 'better-trading/types/ember-concurrency';
@@ -31,6 +32,9 @@ export default class ItemResultsEnhance extends Service {
   @service('item-results/enhancers/regroup-similars')
   itemResultsEnhancersRegroupSimilars: RegroupSimilars;
 
+  @service('item-results/enhancers/scam-prevention')
+  itemResultsEnhancersScamPrevention: ScamPrevention;
+
   resultsObserver: MutationObserver;
 
   get enhancersSequence(): ItemResultsEnhancerService[] {
@@ -40,6 +44,7 @@ export default class ItemResultsEnhance extends Service {
       this.itemResultsEnhancersPinnable,
       this.itemResultsEnhancersMaximumSockets,
       this.itemResultsEnhancersRegroupSimilars,
+      this.itemResultsEnhancersScamPrevention,
     ];
   }
 

@@ -11,3 +11,11 @@ components:
     bookmarks: Bookmarks
     history: History
     pinned-items: Pinned items
+  the-forbidden-trove:
+    credits: Powered by The Forbidden Trove
+    blacklist-warning:
+      title: Blacklisted account
+      body: '{accountName} has been reported {timeAgo}.'
+      reason: 'Logged reason:'
+      disclaimer: The whisper message has still been copied to your clipboard, you can proceed with the trade.
+      close: Close

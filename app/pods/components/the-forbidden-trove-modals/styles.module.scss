@@ -1,0 +1,46 @@
+.blacklist-body {
+  margin: 15px 0;
+  font-family: $primary-font;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+}
+
+.blacklist-reason {
+  padding: 5px 10px;
+  border: 1px solid $gold-alt;
+  margin-top: 5px;
+  font-size: 11px;
+}
+
+.blacklist-disclaimer {
+  margin-top: 10px;
+  font-size: 11px;
+  font-style: italic;
+  color: $beige;
+}
+
+.blacklist-close {
+  width: 100%;
+  margin-top: 10px;
+}
+
+.credits-link-wrapper {
+  margin-top: 15px;
+  text-align: right;
+}
+
+.credits-link {
+  color: $white;
+  transition: color 0.2s ease;
+
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    color: $beige;
+  }
+}
+
+.credits-link-logo {
+  height: 30px;
+  margin-left: 5px;
+}

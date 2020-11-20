@@ -3,6 +3,7 @@ import Service, {inject as service} from '@ember/service';
 
 // Utilities
 import {slugify} from 'better-trading/utilities/slugify';
+import {dateDelta} from 'better-trading/utilities/date-delta';
 
 // Types
 import ExtensionBackground from 'better-trading/services/extension-background';
@@ -23,7 +24,8 @@ export interface PoeNinjaCurrenciesRatios {
 
 // Constants
 const CURRENCIES_RESOURCE_URI = '/data/currencyoverview?type=Currency';
-const ONE_HOUR_IN_MILLISECONDS = 3600000;
+const RATIOS_CACHE_DURATION = 3600000; // 1 hour
+const RATIOS_CACHE_KEY = 'poe-ninja-chaos-ratios-cache';
 
 export default class PoeNinja extends Service {
   @service('extension-background')
@@ -46,11 +48,11 @@ export default class PoeNinja extends Service {
   }
 
   private async lookupCachedChaosRatiosFor(league: string): Promise<PoeNinjaCurrenciesRatios | null> {
-    return this.storage.getValue('poe-ninja-chaos-ratios-cache', league);
+    return this.storage.getValue(RATIOS_CACHE_KEY, league);
   }
 
   private async cacheChaosRatiosFor(league: string, ratios: PoeNinjaCurrenciesRatios): Promise<void> {
-    return this.storage.setEphemeralValue('poe-ninja-chaos-ratios-cache', ratios, this.cacheExpirationDate(), league);
+    return this.storage.setEphemeralValue(RATIOS_CACHE_KEY, ratios, dateDelta(RATIOS_CACHE_DURATION), league);
   }
 
   private parseChaosRatios(payload: PoeNinjaCurrenciesPayload): PoeNinjaCurrenciesRatios {
@@ -62,12 +64,6 @@ export default class PoeNinja extends Service {
       },
       {}
     );
-  }
-
-  private cacheExpirationDate() {
-    const currentTimestamp = new Date().getTime();
-
-    return new Date(currentTimestamp + ONE_HOUR_IN_MILLISECONDS);
   }
 }
 

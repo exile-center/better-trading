@@ -22,6 +22,7 @@ declare const config: {
     } | null;
     imageResourcePrefix: string;
     discordUrl: string;
+    tftDiscordUrl: string;
     githubUrl: string;
     chaosRecipeOverlayUrl: string;
     browser: 'chrome' | 'firefox';

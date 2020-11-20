@@ -1,0 +1,50 @@
+{{#if this.warnedBlacklistEntry}}
+  <Modal
+    @title={{t "components.the-forbidden-trove.blacklist-warning.title"}}
+    @onClose={{fn this.clearBlacklistEntryWarning}}
+  >
+    <p local-class="blacklist-body">
+      {{t
+        "components.the-forbidden-trove.blacklist-warning.body"
+        accountName=this.warnedBlacklistEntry.accountName
+        timeAgo=this.formattedBlacklistedOn
+      }}
+    </p>
+
+    <div>
+      {{t "components.the-forbidden-trove.blacklist-warning.reason"}}
+    </div>
+
+    <div local-class="blacklist-reason">
+      {{this.warnedBlacklistEntry.reason}}
+    </div>
+
+    <p local-class="blacklist-disclaimer">
+      {{t "components.the-forbidden-trove.blacklist-warning.disclaimer"}}
+    </p>
+
+    <div local-class="credits-link-wrapper">
+      <a
+        local-class="credits-link"
+        href={{this.tftDiscordUrl}}
+        target="_blank"
+        rel="noopener"
+      >
+        {{t "components.the-forbidden-trove.credits"}}
+
+        <img
+          local-class="credits-link-logo"
+          src={{image-resource-url "tft-logo.png"}}
+        >
+      </a>
+    </div>
+
+    <Button
+      type="button"
+      local-class="blacklist-close"
+      @theme="blue"
+      @label={{t "components.the-forbidden-trove.blacklist-warning.close"}}
+      @onClick={{fn this.clearBlacklistEntryWarning}}
+    />
+  </Modal>
+{{/if}}
