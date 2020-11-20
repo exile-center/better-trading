@@ -13,11 +13,14 @@ module.exports = function (defaults) {
     storeConfigInMeta: false,
     tests: IS_TEST_ENVIRONMENT,
 
+    'ember-cli-uglify': {
+      enabled: false,
+    },
+
     vendorFiles: {
       'jquery.js': null,
     },
 
-    // SCSS compilation
     autoprefixer: {
       browsers: targets.browsers,
       sourcemap: false,
@@ -31,7 +34,6 @@ module.exports = function (defaults) {
       },
     },
 
-    // JavaScript compilation
     babel: {
       plugins: [require('ember-auto-import/babel-plugin'), 'transform-object-rest-spread'],
       sourceMaps: 'inline',
