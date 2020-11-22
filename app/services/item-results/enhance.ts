@@ -6,12 +6,6 @@ import window from 'ember-window-mock';
 // Types
 import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
 import ItemResults from 'better-trading/services/item-results';
-import HighlightStatFilters from 'better-trading/services/item-results/enhancers/highlight-stat-filters';
-import EquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
-import RegroupSimilars from 'better-trading/services/item-results/enhancers/regroup-similars';
-import ScamPrevention from 'better-trading/services/item-results/enhancers/scam-prevention';
-import Pinnable from 'better-trading/services/item-results/enhancers/pinnable';
-import MaximumSockets from 'better-trading/services/item-results/enhancers/maximum-sockets';
 import {Task} from 'better-trading/types/ember-concurrency';
 
 // Utilities
@@ -21,36 +15,8 @@ export default class ItemResultsEnhance extends Service {
   @service('item-results')
   itemResults: ItemResults;
 
-  @service('item-results/enhancers/highlight-stat-filters')
-  itemResultsEnhancersHighlightStatFilters: HighlightStatFilters;
-
-  @service('item-results/enhancers/equivalent-pricings')
-  itemResultsEnhancersEquivalentPricings: EquivalentPricings;
-
-  @service('item-results/enhancers/pinnable')
-  itemResultsEnhancersPinnable: Pinnable;
-
-  @service('item-results/enhancers/maximum-sockets')
-  itemResultsEnhancersMaximumSockets: MaximumSockets;
-
-  @service('item-results/enhancers/regroup-similars')
-  itemResultsEnhancersRegroupSimilars: RegroupSimilars;
-
-  @service('item-results/enhancers/scam-prevention')
-  itemResultsEnhancersScamPrevention: ScamPrevention;
-
-  resultsObserver: MutationObserver;
-
-  get enhancersSequence(): ItemResultsEnhancerService[] {
-    return [
-      this.itemResultsEnhancersHighlightStatFilters,
-      this.itemResultsEnhancersEquivalentPricings,
-      this.itemResultsEnhancersPinnable,
-      this.itemResultsEnhancersMaximumSockets,
-      this.itemResultsEnhancersRegroupSimilars,
-      this.itemResultsEnhancersScamPrevention,
-    ];
-  }
+  private resultsObserver: MutationObserver;
+  private enhancerServices: ItemResultsEnhancerService[] = [];
 
   @enqueueTask
   *enhanceTask() {
@@ -81,9 +47,13 @@ export default class ItemResultsEnhance extends Service {
     });
 
     await asyncLoop<ItemResultsEnhancerService>(
-      this.enhancersSequence,
+      this.enhancerServices,
       (enhancer) => enhancer.initialize && enhancer.initialize()
     );
+  }
+
+  registerEnhancerService(enhancerService: ItemResultsEnhancerService) {
+    this.enhancerServices.push(enhancerService);
   }
 
   private async enhanceItems(unenhancedElements: HTMLDivElement[]) {
@@ -91,14 +61,14 @@ export default class ItemResultsEnhance extends Service {
     if (unenhancedElements[0].classList.contains('exchange')) return;
 
     await asyncLoop<ItemResultsEnhancerService>(
-      this.enhancersSequence,
+      this.enhancerServices,
       (enhancer) => enhancer.prepare && enhancer.prepare()
     );
 
     await asyncLoop<HTMLDivElement>(unenhancedElements, async (unenhancedElement) => {
       const parsedItem = this.itemResults.parseItemElement(unenhancedElement);
 
-      await asyncLoop<ItemResultsEnhancerService>(this.enhancersSequence, (enhancer) => {
+      await asyncLoop<ItemResultsEnhancerService>(this.enhancerServices, (enhancer) => {
         return enhancer.enhance(unenhancedElement, parsedItem);
       });
 
@@ -108,7 +78,7 @@ export default class ItemResultsEnhance extends Service {
 
   private async clearEnhancedItems() {
     await asyncLoop<ItemResultsEnhancerService>(
-      this.enhancersSequence,
+      this.enhancerServices,
       (enhancer) => enhancer.clear && enhancer.clear()
     );
   }
