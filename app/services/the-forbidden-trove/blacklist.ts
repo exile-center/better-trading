@@ -8,10 +8,6 @@ import {dateDelta} from 'better-trading/utilities/date-delta';
 import Storage from 'better-trading/services/storage';
 import {TheForbbidenTroveBlacklistEntry} from 'better-trading/types/the-forbidden-trove';
 
-export interface PoeNinjaCurrenciesRatios {
-  [key: string]: number;
-}
-
 // Constants
 const BLACKLIST_CSV_URL =
   'https://raw.githubusercontent.com/The-Forbidden-Trove/ForbiddenTroveBlacklist/main/blacklist.csv';
