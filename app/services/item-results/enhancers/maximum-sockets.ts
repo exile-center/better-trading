@@ -2,7 +2,7 @@
 import Service, {inject as service} from '@ember/service';
 
 // Types
-import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
+import {ItemResultsEnhancerService, ItemResultsParsedItem, ItemResultsType} from 'better-trading/types/item-results';
 import IntlService from 'ember-intl/services/intl';
 
 // Constants
@@ -20,27 +20,15 @@ export default class MaximumSockets extends Service implements ItemResultsEnhanc
   statNeedles: RegExp[];
 
   // eslint-disable-next-line complexity
-  enhance(result: HTMLElement) {
-    const currentSocketsCount = result.querySelectorAll('.sockets .socket').length || 0;
-    if (currentSocketsCount === 0) return;
+  enhance(itemElement: HTMLElement, {socketsCount, type, ilvl}: ItemResultsParsedItem) {
+    const itemFrameElement = itemElement.querySelector<HTMLDivElement>('.itemRendered');
 
-    const iconElement = result.querySelector('.icon img') as HTMLImageElement | undefined;
-    if (!iconElement) return;
-    if (!/BodyArmours/.test(iconElement.src)) return;
+    if (!itemFrameElement || !ilvl || socketsCount === 0 || type !== ItemResultsType.ARMOR) return;
 
-    const ilvlElement = result.querySelector('.itemLevel');
-
-    const ilvlMatch = ilvlElement?.textContent?.match(/(\d+)/);
-    if (!ilvlMatch) return;
-
-    const ilvl = parseInt(ilvlMatch[0], 10);
     const applicableThreshold = ILVL_THRESHOLDS.find((threshold) => ilvl <= threshold.ilvl);
     if (!applicableThreshold) return;
 
-    if (applicableThreshold.maxSockets <= currentSocketsCount) return;
-
-    const itemFrameElement = result.querySelector('.itemRendered');
-    if (!itemFrameElement) return;
+    if (applicableThreshold.maxSockets <= socketsCount) return;
 
     itemFrameElement.prepend(this.renderWarning(applicableThreshold.maxSockets));
   }

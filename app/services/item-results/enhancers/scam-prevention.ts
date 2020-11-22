@@ -2,7 +2,7 @@
 import Service, {inject as service} from '@ember/service';
 
 // Types
-import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
+import {ItemResultsEnhancerService, ItemResultsParsedItem} from 'better-trading/types/item-results';
 import TheForbiddenTrove from 'better-trading/services/the-forbidden-trove';
 import {TheForbbidenTroveBlacklistEntry} from 'better-trading/types/the-forbidden-trove';
 
@@ -10,28 +10,23 @@ export default class ScamPrevention extends Service implements ItemResultsEnhanc
   @service('the-forbidden-trove')
   theForbiddenTrove: TheForbiddenTrove;
 
-  private blacklistEntries: TheForbbidenTroveBlacklistEntry[];
+  private blacklistMap: Map<string, TheForbbidenTroveBlacklistEntry> = new Map();
 
   async prepare() {
-    this.blacklistEntries = await this.theForbiddenTrove.fetchBlacklist();
+    const blacklistEntries = await this.theForbiddenTrove.fetchBlacklist();
+
+    blacklistEntries.forEach((blacklistEntry) => {
+      this.blacklistMap.set(blacklistEntry.accountName.toLowerCase(), blacklistEntry);
+    });
   }
 
   // eslint-disable-next-line complexity
-  enhance(result: HTMLElement) {
-    const pmButtonElement = result.querySelector<HTMLAnchorElement>('a.pm-btn');
-    const whisperButtonElement = result.querySelector<HTMLButtonElement>('button.whisper-btn');
-    const characterNameElement = result.querySelector<HTMLSpanElement>('.character-name');
+  enhance(itemElement: HTMLElement, {sellerAccountName}: ItemResultsParsedItem) {
+    const whisperButtonElement = itemElement.querySelector<HTMLButtonElement>('button.whisper-btn');
+    const characterNameElement = itemElement.querySelector<HTMLSpanElement>('.character-name');
+    if (!whisperButtonElement || !characterNameElement || !sellerAccountName) return;
 
-    if (!pmButtonElement || !whisperButtonElement || !characterNameElement) return;
-
-    const match = pmButtonElement.href.match(/compose\?to=(.+)$/);
-    if (!match) return;
-
-    const [, accountName] = match;
-
-    const correspondingBlacklistEntry = this.blacklistEntries.find(
-      (blacklistEntry) => blacklistEntry.accountName.toLowerCase() === accountName.toLowerCase()
-    );
+    const correspondingBlacklistEntry = this.blacklistMap.get(sellerAccountName.toLowerCase());
     if (!correspondingBlacklistEntry) return;
 
     characterNameElement.classList.add('bt-scam-prevention');

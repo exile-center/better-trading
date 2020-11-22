@@ -25,8 +25,8 @@ export default class HighlightStatFilters extends Service implements ItemResults
     });
   }
 
-  enhance(result: HTMLElement) {
-    result.querySelectorAll(MODS_SELECTOR).forEach((modElement: HTMLElement) => {
+  enhance(itemElement: HTMLElement) {
+    itemElement.querySelectorAll(MODS_SELECTOR).forEach((modElement: HTMLElement) => {
       const modText = modElement.textContent || '';
       if (!this.statNeedles.some((needle) => needle.test(modText))) return;
 

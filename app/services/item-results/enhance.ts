@@ -5,6 +5,7 @@ import window from 'ember-window-mock';
 
 // Types
 import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
+import ItemResults from 'better-trading/services/item-results';
 import HighlightStatFilters from 'better-trading/services/item-results/enhancers/highlight-stat-filters';
 import EquivalentPricings from 'better-trading/services/item-results/enhancers/equivalent-pricings';
 import RegroupSimilars from 'better-trading/services/item-results/enhancers/regroup-similars';
@@ -17,6 +18,9 @@ import {Task} from 'better-trading/types/ember-concurrency';
 import {asyncLoop} from 'better-trading/utilities/async-loop';
 
 export default class ItemResultsEnhance extends Service {
+  @service('item-results')
+  itemResults: ItemResults;
+
   @service('item-results/enhancers/highlight-stat-filters')
   itemResultsEnhancersHighlightStatFilters: HighlightStatFilters;
 
@@ -82,7 +86,7 @@ export default class ItemResultsEnhance extends Service {
     );
   }
 
-  private async enhanceItems(unenhancedElements: HTMLElement[]) {
+  private async enhanceItems(unenhancedElements: HTMLDivElement[]) {
     if (unenhancedElements.length === 0) return;
     if (unenhancedElements[0].classList.contains('exchange')) return;
 
@@ -91,9 +95,11 @@ export default class ItemResultsEnhance extends Service {
       (enhancer) => enhancer.prepare && enhancer.prepare()
     );
 
-    await asyncLoop<HTMLElement>(unenhancedElements, async (unenhancedElement) => {
+    await asyncLoop<HTMLDivElement>(unenhancedElements, async (unenhancedElement) => {
+      const parsedItem = this.itemResults.parseItemElement(unenhancedElement);
+
       await asyncLoop<ItemResultsEnhancerService>(this.enhancersSequence, (enhancer) => {
-        return enhancer.enhance(unenhancedElement);
+        return enhancer.enhance(unenhancedElement, parsedItem);
       });
 
       unenhancedElement.toggleAttribute('bt-enhanced', true);

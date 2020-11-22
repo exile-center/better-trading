@@ -9,15 +9,15 @@ export default class RegroupSimilars extends Service implements ItemResultsEnhan
   @service('intl')
   intl: IntlService;
 
-  enhance(result: HTMLElement) {
-    const currentHash = this.setItemHash(result);
+  enhance(itemElement: HTMLElement) {
+    const currentHash = this.setItemHash(itemElement);
 
-    const originalResult = this.findOriginalResult(result, currentHash);
+    const originalResult = this.findOriginalResult(itemElement, currentHash);
 
-    if (originalResult.dataset.id === result.dataset.id) return;
+    if (originalResult.dataset.id === itemElement.dataset.id) return;
 
     const buttonState = this.updateToggleButtonFor(originalResult);
-    result.setAttribute('bt-regroup-state', buttonState);
+    itemElement.setAttribute('bt-regroup-state', buttonState);
   }
 
   private findOriginalResult(result: HTMLElement, currentHash: string): HTMLElement {

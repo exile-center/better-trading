@@ -1,13 +1,10 @@
 // Vendor
 import Service, {inject as service} from '@ember/service';
 
-// Utilities
-import {slugify} from 'better-trading/utilities/slugify';
-
 // Types
 import TradeLocation from 'better-trading/services/trade-location';
 import PoeNinja, {PoeNinjaCurrenciesRatios} from 'better-trading/services/poe-ninja';
-import {ItemResultsEnhancerService} from 'better-trading/types/item-results';
+import {ItemResultsEnhancerService, ItemResultsParsedItem} from 'better-trading/types/item-results';
 
 // Constants
 const CHAOS_IMAGE_URL = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png';
@@ -17,10 +14,6 @@ const EXALT_IMAGE_URL = 'https://web.poecdn.com/image/Art/2DItems/Currency/Curre
 const EXALT_ALT = 'exalt';
 const EXALT_SLUG = 'exalted-orb';
 const EXALT_EQUIVALENCE_THRESHOLD = 0.5;
-const PRICING_CONTAINER_SELECTOR = '.price';
-const CURRENCY_NAME_SELECTOR = '[data-field="price"] .currency-text span';
-const CURRENCY_IMAGE_SELECTOR = '[data-field="price"] .currency-image img';
-const CURRENCY_VALUE_SELECTOR = '[data-field="price"] > br + span';
 const EQUAL_HTML = '<span class="bt-equivalent-pricings-equals">=</span>';
 
 export default class EquivalentPricings extends Service implements ItemResultsEnhancerService {
@@ -38,18 +31,18 @@ export default class EquivalentPricings extends Service implements ItemResultsEn
   }
 
   // eslint-disable-next-line complexity
-  enhance(result: HTMLElement) {
+  enhance(itemElement: HTMLElement, {price}: ItemResultsParsedItem) {
     if (!this.chaosRatios) return;
 
-    const pricingContainerElement = result.querySelector(PRICING_CONTAINER_SELECTOR) as HTMLElement;
-    const currencyNameElement = result.querySelector(CURRENCY_NAME_SELECTOR) as HTMLElement;
-    const currencyValueElement = result.querySelector(CURRENCY_VALUE_SELECTOR) as HTMLElement;
-    const currencyImageElement = result.querySelector(CURRENCY_IMAGE_SELECTOR) as HTMLImageElement;
+    const pricingContainerElement = itemElement.querySelector<HTMLDivElement>('.price');
+    const currencyImageElement = itemElement.querySelector<HTMLImageElement>(
+      '[data-field="price"] .currency-image img'
+    );
 
-    if (!pricingContainerElement || !currencyNameElement || !currencyValueElement || !currencyImageElement) return;
+    if (!pricingContainerElement || !currencyImageElement || !price.currencySlug || !price.value) return;
 
-    const currencySlug = slugify(currencyNameElement.textContent || '');
-    const currencyValue = parseFloat(currencyValueElement.textContent || '');
+    const currencySlug = price.currencySlug;
+    const currencyValue = price.value;
     const chaosValue = this.chaosRatios[currencySlug];
     const exaltValue = this.chaosRatios[EXALT_SLUG];
 
