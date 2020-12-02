@@ -44,10 +44,12 @@ export default class Blacklist extends Service {
     csvLines.shift(); // Remove the CSV header
 
     return csvLines.reduce((acc: TheForbbidenTroveBlacklistEntry[], blacklistCsvLine: string) => {
-      const match = blacklistCsvLine.match(/^"(.+)", "(\d+)", "(.+)", "(.+)"$/);
+      const match = blacklistCsvLine.match(/^"(.+)", "(\d*)", "(.+)", "(.+)", "(Y|N)"$/);
       if (!match) return acc;
 
-      const [, accountName, , rawBlacklistedOn, reason] = match;
+      const [, accountName, , rawBlacklistedOn, reason, activeFlag] = match;
+
+      if (activeFlag !== 'Y') return acc;
 
       return acc.concat({
         accountName,

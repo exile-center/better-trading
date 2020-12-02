@@ -19,7 +19,7 @@
   color: $beige;
 }
 
-.blacklist-close {
+.modal-close {
   width: 100%;
   margin-top: 10px;
 }
@@ -43,4 +43,30 @@
 .credits-link-logo {
   height: 30px;
   margin-left: 5px;
+}
+
+.pending-report-steps {
+  padding-left: 17px;
+  margin-bottom: 15px;
+
+  li {
+    &::after {
+      content: ';';
+    }
+
+    &:last-child::after {
+      content: '.';
+    }
+  }
+
+  a {
+    border-bottom: dotted 1px $white;
+    color: $white;
+
+    &:focus,
+    &:hover {
+      border-bottom: solid 1px $white;
+      text-decoration: none;
+    }
+  }
 }

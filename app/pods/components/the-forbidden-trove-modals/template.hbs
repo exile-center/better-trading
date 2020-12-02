@@ -41,10 +41,60 @@
 
     <Button
       type="button"
-      local-class="blacklist-close"
+      local-class="modal-close"
       @theme="blue"
-      @label={{t "components.the-forbidden-trove.blacklist-warning.close"}}
+      @label={{t "components.the-forbidden-trove.close"}}
       @onClick={{fn this.clearBlacklistEntryWarning}}
+    />
+  </Modal>
+{{/if}}
+
+{{#if this.pendingReport}}
+  <Modal
+    @title={{t "components.the-forbidden-trove.pending-report.title"}}
+    @onClose={{fn this.clearPendingReport}}
+  >
+    <p>
+      {{t "components.the-forbidden-trove.pending-report.warning"}}
+    </p>
+
+    <ol local-class="pending-report-steps">
+      <li>
+        {{t "components.the-forbidden-trove.pending-report.steps.1"}}
+
+        <a href={{this.tftDiscordUrl}} target="_blank" rel="noopener">{{t "components.the-forbidden-trove.pending-report.steps.1-link"}}</a>
+      </li>
+      <li>{{t "components.the-forbidden-trove.pending-report.steps.2"}}</li>
+      <li>{{t "components.the-forbidden-trove.pending-report.steps.3"}}</li>
+    </ol>
+
+    <ClipboardTextarea
+      @value={{this.pendingReport.reportMessage}}
+      rows="7"
+    />
+
+    <div local-class="credits-link-wrapper">
+      <a
+        local-class="credits-link"
+        href={{this.tftDiscordUrl}}
+        target="_blank"
+        rel="noopener"
+      >
+        {{t "components.the-forbidden-trove.credits"}}
+
+        <img
+          local-class="credits-link-logo"
+          src={{image-resource-url "tft-logo.png"}}
+        >
+      </a>
+    </div>
+
+    <Button
+      type="button"
+      local-class="modal-close"
+      @theme="blue"
+      @label={{t "components.the-forbidden-trove.close"}}
+      @onClick={{fn this.clearPendingReport}}
     />
   </Modal>
 {{/if}}

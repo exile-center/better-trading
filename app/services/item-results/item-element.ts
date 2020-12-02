@@ -17,7 +17,10 @@ export default class ItemElement extends Service {
       socketsCount: this.socketsCount(itemElement),
       type: this.type(itemElement),
       ilvl: this.ilvl(itemElement),
-      sellerAccountName: this.sellerAccountName(itemElement),
+      seller: {
+        accountName: this.sellerAccountName(itemElement),
+        characterName: this.sellerCharacterName(itemElement),
+      },
     };
   }
 
@@ -78,6 +81,18 @@ export default class ItemElement extends Service {
     const [, accountName] = match;
 
     return accountName;
+  }
+
+  private sellerCharacterName(itemElement: HTMLDivElement) {
+    const characterNameElement = itemElement.querySelector<HTMLSpanElement>('.character-name');
+    if (!characterNameElement) return null;
+
+    const match = (characterNameElement?.textContent || '').match(/IGN: (.+)/);
+    if (!match) return null;
+
+    const [, characterName] = match;
+
+    return characterName;
   }
 }
 

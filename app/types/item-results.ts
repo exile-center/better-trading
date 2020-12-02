@@ -20,7 +20,10 @@ export interface ItemResultsParsedItem {
   socketsCount: number;
   type: ItemResultsType;
   ilvl: number | null;
-  sellerAccountName: string | null;
+  seller: {
+    accountName: string | null;
+    characterName: string | null;
+  };
 }
 
 export interface ItemResultsEnhancerService {

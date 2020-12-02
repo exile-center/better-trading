@@ -21,12 +21,12 @@ export default class ScamPrevention extends Service implements ItemResultsEnhanc
   }
 
   // eslint-disable-next-line complexity
-  enhance(itemElement: HTMLElement, {sellerAccountName}: ItemResultsParsedItem) {
+  enhance(itemElement: HTMLElement, {seller}: ItemResultsParsedItem) {
     const whisperButtonElement = itemElement.querySelector<HTMLButtonElement>('button.whisper-btn');
     const characterNameElement = itemElement.querySelector<HTMLSpanElement>('.character-name');
-    if (!whisperButtonElement || !characterNameElement || !sellerAccountName) return;
+    if (!whisperButtonElement || !characterNameElement || !seller.accountName) return;
 
-    const correspondingBlacklistEntry = this.blacklistMap.get(sellerAccountName.toLowerCase());
+    const correspondingBlacklistEntry = this.blacklistMap.get(seller.accountName.toLowerCase());
     if (!correspondingBlacklistEntry) return;
 
     characterNameElement.classList.add('bt-scam-prevention');

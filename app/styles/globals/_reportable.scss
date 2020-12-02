@@ -1,0 +1,29 @@
+.results.compact {
+  .bt-report-button {
+    height: 18px;
+    border-color: #444;
+    line-height: 16px;
+  }
+}
+
+.bt-report-button {
+  padding: 1px 5px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  margin: 8px 0 0;
+  background-color: #222;
+  text-align: center;
+  font-size: 12px;
+  font-weight: normal;
+  line-height: 1.5;
+  color: #e9cf9f;
+  cursor: pointer;
+  vertical-align: middle;
+
+  &:focus,
+  &:hover {
+    border-color: #444;
+    background-color: #090909;
+    outline: none;
+  }
+}

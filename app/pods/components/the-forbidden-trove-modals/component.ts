@@ -21,6 +21,10 @@ export default class TheForbiddenTroveModals extends Component {
     return this.theForbiddenTrove.warnedBlacklistEntry;
   }
 
+  get pendingReport() {
+    return this.theForbiddenTrove.pendingReport;
+  }
+
   get formattedBlacklistedOn() {
     if (!this.warnedBlacklistEntry) return null;
 
@@ -34,5 +38,10 @@ export default class TheForbiddenTroveModals extends Component {
   @action
   clearBlacklistEntryWarning() {
     this.theForbiddenTrove.clearBlacklistEntryWarning();
+  }
+
+  @action
+  clearPendingReport() {
+    this.theForbiddenTrove.clearPendingReport();
   }
 }

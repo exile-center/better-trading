@@ -3,3 +3,9 @@ export interface TheForbbidenTroveBlacklistEntry {
   blacklistedOn: string;
   reason: string;
 }
+
+export interface TheForbbidenTroveReport {
+  accountName: string;
+  tradeUrl: string;
+  reportMessage: string;
+}
