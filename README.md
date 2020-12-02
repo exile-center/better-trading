@@ -4,6 +4,15 @@
 
 A browser extension that enhance the pathofexile.com/trade experience.
 
+## Install links
+
+<a href="https://chrome.google.com/webstore/detail/better-pathofexile-tradin/fhlinfpmdlijegjlpgedcmglkakaghnk" target="_blank">
+  <img src="./.github/readme/chrome-button.png" alt="Download for Google Chrome">
+</a>
+<a href="https://addons.mozilla.org/en-CA/firefox/addon/better-pathofexile-trading" target="_blank">
+  <img src="./.github/readme/firefox-button.png" alt="Download for Firefox">
+</a>
+
 ## Features
 
 - Bookmarks manager
