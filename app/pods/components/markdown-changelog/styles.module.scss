@@ -19,5 +19,18 @@
 
   p {
     margin: 10px 0;
+    color: $white;
+  }
+
+  a {
+    color: $white;
+    text-decoration: none;
+    border-bottom: 1px dotted currentColor;
+
+    &:hover,
+    &:hover {
+      text-decoration: none;
+      border-bottom-style: solid;
+    }
   }
 }

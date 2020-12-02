@@ -18,8 +18,8 @@
     </div>
   </LinkTo>
 
-  <LinkTo local-class="header-button" @route="about">
-    <FaIcon @icon="info-circle"/>
+  <LinkTo local-class="header-button" @route={{if this.isOnRootRoute "about" "root"}}>
+    <FaIcon @icon={{if this.isOnRootRoute "info-circle" "times"}} @fixedWidth={{true}}/>
   </LinkTo>
 </div>
 

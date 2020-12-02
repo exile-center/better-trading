@@ -1,16 +1,7 @@
 page:
   about:
     disclaimer: This extension is fan-made and not affiliated with Grinding Gear Games in any way.
-    discord:
-      title: On Discord
-      description: Stay tuned about upcoming updates and discuss future features.
-      button: Join the Discord server
     github:
       title: On GitHub
       description: To contribute, report issues or simply browse the code.
-      button: View on GitHub
-    chaos-recipe-overlay:
-      title: Chaos Recipe Overlay
-      preview-alt: Overlay preview
-      description: Check out this simple overlay app that will track your chaos recipe bottlenecks.
       button: View on GitHub
