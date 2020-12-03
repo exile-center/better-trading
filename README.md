@@ -8,7 +8,7 @@ A browser extension that enhance the pathofexile.com/trade experience.
   <img src="./.github/readme/chrome-button.png" alt="Download for Google Chrome">
 </a>
 
-## Why not in Firefox ?
+## Why not Firefox ?
 
 - Initially, the extension did not work in Firefox. Booting Ember.js as a browser extension is not something that works well within Firefox's addon runtime. The first Firefox version relied on hacks and as expected, it broke after doing some updates. Having to hack into libs to make sure they can work in Firefox is not something that I want to do in my spare time;
 - Firefox addon store review process for new updates is way more strict and time-consuming to deal with compared to Chrome's;
