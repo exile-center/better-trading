@@ -13,6 +13,10 @@ A browser extension that enhance the pathofexile.com/trade experience.
   <img src="./.github/readme/firefox-button.png" alt="Download for Firefox">
 </a>
 
+## Why not in Firefox ?
+
+...
+
 ## Features
 
 - Bookmarks manager
