@@ -1,6 +1,6 @@
 .markdown-changelog {
   line-height: 1.6;
-  
+
   h1 {
     margin: 0 0 10px;
     font-size: 20px;
@@ -25,9 +25,9 @@
   }
 
   a {
-    color: $white;
-    text-decoration: none;
     border-bottom: 1px dotted currentColor;
+    text-decoration: none;
+    color: $white;
 
     &:hover,
     &:hover {
