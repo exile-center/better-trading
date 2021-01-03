@@ -36,10 +36,8 @@ export default class Backup extends Component {
   *restoreBackupTask([dataString]: [string]) {
     const restoreWasSuccessful = yield this.bookmarks.restoreFromDataString(dataString);
 
-    if (restoreWasSuccessful) {
-      this.flashMessages.success('YAYY');
-    } else {
-      this.flashMessages.alert('NOOESSS');
+    if (!restoreWasSuccessful) {
+      this.flashMessages.alert(this.intl.t('page.bookmarks.backup.restore-error-flash'));
     }
   }
 

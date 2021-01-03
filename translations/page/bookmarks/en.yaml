@@ -14,6 +14,7 @@ page:
       title: Backup tools
       generate-button: Save file
       restore-button: Restore from file
+      restore-error-flash: Backup restoration has failed.
     folder:
       edit-folder: Edit
       delete-folder: Delete
