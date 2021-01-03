@@ -53,10 +53,28 @@ export default class Bookmarks extends Service {
     return this.bookmarksStorage.deleteFolder(deletingFolder.id);
   }
 
+  async toggleTradeCompletion(trade: BookmarksTradeStruct, folderId: string) {
+    return this.persistTrade(
+      {
+        ...trade,
+        completedAt: trade.completedAt ? null : new Date().toUTCString(),
+      },
+      folderId
+    );
+  }
+
+  async toggleFolderArchive(folder: BookmarksFolderStruct) {
+    return this.persistFolder({
+      ...folder,
+      archivedAt: folder.archivedAt ? null : new Date().toUTCString(),
+    });
+  }
+
   initializeFolderStruct(): BookmarksFolderStruct {
     return {
       icon: null,
       title: '',
+      archivedAt: null,
     };
   }
 
@@ -76,7 +94,7 @@ export default class Bookmarks extends Service {
     return this.bookmarksState.getExpandedFolderIds();
   }
 
-  collapseAllFolderIds() {
+  collapseAllFolders() {
     return this.bookmarksState.collapseAllFolderIds();
   }
 

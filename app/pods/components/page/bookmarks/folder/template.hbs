@@ -1,10 +1,10 @@
 <div
-  local-class="folder {{if this.isExpanded "is-expanded"}}"
+  local-class="folder {{if this.isExpanded "is-expanded"}} {{if this.isArchived "is-archived"}}"
   ...attributes
 >
   <div local-class="header">
     <div
-      {{on "click" (fn @onExpansionToggle @folder.id)}}
+      {{on "click" (fn @onExpansionToggle)}}
       local-class="expansion-wrapper"
     >
       {{#if @folder.icon}}
@@ -18,33 +18,50 @@
         {{@folder.title}}
       </div>
 
-      <FaIcon @icon="chevron-down" local-class="expansion-indicator" />
+      {{#unless this.isArchived}}
+        <FaIcon @icon="chevron-down" local-class="expansion-indicator" />
+      {{/unless}}
     </div>
 
     <div local-class="header-actions">
       <ContextualMenu local-class="header-action" as |MenuItem|>
+        {{#unless this.isArchived}}
+          <MenuItem
+            @label={{t "page.bookmarks.folder.edit-folder"}}
+            @onClick={{fn this.editFolder}}
+          />
+        {{/unless}}
+
         <MenuItem
-          @label={{t "page.bookmarks.folder.edit-folder"}}
-          @onClick={{fn this.editFolder}}
+          @label={{t
+            (if this.isArchived "page.bookmarks.folder.restore-folder" "page.bookmarks.folder.archive-folder")
+          }}
+          @onClick={{fn @onArchiveToggle}}
         />
-        <MenuItem
-          @label={{t "page.bookmarks.folder.delete-folder"}}
-          @onClick={{fn this.deleteFolder}}
-        />
+
+        {{#if this.isArchived}}
+          <MenuItem
+            @label={{t "page.bookmarks.folder.delete-folder"}}
+            @onClick={{fn @onDelete}}
+          />
+        {{/if}}
+
         <MenuItem
           @label={{t "page.bookmarks.folder.export-folder"}}
           @onClick={{fn this.exportFolder}}
         />
       </ContextualMenu>
 
-      {{#component
-        @dragHandle
-        tagName="button"
-        type="button"
-        local-class="header-action"
-      }}
-        <FaIcon @icon="sort" />
-      {{/component}}
+      {{#unless this.isArchived}}
+        {{#component
+          @dragHandle
+          tagName="button"
+          type="button"
+          local-class="header-action"
+        }}
+          <FaIcon @icon="sort" />
+        {{/component}}
+      {{/unless}}
     </div>
   </div>
 
@@ -156,15 +173,6 @@
     @trade={{this.stagedDeletingTrade}}
     @onCancel={{fn this.cancelTradeDeletion}}
     @submitTask={{this.deleteTradeTask}}
-  />
-{{/if}}
-
-{{#if this.isStagedForDeletion}}
-  <Page::Bookmarks::Folder::FolderDeletion
-    @folder={{@folder}}
-    @tradesCount={{this.trades.length}}
-    @onCancel={{fn this.cancelFolderDeletion}}
-    @onConfirm={{fn this.confirmFolderDeletion}}
   />
 {{/if}}
 

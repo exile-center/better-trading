@@ -9,6 +9,7 @@ export default function (overrides: Partial<BookmarksFolderStruct>) {
     id: uniqueId(),
     icon: BookmarksFolderAscendancyScionIcon.ASCENDANT,
     title: 'Fake folder',
+    archivedAt: null,
     ...overrides,
   };
 }

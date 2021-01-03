@@ -34,6 +34,7 @@ export default class BookmarksShare extends Service {
       const folder: BookmarksFolderStruct = {
         icon: potentialPayload.icn as BookmarksFolderIcon,
         title: potentialPayload.tit,
+        archivedAt: null,
       };
 
       const trades: BookmarksTradeStruct[] = potentialPayload.trs.map((trade) => {

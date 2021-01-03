@@ -71,6 +71,8 @@ module.exports = function (environment) {
         'circle-notch',
         'check-circle',
         'thumbtack',
+        'archive',
+        'undo',
       ],
       'free-brands-svg-icons': ['github', 'discord'],
     },

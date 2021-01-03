@@ -6,6 +6,16 @@
       transform: rotate(180deg);
     }
   }
+
+  &.is-archived {
+    .expansion-wrapper {
+      pointer-events: none;
+
+      &::after {
+        display: none;
+      }
+    }
+  }
 }
 
 .expansion-wrapper {
