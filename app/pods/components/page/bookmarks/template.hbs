@@ -3,65 +3,81 @@
   @task={{this.initialFetchFoldersTask}}
   @size="large"
 >
-  {{#if this.folders}}
-    <div local-class="header-actions">
+  <div local-class="header-actions">
+    {{#if (and this.hasActiveFolders (not this.isShowingArchivedFolders))}}
       <Button
         type="button"
         @theme="gold"
         @label={{t "page.bookmarks.collapse-all"}}
         @icon="compress-alt"
-        @onClick={{fn this.collapseAllFolderIds}}
+        @onClick={{fn this.collapseAllFolders}}
+      />
+    {{/if}}
+
+    {{#if this.hasArchivedFolders}}
+      <Button
+        type="button"
+        @theme="gold"
+        @label={{t
+          (if this.isShowingArchivedFolders "page.bookmarks.show-unarchived-folders" "page.bookmarks.show-archived-folders")
+        }}
+        @icon={{if this.isShowingArchivedFolders "undo" "archive"}}
+        @onClick={{fn this.toggleArchiveDisplay}}
+      />
+    {{/if}}
+  </div>
+
+  <SortableGroup
+    local-class="folders-wrapper"
+    @tagName="div"
+    @model={{this.displayedFolders}}
+    @onChange={{perform this.reorderFoldersTask}}
+    as |group|
+  >
+    {{#each this.displayedFolders key="id" as |folder|}}
+      {{#component
+        group.item
+        local-class="folder-wrapper"
+        tagName="div"
+        model=folder
+        isDraggingDisabled=this.isShowingArchivedFolders
+      as |dragItem|
+      }}
+        <Page::Bookmarks::Folder
+          local-class="folder"
+          @folder={{folder}}
+          @dragHandle={{dragItem.handle}}
+          @expandedFolderIds={{this.expandedFolderIds}}
+          @onEdit={{fn this.stageFolder folder}}
+          @onDelete={{perform this.deleteFolderTask folder}}
+          @onExpansionToggle={{fn this.toggleFolderExpansion folder.id}}
+          @onArchiveToggle={{perform this.toggleFolderArchiveTask folder}}
+        />
+      {{/component}}
+    {{/each}}
+  </SortableGroup>
+
+  {{#unless this.isShowingArchivedFolders}}
+    <div local-class="actions">
+      <Button
+        type="button"
+        local-class="create-folder-button"
+        @theme="gold"
+        @label={{t "page.bookmarks.create-folder"}}
+        @icon="folder-plus"
+        @onClick={{fn this.createFolder}}
+      />
+
+      <Button
+        type="button"
+        local-class="create-folder-button"
+        @theme="gold"
+        @label={{t "page.bookmarks.import-folder"}}
+        @icon="file-import"
+        @onClick={{fn this.importFolder}}
       />
     </div>
-
-    <SortableGroup
-      local-class="folders-wrapper"
-      @tagName="div"
-      @model={{this.folders}}
-      @onChange={{perform this.reorderFoldersTask}}
-      as |group|
-    >
-      {{#each this.folders key="id" as |folder|}}
-        {{#component
-          group.item
-          local-class="folder-wrapper"
-          tagName="div"
-          model=folder
-        as |dragItem|
-        }}
-          <Page::Bookmarks::Folder
-            local-class="folder"
-            @folder={{folder}}
-            @dragHandle={{dragItem.handle}}
-            @expandedFolderIds={{this.expandedFolderIds}}
-            @onEdit={{fn this.stageFolder}}
-            @onDelete={{perform this.deleteFolderTask}}
-            @onExpansionToggle={{fn this.toggleFolderExpansion}}
-          />
-        {{/component}}
-      {{/each}}
-    </SortableGroup>
-  {{/if}}
-
-  <div local-class="actions">
-    <Button
-      type="button"
-      local-class="create-folder-button"
-      @theme="gold"
-      @label={{t "page.bookmarks.create-folder"}}
-      @icon="folder-plus"
-      @onClick={{fn this.createFolder}}
-    />
-
-    <Button
-      type="button"
-      local-class="create-folder-button"
-      @theme="gold"
-      @label={{t "page.bookmarks.import-folder"}}
-      @icon="file-import"
-      @onClick={{fn this.importFolder}}
-    />
-  </div>
+  {{/unless}}
 
   {{#if this.foldersWarningIsVisible}}
     <AlertMessage

@@ -21,9 +21,10 @@ interface Args {
   folder: Required<BookmarksFolderStruct>;
   dragHandle: any;
   expandedFolderIds: string[];
-  onEdit: (folder: BookmarksFolderStruct) => void;
-  onDelete: (deletingFolder: BookmarksFolderStruct) => void;
-  onExpansionToggle: (folderId: string) => void;
+  onEdit: () => void;
+  onDelete: () => void;
+  onExpansionToggle: () => void;
+  onArchiveToggle: () => void;
 }
 
 export default class BookmarksFolder extends Component<Args> {
@@ -52,9 +53,6 @@ export default class BookmarksFolder extends Component<Args> {
   stagedDeletingTrade: BookmarksTradeStruct | null;
 
   @tracked
-  isStagedForDeletion: boolean;
-
-  @tracked
   isReorderingTrades: boolean = false;
 
   @tracked
@@ -68,7 +66,11 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   get isExpanded() {
-    return this.args.expandedFolderIds.includes(this.args.folder.id);
+    return !this.isArchived && this.args.expandedFolderIds.includes(this.args.folder.id);
+  }
+
+  get isArchived() {
+    return Boolean(this.args.folder.archivedAt);
   }
 
   @dropTask
@@ -147,14 +149,7 @@ export default class BookmarksFolder extends Component<Args> {
 
   @dropTask
   *toggleTradeCompletionTask(trade: BookmarksTradeStruct) {
-    yield this.bookmarks.persistTrade(
-      {
-        ...trade,
-        completedAt: trade.completedAt ? null : new Date().toUTCString(),
-      },
-      this.folderId
-    );
-
+    yield this.bookmarks.toggleTradeCompletion(trade, this.folderId);
     this.trades = yield this.bookmarks.fetchTradesByFolderId(this.args.folder.id);
   }
 
@@ -194,24 +189,8 @@ export default class BookmarksFolder extends Component<Args> {
   }
 
   @action
-  deleteFolder() {
-    this.isStagedForDeletion = true;
-  }
-
-  @action
-  cancelFolderDeletion() {
-    this.isStagedForDeletion = false;
-  }
-
-  @action
-  confirmFolderDeletion() {
-    this.args.onDelete(this.args.folder);
-    this.isStagedForDeletion = false;
-  }
-
-  @action
   editFolder() {
-    this.args.onEdit(this.args.folder);
+    this.args.onEdit();
   }
 
   @action

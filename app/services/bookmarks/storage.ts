@@ -7,20 +7,30 @@ import Storage from 'better-trading/services/storage';
 
 // Utilities
 import {uniqueId} from 'better-trading/utilities/unique-id';
+import Bookmarks from 'better-trading/services/bookmarks';
 
 // Constants
 const FOLDERS_KEY = 'bookmark-folders';
 const TRADES_PREFIX_KEY = 'bookmark-trades';
 
 export default class BookmarksStorage extends Service {
+  @service('bookmarks')
+  bookmarks: Bookmarks;
+
   @service('storage')
   storage: Storage;
 
-  async fetchFolders() {
-    const folders = await this.storage.getValue<BookmarksFolderStruct[]>(FOLDERS_KEY);
-    if (!folders) return [];
+  async fetchFolders(): Promise<BookmarksFolderStruct[]> {
+    type PersistedType = Array<Partial<BookmarksFolderStruct>>;
+    const persistedFolders = await this.storage.getValue<PersistedType>(FOLDERS_KEY);
+    if (!persistedFolders) return [];
 
-    return folders;
+    const baseFolder = this.bookmarks.initializeFolderStruct();
+
+    return persistedFolders.map((persistedPartialFolder) => ({
+      ...baseFolder,
+      ...persistedPartialFolder,
+    }));
   }
 
   async fetchTradesByFolderId(folderId: string) {

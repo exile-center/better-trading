@@ -39,8 +39,28 @@ export default class PageBookmarks extends Component {
   @tracked
   isImportingFolder: boolean = false;
 
+  @tracked
+  isShowingArchivedFolders: boolean = false;
+
+  get displayedFolders() {
+    return this.folders.filter(({archivedAt}) => Boolean(archivedAt) === this.isShowingArchivedFolders);
+  }
+
+  get archivedFolders() {
+    return this.folders.filter(({archivedAt}) => Boolean(archivedAt));
+  }
+
+  get hasArchivedFolders() {
+    return this.folders.some(({archivedAt}) => Boolean(archivedAt));
+  }
+
+  get hasActiveFolders() {
+    return this.folders.some(({archivedAt}) => !Boolean(archivedAt));
+  }
+
   get foldersWarningIsVisible() {
-    return this.folders.length >= FOLDERS_WARNING_THRESHOLD;
+    if (this.isShowingArchivedFolders) return false;
+    return this.displayedFolders.length >= FOLDERS_WARNING_THRESHOLD;
   }
 
   @dropTask
@@ -68,8 +88,16 @@ export default class PageBookmarks extends Component {
   }
 
   @dropTask
+  *toggleFolderArchiveTask(folder: BookmarksFolderStruct) {
+    yield this.bookmarks.toggleFolderArchive(folder);
+    this.folders = yield this.bookmarks.fetchFolders();
+
+    this.isShowingArchivedFolders = this.isShowingArchivedFolders && this.hasArchivedFolders;
+  }
+
+  @dropTask
   *reorderFoldersTask(reorderedFolders: BookmarksFolderStruct[]) {
-    this.folders = reorderedFolders;
+    this.folders = this.archivedFolders.concat(reorderedFolders);
 
     yield this.bookmarks.persistFolders(this.folders);
   }
@@ -112,6 +140,11 @@ export default class PageBookmarks extends Component {
   }
 
   @action
+  toggleArchiveDisplay() {
+    this.isShowingArchivedFolders = !this.isShowingArchivedFolders;
+  }
+
+  @action
   createFolder() {
     this.stagedFolder = this.bookmarks.initializeFolderStruct();
   }
@@ -132,8 +165,8 @@ export default class PageBookmarks extends Component {
   }
 
   @action
-  collapseAllFolderIds() {
-    this.expandedFolderIds = this.bookmarks.collapseAllFolderIds();
+  collapseAllFolders() {
+    this.expandedFolderIds = this.bookmarks.collapseAllFolders();
   }
 
   @action

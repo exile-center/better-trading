@@ -2,5 +2,6 @@ node_modules/*
 **/vendor/*.js
 vendor/**/*.js
 dist/**/*.js
+dist-packages/**/*.js
 tmp/**/*.js
 app/**/translations.js

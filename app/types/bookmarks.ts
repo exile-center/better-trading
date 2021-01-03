@@ -14,6 +14,7 @@ export interface BookmarksFolderStruct {
   id?: string;
   title: string;
   icon: BookmarksFolderIcon | null;
+  archivedAt: string | null;
 }
 
 export type BookmarksFolderIcon = BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon;
