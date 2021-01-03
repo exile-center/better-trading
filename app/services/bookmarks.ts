@@ -4,7 +4,8 @@ import Service, {inject as service} from '@ember/service';
 // Types
 import BookmarksState from 'better-trading/services/bookmarks/state';
 import BookmarksStorage from 'better-trading/services/bookmarks/storage';
-import BookmarksShare from 'better-trading/services/bookmarks/share';
+import BookmarksExport from 'better-trading/services/bookmarks/export';
+import BookmarksBackup from 'better-trading/services/bookmarks/backup';
 import {BookmarksFolderStruct, BookmarksTradeLocation, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 
 export default class Bookmarks extends Service {
@@ -14,8 +15,11 @@ export default class Bookmarks extends Service {
   @service('bookmarks/state')
   bookmarksState: BookmarksState;
 
-  @service('bookmarks/share')
-  bookmarksShare: BookmarksShare;
+  @service('bookmarks/export')
+  bookmarksExport: BookmarksExport;
+
+  @service('bookmarks/backup')
+  bookmarksBackup: BookmarksBackup;
 
   async fetchFolders() {
     return this.bookmarksStorage.fetchFolders();
@@ -99,11 +103,19 @@ export default class Bookmarks extends Service {
   }
 
   serializeFolder(folder: BookmarksFolderStruct, trades: BookmarksTradeStruct[]) {
-    return this.bookmarksShare.serialize(folder, trades);
+    return this.bookmarksExport.serialize(folder, trades);
   }
 
   deserializeFolder(serializedFolder: string) {
-    return this.bookmarksShare.deserialize(serializedFolder);
+    return this.bookmarksExport.deserialize(serializedFolder);
+  }
+
+  async generateBackupDataString() {
+    return this.bookmarksBackup.generateBackupDataString();
+  }
+
+  async restoreFromDataString(dataString: string) {
+    return this.bookmarksBackup.restoreFromDataString(dataString);
   }
 }
 

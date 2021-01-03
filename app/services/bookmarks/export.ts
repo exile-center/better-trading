@@ -13,7 +13,7 @@ interface ExportedFolderStruct {
   }>;
 }
 
-export default class BookmarksShare extends Service {
+export default class Export extends Service {
   serialize(folder: BookmarksFolderStruct, trades: BookmarksTradeStruct[]): string {
     const payload: ExportedFolderStruct = {
       icn: folder.icon as string,
@@ -59,6 +59,6 @@ export default class BookmarksShare extends Service {
 
 declare module '@ember/service' {
   interface Registry {
-    'bookmarks/share': BookmarksShare;
+    'bookmarks/export': Export;
   }
 }

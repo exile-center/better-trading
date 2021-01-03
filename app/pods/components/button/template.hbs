@@ -11,10 +11,24 @@
       @icon={{@icon}}
     />
   </a>
+{{else if @onFileChange}}
+  <label local-class="button is-{{@theme}}" ...attributes>
+    <input
+     {{on "change" @onFileChange}}
+     local-class="file-input"
+     type="file"
+     accept={{this.fileAccept}}
+    >
+
+    <Button::Content
+      @label={{@label}}
+      @icon={{@icon}}
+    />
+  </label>
 {{else}}
   <button
     {{on "click" (fn this.handleClick)}}
-    local-class="button is-{{@theme}} {{if @icon "with-icon"}}"
+    local-class="button is-{{@theme}}"
     ...attributes
   >
     <Button::Content

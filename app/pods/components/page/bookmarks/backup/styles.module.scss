@@ -1,0 +1,18 @@
+.backup {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid rgba($white, 0.25);
+  margin-top: 10px;
+}
+
+.title {
+  margin: 0 auto 0 0;
+  font-family: $primary-font;
+  font-size: 15px;
+  color: $white;
+}
+
+.action {
+  margin: 0 0 0 5px;
+}
