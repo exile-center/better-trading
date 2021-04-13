@@ -13,6 +13,8 @@ export default class Reportable extends Service implements ItemResultsEnhancerSe
   @service('intl')
   intl: IntlService;
 
+  slug = 'tft-reportable';
+
   enhance(itemElement: HTMLElement, {seller}: ItemResultsParsedItem) {
     const detailsElement = itemElement.querySelector('.details .pull-left');
     if (!detailsElement) return;

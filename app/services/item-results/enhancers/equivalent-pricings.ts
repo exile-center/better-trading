@@ -23,6 +23,8 @@ export default class EquivalentPricings extends Service implements ItemResultsEn
   @service('trade-location')
   tradeLocation: TradeLocation;
 
+  slug = 'equivalent-pricings';
+
   chaosRatios: PoeNinjaCurrenciesRatios | null;
 
   async prepare() {
