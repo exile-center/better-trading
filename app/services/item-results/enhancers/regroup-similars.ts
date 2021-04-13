@@ -9,6 +9,8 @@ export default class RegroupSimilars extends Service implements ItemResultsEnhan
   @service('intl')
   intl: IntlService;
 
+  slug = 'regroup-similars';
+
   enhance(itemElement: HTMLElement) {
     const currentHash = this.setItemHash(itemElement);
 

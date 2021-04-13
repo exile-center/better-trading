@@ -16,7 +16,7 @@ export default class Storage extends Service {
     await this.cleanupPastLeagues();
   }
 
-  setLocalValue(key: string, value: any, league: string | null = null) {
+  setLocalValue(key: string, value: string, league: string | null = null) {
     window.localStorage.setItem(`bt-${this.formatKey(key, league)}`, value);
   }
 

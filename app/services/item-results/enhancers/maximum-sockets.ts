@@ -17,6 +17,8 @@ export default class MaximumSockets extends Service implements ItemResultsEnhanc
   @service('intl')
   intl: IntlService;
 
+  slug = 'maximum-sockets';
+
   statNeedles: RegExp[];
 
   // eslint-disable-next-line complexity

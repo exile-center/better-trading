@@ -10,6 +10,8 @@ export default class ScamPrevention extends Service implements ItemResultsEnhanc
   @service('the-forbidden-trove')
   theForbiddenTrove: TheForbiddenTrove;
 
+  slug = 'tft-scam-prevention';
+
   private blacklistMap: Map<string, TheForbbidenTroveBlacklistEntry> = new Map();
 
   async prepare() {

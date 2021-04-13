@@ -7,6 +7,21 @@
 
   <section local-class="section">
     <h1 local-class="section-title">
+      {{t "page.about.enhancers.title"}}
+    </h1>
+
+    {{#each this.enhancers as |enhancer|}}
+      <Form::Checkbox
+        local-class="enhancer-checkbox"
+        @value={{enhancer.isEnabled}}
+        @label={{t enhancer.translationKey}}
+        @onChange={{fn this.toggleDisabledEnhancerSlug enhancer.slug}}
+      />
+    {{/each}}
+  </section>
+
+  <section local-class="section">
+    <h1 local-class="section-title">
       {{t "page.about.github.title"}}
     </h1>
 

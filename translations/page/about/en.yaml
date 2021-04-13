@@ -1,6 +1,14 @@
 page:
   about:
     disclaimer: This extension is fan-made and not affiliated with Grinding Gear Games in any way.
+    enhancers:
+      title: Enabled item result enhancers
+      equivalent-pricings: Equivalent pricings (powered by poe.ninja)
+      highlight-stat-filters: Highlight searched mods
+      maximum-sockets: Warning for armors that cannot by 6-socketed
+      regroup-similars: Regroup similar results
+      tft-reportable: Report button (powered by TFT)
+      tft-scam-prevention: Warning against blacklisted users (powered by TFT)
     github:
       title: On GitHub
       description: To contribute, report issues or simply browse the code.
