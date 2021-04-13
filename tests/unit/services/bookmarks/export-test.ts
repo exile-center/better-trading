@@ -8,15 +8,15 @@ import fakeBookmarkFolder from 'better-trading/tests/fixtures/bookmark-folder';
 import fakeBookmarkTrade from 'better-trading/tests/fixtures/bookmark-trade';
 
 // Types
-import BookmarksShare from 'better-trading/services/bookmarks/share';
+import BookmarksExport from 'better-trading/services/bookmarks/export';
 
-describe('Unit | Services | Bookmarks | Share', () => {
+describe('Unit | Services | Bookmarks | Export', () => {
   setupTest();
 
-  let service: BookmarksShare;
+  let service: BookmarksExport;
 
   beforeEach(function () {
-    service = this.owner.lookup('service:bookmarks/share');
+    service = this.owner.lookup('service:bookmarks/export');
   });
 
   describe('serialize/deserialize', () => {

@@ -52,6 +52,7 @@ module.exports = function (environment) {
       'free-solid-svg-icons': [
         'chevron-down',
         'folder-plus',
+        'plus-square',
         'save',
         'trash-alt',
         'check',
@@ -65,6 +66,7 @@ module.exports = function (environment) {
         'link',
         'clipboard',
         'file-import',
+        'file-export',
         'exclamation-circle',
         'history',
         'folder-open',

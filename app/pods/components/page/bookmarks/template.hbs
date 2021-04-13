@@ -73,7 +73,7 @@
         local-class="create-folder-button"
         @theme="gold"
         @label={{t "page.bookmarks.import-folder"}}
-        @icon="file-import"
+        @icon="plus-square"
         @onClick={{fn this.importFolder}}
       />
     </div>
@@ -87,6 +87,8 @@
     />
   {{/if}}
 </LoadingContainer>
+
+<Page::Bookmarks::Backup />
 
 {{#if this.stagedFolder}}
   <Page::Bookmarks::FolderEdition

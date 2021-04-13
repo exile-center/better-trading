@@ -10,6 +10,11 @@ page:
     update-folder-success-flash: 'The folder "{title}" has been updated.'
     create-folder-success-flash: 'The folder "{title}" has been created.'
     import-folder-success-flash: 'The folder "{title}" has been imported.'
+    backup:
+      title: Backup tools
+      generate-button: Save file
+      restore-button: Restore from file
+      restore-error-flash: Backup restoration has failed.
     folder:
       edit-folder: Edit
       delete-folder: Delete

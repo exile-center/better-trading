@@ -1,0 +1,22 @@
+<div local-class="backup">
+  <div local-class="title">
+    {{t "page.bookmarks.backup.title"}}
+  </div>
+
+  <Button
+    local-class="action"
+    @onClick={{perform this.generateBackupTask}}
+    @theme="blue"
+    @icon="file-export"
+    @label={{t "page.bookmarks.backup.generate-button"}}
+  />
+
+  <Button
+    local-class="action"
+    @onFileChange={{fn this.backupFileChange}}
+    @theme="blue"
+    @fileAccept="text/plain"
+    @icon="file-import"
+    @label={{t "page.bookmarks.backup.restore-button"}}
+  />
+</div>
