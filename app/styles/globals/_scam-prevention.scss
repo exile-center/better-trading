@@ -3,5 +3,9 @@
 }
 
 .bt-scam-prevention {
-  color: lighten($red-alt, 15%);
+  color: lighten($red-alt, 15%) !important;
+
+  a {
+    color: lighten($red-alt, 15%) !important;
+  }
 }
