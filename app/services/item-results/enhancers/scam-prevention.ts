@@ -26,12 +26,14 @@ export default class ScamPrevention extends Service implements ItemResultsEnhanc
   enhance(itemElement: HTMLElement, {seller}: ItemResultsParsedItem) {
     const whisperButtonElement = itemElement.querySelector<HTMLButtonElement>('button.whisper-btn');
     const characterNameElement = itemElement.querySelector<HTMLSpanElement>('.character-name');
-    if (!whisperButtonElement || !characterNameElement || !seller.accountName) return;
+    const accountNameElement = itemElement.querySelector<HTMLSpanElement>('.profile-link');
+    if (!accountNameElement || !whisperButtonElement || !characterNameElement || !seller.accountName) return;
 
     const correspondingBlacklistEntry = this.blacklistMap.get(seller.accountName.toLowerCase());
     if (!correspondingBlacklistEntry) return;
 
     characterNameElement.classList.add('bt-scam-prevention');
+    accountNameElement.classList.add('bt-scam-prevention');
 
     whisperButtonElement.addEventListener('click', () => {
       this.theForbiddenTrove.promptBlacklistEntryWarning(correspondingBlacklistEntry);
