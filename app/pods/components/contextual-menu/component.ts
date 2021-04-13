@@ -8,15 +8,38 @@ import {timeout} from 'ember-concurrency';
 // Types
 import {Task} from 'better-trading/types/ember-concurrency';
 
+interface Position {
+  x: number;
+  y: number;
+}
+
 // Constants
 const HIDE_DEBOUNCE_DELAY_IN_MILLISECONDS = 500;
 
 export default class ContextualMenu extends Component {
   @tracked
-  positionStyles: object | null = null;
+  itemsDivElement: HTMLDivElement | null = null;
+
+  @tracked
+  displayPosition: Position | null = null;
 
   get itemsAreVisible() {
-    return Boolean(this.positionStyles);
+    return Boolean(this.displayPosition);
+  }
+
+  get positionStyles() {
+    if (!this.displayPosition || !this.itemsDivElement) return {};
+
+    const viewportHeight = window.innerHeight;
+    const itemsHeight = this.itemsDivElement.clientHeight;
+
+    let top = this.displayPosition.y;
+    top -= Math.max(itemsHeight + top - viewportHeight, 0);
+
+    return {
+      top: `${top}px`,
+      left: `${this.displayPosition.x}px`,
+    };
   }
 
   @restartableTask
@@ -27,19 +50,29 @@ export default class ContextualMenu extends Component {
 
   @action
   showItems(event: MouseEvent) {
-    this.positionStyles = {
-      top: `${event.clientY}px`,
-      left: `${event.clientX}px`,
+    this.displayPosition = {
+      y: event.clientY,
+      x: event.clientX,
     };
   }
 
   @action
   hideItems() {
-    this.positionStyles = null;
+    this.displayPosition = null;
   }
 
   @action
   cancelDebouncedHideItemsTask() {
     (this.debouncedHideItemsTask as Task).cancelAll();
+  }
+
+  @action
+  registerItemsElement(itemsElement: HTMLDivElement) {
+    this.itemsDivElement = itemsElement;
+  }
+
+  @action
+  unregisterItemsElement() {
+    this.itemsDivElement = null;
   }
 }
