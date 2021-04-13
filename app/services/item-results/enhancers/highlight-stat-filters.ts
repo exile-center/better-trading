@@ -15,6 +15,8 @@ export default class HighlightStatFilters extends Service implements ItemResults
   @service('search-panel')
   searchPanel: SearchPanel;
 
+  slug = 'highlight-stat-filters';
+
   statNeedles: RegExp[];
 
   prepare() {

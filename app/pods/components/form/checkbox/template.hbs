@@ -1,6 +1,7 @@
 <label
   {{on "click" (fn this.toggleValue)}}
   local-class="wrapper"
+  ...attributes
 >
   <div local-class="indicator {{if @value "is-active"}}"></div>
 

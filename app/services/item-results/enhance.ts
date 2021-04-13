@@ -32,6 +32,10 @@ export default class ItemResultsEnhance extends Service {
     }
   }
 
+  getEnhancerSlugs() {
+    return this.enhancerServices.map((enhancerService) => enhancerService.slug || '').filter(Boolean);
+  }
+
   async initialize() {
     const tradeAppElement = window.document.getElementById('trade');
     if (!tradeAppElement || !tradeAppElement.parentElement) return;
@@ -60,15 +64,18 @@ export default class ItemResultsEnhance extends Service {
     if (unenhancedElements.length === 0) return;
     if (unenhancedElements[0].classList.contains('exchange')) return;
 
-    await asyncLoop<ItemResultsEnhancerService>(
-      this.enhancerServices,
-      (enhancer) => enhancer.prepare && enhancer.prepare()
-    );
+    await asyncLoop<ItemResultsEnhancerService>(this.enhancerServices, (enhancer) => {
+      if (enhancer.slug && this.itemResults.disabledEnhancerSlugs.includes(enhancer.slug)) return;
+      if (!enhancer.prepare) return;
+      return enhancer.prepare();
+    });
 
     await asyncLoop<HTMLDivElement>(unenhancedElements, async (unenhancedElement) => {
       const parsedItem = this.itemResults.parseItemElement(unenhancedElement);
 
       await asyncLoop<ItemResultsEnhancerService>(this.enhancerServices, (enhancer) => {
+        if (enhancer.slug && this.itemResults.disabledEnhancerSlugs.includes(enhancer.slug)) return;
+
         return enhancer.enhance(unenhancedElement, parsedItem);
       });
 
