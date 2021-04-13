@@ -9,6 +9,8 @@
 {{#if this.itemsAreVisible}}
   <EmberWormhole @to="contextual-menu-items">
     <div
+      {{did-insert (fn this.registerItemsElement)}}
+      {{will-destroy (fn this.unregisterItemsElement)}}
       {{on "mouseleave" (perform this.debouncedHideItemsTask)}}
       {{on "mouseenter" (fn this.cancelDebouncedHideItemsTask)}}
       style={{safe-styles this.positionStyles}}
