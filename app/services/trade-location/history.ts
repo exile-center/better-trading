@@ -39,7 +39,7 @@ export default class TradeLocationHistory extends Service {
       id: uniqueId(),
       title: this.searchPanel.recommendTitle(),
       createdAt: new Date().toISOString(),
-    });
+    } as TradeLocationHistoryStruct);
     historyEntries.splice(config.APP.maximumHistoryLength);
 
     await this.storage.setValue(HISTORY_KEY, historyEntries);

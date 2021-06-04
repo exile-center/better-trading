@@ -1,4 +1,5 @@
 export interface BookmarksTradeLocation {
+  baseUrl?: string;
   type: string;
   slug: string;
 }

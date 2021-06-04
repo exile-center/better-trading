@@ -1,0 +1,5 @@
+page:
+  history:
+    clear: 기록 초기화
+    empty: 검색 기록이 비어있습니다.
+    clear-success-flash: 검색 기록이 초기화됐습니다.

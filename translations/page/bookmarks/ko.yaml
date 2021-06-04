@@ -1,0 +1,71 @@
+page:
+  bookmarks:
+    create-folder: 새 폴더
+    import-folder: 폴더 가져오기
+    collapse-all: 폴더 모두 접기
+    show-archived-folders: 폴더 보관
+    show-unarchived-folders: 활성화된 폴더로 돌아가기
+    folders-warning: 너무 많은 폴더는 페이지를 느리게 할 수 있습니다.<br>불필요한 폴더를 내보내기하여 백업한 뒤, 제거해주세요.
+    delete-folder-success-flash: '"{title}"폴더가 제거됐습니다.'
+    update-folder-success-flash: '"{title}"폴더가 갱신됐습니다.'
+    create-folder-success-flash: '"{title}"폴더가 생성됐습니다.'
+    import-folder-success-flash: '"{title}"폴더를 가져왔습니다.'
+    backup:
+      title: 백업 도구
+      generate-button: 파일로 저장
+      restore-button: 파일에서 가져오기
+      restore-error-flash: 백업에서 복구를 실패했습니다.
+    folder:
+      edit-folder: 수정
+      delete-folder: 삭제
+      archive-folder: 보관
+      restore-folder: 복구
+      export-folder: 내보내기/공유
+      open-live-trade: 라이브 서치
+      create-trade: 현재 트레이드를 등록
+      copy-trade-to-clipboard: 트레이드 URL을 클립보드에 복사
+      copy-trade-to-clipboard-success-flash: '"{title}"의 트레이드 URL이 클립보드에 복사됐습니다.'
+      edit-trade: 수정
+      delete-trade: 삭제
+      update-trade-location: 현재 트레이드로 저장
+      complete-trade: 완료로 표시
+      uncomplete-trade: 미완료로 표시
+      delete-trade-success-flash: '"{title}" 트레이드가 제거됐습니다.'
+      update-trade-success-flash: '"{title}" 트레이드가 업데이트됐습니다.'
+      create-trade-success-flash: '"{title}" 트레이드가 생성됐습니다.'
+      persist-trade-location-success-flash: '"{title}" 트레이드 경로가 업데이트 됐습니다.'
+      trade-deletion:
+        modal-title: 삭제 확인
+        confirmation: '정말로 트레이드 <strong>{name}</strong>를 삭제하시겠습니까?'
+        delete: 삭제
+        cancel: 취소
+      folder-deletion:
+        modal-title: 삭제 확인
+        confirmation: '정말로 즐겨찾기 폴더 <strong>{name}</strong>{tradesCount, plural, =0 {} =1 {와 <strong>한 개의 즐겨찾기</strong>} other {와 <strong># 개의 즐겨찾기</strong>}}를 삭제하시겠습니까?'
+        delete: 삭제
+        cancel: 취소
+      folder-export:
+        modal-title: 즐겨찾기 폴더 내보내기
+        preview-url: 미리보기 페이지
+        preview-url-button: 새 탭에서 열기
+        export-code: 코드 내보내기
+        export-code-helper: 이 코드는 폴더를 복구할 수 있습니다. 백업과 공유를 목적으로 사용될 수 있습니다.
+        embed-code: Embed code snippet
+        embed-code-helper: Code snippet that can be used to include the folder's preview into a website.
+        close: 닫기
+      trade-edition:
+        modal-title: 트레이드 즐겨찾기
+        title-label: 제목
+        save: 저장
+    folder-edition:
+      modal-title: 즐겨찾기 폴더
+      title-label: 제목
+      icon-label: 아이콘
+      save: 저장
+    folder-import:
+      modal-title: 즐겨찾기 폴더 가져오기
+      import-code:
+        label: 코드 가져오기
+      preview: '{name} {tradesCount, plural, =0 {} =1 {(1 개의 즐겨찾기)} other {(#개의 즐겨찾기)}}'
+      invalid-code: 입력된 코드가 유효하지 않습니다. 다른 코드를 입력해주세요.
+      save: 저장

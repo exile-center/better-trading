@@ -10,7 +10,7 @@ import Storage from 'better-trading/services/storage';
 import TradeLocation from 'better-trading/services/trade-location';
 
 // Constants
-const DEFAULT_LOCALE = 'en';
+const DEFAULT_LOCALE = window.location.host.includes('pathofexile.com') ? 'en' : 'ko';
 
 export default class ApplicationRoute extends Route {
   @service('bookmarks')

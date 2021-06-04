@@ -17,6 +17,7 @@ import config from 'better-trading/config/environment';
 const BASE_URL = 'https://www.pathofexile.com/trade';
 
 interface ParsedPath {
+  baseUrl?: string;
   type: string;
   league: string;
   slug?: string;
@@ -27,6 +28,12 @@ export default class TradeLocation extends Service.extend(Evented) {
   tradeLocationHistory: TradeLocationHistory;
 
   lastTradeLocation: TradeLocationStruct = this.currentTradeLocation;
+
+  get baseUrl(): string {
+    const {baseUrl} = this.parseCurrentPath();
+    
+    return baseUrl || BASE_URL;
+  }
 
   get type(): string | null {
     const {type} = this.parseCurrentPath();
@@ -48,6 +55,7 @@ export default class TradeLocation extends Service.extend(Evented) {
 
   get currentTradeLocation(): TradeLocationStruct {
     return {
+      baseUrl: this.baseUrl,
       slug: this.slug,
       type: this.type,
       league: this.league,
@@ -82,13 +90,16 @@ export default class TradeLocation extends Service.extend(Evented) {
     this.startLocationPolling();
   }
 
-  getTradeUrl(type: string, slug: string, league: string) {
-    return [BASE_URL, type, league, slug].join('/');
+  getTradeUrl(type: string, slug: string, league: string, baseUrl?: string) {
+    return [baseUrl || BASE_URL, type, league, slug].join('/');
   }
 
   compareTradeLocations(locationA: TradeLocationStruct, locationB: TradeLocationStruct) {
     return (
-      locationA.league === locationB.league && locationA.slug === locationB.slug && locationA.type === locationB.type
+      locationA.baseUrl === locationB.baseUrl &&
+      locationA.league === locationB.league &&
+      locationA.slug === locationB.slug &&
+      locationA.type === locationB.type
     );
   }
 
@@ -102,8 +113,9 @@ export default class TradeLocation extends Service.extend(Evented) {
 
   private parseCurrentPath(): ParsedPath {
     const [type, league, slug] = window.location.pathname.replace('/trade/', '').split('/');
+    const baseUrl = `${window.location.origin}/trade`;
 
-    return {type, league, slug};
+    return { baseUrl, type, league, slug};
   }
 
   private startLocationPolling() {

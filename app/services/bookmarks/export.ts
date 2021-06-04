@@ -8,6 +8,7 @@ interface ExportedFolderStruct {
   icn: string;
   tit: string;
   trs: Array<{
+    url?: string;
     tit: string;
     loc: string;
   }>;
@@ -19,17 +20,18 @@ export default class Export extends Service {
       icn: folder.icon as string,
       tit: folder.title,
       trs: trades.map((trade) => ({
+        url: trade.location.baseUrl,
         tit: trade.title,
         loc: `${trade.location.type}:${trade.location.slug}`,
       })),
     };
 
-    return btoa(JSON.stringify(payload));
+    return btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
   }
 
   deserialize(serializedFolder: string): [BookmarksFolderStruct, BookmarksTradeStruct[]] | null {
     try {
-      const potentialPayload: ExportedFolderStruct = JSON.parse(atob(serializedFolder));
+      const potentialPayload: ExportedFolderStruct = JSON.parse(decodeURIComponent(escape(atob(serializedFolder))));
 
       const folder: BookmarksFolderStruct = {
         icon: potentialPayload.icn as BookmarksFolderIcon,
@@ -44,6 +46,7 @@ export default class Export extends Service {
           title: trade.tit,
           completedAt: null,
           location: {
+            baseUrl: trade.url,
             type,
             slug,
           },

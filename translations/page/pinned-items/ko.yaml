@@ -1,0 +1,7 @@
+page:
+  pinned-items:
+    warning: 고정된 아이템은 현재 검색된 결과에서만 나타납니다. 새로 검색하게 되는 경우 현재 고정된 아이템은 모두 초기화됩니다.
+    clear: 고정된 아이템 초기화
+    empty: 고정 버튼을 눌러 아이템을 고정할 수 있습니다.
+    unpin-item: 해제
+    scroll-to-item: 아이템으로 스크롤

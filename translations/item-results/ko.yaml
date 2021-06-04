@@ -1,0 +1,10 @@
+item-results:
+  reportable:
+    report: TFT에 신고
+  pinnable:
+    pin: 고정
+    unpin: 해제
+  maximum-sockets:
+    warning: '최대. {maximum} 소켓'
+  regroup-similars:
+    button: '{count, plural, =0 {} =1 {1개의 유사한 결과} other {#개의 유사한 결과들}}'

@@ -24,7 +24,10 @@ const manifest = Object.assign(
     manifest_version: 2,
     content_scripts: [
       {
-        matches: ['*://www.pathofexile.com/trade*'],
+        matches: [
+          '*://www.pathofexile.com/trade*',
+          "*://poe.game.daum.net/trade*"
+        ],
         js: [assetsPathFor('vendor.js'), assetsPathFor('better-trading.js')],
         css: [assetsPathFor('vendor.css'), assetsPathFor('better-trading.css')],
       },
