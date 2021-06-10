@@ -95,6 +95,7 @@ describe('Unit | Services | TradeLocation', () => {
             type: 'search',
             slug: 'new-trade',
             league: 'new-league',
+            baseUrl: `${window.location.origin  }/trade`,
           })
           .returns(Promise.resolve());
 
@@ -110,11 +111,13 @@ describe('Unit | Services | TradeLocation', () => {
             type: 'search',
             slug: 'initial-trade',
             league: 'initial-league',
+            baseUrl: `${window.location.origin  }/trade`,
           },
           newTradeLocation: {
             type: 'search',
             slug: 'new-trade',
             league: 'new-league',
+            baseUrl: `${window.location.origin  }/trade`,
           },
         });
       });

@@ -31,7 +31,7 @@ export default class TradeLocation extends Service.extend(Evented) {
 
   get baseUrl(): string {
     const {baseUrl} = this.parseCurrentPath();
-    
+
     return baseUrl || BASE_URL;
   }
 
@@ -115,7 +115,7 @@ export default class TradeLocation extends Service.extend(Evented) {
     const [type, league, slug] = window.location.pathname.replace('/trade/', '').split('/');
     const baseUrl = `${window.location.origin}/trade`;
 
-    return { baseUrl, type, league, slug};
+    return {baseUrl, type, league, slug};
   }
 
   private startLocationPolling() {

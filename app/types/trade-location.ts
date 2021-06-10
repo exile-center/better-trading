@@ -1,5 +1,5 @@
 export interface TradeLocationStruct {
-  baseUrl?: string,
+  baseUrl?: string;
   slug: string | null;
   type: string | null;
   league: string | null;

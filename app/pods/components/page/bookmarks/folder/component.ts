@@ -228,7 +228,12 @@ export default class BookmarksFolder extends Component<Args> {
   copyToClipboard(trade: BookmarksTradeStruct) {
     if (!this.currentLeague) return;
 
-    const tradeUrl = this.tradeLocation.getTradeUrl(trade.location.type, trade.location.slug, this.currentLeague, trade.location.baseUrl);
+    const tradeUrl = this.tradeLocation.getTradeUrl(
+      trade.location.type,
+      trade.location.slug,
+      this.currentLeague,
+      trade.location.baseUrl
+    );
     copyToClipboard(tradeUrl);
 
     this.flashMessages.success(

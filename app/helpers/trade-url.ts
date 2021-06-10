@@ -5,7 +5,7 @@ import {inject as service} from '@ember/service';
 // Types
 import TradeLocation from 'better-trading/services/trade-location';
 
-type PositionalParams = [{slug: string; type: string, baseUrl?: string}];
+type PositionalParams = [{slug: string; type: string; baseUrl?: string}];
 interface NamedParams {
   suffix?: string;
   league: string;
