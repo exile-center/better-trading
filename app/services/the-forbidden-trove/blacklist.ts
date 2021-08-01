@@ -52,7 +52,7 @@ export default class Blacklist extends Service {
       if (activeFlag !== 'Y') return acc;
 
       return acc.concat({
-        accountName,
+        accountName: encodeURIComponent(accountName),
         reason,
         blacklistedOn: new Date(rawBlacklistedOn.split('/').reverse().join('-')).toUTCString(),
       });
