@@ -12,7 +12,7 @@ import {TheForbbidenTroveBlacklistEntry} from 'better-trading/types/the-forbidde
 const BLACKLIST_CSV_URL =
   'https://raw.githubusercontent.com/The-Forbidden-Trove/ForbiddenTroveBlacklist/main/blacklist.csv';
 const BLACKLIST_CACHE_KEY = 'the-forbidden-trove-blacklist-cache';
-const BLACKLIST_CACHE_DURATION = 43200000; // 12 hours
+const BLACKLIST_CACHE_DURATION = 21600000; // 6 hours
 
 export default class Blacklist extends Service {
   @service('storage')
