@@ -21,7 +21,7 @@ const assetsPathFor = (assetsRelativePath) => {
 const manifest = Object.assign(
   {
     version: packageJson.version,
-    manifest_version: 2,
+    manifest_version: 3,
     content_scripts: [
       {
         matches: ['*://www.pathofexile.com/trade*'],
@@ -30,11 +30,14 @@ const manifest = Object.assign(
       },
     ],
     background: {
-      scripts: ['background.js'],
-      persistent: true,
+      service_worker: 'background.js',
     },
-    permissions: ['storage', '*://poe.ninja/*'],
-    web_accessible_resources: [assetsPathFor('images/*')],
+    permissions: ['storage'],
+    host_permissions: ['*://poe.ninja/*'],
+    web_accessible_resources: [{
+      resources: [assetsPathFor('images/*')],
+      matches: ['*://www.pathofexile.com/*']
+    }],
     icons: {
       16: 'icon16.png',
       48: 'icon48.png',

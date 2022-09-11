@@ -43,6 +43,13 @@ module.exports = function (defaults) {
       includePolyfill: true,
     },
 
+    // Chromium forbids the use of eval in browser extensions as of Manifest v3.
+    // This setting causes ember-auto-import to avoid webpack source map settings
+    // which would implicitly use eval in built versions of the app.
+    autoImport: {
+      forbidEval: true,
+    },
+
     sourcemaps: {
       enabled: !IS_TEST_ENVIRONMENT,
     },
