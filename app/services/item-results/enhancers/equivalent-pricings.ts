@@ -10,7 +10,7 @@ import {ItemResultsEnhancerService, ItemResultsParsedItem} from 'better-trading/
 const CHAOS_IMAGE_URL = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png';
 const CHAOS_ALT = 'chaos';
 const CHAOS_SLUG = 'chaos-orb';
-const DIVINE_IMAGE_URL = 'http://web.poecdn.com/image/Art/2DItems/Currency/CurrencyModValues.png';
+const DIVINE_IMAGE_URL = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyModValues.png';
 const DIVINE_ALT = 'divine';
 const DIVINE_SLUG = 'divine-orb';
 const DIVINE_EQUIVALENCE_THRESHOLD = 0.5;
