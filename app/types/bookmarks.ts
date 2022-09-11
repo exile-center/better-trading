@@ -72,6 +72,7 @@ export enum BookmarksFolderItemIcon {
   ALCHEMY = 'alchemy',
   CHAOS = 'chaos',
   EXALT = 'exalt',
+  DIVINE = 'divine',
   MIRROR = 'mirror',
   CARD = 'card',
   ESSENCE = 'essence',
