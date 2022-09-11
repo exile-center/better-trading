@@ -66,7 +66,7 @@ export default `
       <div class="price"><span data-field="price" class="s sorted sorted-asc"><span class="price-label buyout-price">Exact Price:</span><br> <span>1</span><span>×</span><span
         class="currency-text currency-image"><img
         src="https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyAddModToRare.png?v=1745ebafbd533b6f91bccf588ab5efc5"
-        alt="exa" title="exa"><span>Exalted Orb</span></span></span></div>
+        alt="exa" title="exa"><span>Divine Orb</span></span></span></div>
       <div data-field="indexed" class="info s"><span class="profile-link"><a href="/account/view-profile/foobar"
                                                                              target="_blank">foobar</a></span>&nbsp;<small>
         listed an hour ago
