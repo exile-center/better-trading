@@ -34,10 +34,12 @@ const manifest = Object.assign(
     },
     permissions: ['storage'],
     host_permissions: ['*://poe.ninja/*'],
-    web_accessible_resources: [{
-      resources: [assetsPathFor('images/*')],
-      matches: ['*://www.pathofexile.com/*']
-    }],
+    web_accessible_resources: [
+      {
+        resources: [assetsPathFor('images/*')],
+        matches: ['*://www.pathofexile.com/*'],
+      },
+    ],
     icons: {
       16: 'icon16.png',
       48: 'icon48.png',
