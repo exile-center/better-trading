@@ -21,6 +21,10 @@
 }
 
 .bt-pin-button {
+  // This ensures the button is big enough to fit the "Unpin" text
+  // without resizing when toggling between pin and unpin
+  min-width: 47px !important;
+
   .bt-pin-button-pinned {
     display: none;
   }
