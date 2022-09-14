@@ -24,7 +24,7 @@ export default class Pinnable extends Service implements ItemResultsEnhancerServ
   pinnedItems: PinnedItemsMap = {};
 
   enhance(itemElement: HTMLElement) {
-    const detailsElement = itemElement.querySelector('.details .pull-left');
+    const detailsElement = itemElement.querySelector('.details .btns');
     if (!detailsElement) return;
 
     detailsElement.appendChild(this.renderPinButton());
