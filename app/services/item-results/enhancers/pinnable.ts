@@ -71,6 +71,10 @@ export default class Pinnable extends Service implements ItemResultsEnhancerServ
 
   private renderPinButton(): HTMLElement {
     const element = window.document.createElement('button');
+    // standard button styles from pathofexile.com
+    element.classList.add('btn');
+    element.classList.add('btn-default');
+    // our style overrides
     element.classList.add('bt-pin-button');
     element.innerHTML = `
       <span class="bt-pin-button-unpinned">
@@ -82,7 +86,11 @@ export default class Pinnable extends Service implements ItemResultsEnhancerServ
     `;
     element.addEventListener('click', this.handlePinClick.bind(this));
 
-    return element;
+    // for consistency with sibling button layouts/styling
+    const wrapper = window.document.createElement('span');
+    wrapper.appendChild(element);
+
+    return wrapper;
   }
 
   private createPinnedItem(id: string, result: HTMLElement): ItemResultsPinnedItem | null {
