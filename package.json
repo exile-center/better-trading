@@ -1,7 +1,7 @@
 {
   "name": "better-trading",
-  "version": "1.4.0",
-  "changelog": "1-4-0-tft",
+  "version": "1.6.0",
+  "changelog": "1-6-0-new-maintainer",
   "private": true,
   "directories": {
     "doc": "doc",
