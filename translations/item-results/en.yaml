@@ -1,6 +1,4 @@
 item-results:
-  reportable:
-    report: Report on TFT
   pinnable:
     pin: Pin
     unpin: Unpin

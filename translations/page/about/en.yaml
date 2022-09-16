@@ -7,8 +7,6 @@ page:
       highlight-stat-filters: Highlight searched mods
       maximum-sockets: Warning for armors that cannot be 6-socketed
       regroup-similars: Regroup similar results
-      tft-reportable: Report button (powered by TFT)
-      tft-scam-prevention: Warning against blacklisted users (powered by TFT)
     github:
       title: On GitHub
       description: To contribute, report issues or simply browse the code.

@@ -14,8 +14,8 @@
   "repository": "https://github.com/poe-world/better-trading",
   "engine-strict": true,
   "engines": {
-    "node": "~10.15",
-    "npm": "~6.4"
+    "node": "~12.22",
+    "npm": "~6.14"
   },
   "devDependencies": {
     "@ember/optional-features": "~1.1.0",

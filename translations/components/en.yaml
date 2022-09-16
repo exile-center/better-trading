@@ -11,19 +11,3 @@ components:
     bookmarks: Bookmarks
     history: History
     pinned-items: Pinned items
-  the-forbidden-trove:
-    credits: Powered by The Forbidden Trove
-    close: Close
-    blacklist-warning:
-      title: Blacklisted account
-      body: '{accountName} has been reported {timeAgo}.'
-      reason: 'Logged reason:'
-      disclaimer: The whisper message has still been copied to your clipboard, you can proceed with the trade.
-    pending-report:
-      title: Report a fraudulent trade
-      warning: Make sure the reported issue is really a scam. False reports wont be tolerated by TFT's moderators.
-      steps:
-        1: Log into
-        1-link: TFT's Discord server
-        2: 'Paste the pre-generated message into the #scam-report-psa channel'
-        3: Fill the "transcript of the event" and "proof" to help the moderation team

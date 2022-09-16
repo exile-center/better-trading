@@ -45,7 +45,7 @@ targets:
 .PHONY: dependencies
 dependencies: ## Install required dependencies
 	node ./scripts/enforce-engine-versions.js
-	npm install
+	npm ci
 
 .PHONY: package
 package: package-chrome package-firefox ## Package the extension for every browsers
