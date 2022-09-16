@@ -10,10 +10,10 @@ import {ItemResultsEnhancerService, ItemResultsParsedItem} from 'better-trading/
 const CHAOS_IMAGE_URL = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyRerollRare.png';
 const CHAOS_ALT = 'chaos';
 const CHAOS_SLUG = 'chaos-orb';
-const EXALT_IMAGE_URL = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyAddModToRare.png';
-const EXALT_ALT = 'exalt';
-const EXALT_SLUG = 'exalted-orb';
-const EXALT_EQUIVALENCE_THRESHOLD = 0.5;
+const NORMALIZED_CURRENCY_IMAGE_URL = 'https://web.poecdn.com/image/Art/2DItems/Currency/CurrencyModValues.png';
+const NORMALIZED_CURRENCY_ALT = 'divine';
+const NORMALIZED_CURRENCY_SLUG = 'divine-orb';
+const NORMALIZED_CURRENCY_EQUIVALENCE_THRESHOLD = 0.5;
 const EQUAL_HTML = '<span class="bt-equivalent-pricings-equals">=</span>';
 
 export default class EquivalentPricings extends Service implements ItemResultsEnhancerService {
@@ -46,12 +46,12 @@ export default class EquivalentPricings extends Service implements ItemResultsEn
     const currencySlug = price.currencySlug;
     const currencyValue = price.value;
     const chaosValue = this.chaosRatios[currencySlug];
-    const exaltValue = this.chaosRatios[EXALT_SLUG];
+    const normalizedCurrencyValue = this.chaosRatios[NORMALIZED_CURRENCY_SLUG];
 
     if (chaosValue && currencyValue) {
       this.handleNonChaosPricedItem(pricingContainerElement, currencyImageElement, currencyValue, chaosValue);
-    } else if (currencySlug === CHAOS_SLUG && exaltValue) {
-      this.handleChaosPricedItem(pricingContainerElement, currencyValue, exaltValue);
+    } else if (currencySlug === CHAOS_SLUG && normalizedCurrencyValue) {
+      this.handleChaosPricedItem(pricingContainerElement, currencyValue, normalizedCurrencyValue);
     }
   }
 
@@ -80,12 +80,16 @@ export default class EquivalentPricings extends Service implements ItemResultsEn
     );
   }
 
-  private handleChaosPricedItem(pricingContainerElement: HTMLElement, currencyValue: number, exaltValue: number) {
-    if (currencyValue < EXALT_EQUIVALENCE_THRESHOLD * exaltValue) return;
+  private handleChaosPricedItem(
+    pricingContainerElement: HTMLElement,
+    currencyValue: number,
+    normalizedCurrencyValue: number
+  ) {
+    if (currencyValue < NORMALIZED_CURRENCY_EQUIVALENCE_THRESHOLD * normalizedCurrencyValue) return;
 
     // eslint-disable-next-line no-magic-numbers
-    const exaltEquivalentValue = Math.round((currencyValue / exaltValue) * 10) / 10;
-    pricingContainerElement.append(this.renderExaltEquivalence(exaltEquivalentValue));
+    const roundNormalizedCurrencyValue = Math.round((currencyValue / normalizedCurrencyValue) * 10) / 10;
+    pricingContainerElement.append(this.renderNormalizedCurrencyEquivalence(roundNormalizedCurrencyValue));
   }
 
   private renderChaosEquivalence(chaosEquivalentValue: number): HTMLElement {
@@ -115,12 +119,12 @@ export default class EquivalentPricings extends Service implements ItemResultsEn
     return element;
   }
 
-  private renderExaltEquivalence(exaltEquivalentValue: number): HTMLElement {
+  private renderNormalizedCurrencyEquivalence(normalizedCurrencyValue: number): HTMLElement {
     const element = window.document.createElement('span');
     element.classList.add('bt-equivalent-pricings');
     element.classList.add('bt-equivalent-pricings-equivalent');
 
-    element.innerHTML = `<span>${EQUAL_HTML}${exaltEquivalentValue}×<img src="${EXALT_IMAGE_URL}" alt="${EXALT_ALT}" /></span>`;
+    element.innerHTML = `<span>${EQUAL_HTML}${normalizedCurrencyValue}×<img src="${NORMALIZED_CURRENCY_IMAGE_URL}" alt="${NORMALIZED_CURRENCY_ALT}" /></span>`;
 
     return element;
   }
