@@ -16,12 +16,6 @@ import config from 'better-trading/config/environment';
 // Constants
 const BASE_URL = 'https://www.pathofexile.com/trade';
 
-interface ParsedPath {
-  type: string;
-  league: string;
-  slug?: string;
-}
-
 export default class TradeLocation extends Service.extend(Evented) {
   @service('trade-location/history')
   tradeLocationHistory: TradeLocationHistory;
@@ -29,36 +23,30 @@ export default class TradeLocation extends Service.extend(Evented) {
   lastTradeLocation: TradeLocationStruct = this.currentTradeLocation;
 
   get type(): string | null {
-    const {type} = this.parseCurrentPath();
-
-    return type || null;
+    return this.currentTradeLocation.type;
   }
 
   get league(): string | null {
-    const {league} = this.parseCurrentPath();
-
-    return league || null;
+    return this.currentTradeLocation.league;
   }
 
   get slug(): string | null {
-    const {slug} = this.parseCurrentPath();
+    return this.currentTradeLocation.slug;
+  }
 
-    return slug || null;
+  get isLive(): boolean {
+    return this.currentTradeLocation.isLive;
   }
 
   get currentTradeLocation(): TradeLocationStruct {
-    return {
-      slug: this.slug,
-      type: this.type,
-      league: this.league,
-    };
+    return this.parseCurrentPath();
   }
 
   @restartableTask
   *locationPollingTask() {
     const currentTradeLocation = this.currentTradeLocation;
 
-    if (!this.compareTradeLocations(this.lastTradeLocation, currentTradeLocation)) {
+    if (!this.compareTradeLocationsIncludingLiveness(this.lastTradeLocation, currentTradeLocation)) {
       const changeEvent: TradeLocationChangeEvent = {
         oldTradeLocation: this.lastTradeLocation,
         newTradeLocation: currentTradeLocation,
@@ -88,8 +76,14 @@ export default class TradeLocation extends Service.extend(Evented) {
 
   compareTradeLocations(locationA: TradeLocationStruct, locationB: TradeLocationStruct) {
     return (
-      locationA.league === locationB.league && locationA.slug === locationB.slug && locationA.type === locationB.type
+      locationA.league === locationB.league &&
+      locationA.slug === locationB.slug &&
+      locationA.type === locationB.type
     );
+  }
+
+  compareTradeLocationsIncludingLiveness(locationA: TradeLocationStruct, locationB: TradeLocationStruct) {
+    return this.compareTradeLocations(locationA, locationB) && locationA.isLive === locationB.isLive;
   }
 
   async fetchHistoryEntries() {
@@ -100,10 +94,15 @@ export default class TradeLocation extends Service.extend(Evented) {
     return this.tradeLocationHistory.clearHistoryEntries();
   }
 
-  private parseCurrentPath(): ParsedPath {
-    const [type, league, slug] = window.location.pathname.replace('/trade/', '').split('/');
+  private parseCurrentPath(): TradeLocationStruct {
+    const [type, league, slug, live] = window.location.pathname.replace('/trade/', '').split('/');
 
-    return {type, league, slug};
+    return {
+      type: type ?? null,
+      league: league ?? null,
+      slug: slug ?? null,
+      isLive: live === "live"
+    };
   }
 
   private startLocationPolling() {

@@ -2,6 +2,7 @@ export interface TradeLocationStruct {
   slug: string | null;
   type: string | null;
   league: string | null;
+  isLive: boolean;
 }
 
 export interface TradeLocationChangeEvent {

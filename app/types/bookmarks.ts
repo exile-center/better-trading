@@ -3,6 +3,11 @@ export interface BookmarksTradeLocation {
   slug: string;
 }
 
+export interface PartialBookmarksTradeLocation {
+  type: string | null;
+  slug: string | null;
+}
+
 export interface BookmarksTradeStruct {
   id?: string;
   title: string;
