@@ -76,9 +76,7 @@ export default class TradeLocation extends Service.extend(Evented) {
 
   compareTradeLocations(locationA: TradeLocationStruct, locationB: TradeLocationStruct) {
     return (
-      locationA.league === locationB.league &&
-      locationA.slug === locationB.slug &&
-      locationA.type === locationB.type
+      locationA.league === locationB.league && locationA.slug === locationB.slug && locationA.type === locationB.type
     );
   }
 
@@ -101,7 +99,7 @@ export default class TradeLocation extends Service.extend(Evented) {
       type: type ?? null,
       league: league ?? null,
       slug: slug ?? null,
-      isLive: live === "live"
+      isLive: live === 'live',
     };
   }
 

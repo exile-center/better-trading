@@ -7,7 +7,12 @@ import BookmarksState from 'better-trading/services/bookmarks/state';
 import BookmarksStorage from 'better-trading/services/bookmarks/storage';
 import BookmarksExport from 'better-trading/services/bookmarks/export';
 import BookmarksBackup from 'better-trading/services/bookmarks/backup';
-import {BookmarksFolderStruct, BookmarksTradeLocation, BookmarksTradeStruct, PartialBookmarksTradeLocation} from 'better-trading/types/bookmarks';
+import {
+  BookmarksFolderStruct,
+  BookmarksTradeLocation,
+  BookmarksTradeStruct,
+  PartialBookmarksTradeLocation,
+} from 'better-trading/types/bookmarks';
 
 export default class Bookmarks extends Service.extend(Evented) {
   @service('bookmarks/storage')
@@ -33,24 +38,25 @@ export default class Bookmarks extends Service.extend(Evented) {
   async fetchTradeByLocation(location: PartialBookmarksTradeLocation): Promise<BookmarksTradeStruct | null> {
     const folders = await this.fetchFolders();
     const foldersWithTrades = await Promise.all(
-      folders.map(async folder => ({
+      folders.map(async (folder) => ({
         ...folder,
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        trades: await this.fetchTradesByFolderId(folder.id!)
-      })));
-    const matches = foldersWithTrades
-      .map(folderWithTrades => ({
-        ...folderWithTrades,
-        trades: folderWithTrades.trades.filter(trade =>
-          trade.location.slug === location.slug &&
-          trade.location.type === location.type)
+        trades: await this.fetchTradesByFolderId(folder.id!),
       }))
-      .filter(f => f.trades.length > 0);
-    const unarchivedMatches = matches.filter(m => m.archivedAt);
+    );
+    const matches = foldersWithTrades
+      .map((folderWithTrades) => ({
+        ...folderWithTrades,
+        trades: folderWithTrades.trades.filter(
+          (trade) => trade.location.slug === location.slug && trade.location.type === location.type
+        ),
+      }))
+      .filter((f) => f.trades.length > 0);
+    const unarchivedMatches = matches.filter((m) => m.archivedAt);
 
     if (unarchivedMatches.length > 0) {
       return unarchivedMatches[0].trades[0];
-    } else if(matches.length > 0) {
+    } else if (matches.length > 0) {
       return matches[0].trades[0];
     } else {
       return null;

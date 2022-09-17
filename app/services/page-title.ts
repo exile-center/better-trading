@@ -23,19 +23,28 @@ export default class PageTitle extends Service {
   private _titleObserver: MutationObserver;
 
   async initialize(): Promise<void> {
-    const titleElement = document.querySelector("title")
-    if (!titleElement) { return; }
+    const titleElement = document.querySelector('title');
+    if (!titleElement) {
+      return;
+    }
     this._baseSiteTitle = document.title;
 
     // The observer is to counteract the trade site's native behavior of regularly
     // resetting the document title in response to various UI interactions
-    this._titleObserver = new MutationObserver(() => { this.onDocumentTitleMutation() });
-    this._titleObserver.observe(titleElement, { childList: true });
+    this._titleObserver = new MutationObserver(() => {
+      this.onDocumentTitleMutation();
+    });
+    this._titleObserver.observe(titleElement, {childList: true});
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.bookmarks.on('change', () => { this.recalculateTitle(); });
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    this.tradeLocation.on('change', () => { this.recalculateTitle(); });
+    // It's okay for multiple floating recalculateTitle() promises to race each other
+    this.bookmarks.on('change', () => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.recalculateTitle();
+    });
+    this.tradeLocation.on('change', () => {
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      this.recalculateTitle();
+    });
 
     await this.recalculateTitle();
   }
@@ -43,7 +52,7 @@ export default class PageTitle extends Service {
   private async recalculateTitle(): Promise<void> {
     const activeBookmark = await this.bookmarks.fetchTradeByLocation(this.tradeLocation.currentTradeLocation);
 
-    const isLiveSegment = this.tradeLocation.isLive ? '⚡ ' : ''
+    const isLiveSegment = this.tradeLocation.isLive ? '⚡ ' : '';
     const activeTradeTitle = activeBookmark ? activeBookmark.title : this.searchPanel.recommendTitle();
     const tradeTitleSegment = activeTradeTitle ? `${activeTradeTitle} - ` : '';
 
@@ -58,7 +67,7 @@ export default class PageTitle extends Service {
   }
 
   private onDocumentTitleMutation(): void {
-    if(this._title != null && document.title !== this._title) {
+    if (this._title != null && document.title !== this._title) {
       this._baseSiteTitle = document.title;
       document.title = this._title;
     }
