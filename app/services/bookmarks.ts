@@ -44,7 +44,7 @@ export default class Bookmarks extends Service.extend(Evented) {
         trades: await this.fetchTradesByFolderId(folder.id!),
       }))
     );
-    const matches = foldersWithTrades
+    let matches = foldersWithTrades
       .map((folderWithTrades) => ({
         ...folderWithTrades,
         trades: folderWithTrades.trades.filter(
@@ -52,15 +52,20 @@ export default class Bookmarks extends Service.extend(Evented) {
         ),
       }))
       .filter((f) => f.trades.length > 0);
-    const unarchivedMatches = matches.filter((m) => m.archivedAt);
 
-    if (unarchivedMatches.length > 0) {
-      return unarchivedMatches[0].trades[0];
-    } else if (matches.length > 0) {
-      return matches[0].trades[0];
-    } else {
-      return null;
-    }
+    if (matches.length === 0) return null;
+
+    const unarchivedMatches = matches.filter((m) => !m.archivedAt);
+    if (unarchivedMatches.length > 0) matches = unarchivedMatches;
+
+    const matchingTrades = matches.flatMap((m) => m.trades);
+
+    // Sort alphabetically by title. "by title" is an arbitrary choice, we just want some
+    // consistent sort order to make sure the result stays consistent between repeated calls
+    //
+    // eslint-disable-next-line no-nested-ternary
+    matchingTrades.sort((a, b) => (a.title < b.title ? -1 : a.title > b.title ? 1 : 0));
+    return matchingTrades[0];
   }
 
   async persistFolder(bookmarkFolder: BookmarksFolderStruct) {
