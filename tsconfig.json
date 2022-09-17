@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es2019",
+    "target": "es2017",
     "allowJs": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -22,7 +22,7 @@
     "module": "esNext",
     "lib": [
       "dom",
-      "es2019",
+      "es2017",
       "esnext.asynciterable"
     ],
     "paths": {
