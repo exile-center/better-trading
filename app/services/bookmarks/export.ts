@@ -1,4 +1,5 @@
 // Vendor
+import { Base64 } from 'js-base64';
 import Service from '@ember/service';
 
 // Types
@@ -24,12 +25,22 @@ export default class Export extends Service {
       })),
     };
 
-    return btoa(JSON.stringify(payload));
+    return `2:${Base64.encode(JSON.stringify(payload))}`;
+  }
+
+  jsonFromExportString(exportString: string): string {
+    if (exportString.startsWith('2:')) {
+      // v2 export string, can include unicode emoji/etc
+      return Base64.decode(exportString.slice(2));
+    } else {
+      // v1 export string with no version prefix, breaks for non-Latin1
+      return atob(exportString);
+    }
   }
 
   deserialize(serializedFolder: string): [BookmarksFolderStruct, BookmarksTradeStruct[]] | null {
     try {
-      const potentialPayload: ExportedFolderStruct = JSON.parse(atob(serializedFolder));
+      const potentialPayload: ExportedFolderStruct = JSON.parse(this.jsonFromExportString(serializedFolder));
 
       const folder: BookmarksFolderStruct = {
         icon: potentialPayload.icn as BookmarksFolderIcon,

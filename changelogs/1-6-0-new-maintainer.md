@@ -13,3 +13,4 @@ BetterTrading has found a new maintainer! For bug reports or feature requests, [
 ## Bug fixes 🐛
 
 - Pinning trade results is fixed! You can now find the "Pin" button next to the "Direct Whisper" and "Ignore" buttons again
+- Fixed exporting/saving folders and trades whose names contain emoji ([#88](https://github.com/exile-center/better-trading/issues/88)). Thanks @kamilrogo for reporting the issue!

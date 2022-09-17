@@ -84,6 +84,7 @@
     "eslint-plugin-ember": "~7.2.0",
     "eslint-plugin-mirego": "~0.0.1",
     "eslint-plugin-node": "~10.0.0",
+    "js-base64": "^3.7.2",
     "loader.js": "~4.7.0",
     "prettier": "~2.1.2",
     "sass": "~1.20.1",
