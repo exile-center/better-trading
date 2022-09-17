@@ -11,3 +11,6 @@ page:
       title: On GitHub
       description: To contribute, report issues or simply browse the code.
       button: View on GitHub
+    credits:
+      title: Credits
+      description: Better Trading was originally created by <strong>InfaMc</strong> (<a href="https://github.com/pboutin">@pboutin</a>) and is currently maintained by <strong>brosmike</strong> (<a href="https://github.com/dbjorge">@dbjorge</a>).
