@@ -6,7 +6,11 @@ import {timeout} from 'ember-concurrency';
 import Evented from '@ember/object/evented';
 
 // Types
-import {TradeLocationChangeEvent, TradeLocationStruct} from 'better-trading/types/trade-location';
+import {
+  ExactTradeLocationStruct,
+  TradeLocationChangeEvent,
+  TradeLocationStruct,
+} from 'better-trading/types/trade-location';
 import {Task} from 'better-trading/types/ember-concurrency';
 import TradeLocationHistory from 'better-trading/services/trade-location/history';
 
@@ -20,7 +24,7 @@ export default class TradeLocation extends Service.extend(Evented) {
   @service('trade-location/history')
   tradeLocationHistory: TradeLocationHistory;
 
-  lastTradeLocation: TradeLocationStruct = this.currentTradeLocation;
+  lastTradeLocation: ExactTradeLocationStruct = this.currentTradeLocation;
 
   get type(): string | null {
     return this.currentTradeLocation.type;
@@ -38,7 +42,7 @@ export default class TradeLocation extends Service.extend(Evented) {
     return this.currentTradeLocation.isLive;
   }
 
-  get currentTradeLocation(): TradeLocationStruct {
+  get currentTradeLocation(): ExactTradeLocationStruct {
     return this.parseCurrentPath();
   }
 
@@ -46,7 +50,7 @@ export default class TradeLocation extends Service.extend(Evented) {
   *locationPollingTask() {
     const currentTradeLocation = this.currentTradeLocation;
 
-    if (!this.compareTradeLocationsIncludingLiveness(this.lastTradeLocation, currentTradeLocation)) {
+    if (!this.compareExactTradeLocations(this.lastTradeLocation, currentTradeLocation)) {
       const changeEvent: TradeLocationChangeEvent = {
         oldTradeLocation: this.lastTradeLocation,
         newTradeLocation: currentTradeLocation,
@@ -80,7 +84,7 @@ export default class TradeLocation extends Service.extend(Evented) {
     );
   }
 
-  compareTradeLocationsIncludingLiveness(locationA: TradeLocationStruct, locationB: TradeLocationStruct) {
+  compareExactTradeLocations(locationA: ExactTradeLocationStruct, locationB: ExactTradeLocationStruct) {
     return this.compareTradeLocations(locationA, locationB) && locationA.isLive === locationB.isLive;
   }
 
@@ -92,13 +96,13 @@ export default class TradeLocation extends Service.extend(Evented) {
     return this.tradeLocationHistory.clearHistoryEntries();
   }
 
-  private parseCurrentPath(): TradeLocationStruct {
+  private parseCurrentPath(): ExactTradeLocationStruct {
     const [type, league, slug, live] = window.location.pathname.replace('/trade/', '').split('/');
 
     return {
-      type: type ?? null,
-      league: league ?? null,
-      slug: slug ?? null,
+      type: type || null,
+      league: league || null,
+      slug: slug || null,
       isLive: live === 'live',
     };
   }

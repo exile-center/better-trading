@@ -9,6 +9,7 @@ import fakeTradeLocationHistory from 'better-trading/tests/fixtures/trade-locati
 
 // Types
 import TradeLocationHistory from 'better-trading/services/trade-location/history';
+import {TradeLocationStruct} from 'better-trading/types/trade-location';
 
 describe('Unit | Services | TradeLocation | History', () => {
   setupTest();
@@ -43,6 +44,22 @@ describe('Unit | Services | TradeLocation | History', () => {
       storageMock.expects('setValue').never();
 
       await service.maybeLogTradeLocation({slug: 'bang', league: 'foo', type: 'search'});
+    });
+
+    it('should not log it twice if it is identical to the last entry modulo liveness', async () => {
+      storageMock
+        .expects('getValue')
+        .once()
+        .returns(Promise.resolve([fakeTradeLocationHistory({slug: 'bang', league: 'foo', type: 'search'})]));
+
+      storageMock.expects('setValue').never();
+
+      await service.maybeLogTradeLocation({
+        slug: 'bang',
+        league: 'foo',
+        type: 'search',
+        isLive: true,
+      } as TradeLocationStruct);
     });
 
     it('should prepend a valid entry', async () => {
