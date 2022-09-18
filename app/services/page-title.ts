@@ -75,7 +75,6 @@ export default class PageTitle extends Service {
 
   private onDocumentTitleMutation(): void {
     if (this.title != null && document.title !== this.title) {
-      this.baseSiteTitle = document.title;
       document.title = this.title;
     }
   }
