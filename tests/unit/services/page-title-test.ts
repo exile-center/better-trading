@@ -7,7 +7,7 @@ import sinon from 'sinon';
 // Types
 import PageTitle from 'better-trading/services/page-title';
 import TradeLocation from 'better-trading/services/trade-location';
-import { ExactTradeLocationStruct } from 'better-trading/types/trade-location';
+import {ExactTradeLocationStruct} from 'better-trading/types/trade-location';
 
 describe('Unit | Services | PageTitle', () => {
   setupTest();
@@ -15,15 +15,15 @@ describe('Unit | Services | PageTitle', () => {
   let service: PageTitle;
   let bookmarksMock: sinon.SinonMock;
   let searchPanelMock: sinon.SinonMock;
-  let currentLocationStub: Partial<ExactTradeLocationStruct>
+  let currentLocationStub: Partial<ExactTradeLocationStruct>;
 
   beforeEach(function () {
     service = this.owner.lookup('service:page-title');
     service.baseSiteTitle = 'Base Site Title';
     bookmarksMock = sinon.mock(service.bookmarks);
     searchPanelMock = sinon.mock(service.searchPanel);
-    currentLocationStub = { type: null };
-    service.tradeLocation = { currentTradeLocation: currentLocationStub } as TradeLocation;
+    currentLocationStub = {type: null};
+    service.tradeLocation = {currentTradeLocation: currentLocationStub} as TradeLocation;
   });
 
   afterEach(() => {
@@ -63,7 +63,7 @@ describe('Unit | Services | PageTitle', () => {
     it('uses the search panel recommended title if there is no current bookmark', async () => {
       currentLocationStub.type = 'search';
       currentLocationStub.isLive = false;
-      
+
       bookmarksMock.expects('fetchTradeByLocation').once().withArgs(currentLocationStub).returns(Promise.resolve(null));
       searchPanelMock.expects('recommendTitle').once().returns('Search Panel Recommendation');
 
