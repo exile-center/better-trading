@@ -4,6 +4,10 @@ export interface TradeLocationStruct {
   league: string | null;
 }
 
+export interface ExactTradeLocationStruct extends TradeLocationStruct {
+  isLive: boolean;
+}
+
 export interface TradeLocationChangeEvent {
   oldTradeLocation: TradeLocationStruct;
   newTradeLocation: TradeLocationStruct;
