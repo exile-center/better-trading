@@ -17,59 +17,66 @@ export default class PageTitle extends Service {
   @service('search-panel')
   searchPanel: SearchPanel;
 
+  baseSiteTitle: string = '';
+
   // null implies "uncontrolled by the service"
-  private _title: string | null = null;
-  private _baseSiteTitle: string = '';
-  private _titleObserver: MutationObserver;
+  private title: string | null = null;
+  private titleMutationObserver: MutationObserver;
 
   async initialize(): Promise<void> {
     const titleElement = document.querySelector('title');
     if (!titleElement) {
       return;
     }
-    this._baseSiteTitle = document.title;
+    this.baseSiteTitle = document.title;
 
     // The observer is to counteract the trade site's native behavior of regularly
     // resetting the document title in response to various UI interactions
-    this._titleObserver = new MutationObserver(() => {
+    this.titleMutationObserver = new MutationObserver(() => {
       this.onDocumentTitleMutation();
     });
-    this._titleObserver.observe(titleElement, {childList: true});
+    this.titleMutationObserver.observe(titleElement, {childList: true});
 
     // It's okay for multiple floating recalculateTitle() promises to race each other
     this.bookmarks.on('change', () => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.recalculateTitle();
+      this.updateTitle();
     });
     this.tradeLocation.on('change', () => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises
-      this.recalculateTitle();
+      this.updateTitle();
     });
 
-    await this.recalculateTitle();
+    await this.updateTitle();
   }
 
-  private async recalculateTitle(): Promise<void> {
-    const activeBookmark = await this.bookmarks.fetchTradeByLocation(this.tradeLocation.currentTradeLocation);
+  async calculateTitle(): Promise<string> {
+    const currentLocation = this.tradeLocation.currentTradeLocation;
+    const activeBookmark = await this.bookmarks.fetchTradeByLocation(currentLocation);
 
-    const isLiveSegment = this.tradeLocation.isLive ? '⚡ ' : '';
-    const activeTradeTitle = activeBookmark ? activeBookmark.title : this.searchPanel.recommendTitle();
+    let activeTradeTitle = '';
+    if (activeBookmark) activeTradeTitle = activeBookmark.title;
+    else if (currentLocation.type === 'search') activeTradeTitle = this.searchPanel.recommendTitle();
+
+    const isLiveSegment = currentLocation.isLive ? '⚡ ' : '';
     const tradeTitleSegment = activeTradeTitle ? `${activeTradeTitle} - ` : '';
 
-    this.title = `${isLiveSegment}${tradeTitleSegment}${this._baseSiteTitle}`;
+    return `${isLiveSegment}${tradeTitleSegment}${this.baseSiteTitle}`;
   }
 
-  set title(value: string) {
-    if (value !== this._title) {
-      this._title = value;
-      document.title = value;
+  async updateTitle(): Promise<void> {
+    const newTitle = await this.calculateTitle();
+
+    if (newTitle !== this.title) {
+      this.title = newTitle;
+      document.title = newTitle;
     }
   }
 
   private onDocumentTitleMutation(): void {
-    if (this._title != null && document.title !== this._title) {
-      this._baseSiteTitle = document.title;
-      document.title = this._title;
+    if (this.title != null && document.title !== this.title) {
+      this.baseSiteTitle = document.title;
+      document.title = this.title;
     }
   }
 }
