@@ -85,7 +85,7 @@ describe('Unit | Services | TradeLocation', () => {
     });
   });
 
-  describe('get league', () => {
+  describe('get league (PC realm)', () => {
     it('should returns the active league from the base URL', () => {
       window.location.pathname = '/trade/search/Legion';
 
@@ -108,6 +108,32 @@ describe('Unit | Services | TradeLocation', () => {
       window.location.pathname = '/trade/search/Legion/q1w2e3r4t5/live';
 
       expect(service.league).to.equal('Legion');
+    });
+  });
+
+  describe('get league (non-PC realm)', () => {
+    it('should returns the active league from the base URL', () => {
+      window.location.pathname = '/trade/search/xbox/Legion';
+
+      expect(service.league).to.equal('xbox/Legion');
+    });
+
+    it('should returns the active league from a trade URL', () => {
+      window.location.pathname = '/trade/search/sony/Legion/q1w2e3r4t5';
+
+      expect(service.league).to.equal('sony/Legion');
+    });
+
+    it('should returns the active league from a bulk exchange URL', () => {
+      window.location.pathname = '/trade/exchange/xbox/Legion/q1w2e3r4t5';
+
+      expect(service.league).to.equal('xbox/Legion');
+    });
+
+    it('should returns the active league from a live search URL', () => {
+      window.location.pathname = '/trade/search/sony/Legion/q1w2e3r4t5/live';
+
+      expect(service.league).to.equal('sony/Legion');
     });
   });
 
@@ -135,14 +161,36 @@ describe('Unit | Services | TradeLocation', () => {
 
       expect(service.slug).to.equal('q1w2e3r4t5');
     });
+
+    it('should returns the active trade slug from an Xbox realm trade URL', () => {
+      window.location.pathname = '/trade/search/xbox/Legion/q1w2e3r4t5/live';
+
+      expect(service.slug).to.equal('q1w2e3r4t5');
+    });
+
+    it('should returns the active trade slug from a Playstation realm live search URL', () => {
+      window.location.pathname = '/trade/search/sony/Legion/q1w2e3r4t5/live';
+
+      expect(service.slug).to.equal('q1w2e3r4t5');
+    });
   });
 
   describe('getTradeUrl', () => {
     it('should forge the proper URL', () => {
-      window.location.pathname = '/trade/search/Legion/q1w2e3r4t5';
-
       expect(service.getTradeUrl('search', 'foobar', 'some-league')).to.be.equal(
         'https://www.pathofexile.com/trade/search/some-league/foobar'
+      );
+    });
+
+    it('should support Xbox realm', () => {
+      expect(service.getTradeUrl('search', 'foobar', 'xbox/some-league')).to.be.equal(
+        'https://www.pathofexile.com/trade/search/xbox/some-league/foobar'
+      );
+    });
+
+    it('should support Playstation realm', () => {
+      expect(service.getTradeUrl('search', 'foobar', 'sony/some-league')).to.be.equal(
+        'https://www.pathofexile.com/trade/search/sony/some-league/foobar'
       );
     });
   });

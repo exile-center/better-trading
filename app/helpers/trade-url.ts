@@ -8,7 +8,7 @@ import TradeLocation from 'better-trading/services/trade-location';
 type PositionalParams = [{slug: string; type: string}];
 interface NamedParams {
   suffix?: string;
-  league: string;
+  league: string; // in non-PC realms, should be of form "realm/LeagueName", eg "xbox/Legion"
 }
 
 export default class TradeUrl extends Helper {

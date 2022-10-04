@@ -74,6 +74,7 @@ export default class TradeLocation extends Service.extend(Evented) {
     this.startLocationPolling();
   }
 
+  // in non-PC realms, league should be of form "realm/LeagueName", eg "xbox/Legion"
   getTradeUrl(type: string, slug: string, league: string) {
     return [BASE_URL, type, league, slug].join('/');
   }
@@ -97,7 +98,16 @@ export default class TradeLocation extends Service.extend(Evented) {
   }
 
   private parseCurrentPath(): ExactTradeLocationStruct {
-    const [type, league, slug, live] = window.location.pathname.replace('/trade/', '').split('/');
+    const tradeRealms = ['xbox', 'sony'];
+    const pathParts = window.location.pathname.replace('/trade/', '').split('/');
+    let type, league, slug, live;
+    if (tradeRealms.includes(pathParts[1])) {
+      let realm, leagueInRealm;
+      [type, realm, leagueInRealm, slug, live] = pathParts;
+      league = `${realm}/${leagueInRealm}`;
+    } else {
+      [type, league, slug, live] = pathParts;
+    }
 
     return {
       type: type || null,
