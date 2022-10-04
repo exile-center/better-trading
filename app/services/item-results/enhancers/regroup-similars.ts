@@ -57,7 +57,7 @@ export default class RegroupSimilars extends Service implements ItemResultsEnhan
       buttonElement.dataset.state = 'hidden';
       buttonElement.addEventListener('click', this.handleToggleClick.bind(this));
 
-      const detailsElement = result.querySelector('.details .pull-left');
+      const detailsElement = result.querySelector('.details .btns');
       detailsElement?.appendChild(buttonElement);
     }
 
