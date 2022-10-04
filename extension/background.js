@@ -11,7 +11,7 @@ extensionApi.runtime.onMessage.addListener(function(request, sender, sendRespons
       .then(function(response) { return response.json() })
       .then(function(payload) { sendResponse(payload) })
       .catch(function(_error) { sendResponse(null) });
-  }
 
-  return true;
+    return true;
+  }
 });
