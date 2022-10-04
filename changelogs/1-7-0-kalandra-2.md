@@ -1,8 +1,4 @@
-# ...
-
-## New features ✨
-
-...
+# Kalandra Mid-League Update
 
 ## Improvements 💅
 
