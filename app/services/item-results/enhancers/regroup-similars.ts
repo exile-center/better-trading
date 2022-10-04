@@ -48,17 +48,34 @@ export default class RegroupSimilars extends Service implements ItemResultsEnhan
     return hash;
   }
 
+  private injectToggleButton(result: HTMLElement): HTMLButtonElement {
+    const button = document.createElement('button');
+
+    // standard button styles from pathofexile.com
+    button.classList.add('btn');
+    button.classList.add('btn-default');
+    // our style overrides
+    button.classList.add('bt-group-button');
+
+    button.dataset.state = 'hidden';
+
+    button.addEventListener('click', this.handleToggleClick.bind(this));
+
+    // for consistency with sibling button layouts/styling
+    const wrapper = window.document.createElement('span');
+    wrapper.appendChild(button);
+
+    const detailsElement = result.querySelector('.details .btns');
+    detailsElement?.appendChild(button);
+
+    return button;
+  }
+
   private updateToggleButtonFor(result: HTMLElement) {
     let buttonElement: HTMLButtonElement = result.querySelector('.bt-group-button') as HTMLButtonElement;
 
     if (!buttonElement) {
-      buttonElement = document.createElement('button');
-      buttonElement.classList.add('bt-group-button');
-      buttonElement.dataset.state = 'hidden';
-      buttonElement.addEventListener('click', this.handleToggleClick.bind(this));
-
-      const detailsElement = result.querySelector('.details .btns');
-      detailsElement?.appendChild(buttonElement);
+      buttonElement = this.injectToggleButton(result);
     }
 
     const currentCount = buttonElement.dataset.count;
