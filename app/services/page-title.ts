@@ -1,11 +1,13 @@
 // Vendor
 import Service from '@ember/service';
 import {inject as service} from '@ember/service';
-
+import {throttle} from 'lodash';
 // Types
 import Bookmarks from './bookmarks';
 import SearchPanel from './search-panel';
 import TradeLocation from './trade-location';
+
+const TITLE_MUTATION_THROTTLE_SPACING_MS = 100;
 
 export default class PageTitle extends Service {
   @service('bookmarks')
@@ -31,10 +33,16 @@ export default class PageTitle extends Service {
     this.baseSiteTitle = document.title;
 
     // The observer is to counteract the trade site's native behavior of regularly
-    // resetting the document title in response to various UI interactions
-    this.titleMutationObserver = new MutationObserver(() => {
-      this.onDocumentTitleMutation();
-    });
+    // resetting the document title in response to various UI interactions.
+    //
+    // The throttling is to prevent infinite busy loops/sad tabs in the event that some
+    // other extension/userscript happens to be trying to fight us to change the title.
+    const throttledTitleMutationHandler = throttle(
+      () => this.onDocumentTitleMutation(),
+      TITLE_MUTATION_THROTTLE_SPACING_MS,
+      {leading: true, trailing: true}
+    );
+    this.titleMutationObserver = new MutationObserver(throttledTitleMutationHandler);
     this.titleMutationObserver.observe(titleElement, {childList: true});
 
     // It's okay for multiple floating recalculateTitle() promises to race each other
