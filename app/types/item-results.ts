@@ -38,6 +38,6 @@ export interface ItemResultsPinnedItem {
   id: string;
   pinnedAt: string;
   detailsElement: HTMLElement;
-  socketsElement: HTMLElement;
+  renderedItemElement: HTMLElement;
   pricingElement: HTMLElement;
 }

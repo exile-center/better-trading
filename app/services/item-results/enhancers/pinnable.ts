@@ -95,15 +95,15 @@ export default class Pinnable extends Service implements ItemResultsEnhancerServ
 
   private createPinnedItem(id: string, result: HTMLElement): ItemResultsPinnedItem | null {
     const detailsElement = result.querySelector('.middle') as HTMLElement;
-    const socketsElement = result.querySelector('.sockets') as HTMLElement;
+    const renderedItemElement = result.querySelector('.itemRendered') as HTMLElement;
     const pricingElement = result.querySelector('.details .price') as HTMLElement;
 
-    if (!detailsElement || !socketsElement || !pricingElement) return null;
+    if (!detailsElement || !renderedItemElement || !pricingElement) return null;
 
     return {
       id,
       detailsElement: detailsElement.cloneNode(true) as HTMLElement,
-      socketsElement: socketsElement.cloneNode(true) as HTMLElement,
+      renderedItemElement: renderedItemElement.cloneNode(true) as HTMLElement,
       pricingElement: pricingElement.cloneNode(true) as HTMLElement,
       pinnedAt: new Date().toISOString(),
     };
