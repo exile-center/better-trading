@@ -105,11 +105,11 @@ describe('Unit | Services | PageTitle', () => {
 
       await service.recalculateTradeTitleSegment();
 
-      document.title = '(32) Base Site Title'
+      document.title = '(32) Base Site Title';
       service.onDocumentTitleMutation();
       expect(document.title).to.equal('(32) ⚡ Search Panel Recommendation - Base Site Title');
 
-      document.title = 'Base Site Title'
+      document.title = 'Base Site Title';
       service.onDocumentTitleMutation();
 
       expect(document.title).to.equal('⚡ Search Panel Recommendation - Base Site Title');
@@ -124,11 +124,11 @@ describe('Unit | Services | PageTitle', () => {
 
       await service.recalculateTradeTitleSegment();
 
-      document.title = '(32) ⚡ Search Panel Recommendation - Base Site Title'
+      document.title = '(32) ⚡ Search Panel Recommendation - Base Site Title';
       service.onDocumentTitleMutation();
       expect(document.title).to.equal('(32) ⚡ Search Panel Recommendation - Base Site Title');
 
-      document.title = 'Base Site Title'
+      document.title = 'Base Site Title';
       service.onDocumentTitleMutation();
 
       expect(document.title).to.equal('⚡ Search Panel Recommendation - Base Site Title');

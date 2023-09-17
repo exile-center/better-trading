@@ -76,11 +76,13 @@ export default class PageTitle extends Service {
     const tradeTitleSegment = activeTradeTitle ? `${activeTradeTitle} - ` : '';
 
     this.title = `${isLiveSegment}${tradeTitleSegment}${this.baseSiteTitle}`;
-    this.updateTitle()
+    this.updateTitle();
   }
 
   updateTitle(): void {
-    if (this.title === null) { return; }
+    if (this.title === null) {
+      return;
+    }
 
     const woopPrefix = this.lastWoopCount !== null ? `(${this.lastWoopCount}) ` : '';
     const newTitle = woopPrefix + this.title;
@@ -91,12 +93,12 @@ export default class PageTitle extends Service {
 
   // null indicates "doesn't seem to have a woop count prefix"
   parseWoopCount(title: string): number | null {
-      const woopTitleMatch = WOOP_PREFIX_REGEX.exec(title);
-      if (woopTitleMatch) {
-        const parsedWoopCount = parseInt(woopTitleMatch[1], 10);
-        return isNaN(parsedWoopCount) ? null : parsedWoopCount;
-      }
-      return null;
+    const woopTitleMatch = WOOP_PREFIX_REGEX.exec(title);
+    if (woopTitleMatch) {
+      const parsedWoopCount = parseInt(woopTitleMatch[1], 10);
+      return isNaN(parsedWoopCount) ? null : parsedWoopCount;
+    }
+    return null;
   }
 
   onDocumentTitleMutation(): void {
