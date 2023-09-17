@@ -39,9 +39,9 @@ describe('Unit | Services | PageTitle', () => {
       bookmarksMock.expects('fetchTradeByLocation').once().returns(Promise.resolve(null));
       searchPanelMock.expects('recommendTitle').once().returns('');
 
-      const result = await service.calculateTitle();
+      await service.recalculateTradeTitleSegment();
 
-      expect(result).to.equal('⚡ Base Site Title');
+      expect(document.title).to.equal('⚡ Base Site Title');
     });
 
     it('uses the current bookmark title if available', async () => {
@@ -55,9 +55,9 @@ describe('Unit | Services | PageTitle', () => {
         .returns(Promise.resolve({title: 'Bookmark Title'}));
       searchPanelMock.expects('recommendTitle').never();
 
-      const result = await service.calculateTitle();
+      await service.recalculateTradeTitleSegment();
 
-      expect(result).to.equal('Bookmark Title - Base Site Title');
+      expect(document.title).to.equal('Bookmark Title - Base Site Title');
     });
 
     it('uses the search panel recommended title if there is no current bookmark', async () => {
@@ -67,9 +67,9 @@ describe('Unit | Services | PageTitle', () => {
       bookmarksMock.expects('fetchTradeByLocation').once().withArgs(currentLocationStub).returns(Promise.resolve(null));
       searchPanelMock.expects('recommendTitle').once().returns('Search Panel Recommendation');
 
-      const result = await service.calculateTitle();
+      await service.recalculateTradeTitleSegment();
 
-      expect(result).to.equal('Search Panel Recommendation - Base Site Title');
+      expect(document.title).to.equal('Search Panel Recommendation - Base Site Title');
     });
 
     it('falls back to the base site title', async () => {
@@ -79,9 +79,9 @@ describe('Unit | Services | PageTitle', () => {
       bookmarksMock.expects('fetchTradeByLocation').once().withArgs(currentLocationStub).returns(Promise.resolve(null));
       searchPanelMock.expects('recommendTitle').once().returns('');
 
-      const result = await service.calculateTitle();
+      await service.recalculateTradeTitleSegment();
 
-      expect(result).to.equal('Base Site Title');
+      expect(document.title).to.equal('Base Site Title');
     });
 
     it('does not query the search panel for non-search locations', async () => {
@@ -91,9 +91,47 @@ describe('Unit | Services | PageTitle', () => {
       bookmarksMock.expects('fetchTradeByLocation').once().withArgs(currentLocationStub).returns(Promise.resolve(null));
       searchPanelMock.expects('recommendTitle').never();
 
-      const result = await service.calculateTitle();
+      await service.recalculateTradeTitleSegment();
 
-      expect(result).to.equal('Base Site Title');
+      expect(document.title).to.equal('Base Site Title');
+    });
+
+    it('reflects woop counts if base site updates title as "(count) base title"', async () => {
+      currentLocationStub.type = 'search';
+      currentLocationStub.isLive = true;
+
+      bookmarksMock.expects('fetchTradeByLocation').once().withArgs(currentLocationStub).returns(Promise.resolve(null));
+      searchPanelMock.expects('recommendTitle').once().returns('Search Panel Recommendation');
+
+      await service.recalculateTradeTitleSegment();
+
+      document.title = '(32) Base Site Title'
+      service.onDocumentTitleMutation();
+      expect(document.title).to.equal('(32) ⚡ Search Panel Recommendation - Base Site Title');
+
+      document.title = 'Base Site Title'
+      service.onDocumentTitleMutation();
+
+      expect(document.title).to.equal('⚡ Search Panel Recommendation - Base Site Title');
+    });
+
+    it('reflects woop counts if base site updates title by prepending "(count) " prefix to our title"', async () => {
+      currentLocationStub.type = 'search';
+      currentLocationStub.isLive = true;
+
+      bookmarksMock.expects('fetchTradeByLocation').once().withArgs(currentLocationStub).returns(Promise.resolve(null));
+      searchPanelMock.expects('recommendTitle').once().returns('Search Panel Recommendation');
+
+      await service.recalculateTradeTitleSegment();
+
+      document.title = '(32) ⚡ Search Panel Recommendation - Base Site Title'
+      service.onDocumentTitleMutation();
+      expect(document.title).to.equal('(32) ⚡ Search Panel Recommendation - Base Site Title');
+
+      document.title = 'Base Site Title'
+      service.onDocumentTitleMutation();
+
+      expect(document.title).to.equal('⚡ Search Panel Recommendation - Base Site Title');
     });
   });
 });
