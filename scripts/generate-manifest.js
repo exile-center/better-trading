@@ -28,6 +28,11 @@ const manifest = Object.assign(
         js: [assetsPathFor('vendor.js'), assetsPathFor('better-trading.js')],
         css: [assetsPathFor('vendor.css'), assetsPathFor('better-trading.css')],
       },
+      {
+        matches: ['*://poe.game.qq.com/trade*'],
+        js: [assetsPathFor('vendor.js'), assetsPathFor('better-trading.js')],
+        css: [assetsPathFor('vendor.css'), assetsPathFor('better-trading.css')],
+      },
     ],
     background: {
       service_worker: 'background.js',
@@ -38,6 +43,10 @@ const manifest = Object.assign(
       {
         resources: [assetsPathFor('images/*')],
         matches: ['*://www.pathofexile.com/*'],
+      },
+      {
+        resources: [assetsPathFor('images/*')],
+        matches: ['*://poe.game.qq.com/*'],
       },
     ],
     icons: {
