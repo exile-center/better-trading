@@ -11,7 +11,7 @@ import TradeLocation from 'better-trading/services/trade-location';
 import PageTitle from 'better-trading/services/page-title';
 
 // Constants
-const DEFAULT_LOCALE = 'en';
+const DEFAULT_LOCALE = 'cn';
 
 export default class ApplicationRoute extends Route {
   @service('bookmarks')
