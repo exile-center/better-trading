@@ -22,7 +22,6 @@ import config from 'better-trading/config/environment';
 //const BASE_URL = 'https://poe.game.qq.com/trade';
 
 export default class TradeLocation extends Service.extend(Evented) {
-
   @service('trade-location/history')
   tradeLocationHistory: TradeLocationHistory;
 

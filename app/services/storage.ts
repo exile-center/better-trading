@@ -14,8 +14,6 @@ interface StoragePayload {
 export default class Storage extends Service {
   async initialize(locale: string) {
     this.locale = locale
-    console.log("storage")
-    console.log(this.locale)
     await this.cleanupPastLeagues();
   }
 
