@@ -1,12 +1,12 @@
 /* eslint-env node */
 
 const fs = require('fs');
-
+const path = require('path');
 const [target] = process.argv.slice(2);
 
-const outputPath = {
-  dev: './dist/dev/manifest.json',
-  production: './dist/staged/manifest.json',
+const outputDir = {
+  dev: './dist/dev',
+  production: './dist/staged',
 }[target];
 
 const packageJson = JSON.parse(fs.readFileSync('./package.json'));
@@ -50,4 +50,8 @@ const manifest = Object.assign(
   packageJson.manifest
 );
 
-fs.writeFileSync(outputPath, JSON.stringify(manifest, null, 2));
+fs.mkdirSync(outputDir, {recursive: true});
+for (const file of fs.readdirSync('./extension')) {
+  fs.copyFileSync(path.join('./extension', file), path.join(outputDir, file));
+}
+fs.writeFileSync(path.join(outputDir, 'manifest.json'), JSON.stringify(manifest, null, 2));
