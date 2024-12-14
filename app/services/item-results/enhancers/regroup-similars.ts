@@ -34,9 +34,9 @@ export default class RegroupSimilars extends Service implements ItemResultsEnhan
 
   private setItemHash(result: HTMLElement) {
     const seller = result
-      .querySelector('.pm-btn')
+      .querySelector('.profile-link [href]')
       ?.getAttribute('href')
-      ?.replace(/^.+\?to=/, '');
+      ?.replace(/^\/account\/view-profile\//, '');
     const itemName = result.querySelector('.itemHeader')?.textContent?.replace(/superior/i, '');
     const price = result.querySelector('.price')?.textContent;
 
