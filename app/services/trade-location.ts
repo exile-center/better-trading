@@ -10,6 +10,7 @@ import {
   ExactTradeLocationStruct,
   TradeLocationChangeEvent,
   TradeLocationStruct,
+  TradeSiteVersion,
 } from 'better-trading/types/trade-location';
 import {Task} from 'better-trading/types/ember-concurrency';
 import TradeLocationHistory from 'better-trading/services/trade-location/history';
@@ -18,13 +19,17 @@ import TradeLocationHistory from 'better-trading/services/trade-location/history
 import config from 'better-trading/config/environment';
 
 // Constants
-const BASE_URL = 'https://www.pathofexile.com/trade';
+const BASE_URL = 'https://www.pathofexile.com';
 
 export default class TradeLocation extends Service.extend(Evented) {
   @service('trade-location/history')
   tradeLocationHistory: TradeLocationHistory;
 
   lastTradeLocation: ExactTradeLocationStruct = this.currentTradeLocation;
+
+  get version(): TradeSiteVersion {
+    return this.currentTradeLocation.version;
+  }
 
   get type(): string | null {
     return this.currentTradeLocation.type;
@@ -75,13 +80,14 @@ export default class TradeLocation extends Service.extend(Evented) {
   }
 
   // in non-PC realms, league should be of form "realm/LeagueName", eg "xbox/Legion"
-  getTradeUrl(type: string, slug: string, league: string) {
-    return [BASE_URL, type, league, slug].join('/');
+  getTradeUrl(version: TradeSiteVersion, type: string, slug: string, league: string) {
+    const basePath = version === '2' ? 'trade2' : 'trade';
+    return [BASE_URL, basePath, type, league, slug].join('/');
   }
 
   compareTradeLocations(locationA: TradeLocationStruct, locationB: TradeLocationStruct) {
     return (
-      locationA.league === locationB.league && locationA.slug === locationB.slug && locationA.type === locationB.type
+      locationA.version === locationB.version && locationA.league === locationB.league && locationA.slug === locationB.slug && locationA.type === locationB.type
     );
   }
 
@@ -97,19 +103,24 @@ export default class TradeLocation extends Service.extend(Evented) {
     return this.tradeLocationHistory.clearHistoryEntries();
   }
 
+  private parseVersion(tradePathPrefix: string) {
+    return tradePathPrefix === 'trade2' ? '2' : '1';
+  }
+
   private parseCurrentPath(): ExactTradeLocationStruct {
     const tradeRealms = ['xbox', 'sony'];
-    const pathParts = window.location.pathname.replace('/trade/', '').split('/');
-    let type, league, slug, live;
-    if (tradeRealms.includes(pathParts[1])) {
+    const pathParts = window.location.pathname.split('/').slice(1);
+    let versionPart, type, league, slug, live;
+    if (tradeRealms.includes(pathParts[2])) {
       let realm, leagueInRealm;
-      [type, realm, leagueInRealm, slug, live] = pathParts;
+      [versionPart, type, realm, leagueInRealm, slug, live] = pathParts;
       league = `${realm}/${leagueInRealm}`;
     } else {
-      [type, league, slug, live] = pathParts;
+      [versionPart, type, league, slug, live] = pathParts;
     }
 
     return {
+      version: this.parseVersion(versionPart),
       type: type || null,
       league: league || null,
       slug: slug || null,

@@ -37,7 +37,7 @@ export default class BookmarksStorage extends Service {
     const trades = await this.storage.getValue<BookmarksTradeStruct[]>(`${TRADES_PREFIX_KEY}--${folderId}`);
     if (!trades) return [];
 
-    return trades;
+    return trades.map(this.migrateOldTrade);
   }
 
   async persistFolder(folderToPersist: BookmarksFolderStruct) {
@@ -121,6 +121,13 @@ export default class BookmarksStorage extends Service {
     });
 
     return this.persistTrades(updatedTrades, folderId);
+  }
+
+  private migrateOldTrade(trade: BookmarksTradeStruct) {
+    if (!trade.location.version) {
+      trade.location.version = '1';
+    }
+    return trade;
   }
 }
 

@@ -28,7 +28,7 @@ export default class TradeLocationHistory extends Service {
 
   // eslint-disable-next-line complexity
   async maybeLogTradeLocation(newTradeLocation: TradeLocationStruct) {
-    if (!newTradeLocation.league || !newTradeLocation.type || !newTradeLocation.slug) return;
+    if (!newTradeLocation.version || !newTradeLocation.league || !newTradeLocation.type || !newTradeLocation.slug) return;
 
     const historyEntries = await this.fetchHistoryEntries();
     const lastEntry = historyEntries[0];
@@ -45,11 +45,18 @@ export default class TradeLocationHistory extends Service {
     await this.storage.setValue(HISTORY_KEY, historyEntries);
   }
 
+  migrateOldHistory(history: TradeLocationHistoryStruct) {
+    if (!history.version) {
+      history.version = '1';
+    }
+    return history;
+  }
+
   async fetchHistoryEntries() {
     const history = await this.storage.getValue<TradeLocationHistoryStruct[]>(HISTORY_KEY);
     if (!history) return [];
 
-    return history;
+    return history.map(this.migrateOldHistory);
   }
 
   async clearHistoryEntries() {

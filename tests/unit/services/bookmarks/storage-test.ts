@@ -61,6 +61,21 @@ describe('Unit | Services | Bookmarks | Storage', () => {
       expect(trades).to.have.same.members([]);
     });
 
+    it('should migrate old trades to new versioned TradeLocationStruct format', async () => {
+      const oldTrade = fakeBookmarkTrade({location: {/* no version */ type: 'search', slug: 'slug1'}} as any);
+
+      storageMock
+        .expects('getValue')
+        .once()
+        .withArgs('bookmark-trades--fake-folder')
+        .returns(Promise.resolve([oldTrade]));
+
+      const trades = await service.fetchTradesByFolderId('fake-folder');
+
+      expect(trades.length).to.be.equal(1);
+      expect(trades[0].location.version).to.be.equal('1');
+    });
+
     it('should returns the trades when there is any', async () => {
       storageMock
         .expects('getValue')

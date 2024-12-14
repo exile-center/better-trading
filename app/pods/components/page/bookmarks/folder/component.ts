@@ -130,6 +130,7 @@ export default class BookmarksFolder extends Component<Args> {
           location: {
             slug: this.tradeLocation.slug,
             type: this.tradeLocation.type,
+            version: this.tradeLocation.version,
           },
         },
         this.folderId
@@ -165,6 +166,7 @@ export default class BookmarksFolder extends Component<Args> {
     const initializedTrade = this.bookmarks.initializeTradeStructFrom({
       slug: this.tradeLocation.slug,
       type: this.tradeLocation.type,
+      version: this.tradeLocation.version,
     });
 
     this.stagedTrade = {
@@ -227,7 +229,7 @@ export default class BookmarksFolder extends Component<Args> {
   copyToClipboard(trade: BookmarksTradeStruct) {
     if (!this.currentLeague) return;
 
-    const tradeUrl = this.tradeLocation.getTradeUrl(trade.location.type, trade.location.slug, this.currentLeague);
+    const tradeUrl = this.tradeLocation.getTradeUrl(trade.location.version, trade.location.type, trade.location.slug, this.currentLeague);
     copyToClipboard(tradeUrl);
 
     this.flashMessages.success(

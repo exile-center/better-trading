@@ -1,9 +1,13 @@
+import type {TradeSiteVersion} from 'better-trading/types/trade-location';
+
 export interface BookmarksTradeLocation {
+  version: TradeSiteVersion;
   type: string;
   slug: string;
 }
 
 export interface PartialBookmarksTradeLocation {
+  version: TradeSiteVersion;
   type: string | null;
   slug: string | null;
 }

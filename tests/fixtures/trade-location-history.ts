@@ -8,6 +8,7 @@ export default function (overrides: Partial<TradeLocationHistoryStruct>) {
   return {
     id: uniqueId(),
     title: 'Fake history',
+    version: '1',
     slug: 'Fake slug',
     type: 'Fake type',
     league: 'Fake league',

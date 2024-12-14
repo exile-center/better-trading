@@ -32,7 +32,7 @@ describe('Unit | Services | TradeLocation | History', () => {
 
       storageMock.expects('setValue').never();
 
-      await service.maybeLogTradeLocation({slug: null, league: 'foo', type: 'search'});
+      await service.maybeLogTradeLocation({version: '1', slug: null, league: 'foo', type: 'search'});
     });
 
     it('should not log it twice if it is identical to the last entry', async () => {
@@ -43,7 +43,7 @@ describe('Unit | Services | TradeLocation | History', () => {
 
       storageMock.expects('setValue').never();
 
-      await service.maybeLogTradeLocation({slug: 'bang', league: 'foo', type: 'search'});
+      await service.maybeLogTradeLocation({version: '1', slug: 'bang', league: 'foo', type: 'search'});
     });
 
     it('should not log it twice if it is identical to the last entry modulo liveness', async () => {
@@ -55,6 +55,7 @@ describe('Unit | Services | TradeLocation | History', () => {
       storageMock.expects('setValue').never();
 
       await service.maybeLogTradeLocation({
+        version: '1',
         slug: 'bang',
         league: 'foo',
         type: 'search',
@@ -70,7 +71,7 @@ describe('Unit | Services | TradeLocation | History', () => {
 
       const setValueCall = storageMock.expects('setValue').once().returns(Promise.resolve());
 
-      await service.maybeLogTradeLocation({slug: 'bang', league: 'foo', type: 'search'});
+      await service.maybeLogTradeLocation({version: '1', slug: 'bang', league: 'foo', type: 'search'});
 
       const [[storageKey, persistedEntries]] = setValueCall.args;
       expect(storageKey).to.be.equal('trade-history');
@@ -97,7 +98,7 @@ describe('Unit | Services | TradeLocation | History', () => {
 
       const setValueCall = storageMock.expects('setValue').once().returns(Promise.resolve());
 
-      await service.maybeLogTradeLocation({slug: '0', league: 'foo', type: 'search'});
+      await service.maybeLogTradeLocation({version: '1', slug: '0', league: 'foo', type: 'search'});
 
       const [[storageKey, persistedEntries]] = setValueCall.args;
       expect(storageKey).to.be.equal('trade-history');
@@ -117,6 +118,21 @@ describe('Unit | Services | TradeLocation | History', () => {
       const historyEntries = await service.fetchHistoryEntries();
 
       expect(historyEntries).to.have.same.members([]);
+    });
+
+    it('should migrate old history entries to new versioned TradeLocationStruct format', async () => {
+      const oldHistoryEntry = fakeTradeLocationHistory({});
+      delete (oldHistoryEntry as any).version;
+
+      storageMock
+        .expects('getValue')
+        .once()
+        .withArgs('trade-history')
+        .returns(Promise.resolve([oldHistoryEntry]));
+
+      const historyEntries = await service.fetchHistoryEntries();
+
+      expect(historyEntries[0].version).to.be.equal('1');
     });
 
     it('should returns the entries when there is any', async () => {

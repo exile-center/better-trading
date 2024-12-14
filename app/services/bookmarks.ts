@@ -48,7 +48,7 @@ export default class Bookmarks extends Service.extend(Evented) {
       .map((folderWithTrades) => ({
         ...folderWithTrades,
         trades: folderWithTrades.trades.filter(
-          (trade) => trade.location.slug === location.slug && trade.location.type === location.type
+          (trade) => trade.location.version === location.version && trade.location.slug === location.slug && trade.location.type === location.type
         ),
       }))
       .filter((f) => f.trades.length > 0);
