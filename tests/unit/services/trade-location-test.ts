@@ -99,7 +99,7 @@ describe('Unit | Services | TradeLocation', () => {
     });
   });
 
-  describe('get league (PC realm)', () => {
+  describe('get league (PC poe1 realm)', () => {
     it('should returns the active league from the base URL', () => {
       window.location.pathname = '/trade/search/Legion';
 
@@ -125,7 +125,7 @@ describe('Unit | Services | TradeLocation', () => {
     });
   });
 
-  describe('get league (non-PC realm)', () => {
+  describe('get league (non-PC poe1 realm)', () => {
     it('should returns the active league from the base URL', () => {
       window.location.pathname = '/trade/search/xbox/Legion';
 
@@ -151,6 +151,20 @@ describe('Unit | Services | TradeLocation', () => {
     });
   });
 
+  describe('get league (PoE 2 realm)', () => {
+    it('should returns the active league from the base URL', () => {
+      window.location.pathname = '/trade/search/poe2/Standard';
+
+      expect(service.league).to.equal('poe2/Standard');
+    });
+
+    it('should returns the active league from a trade URL', () => {
+      window.location.pathname = '/trade/search/poe2/Hardcore/q1w2e3r4t5';
+
+      expect(service.league).to.equal('poe2/Hardcore');
+    });
+  });
+
   describe('get slug', () => {
     it('should handle the absence of a current trade', () => {
       window.location.pathname = '/trade/search/Legion';
@@ -172,6 +186,12 @@ describe('Unit | Services | TradeLocation', () => {
 
     it('should returns the active trade slug from a live search URL', () => {
       window.location.pathname = '/trade/search/Legion/q1w2e3r4t5/live';
+
+      expect(service.slug).to.equal('q1w2e3r4t5');
+    });
+
+    it('should returns the active trade slug from an poe2 realm trade URL', () => {
+      window.location.pathname = '/trade2/search/poe2/standard/q1w2e3r4t5/live';
 
       expect(service.slug).to.equal('q1w2e3r4t5');
     });

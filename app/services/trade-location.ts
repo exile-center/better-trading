@@ -111,7 +111,7 @@ export default class TradeLocation extends Service.extend(Evented) {
   }
 
   private parseCurrentPath(): ExactTradeLocationStruct {
-    const tradeRealms = ['xbox', 'sony'];
+    const tradeRealms = ['xbox', 'sony', 'poe2'];
     const pathParts = window.location.pathname.split('/').slice(1);
     let versionPart, type, league, slug, live;
     if (tradeRealms.includes(pathParts[2])) {
