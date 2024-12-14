@@ -15,7 +15,7 @@ jobs:
       - run: make verify
       - run: make test
         env:
-          - JOBS: 1 # See https://git.io/vdao3 for details
+          JOBS: 1 # See https://git.io/vdao3 for details
       - run: make package-chrome
       - uses: actions/upload-artifact@v4
         with:
