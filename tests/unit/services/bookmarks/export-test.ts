@@ -25,11 +25,11 @@ describe('Unit | Services | Bookmarks | Export', () => {
   describe('serialize/deserialize', () => {
     it('should be able to encode and decode back a folder and its trades', () => {
       const folder = fakeBookmarkFolder({
-        title: 'Some folder 🗁',
+        title: 'test folder 🗁',
       });
 
       const trade = fakeBookmarkTrade({
-        title: 'Some trade 🚚',
+        title: 'test trade 🚚',
       });
 
       const encoded = service.serialize(folder, [trade]);
@@ -78,7 +78,7 @@ describe('Unit | Services | Bookmarks | Export', () => {
       expect(decoded).to.not.be.null;
       if (!decoded) return;
       const [decodedFolder, decodedTrades] = decoded;
-      expect(decodedFolder.title).to.be.equal('test folder 🗁');
+      expect(decodedFolder.title).to.be.equal('test PoE 1 folder 🗁');
       expect(decodedFolder.version).to.be.equal('1');
       expect(decodedTrades[0].title).to.be.equal('test PoE 1 trade 🚚');
       expect(decodedTrades[0].location.version).to.be.equal('1');
