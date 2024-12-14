@@ -22,6 +22,7 @@ export interface BookmarksTradeStruct {
 export interface BookmarksFolderStruct {
   id?: string;
   title: string;
+  version: TradeSiteVersion;
   icon: BookmarksFolderIcon | null;
   archivedAt: string | null;
 }

@@ -10,7 +10,7 @@ import type {TradeSiteVersion} from 'better-trading/types/trade-location';
 
 type ExportVersion = 1 | 2 | 3;
 
-interface ExportedFolderStruct {
+interface ExportedFolderStructV1 {
   icn: string;
   tit: string;
   trs: Array<{
@@ -19,11 +19,16 @@ interface ExportedFolderStruct {
   }>;
 }
 
+interface ExportedFolderStructV3 extends ExportedFolderStructV1 {
+  ver: TradeSiteVersion;
+}
+
 export default class Export extends Service {
   serialize(folder: BookmarksFolderStruct, trades: BookmarksTradeStruct[]): string {
-    const payload: ExportedFolderStruct = {
+    const payload: ExportedFolderStructV3 = {
       icn: folder.icon as string,
       tit: folder.title,
+      ver: folder.version,
       trs: trades.map((trade) => ({
         tit: trade.title,
         loc: `${trade.location.version}:${trade.location.type}:${trade.location.slug}`,
@@ -57,15 +62,20 @@ export default class Export extends Service {
   deserialize(serializedFolder: string): [BookmarksFolderStruct, BookmarksTradeStruct[]] | null {
     try {
       const exportVersion = this.parseExportVersion(serializedFolder);
-      const potentialPayload: ExportedFolderStruct = JSON.parse(
+      const potentialPayload: ExportedFolderStructV1 = JSON.parse(
         this.jsonFromExportString(exportVersion, serializedFolder)
       );
 
       const folder: BookmarksFolderStruct = {
+        version: '1',
         icon: potentialPayload.icn as BookmarksFolderIcon,
         title: potentialPayload.tit,
         archivedAt: null,
       };
+
+      if (exportVersion >= 3) {
+        folder.version = (potentialPayload as ExportedFolderStructV3).ver;
+      }
 
       const trades: BookmarksTradeStruct[] = potentialPayload.trs.map((trade) => {
         let version: string, type: string, slug: string;

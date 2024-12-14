@@ -28,6 +28,7 @@ describe('Unit | Services | Bookmarks', () => {
       const fakeFolders: BookmarksFolderStruct[] = Object.keys(tradesByFolderId).map((id) => ({
         id,
         title: `Title ${id}`,
+        version: '1',
         icon: null,
         archivedAt: id.startsWith('archived') ? 'some timestamp' : null,
       }));

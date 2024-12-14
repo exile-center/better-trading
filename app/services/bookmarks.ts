@@ -13,6 +13,7 @@ import {
   BookmarksTradeStruct,
   PartialBookmarksTradeLocation,
 } from 'better-trading/types/bookmarks';
+import { TradeSiteVersion } from 'better-trading/types/trade-location';
 
 export default class Bookmarks extends Service.extend(Evented) {
   @service('bookmarks/storage')
@@ -126,8 +127,9 @@ export default class Bookmarks extends Service.extend(Evented) {
     });
   }
 
-  initializeFolderStruct(): BookmarksFolderStruct {
+  initializeFolderStruct(version: TradeSiteVersion): BookmarksFolderStruct {
     return {
+      version,
       icon: null,
       title: '',
       archivedAt: null,
