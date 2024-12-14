@@ -28,7 +28,8 @@ export default class TradeLocationHistory extends Service {
 
   // eslint-disable-next-line complexity
   async maybeLogTradeLocation(newTradeLocation: TradeLocationStruct) {
-    if (!newTradeLocation.version || !newTradeLocation.league || !newTradeLocation.type || !newTradeLocation.slug) return;
+    if (!newTradeLocation.version || !newTradeLocation.league || !newTradeLocation.type || !newTradeLocation.slug)
+      return;
 
     const historyEntries = await this.fetchHistoryEntries();
     const lastEntry = historyEntries[0];

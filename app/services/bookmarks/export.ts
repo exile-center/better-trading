@@ -57,7 +57,9 @@ export default class Export extends Service {
   deserialize(serializedFolder: string): [BookmarksFolderStruct, BookmarksTradeStruct[]] | null {
     try {
       const exportVersion = this.parseExportVersion(serializedFolder);
-      const potentialPayload: ExportedFolderStruct = JSON.parse(this.jsonFromExportString(exportVersion, serializedFolder));
+      const potentialPayload: ExportedFolderStruct = JSON.parse(
+        this.jsonFromExportString(exportVersion, serializedFolder)
+      );
 
       const folder: BookmarksFolderStruct = {
         icon: potentialPayload.icn as BookmarksFolderIcon,

@@ -70,7 +70,11 @@ describe('Unit | Services | Bookmarks', () => {
     it('should return trade with alphabetically first title when multiple matches exists', async () => {
       setupFakeTrades({
         folder1: [
-          {id: 'matching-id-1', title: 'alphabetically later', location: {version: '1', type: 'search', slug: 'matching-slug'}},
+          {
+            id: 'matching-id-1',
+            title: 'alphabetically later',
+            location: {version: '1', type: 'search', slug: 'matching-slug'},
+          },
           {
             id: 'unrelated-id',
             title: 'aaalphabetically earliest, but wrong location',
@@ -78,7 +82,11 @@ describe('Unit | Services | Bookmarks', () => {
           },
         ],
         folder2: [
-          {id: 'matching-id-2', title: 'alphabetically earlier', location: {version: '1', type: 'search', slug: 'matching-slug'}},
+          {
+            id: 'matching-id-2',
+            title: 'alphabetically earlier',
+            location: {version: '1', type: 'search', slug: 'matching-slug'},
+          },
         ],
       });
 
@@ -92,8 +100,12 @@ describe('Unit | Services | Bookmarks', () => {
 
     it('should prefer unarchived trades to archived ones', async () => {
       setupFakeTrades({
-        'archived-folder': [{id: 'archived-trade', title: 'Archived Trade', location: {version: '1', type: 'search', slug: 'slug1'}}],
-        'current-folder': [{id: 'current-trade', title: 'Current Trade', location: {version: '1', type: 'search', slug: 'slug1'}}],
+        'archived-folder': [
+          {id: 'archived-trade', title: 'Archived Trade', location: {version: '1', type: 'search', slug: 'slug1'}},
+        ],
+        'current-folder': [
+          {id: 'current-trade', title: 'Current Trade', location: {version: '1', type: 'search', slug: 'slug1'}},
+        ],
       });
 
       const result = await service.fetchTradeByLocation({version: '1', type: 'search', slug: 'slug1'});

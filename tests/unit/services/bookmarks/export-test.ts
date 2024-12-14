@@ -69,7 +69,6 @@ describe('Unit | Services | Bookmarks | Export', () => {
       expect(decodedTrades[0].location.version).to.be.equal('1');
     });
 
-    
     it('should successfully deserialize a pinned v3 export string with a mix of PoE 1 and 2 locations', () => {
       const decoded = service.deserialize(exportv3);
 

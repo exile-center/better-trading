@@ -21,4 +21,3 @@ export interface TradeLocationHistoryStruct extends Required<TradeLocationStruct
   title: string;
   createdAt: string;
 }
-
