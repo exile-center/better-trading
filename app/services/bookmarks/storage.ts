@@ -25,14 +25,14 @@ export default class BookmarksStorage extends Service {
     const persistedFolders = await this.storage.getValue<PersistedType>(FOLDERS_KEY);
     if (!persistedFolders) return [];
 
-    return persistedFolders.map(f => this.migrateOldFolder(f));
+    return persistedFolders.map((f) => this.migrateOldFolder(f));
   }
 
   async fetchTradesByFolderId(folderId: string) {
     const trades = await this.storage.getValue<BookmarksTradeStruct[]>(`${TRADES_PREFIX_KEY}--${folderId}`);
     if (!trades) return [];
 
-    return trades.map(t => this.migrateOldTrade(t));
+    return trades.map((t) => this.migrateOldTrade(t));
   }
 
   async persistFolder(folderToPersist: BookmarksFolderStruct) {

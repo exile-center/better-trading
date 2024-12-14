@@ -2,7 +2,11 @@
 import Component from '@glimmer/component';
 
 // Types
-import {BookmarksFolderIcon, BookmarksFolderPoE1ItemIcon, BookmarksFolderPoE2ItemIcon} from 'better-trading/types/bookmarks';
+import {
+  BookmarksFolderIcon,
+  BookmarksFolderPoE1ItemIcon,
+  BookmarksFolderPoE2ItemIcon,
+} from 'better-trading/types/bookmarks';
 
 interface Args {
   icon: BookmarksFolderIcon;

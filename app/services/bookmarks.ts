@@ -13,7 +13,7 @@ import {
   BookmarksTradeStruct,
   PartialBookmarksTradeLocation,
 } from 'better-trading/types/bookmarks';
-import { TradeSiteVersion } from 'better-trading/types/trade-location';
+import {TradeSiteVersion} from 'better-trading/types/trade-location';
 
 export default class Bookmarks extends Service.extend(Evented) {
   @service('bookmarks/storage')

@@ -114,9 +114,9 @@ export default class PageBookmarks extends Component {
 
   @dropTask
   *reorderFoldersTask(reorderedDisplayedFolders: BookmarksFolderStruct[]) {
-    if(this.isShowingArchivedFolders) {
-      throw new Error("Archived folder view isn't meant to support reordering")
-    } 
+    if (this.isShowingArchivedFolders) {
+      throw new Error("Archived folder view isn't meant to support reordering");
+    }
 
     // reorderedFolders only includes displayedFolders,
     // but to re-persist all folders we need to also include
