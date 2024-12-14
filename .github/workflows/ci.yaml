@@ -5,10 +5,6 @@ on: [push, pull_request]
 jobs:
   ci:
     runs-on: ubuntu-latest
-
-    env:
-      JOBS: 1 # See https://git.io/vdao3 for details
-
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -18,8 +14,10 @@ jobs:
       - run: make dependencies
       - run: make verify
       - run: make test
+        env:
+          - JOBS: 1 # See https://git.io/vdao3 for details
       - run: make package-chrome
-      - run: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: chrome-extension
           path: dist-packages/chrome.zip
