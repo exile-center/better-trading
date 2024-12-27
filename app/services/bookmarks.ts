@@ -4,7 +4,7 @@ import Evented from '@ember/object/evented';
 
 // Types
 import BookmarksState from 'better-trading/services/bookmarks/state';
-import BookmarksStorage from 'better-trading/services/bookmarks/storage';
+import BookmarksStorage, {PersistFolderOptions} from 'better-trading/services/bookmarks/storage';
 import BookmarksExport from 'better-trading/services/bookmarks/export';
 import BookmarksBackup from 'better-trading/services/bookmarks/backup';
 import {
@@ -72,16 +72,15 @@ export default class Bookmarks extends Service.extend(Evented) {
     return matchingTrades[0];
   }
 
-  async persistFolder(bookmarkFolder: BookmarksFolderStruct) {
-    const newId = await this.bookmarksStorage.persistFolder(bookmarkFolder);
+  async persistFolder(bookmarkFolder: BookmarksFolderStruct, options?: PersistFolderOptions) {
+    const newId = await this.bookmarksStorage.persistFolder(bookmarkFolder, options);
     this.trigger('change');
     return newId;
   }
 
   async persistFolders(bookmarkFolders: BookmarksFolderStruct[]) {
-    const newId = await this.bookmarksStorage.persistFolders(bookmarkFolders);
+    await this.bookmarksStorage.persistFolders(bookmarkFolders);
     this.trigger('change');
-    return newId;
   }
 
   async persistTrade(bookmarkTrade: BookmarksTradeStruct, folderId: string) {
@@ -121,10 +120,38 @@ export default class Bookmarks extends Service.extend(Evented) {
   }
 
   async toggleFolderArchive(folder: BookmarksFolderStruct) {
-    return this.persistFolder({
-      ...folder,
-      archivedAt: folder.archivedAt ? null : new Date().toUTCString(),
-    });
+    return this.persistFolder(
+      {
+        ...folder,
+        archivedAt: folder.archivedAt ? null : new Date().toUTCString(),
+      },
+      {moveToEnd: true}
+    );
+  }
+
+  // This function reorders the `reorderedFolders` within `allFolders` relative to
+  // one another without affecting the relative order of non-reordered folders.
+  //
+  // Does *not* persist the changes.
+  //
+  // Precondition: `reorderedFolders` must be a subset of `allFolders`.
+  partiallyReorderFolders(
+    allFolders: BookmarksFolderStruct[],
+    reorderedFolders: BookmarksFolderStruct[]
+  ): BookmarksFolderStruct[] {
+    const reorderedSet = new Set(reorderedFolders);
+    const result = [...allFolders];
+    let reorderedIndex = 0;
+    for (let i = 0; i < allFolders.length; i++) {
+      if (reorderedSet.has(allFolders[i])) {
+        result[i] = reorderedFolders[reorderedIndex];
+        reorderedIndex++;
+      }
+    }
+    if (reorderedIndex !== reorderedFolders.length) {
+      throw new Error('partiallyReorderFolders precondition violated: reorderedFolders was not a subset of allFolders');
+    }
+    return result;
   }
 
   initializeFolderStruct(version: TradeSiteVersion): BookmarksFolderStruct {

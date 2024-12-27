@@ -13,6 +13,10 @@ import Bookmarks from 'better-trading/services/bookmarks';
 const FOLDERS_KEY = 'bookmark-folders';
 const TRADES_PREFIX_KEY = 'bookmark-trades';
 
+export interface PersistFolderOptions {
+  moveToEnd?: boolean;
+}
+
 export default class BookmarksStorage extends Service {
   @service('bookmarks')
   bookmarks: Bookmarks;
@@ -35,7 +39,7 @@ export default class BookmarksStorage extends Service {
     return trades.map((t) => this.migrateOldTrade(t));
   }
 
-  async persistFolder(folderToPersist: BookmarksFolderStruct) {
+  async persistFolder(folderToPersist: BookmarksFolderStruct, options?: PersistFolderOptions) {
     const folders = (await this.fetchFolders()) || [];
     let updatedFolders;
     let persistingId = folderToPersist.id;
@@ -52,6 +56,13 @@ export default class BookmarksStorage extends Service {
           ...folderToPersist,
         };
       });
+
+      if (options?.moveToEnd) {
+        updatedFolders = [
+          ...updatedFolders.filter((f) => f.id !== folderToPersist.id),
+          ...updatedFolders.filter((f) => f.id === folderToPersist.id),
+        ];
+      }
     }
 
     await this.persistFolders(updatedFolders);

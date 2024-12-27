@@ -60,7 +60,11 @@ export default class PageBookmarks extends Component {
   }
 
   get displayedFolders() {
-    return this.applicableFolders.filter(({archivedAt}) => Boolean(archivedAt) === this.isShowingArchivedFolders);
+    return this.isShowingArchivedFolders ? this.archivedFolders : this.activeFolders;
+  }
+
+  get activeFolders() {
+    return this.applicableFolders.filter(({archivedAt}) => !Boolean(archivedAt));
   }
 
   get archivedFolders() {
@@ -114,19 +118,7 @@ export default class PageBookmarks extends Component {
 
   @dropTask
   *reorderFoldersTask(reorderedDisplayedFolders: BookmarksFolderStruct[]) {
-    if (this.isShowingArchivedFolders) {
-      throw new Error("Archived folder view isn't meant to support reordering");
-    }
-
-    // reorderedFolders only includes displayedFolders,
-    // but to re-persist all folders we need to also include
-    // hidden folders in a reasonable/repeatable order.
-    this.folders = [
-      ...this.olderVersionFolders,
-      ...this.archivedFolders,
-      ...reorderedDisplayedFolders,
-      ...this.newerVersionFolders,
-    ];
+    this.folders = this.bookmarks.partiallyReorderFolders(this.folders, reorderedDisplayedFolders);
     yield this.bookmarks.persistFolders(this.folders);
   }
 
