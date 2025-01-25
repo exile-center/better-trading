@@ -1,0 +1,8 @@
+item-results:
+  pinnable:
+    pin: 固定
+    unpin: 解除固定
+  maximum-sockets:
+    warning: '最大. {maximum} 连接数'
+  regroup-similars:
+    button: '{count, plural, =0 {} =1 {1 similar result} other {# similar results}}'

@@ -12,7 +12,8 @@ interface StoragePayload {
 }
 
 export default class Storage extends Service {
-  async initialize() {
+  async initialize(locale: string) {
+    this.locale = locale
     await this.cleanupPastLeagues();
   }
 
@@ -63,9 +64,8 @@ export default class Storage extends Service {
   }
 
   private formatKey(key: string, league: string | null) {
-    let formattedKey = key;
+    let formattedKey = `${this.locale}--${key}`;
     if (league) formattedKey += `--${league}`;
-
     return formattedKey.toLowerCase();
   }
 
