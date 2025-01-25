@@ -2,7 +2,7 @@
 
 # Better trading
 
-A browser extension that enhance the pathofexile.com/trade experience.
+A browser extension that enhances the pathofexile.com trade site experience for Path of Exile and Path of Exile 2.
 
 <a href="https://chrome.google.com/webstore/detail/better-pathofexile-tradin/fhlinfpmdlijegjlpgedcmglkakaghnk" target="_blank">
   <img src="./.github/readme/chrome-button.png" alt="Download for Google Chrome">

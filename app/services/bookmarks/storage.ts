@@ -13,6 +13,10 @@ import Bookmarks from 'better-trading/services/bookmarks';
 const FOLDERS_KEY = 'bookmark-folders';
 const TRADES_PREFIX_KEY = 'bookmark-trades';
 
+export interface PersistFolderOptions {
+  moveToEnd?: boolean;
+}
+
 export default class BookmarksStorage extends Service {
   @service('bookmarks')
   bookmarks: Bookmarks;
@@ -25,22 +29,17 @@ export default class BookmarksStorage extends Service {
     const persistedFolders = await this.storage.getValue<PersistedType>(FOLDERS_KEY);
     if (!persistedFolders) return [];
 
-    const baseFolder = this.bookmarks.initializeFolderStruct();
-
-    return persistedFolders.map((persistedPartialFolder) => ({
-      ...baseFolder,
-      ...persistedPartialFolder,
-    }));
+    return persistedFolders.map((f) => this.migrateOldFolder(f));
   }
 
   async fetchTradesByFolderId(folderId: string) {
     const trades = await this.storage.getValue<BookmarksTradeStruct[]>(`${TRADES_PREFIX_KEY}--${folderId}`);
     if (!trades) return [];
 
-    return trades;
+    return trades.map((t) => this.migrateOldTrade(t));
   }
 
-  async persistFolder(folderToPersist: BookmarksFolderStruct) {
+  async persistFolder(folderToPersist: BookmarksFolderStruct, options?: PersistFolderOptions) {
     const folders = (await this.fetchFolders()) || [];
     let updatedFolders;
     let persistingId = folderToPersist.id;
@@ -57,6 +56,13 @@ export default class BookmarksStorage extends Service {
           ...folderToPersist,
         };
       });
+
+      if (options?.moveToEnd) {
+        updatedFolders = [
+          ...updatedFolders.filter((f) => f.id !== folderToPersist.id),
+          ...updatedFolders.filter((f) => f.id === folderToPersist.id),
+        ];
+      }
     }
 
     await this.persistFolders(updatedFolders);
@@ -121,6 +127,22 @@ export default class BookmarksStorage extends Service {
     });
 
     return this.persistTrades(updatedTrades, folderId);
+  }
+
+  private migrateOldTrade(trade: BookmarksTradeStruct) {
+    if (!trade.location.version) {
+      trade.location.version = '1';
+    }
+    return trade;
+  }
+
+  private migrateOldFolder(folder: Partial<BookmarksFolderStruct>): BookmarksFolderStruct {
+    const baseFolder = this.bookmarks.initializeFolderStruct(folder.version ?? '1');
+
+    return {
+      ...baseFolder,
+      ...folder,
+    };
   }
 }
 

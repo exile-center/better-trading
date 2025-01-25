@@ -61,6 +61,21 @@ describe('Unit | Services | Bookmarks | Storage', () => {
       expect(trades).to.have.same.members([]);
     });
 
+    it('should migrate old trades to new versioned TradeLocationStruct format', async () => {
+      const oldTrade = fakeBookmarkTrade({location: {/* no version */ type: 'search', slug: 'slug1'}} as any);
+
+      storageMock
+        .expects('getValue')
+        .once()
+        .withArgs('bookmark-trades--fake-folder')
+        .returns(Promise.resolve([oldTrade]));
+
+      const trades = await service.fetchTradesByFolderId('fake-folder');
+
+      expect(trades.length).to.be.equal(1);
+      expect(trades[0].location.version).to.be.equal('1');
+    });
+
     it('should returns the trades when there is any', async () => {
       storageMock
         .expects('getValue')
@@ -99,26 +114,54 @@ describe('Unit | Services | Bookmarks | Storage', () => {
     });
 
     it('should persist in-place a folder if it already exists', async () => {
-      const folder = fakeBookmarkFolder({title: 'Existing folder'});
+      const folders = [
+        fakeBookmarkFolder({title: 'Existing folder 0'}),
+        fakeBookmarkFolder({title: 'Existing folder 1'}),
+      ];
 
-      storageMock
-        .expects('getValue')
-        .once()
-        .withArgs('bookmark-folders')
-        .returns(Promise.resolve([folder]));
+      storageMock.expects('getValue').once().withArgs('bookmark-folders').returns(Promise.resolve(folders));
 
       const receivedSetValue = storageMock.expects('setValue').once().returns(Promise.resolve());
 
       await service.persistFolder({
-        ...folder,
-        title: 'Updated title',
+        ...folders[0],
+        title: 'Updated folder 0',
       });
 
       const [[storageKey, persistedFolders]] = receivedSetValue.args;
       expect(storageKey).to.be.equal('bookmark-folders');
-      expect(persistedFolders.length).to.be.equal(1);
-      expect(persistedFolders[0].title).to.be.equal('Updated title');
-      expect(persistedFolders[0].id).to.be.equal(folder.id);
+      expect(persistedFolders.length).to.be.equal(2);
+      expect(persistedFolders[0].title).to.be.equal('Updated folder 0');
+      expect(persistedFolders[0].id).to.be.equal(folders[0].id);
+      expect(persistedFolders[1].title).to.be.equal('Existing folder 1');
+      expect(persistedFolders[1].id).to.be.equal(folders[1].id);
+    });
+
+    it('should move the folder to the end of the list if the moveToEnd option is true', async () => {
+      const folders = [
+        fakeBookmarkFolder({title: 'Existing folder 0'}),
+        fakeBookmarkFolder({title: 'Existing folder 1'}),
+      ];
+
+      storageMock.expects('getValue').once().withArgs('bookmark-folders').returns(Promise.resolve(folders));
+
+      const receivedSetValue = storageMock.expects('setValue').once().returns(Promise.resolve());
+
+      await service.persistFolder(
+        {
+          ...folders[0],
+          title: 'Updated folder 0',
+        },
+        {moveToEnd: true}
+      );
+
+      const [[storageKey, persistedFolders]] = receivedSetValue.args;
+      expect(storageKey).to.be.equal('bookmark-folders');
+      expect(persistedFolders.length).to.be.equal(2);
+      expect(persistedFolders[0].title).to.be.equal('Existing folder 1');
+      expect(persistedFolders[0].id).to.be.equal(folders[1].id);
+      expect(persistedFolders[1].title).to.be.equal('Updated folder 0');
+      expect(persistedFolders[1].id).to.be.equal(folders[0].id);
     });
   });
 

@@ -27,6 +27,20 @@ describe('Unit | Services | TradeLocation', () => {
     tradeLocationHistoryMock.verify();
   });
 
+  describe('get version', () => {
+    it('should return 1 from the base URL', () => {
+      window.location.pathname = '/trade/search/Legion';
+
+      expect(service.version).to.equal('1');
+    });
+
+    it('should return 2 from the base URL', () => {
+      window.location.pathname = '/trade2/search/poe2/Standard';
+
+      expect(service.version).to.equal('2');
+    });
+  });
+
   describe('get type', () => {
     it('should return null from the unresolved redirect URL', () => {
       window.location.pathname = '/trade';
@@ -85,7 +99,7 @@ describe('Unit | Services | TradeLocation', () => {
     });
   });
 
-  describe('get league (PC realm)', () => {
+  describe('get league (PC poe1 realm)', () => {
     it('should returns the active league from the base URL', () => {
       window.location.pathname = '/trade/search/Legion';
 
@@ -111,7 +125,7 @@ describe('Unit | Services | TradeLocation', () => {
     });
   });
 
-  describe('get league (non-PC realm)', () => {
+  describe('get league (non-PC poe1 realm)', () => {
     it('should returns the active league from the base URL', () => {
       window.location.pathname = '/trade/search/xbox/Legion';
 
@@ -134,6 +148,20 @@ describe('Unit | Services | TradeLocation', () => {
       window.location.pathname = '/trade/search/sony/Legion/q1w2e3r4t5/live';
 
       expect(service.league).to.equal('sony/Legion');
+    });
+  });
+
+  describe('get league (PoE 2 realm)', () => {
+    it('should returns the active league from the base URL', () => {
+      window.location.pathname = '/trade/search/poe2/Standard';
+
+      expect(service.league).to.equal('poe2/Standard');
+    });
+
+    it('should returns the active league from a trade URL', () => {
+      window.location.pathname = '/trade/search/poe2/Hardcore/q1w2e3r4t5';
+
+      expect(service.league).to.equal('poe2/Hardcore');
     });
   });
 
@@ -162,6 +190,12 @@ describe('Unit | Services | TradeLocation', () => {
       expect(service.slug).to.equal('q1w2e3r4t5');
     });
 
+    it('should returns the active trade slug from an poe2 realm trade URL', () => {
+      window.location.pathname = '/trade2/search/poe2/standard/q1w2e3r4t5/live';
+
+      expect(service.slug).to.equal('q1w2e3r4t5');
+    });
+
     it('should returns the active trade slug from an Xbox realm trade URL', () => {
       window.location.pathname = '/trade/search/xbox/Legion/q1w2e3r4t5/live';
 
@@ -176,22 +210,32 @@ describe('Unit | Services | TradeLocation', () => {
   });
 
   describe('getTradeUrl', () => {
-    it('should forge the proper URL', () => {
-      expect(service.getTradeUrl('search', 'foobar', 'some-league')).to.be.equal(
-        'https://www.pathofexile.com/trade/search/some-league/foobar'
-      );
+    describe('for PoE 1', () => {
+      it('should forge the proper URL', () => {
+        expect(service.getTradeUrl('1', 'search', 'foobar', 'some-league')).to.be.equal(
+          'https://www.pathofexile.com/trade/search/some-league/foobar'
+        );
+      });
+
+      it('should support Xbox realm', () => {
+        expect(service.getTradeUrl('1', 'search', 'foobar', 'xbox/some-league')).to.be.equal(
+          'https://www.pathofexile.com/trade/search/xbox/some-league/foobar'
+        );
+      });
+
+      it('should support Playstation realm', () => {
+        expect(service.getTradeUrl('1', 'search', 'foobar', 'sony/some-league')).to.be.equal(
+          'https://www.pathofexile.com/trade/search/sony/some-league/foobar'
+        );
+      });
     });
 
-    it('should support Xbox realm', () => {
-      expect(service.getTradeUrl('search', 'foobar', 'xbox/some-league')).to.be.equal(
-        'https://www.pathofexile.com/trade/search/xbox/some-league/foobar'
-      );
-    });
-
-    it('should support Playstation realm', () => {
-      expect(service.getTradeUrl('search', 'foobar', 'sony/some-league')).to.be.equal(
-        'https://www.pathofexile.com/trade/search/sony/some-league/foobar'
-      );
+    describe('for PoE 2', () => {
+      it('should forge the proper URL', () => {
+        expect(service.getTradeUrl('2', 'search', 'foobar', 'poe2/Standard')).to.be.equal(
+          'https://www.pathofexile.com/trade2/search/poe2/Standard/foobar'
+        );
+      });
     });
   });
 
@@ -210,6 +254,7 @@ describe('Unit | Services | TradeLocation', () => {
           .expects('maybeLogTradeLocation')
           .once()
           .withArgs({
+            version: '1',
             type: 'search',
             slug: 'new-trade',
             league: 'new-league',
@@ -226,12 +271,14 @@ describe('Unit | Services | TradeLocation', () => {
 
         expect(changeSpy).to.have.been.calledOnceWith({
           oldTradeLocation: {
+            version: '1',
             type: 'search',
             slug: 'initial-trade',
             league: 'initial-league',
             isLive: false,
           },
           newTradeLocation: {
+            version: '1',
             type: 'search',
             slug: 'new-trade',
             league: 'new-league',
@@ -252,6 +299,7 @@ describe('Unit | Services | TradeLocation', () => {
           .expects('maybeLogTradeLocation')
           .once()
           .withArgs({
+            version: '1',
             type: 'search',
             slug: 'initial-trade',
             league: 'initial-league',
@@ -268,12 +316,14 @@ describe('Unit | Services | TradeLocation', () => {
 
         expect(changeSpy).to.have.been.calledOnceWith({
           oldTradeLocation: {
+            version: '1',
             type: 'search',
             slug: 'initial-trade',
             league: 'initial-league',
             isLive: false,
           },
           newTradeLocation: {
+            version: '1',
             type: 'search',
             slug: 'initial-trade',
             league: 'initial-league',

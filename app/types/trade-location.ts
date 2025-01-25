@@ -1,4 +1,7 @@
+export type TradeSiteVersion = '1' | '2';
+
 export interface TradeLocationStruct {
+  version: TradeSiteVersion;
   slug: string | null;
   type: string | null;
   league: string | null;

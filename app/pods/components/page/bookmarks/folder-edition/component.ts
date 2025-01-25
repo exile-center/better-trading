@@ -6,18 +6,45 @@ import {tracked} from '@glimmer/tracking';
 
 // Types
 import Bookmarks from 'better-trading/services/bookmarks';
+import TradeLocation from 'better-trading/services/trade-location';
 import {
   BookmarksFolderAscendancyDuelistIcon,
-  BookmarksFolderAscendancyIcon,
   BookmarksFolderAscendancyMarauderIcon,
   BookmarksFolderAscendancyRangerIcon,
   BookmarksFolderAscendancyScionIcon,
   BookmarksFolderAscendancyShadowIcon,
   BookmarksFolderAscendancyTemplarIcon,
   BookmarksFolderAscendancyWitchIcon,
-  BookmarksFolderItemIcon,
+  BookmarksFolderAscendancyPoE2RangerIcon,
+  BookmarksFolderAscendancyPoE2WarriorIcon,
+  BookmarksFolderAscendancyPoE2WitchIcon,
+  BookmarksFolderAscendancyPoE2SorceressIcon,
+  BookmarksFolderAscendancyPoE2MercenaryIcon,
+  BookmarksFolderAscendancyPoE2MonkIcon,
+  BookmarksFolderPoE1ItemIcon,
+  BookmarksFolderPoE2ItemIcon,
   BookmarksFolderStruct,
+  BookmarksFolderIcon,
 } from 'better-trading/types/bookmarks';
+
+const POE1_ASCENDANCY_ICONS: Array<Record<string, BookmarksFolderIcon>> = [
+  BookmarksFolderAscendancyDuelistIcon,
+  BookmarksFolderAscendancyShadowIcon,
+  BookmarksFolderAscendancyMarauderIcon,
+  BookmarksFolderAscendancyWitchIcon,
+  BookmarksFolderAscendancyRangerIcon,
+  BookmarksFolderAscendancyTemplarIcon,
+  BookmarksFolderAscendancyScionIcon,
+];
+
+const POE2_ASCENDANCY_ICONS: Array<Record<string, BookmarksFolderIcon>> = [
+  BookmarksFolderAscendancyPoE2WarriorIcon,
+  BookmarksFolderAscendancyPoE2WitchIcon,
+  BookmarksFolderAscendancyPoE2RangerIcon,
+  BookmarksFolderAscendancyPoE2SorceressIcon,
+  BookmarksFolderAscendancyPoE2MercenaryIcon,
+  BookmarksFolderAscendancyPoE2MonkIcon,
+];
 
 interface Args {
   folder: BookmarksFolderStruct;
@@ -29,23 +56,22 @@ export default class BookmarksFolderEdition extends Component<Args> {
   @service('bookmarks')
   bookmarks: Bookmarks;
 
+  @service('trade-location')
+  tradeLocation: TradeLocation;
+
   @tracked
   folder: BookmarksFolderStruct = this.args.folder;
 
   get iconAscendancyOptions() {
-    return [
-      Object.values(BookmarksFolderAscendancyDuelistIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarksFolderAscendancyShadowIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarksFolderAscendancyMarauderIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarksFolderAscendancyWitchIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarksFolderAscendancyRangerIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarksFolderAscendancyTemplarIcon).map(this.iconOptionFromIcon),
-      Object.values(BookmarksFolderAscendancyScionIcon).map(this.iconOptionFromIcon),
-    ];
+    const icons = this.tradeLocation.version === '2' ? POE2_ASCENDANCY_ICONS : POE1_ASCENDANCY_ICONS;
+    return icons.map((iconGroupEnum) => {
+      return Object.values(iconGroupEnum).map(this.iconOptionFromIcon);
+    });
   }
 
   get iconItemOptions() {
-    return Object.values(BookmarksFolderItemIcon).map(this.iconOptionFromIcon);
+    const icons = this.tradeLocation.version === '2' ? BookmarksFolderPoE2ItemIcon : BookmarksFolderPoE1ItemIcon;
+    return Object.values(icons).map(this.iconOptionFromIcon);
   }
 
   get canSubmit() {
@@ -58,14 +84,14 @@ export default class BookmarksFolderEdition extends Component<Args> {
   }
 
   @action
-  toggleIcon(icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon) {
+  toggleIcon(icon: BookmarksFolderIcon) {
     this.folder = {
       ...this.folder,
       icon: icon !== this.folder.icon ? icon : null,
     };
   }
 
-  private iconOptionFromIcon(icon: BookmarksFolderAscendancyIcon | BookmarksFolderItemIcon) {
+  private iconOptionFromIcon(icon: BookmarksFolderIcon) {
     return {
       value: icon,
       imagePath: `bookmark-folder/${icon}.png`,

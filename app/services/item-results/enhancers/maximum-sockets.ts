@@ -4,6 +4,7 @@ import Service, {inject as service} from '@ember/service';
 // Types
 import {ItemResultsEnhancerService, ItemResultsParsedItem, ItemResultsType} from 'better-trading/types/item-results';
 import IntlService from 'ember-intl/services/intl';
+import TradeLocation from 'better-trading/services/trade-location';
 
 // Constants
 const ILVL_THRESHOLDS = [
@@ -17,12 +18,17 @@ export default class MaximumSockets extends Service implements ItemResultsEnhanc
   @service('intl')
   intl: IntlService;
 
+  @service('trade-location')
+  tradeLocation: TradeLocation;
+
   slug = 'maximum-sockets';
 
   statNeedles: RegExp[];
 
   // eslint-disable-next-line complexity
   enhance(itemElement: HTMLElement, {socketsCount, type, ilvl}: ItemResultsParsedItem) {
+    if (this.tradeLocation.version !== '1') return;
+
     const itemFrameElement = itemElement.querySelector<HTMLDivElement>('.itemRendered');
 
     if (!itemFrameElement || !ilvl || socketsCount === 0 || type !== ItemResultsType.ARMOR) return;

@@ -2,21 +2,24 @@
 import Helper from '@ember/component/helper';
 import {inject as service} from '@ember/service';
 
-// Types
+// Services
 import TradeLocation from 'better-trading/services/trade-location';
 
-type PositionalParams = [{slug: string; type: string}];
+// Types
+import type {TradeSiteVersion} from 'better-trading/types/trade-location';
+
+type PositionalParams = [{version: TradeSiteVersion; slug: string; type: string}];
 interface NamedParams {
   suffix?: string;
-  league: string; // in non-PC realms, should be of form "realm/LeagueName", eg "xbox/Legion"
+  league: string; // in non-PC-poe1 realms, should be of form "realm/LeagueName", eg "xbox/Legion" or "poe2/Standard"
 }
 
 export default class TradeUrl extends Helper {
   @service('trade-location')
   tradeLocation: TradeLocation;
 
-  compute([{type, slug}]: PositionalParams, {suffix, league}: NamedParams) {
-    const tradeUrl = this.tradeLocation.getTradeUrl(type, slug, league);
+  compute([{version, type, slug}]: PositionalParams, {suffix, league}: NamedParams) {
+    const tradeUrl = this.tradeLocation.getTradeUrl(version, type, slug, league);
 
     if (!suffix) return tradeUrl;
 

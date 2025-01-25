@@ -52,16 +52,14 @@
         />
       </ContextualMenu>
 
-      {{#unless this.isArchived}}
-        {{#component
-          @dragHandle
-          tagName="button"
-          type="button"
-          local-class="header-action"
-        }}
-          <FaIcon @icon="sort" />
-        {{/component}}
-      {{/unless}}
+      {{#component
+        @dragHandle
+        tagName="button"
+        type="button"
+        local-class="header-action"
+      }}
+        <FaIcon @icon="sort" />
+      {{/component}}
     </div>
   </div>
 

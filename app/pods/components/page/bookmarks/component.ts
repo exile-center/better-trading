@@ -10,6 +10,7 @@ import Bookmarks from 'better-trading/services/bookmarks';
 import {BookmarksFolderStruct, BookmarksTradeStruct} from 'better-trading/types/bookmarks';
 import FlashMessages from 'ember-cli-flash/services/flash-messages';
 import IntlService from 'ember-intl/services/intl';
+import TradeLocation from 'better-trading/services/trade-location';
 
 // Constants
 const FOLDERS_WARNING_THRESHOLD = 10;
@@ -24,9 +25,13 @@ export default class PageBookmarks extends Component {
   @service('intl')
   intl: IntlService;
 
+  @service('trade-location')
+  tradeLocation: TradeLocation;
+
   @tracked
   stagedFolder: BookmarksFolderStruct | null;
 
+  // Includes folders for other PoE versions
   @tracked
   folders: BookmarksFolderStruct[] = [];
 
@@ -42,20 +47,36 @@ export default class PageBookmarks extends Component {
   @tracked
   isShowingArchivedFolders: boolean = false;
 
+  get applicableFolders() {
+    return this.folders.filter(({version}) => version === this.tradeLocation.version);
+  }
+
+  get olderVersionFolders() {
+    return this.folders.filter(({version}) => version < this.tradeLocation.version);
+  }
+
+  get newerVersionFolders() {
+    return this.folders.filter(({version}) => version > this.tradeLocation.version);
+  }
+
   get displayedFolders() {
-    return this.folders.filter(({archivedAt}) => Boolean(archivedAt) === this.isShowingArchivedFolders);
+    return this.isShowingArchivedFolders ? this.archivedFolders : this.activeFolders;
+  }
+
+  get activeFolders() {
+    return this.applicableFolders.filter(({archivedAt}) => !Boolean(archivedAt));
   }
 
   get archivedFolders() {
-    return this.folders.filter(({archivedAt}) => Boolean(archivedAt));
+    return this.applicableFolders.filter(({archivedAt}) => Boolean(archivedAt));
   }
 
   get hasArchivedFolders() {
-    return this.folders.some(({archivedAt}) => Boolean(archivedAt));
+    return this.applicableFolders.some(({archivedAt}) => Boolean(archivedAt));
   }
 
   get hasActiveFolders() {
-    return this.folders.some(({archivedAt}) => !Boolean(archivedAt));
+    return this.applicableFolders.some(({archivedAt}) => !Boolean(archivedAt));
   }
 
   get foldersWarningIsVisible() {
@@ -96,9 +117,8 @@ export default class PageBookmarks extends Component {
   }
 
   @dropTask
-  *reorderFoldersTask(reorderedFolders: BookmarksFolderStruct[]) {
-    this.folders = this.archivedFolders.concat(reorderedFolders);
-
+  *reorderFoldersTask(reorderedDisplayedFolders: BookmarksFolderStruct[]) {
+    this.folders = this.bookmarks.partiallyReorderFolders(this.folders, reorderedDisplayedFolders);
     yield this.bookmarks.persistFolders(this.folders);
   }
 
@@ -146,7 +166,7 @@ export default class PageBookmarks extends Component {
 
   @action
   createFolder() {
-    this.stagedFolder = this.bookmarks.initializeFolderStruct();
+    this.stagedFolder = this.bookmarks.initializeFolderStruct(this.tradeLocation.version);
   }
 
   @action

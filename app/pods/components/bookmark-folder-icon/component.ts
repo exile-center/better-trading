@@ -2,7 +2,11 @@
 import Component from '@glimmer/component';
 
 // Types
-import {BookmarksFolderIcon, BookmarksFolderItemIcon} from 'better-trading/types/bookmarks';
+import {
+  BookmarksFolderIcon,
+  BookmarksFolderPoE1ItemIcon,
+  BookmarksFolderPoE2ItemIcon,
+} from 'better-trading/types/bookmarks';
 
 interface Args {
   icon: BookmarksFolderIcon;
@@ -14,6 +18,11 @@ export default class BookmarkFolderIcon extends Component<Args> {
   }
 
   get iconIsItem() {
-    return (Object.values(BookmarksFolderItemIcon) as string[]).includes(this.args.icon);
+    const itemIcons: BookmarksFolderIcon[] = [
+      ...Object.values(BookmarksFolderPoE1ItemIcon),
+      ...Object.values(BookmarksFolderPoE2ItemIcon),
+    ];
+
+    return itemIcons.includes(this.args.icon);
   }
 }
