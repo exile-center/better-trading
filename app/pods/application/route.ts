@@ -9,6 +9,7 @@ import Bookmarks from 'better-trading/services/bookmarks';
 import Storage from 'better-trading/services/storage';
 import TradeLocation from 'better-trading/services/trade-location';
 import PageTitle from 'better-trading/services/page-title';
+import PrependTilde from 'better-trading/services/prepend-tilde';
 
 // Constants
 const DEFAULT_LOCALE = 'en';
@@ -32,11 +33,15 @@ export default class ApplicationRoute extends Route {
   @service('page-title')
   pageTitle: PageTitle;
 
+  @service('prepend-tilde')
+  prependTilde: PrependTilde;
+
   async beforeModel() {
     this.intl.setLocale(DEFAULT_LOCALE);
     await this.itemResults.initialize();
     this.tradeLocation.initialize();
     await this.storage.initialize();
     await this.pageTitle.initialize();
+    this.prependTilde.initialize();
   }
 }
