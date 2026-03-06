@@ -33,10 +33,17 @@ export default class ApplicationRoute extends Route {
   pageTitle: PageTitle;
 
   async beforeModel() {
-    this.intl.setLocale(DEFAULT_LOCALE);
+    const host = window.location.host;
+    let locale = DEFAULT_LOCALE
+    if ("poe.game.qq.com" == host ){
+        console.log("poe.game.qq.com")
+        locale = 'cn';
+    }
+    this.intl.setLocale(locale);
+
     await this.itemResults.initialize();
-    this.tradeLocation.initialize();
-    await this.storage.initialize();
+    this.tradeLocation.initialize(host);
+    await this.storage.initialize(locale);
     await this.pageTitle.initialize();
   }
 }

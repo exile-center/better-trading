@@ -1,0 +1,13 @@
+components:
+  changelog-banner:
+    notice: '新版本 {version} 已经安装.'
+    modal-title: '{version} 更新日志'
+    modal-button: 更新日志
+    dismiss-button: 关闭
+  clipboard-textarea:
+    button: 复制到剪贴板
+    button-copied: 已复制
+  root-page-menu:
+    bookmarks: 书签
+    history: 历史记录
+    pinned-items: 固定项

@@ -1,0 +1,71 @@
+page:
+  bookmarks:
+    create-folder: 新建文件夹
+    import-folder: 导入文件夹
+    collapse-all: 折叠所有文件夹
+    show-archived-folders: 展示归档的文件夹
+    show-unarchived-folders: 返回活跃的文件夹
+    folders-warning: 太多的文件夹可能会导致网站变慢.<br>使用导出功能备份不需要的文件夹，然后删除它们。
+    delete-folder-success-flash: '文件夹 "{title}" 删除成功'
+    update-folder-success-flash: '文件夹 "{title}" 更新成功.'
+    create-folder-success-flash: '文件夹 "{title}" 创建成功.'
+    import-folder-success-flash: '文件夹 "{title}" 导入成功.'
+    backup:
+      title: 备份工具
+      generate-button: 保存为文件
+      restore-button: 从文件恢复
+      restore-error-flash: 恢复失败.
+    folder:
+      edit-folder: 编辑
+      delete-folder: 删除
+      archive-folder: 归档
+      restore-folder: 恢复
+      export-folder: 导出代码/分享
+      open-live-trade: 实时搜索
+      create-trade: 收藏
+      copy-trade-to-clipboard: 复制url
+      copy-trade-to-clipboard-success-flash: '复制"{title}" 的URL成功.'
+      edit-trade: 编辑
+      delete-trade: 删除
+      update-trade-location: 保存
+      complete-trade: 标记为完成
+      uncomplete-trade: 取消完成标记
+      delete-trade-success-flash: '"{title}" 删除成功.'
+      update-trade-success-flash: '"{title}" 更新成功.'
+      create-trade-success-flash: '"{title}" 创建成功.'
+      persist-trade-location-success-flash: '"{title}" URL更新成功.'
+      trade-deletion:
+        modal-title: 确认删除
+        confirmation: '删除书签 <strong>{name}</strong> ?'
+        delete: 删除
+        cancel: 取消
+      folder-deletion:
+        modal-title: 确认删除
+        confirmation: '删除文件夹 <strong>{name}</strong> {tradesCount, plural, =0 {} =1 {and its <strong>single bookmark</strong> } other {and its <strong># bookmarks</strong> }}?'
+        delete: 删除
+        cancel: 取消
+      folder-export:
+        modal-title: 文件夹导出
+        preview-url: 预览URL
+        preview-url-button: 在新的Tab页打开
+        export-code: 导出代码
+        export-code-helper: 代码可以被用来恢复文件夹，也可以用于备份或者分享。.
+        embed-code: 代码片段
+        embed-code-helper: Code snippet that can be used to include the folder's preview into a website.
+        close: 关闭
+      trade-edition:
+        modal-title: 书签
+        title-label: 标题
+        save: 保存
+    folder-edition:
+      modal-title: 文件夹
+      title-label: 标题
+      icon-label: 图标
+      save: 保存
+    folder-import:
+      modal-title: 导入文件夹代码
+      import-code:
+        label: 导入代码
+      preview: '{name} {tradesCount, plural, =0 {} =1 {(1 bookmark)} other {(# bookmarks)}}'
+      invalid-code: 代码无效，请重新获取代码.
+      save: 保存

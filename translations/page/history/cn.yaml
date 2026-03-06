@@ -1,0 +1,5 @@
+page:
+  history:
+    clear: 清空历史
+    empty: 搜索历史为空.
+    clear-success-flash: 清空完成.

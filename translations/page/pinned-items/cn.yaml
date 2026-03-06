@@ -1,0 +1,7 @@
+page:
+  pinned-items:
+    warning: 物品只会保存到它还在搜索结果里面的时候，改变搜索或者刷新会重置固定项。
+    clear: 清空固定项
+    empty: 物品可以被密语旁的固定按钮固定到这里。
+    unpin-item: 取消固定
+    scroll-to-item: 聚焦物品
