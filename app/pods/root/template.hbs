@@ -3,9 +3,25 @@
   @onChange={{fn this.changeCurrentPage}}
 />
 
+<div local-class="paste-item-row">
+  <Button
+    @theme="gold"
+    @icon="paste"
+    @label={{t "components.paste-item-modal.paste-button"}}
+    @onClick={{fn this.openPasteModal}}
+    local-class="paste-item-button"
+  />
+</div>
+
 <div
   {{did-insert (fn this.subscribeToPinnedItemsChange)}}
   {{will-destroy (fn this.unsubscribeFromPinnedItemsChange)}}
 >
   {{component this.currentPageComponentName}}
 </div>
+
+{{#if this.isPasteModalOpen}}
+  <PasteItemModal
+    @onClose={{fn this.closePasteModal}}
+  />
+{{/if}}
