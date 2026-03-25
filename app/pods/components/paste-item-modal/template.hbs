@@ -1,0 +1,69 @@
+<Modal
+  @title={{t "components.paste-item-modal.title"}}
+  @onClose={{fn @onClose}}
+>
+  <div local-class="container">
+    <p local-class="description">
+      {{t "components.paste-item-modal.description"}}
+    </p>
+
+    <textarea
+      {{on "input" this.updateItemText}}
+      local-class="textarea"
+      placeholder={{t "components.paste-item-modal.placeholder"}}
+      rows="12"
+    >{{this.itemText}}</textarea>
+
+    {{#if this.errorMessage}}
+      <div local-class="error">
+        <FaIcon @icon="exclamation-triangle" />
+        {{this.errorMessage}}
+      </div>
+    {{/if}}
+
+    {{#if this.parsedItem}}
+      <div local-class="preview">
+        <div local-class="preview-header">
+          <FaIcon @icon="check-circle" local-class="preview-icon" />
+          {{this.itemSummary}}
+        </div>
+
+        <div local-class="preview-details">
+          {{#if this.parsedItem.itemClass}}
+            <span local-class="preview-tag">{{this.parsedItem.itemClass}}</span>
+          {{/if}}
+          {{#if this.parsedItem.itemLevel}}
+            <span local-class="preview-tag">iLvl {{this.parsedItem.itemLevel}}</span>
+          {{/if}}
+          <span local-class="preview-tag">
+            {{this.modCount}} {{t "components.paste-item-modal.mods"}}
+          </span>
+        </div>
+      </div>
+    {{/if}}
+
+    <div local-class="actions">
+      <Button
+        @theme="blue"
+        @label={{t "components.paste-item-modal.cancel"}}
+        @onClick={{fn @onClose}}
+      />
+
+      {{#if this.canSearch}}
+        <Button
+          @theme="gold"
+          @icon="search"
+          @label={{t "components.paste-item-modal.search"}}
+          @onClick={{perform this.searchTask}}
+        />
+      {{else}}
+        <Button
+          @theme="gold"
+          @icon={{if this.isSearching "spinner" "search"}}
+          @label={{t "components.paste-item-modal.search"}}
+          disabled="disabled"
+        />
+      {{/if}}
+    </div>
+  </div>
+</Modal>

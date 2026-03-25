@@ -27,6 +27,9 @@ export default class RootController extends Controller {
   @tracked
   currentPage: RootPage = (this.storage.getLocalValue(CURRENT_PAGE_KEY) as RootPage) || RootPage.BOOKMARKS;
 
+  @tracked
+  isPasteModalOpen: boolean = false;
+
   get currentPageComponentName() {
     return `page/${this.currentPage}`;
   }
@@ -35,6 +38,16 @@ export default class RootController extends Controller {
   changeCurrentPage(page: RootPage) {
     this.storage.setLocalValue(CURRENT_PAGE_KEY, page);
     this.currentPage = page;
+  }
+
+  @action
+  openPasteModal() {
+    this.isPasteModalOpen = true;
+  }
+
+  @action
+  closePasteModal() {
+    this.isPasteModalOpen = false;
   }
 
   @action

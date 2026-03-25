@@ -7,6 +7,18 @@ components:
   clipboard-textarea:
     button: Copy to clipboard
     button-copied: Copied
+  paste-item-modal:
+    paste-button: Paste Item
+    title: Paste Item
+    description: 'Paste your item text from Path of Exile (Ctrl+C on item) to search for similar items on the trade site.'
+    placeholder: 'Paste item text here (Ctrl+C while hovering over an item in game)...'
+    cancel: Cancel
+    search: Search Trade
+    mods: mods
+    parse-error: Could not parse item text. Make sure you copied the item with Ctrl+C in game.
+    empty-error: Please paste an item text first.
+    search-success: Trade search opened successfully.
+    search-error: Failed to execute trade search. Please try again.
   root-page-menu:
     bookmarks: Bookmarks
     history: History

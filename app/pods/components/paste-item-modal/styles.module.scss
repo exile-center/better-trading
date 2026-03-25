@@ -1,0 +1,82 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.description {
+  margin: 0;
+  font-size: 12px;
+  color: $gray-alt;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 8px;
+  border: 1px solid $gray;
+  background-color: darken($black, 3%);
+  color: $white;
+  font-family: monospace;
+  font-size: 11px;
+  line-height: 1.4;
+  resize: vertical;
+  outline: none;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $gold-alt;
+  }
+
+  &::placeholder {
+    color: $gray-alt;
+  }
+}
+
+.error {
+  padding: 6px 10px;
+  border: 1px solid $red-alt;
+  background-color: rgba($red, 0.3);
+  color: $beige;
+  font-size: 12px;
+}
+
+.preview {
+  padding: 8px 10px;
+  border: 1px solid $gold-alt;
+  background-color: rgba($gold, 0.15);
+}
+
+.preview-header {
+  font-family: $primary-font;
+  font-size: 14px;
+  color: $beige;
+}
+
+.preview-icon {
+  color: $green-alt;
+  margin-right: 4px;
+}
+
+.preview-details {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.preview-tag {
+  display: inline-block;
+  padding: 2px 6px;
+  background-color: rgba($blue, 0.5);
+  border: 1px solid $blue-alt;
+  font-size: 11px;
+  color: $white;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
