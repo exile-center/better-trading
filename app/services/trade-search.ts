@@ -4,8 +4,11 @@ import window from 'ember-window-mock';
 
 // Types
 import TradeLocation from 'better-trading/services/trade-location';
-import {ParsedItem, ParsedMod} from 'better-trading/types/item-parser';
+import {ParsedItem, ParsedMod, ModTag} from 'better-trading/types/item-parser';
 import {TradeSiteVersion} from 'better-trading/types/trade-location';
+
+// Constants
+const BASE_URL = 'https://www.pathofexile.com';
 
 interface StatEntry {
   id: string;
@@ -13,13 +16,22 @@ interface StatEntry {
   type: string;
 }
 
-interface StatsCache {
-  [version: string]: StatEntry[];
+interface StatIndex {
+  entries: StatEntry[];
+  // Keyed by normalized lowercase text -> list of matching stats
+  byText: Map<string, StatEntry[]>;
 }
 
 interface SearchFilter {
   id: string;
   value: {min?: number; max?: number};
+}
+
+interface MiscFilterValues {
+  ilvl?: {min?: number};
+  corrupted?: {option?: boolean};
+  mirrored?: {option?: boolean};
+  fractured_item?: {option?: boolean};
 }
 
 interface SearchPayload {
@@ -32,171 +44,109 @@ interface SearchPayload {
     }>;
     filters?: {
       misc_filters?: {
-        filters: {
-          ilvl?: {min?: number};
-          corrupted?: {option?: boolean};
-          mirrored?: {option?: boolean};
-          fractured_item?: {option?: boolean};
-        };
-      };
-      type_filters?: {
-        filters: {
-          category?: {option?: string};
-          rarity?: {option?: string};
-        };
+        filters: MiscFilterValues;
       };
     };
   };
   sort: {price: string};
 }
 
+// Fix #14: Store in-flight Promise to prevent concurrent duplicate fetches
+const statsCachePromises: {[version: string]: Promise<StatIndex>} = {};
+
+const STAT_TYPE_PREFIXES: Record<ModTag, string> = {
+  implicit: 'implicit',
+  explicit: 'explicit',
+  crafted: 'crafted',
+  fractured: 'fractured',
+  enchant: 'enchant',
+  rune: 'rune',           // Fix #3: handle PoE 2 mod tags
+  desecrated: 'desecrated', // Fix #3: handle PoE 2 mod tags
+};
+
 export default class TradeSearch extends Service {
   @service('trade-location')
   tradeLocation: TradeLocation;
 
-  private statsCache: StatsCache = {};
+  // Fix #14: Returns cached promise to deduplicate concurrent calls
+  fetchStats(version: TradeSiteVersion): Promise<StatIndex> {
+    if (statsCachePromises[version]) return statsCachePromises[version];
 
-  async fetchStats(version: TradeSiteVersion): Promise<StatEntry[]> {
-    const cacheKey = version;
-    if (this.statsCache[cacheKey]) return this.statsCache[cacheKey];
-
-    const basePath = version === '2' ? 'trade2' : 'trade';
-    const url = `https://www.pathofexile.com/api/${basePath}/data/stats`;
-
-    const response = await window.fetch(url);
-    if (!response.ok) throw new Error(`Failed to fetch stats: ${response.status}`);
-
-    const data = await response.json();
-    const entries: StatEntry[] = [];
-
-    // Stats response has result array with groups, each group has entries
-    for (const group of data.result || []) {
-      for (const entry of group.entries || []) {
-        entries.push({
-          id: entry.id,
-          text: entry.text,
-          type: entry.type,
-        });
-      }
-    }
-
-    this.statsCache[cacheKey] = entries;
-    return entries;
+    statsCachePromises[version] = this._doFetchStats(version);
+    return statsCachePromises[version];
   }
 
-  matchMod(mod: ParsedMod, stats: StatEntry[]): {statId: string; value: number | null} | null {
+  // Fix #11: Single-pass O(1) lookup via Map instead of 4x linear scan
+  matchMod(mod: ParsedMod, index: StatIndex): {statId: string; value: number | null} | null {
     const normalized = mod.normalizedText.trim();
-
-    // Determine expected stat type prefix based on mod tag
-    const typePrefix = this.getStatTypePrefix(mod.tag);
-
-    // Try exact normalized match first
-    for (const stat of stats) {
-      if (stat.text === normalized && stat.id.startsWith(typePrefix)) {
-        return {
-          statId: stat.id,
-          value: mod.values.length > 0 ? mod.values[0] : null,
-        };
-      }
-    }
-
-    // Try case-insensitive match
     const normalizedLower = normalized.toLowerCase();
-    for (const stat of stats) {
-      if (stat.text.toLowerCase() === normalizedLower && stat.id.startsWith(typePrefix)) {
-        return {
-          statId: stat.id,
-          value: mod.values.length > 0 ? mod.values[0] : null,
-        };
-      }
+    const typePrefix = STAT_TYPE_PREFIXES[mod.tag];
+    const value = mod.values.length > 0 ? mod.values[0] : null;
+
+    const candidates = index.byText.get(normalizedLower);
+    if (!candidates) return null;
+
+    // Priority: exact text + typed > exact text + untyped > case-insensitive + typed > case-insensitive + untyped
+    let exactTyped: StatEntry | null = null;
+    let exactUntyped: StatEntry | null = null;
+    let caseTyped: StatEntry | null = null;
+    let caseUntyped: StatEntry | null = null;
+
+    for (const stat of candidates) {
+      const isTyped = stat.id.startsWith(typePrefix);
+      const isExact = stat.text === normalized;
+
+      if (isExact && isTyped) return {statId: stat.id, value};
+      if (isExact && !exactUntyped) exactUntyped = stat;
+      if (!isExact && isTyped && !caseTyped) caseTyped = stat;
+      if (!isExact && !isTyped && !caseUntyped) caseUntyped = stat;
     }
 
-    // Try without type prefix constraint (fallback)
-    for (const stat of stats) {
-      if (stat.text === normalized) {
-        return {
-          statId: stat.id,
-          value: mod.values.length > 0 ? mod.values[0] : null,
-        };
-      }
-    }
-
-    // Try case-insensitive without type constraint
-    for (const stat of stats) {
-      if (stat.text.toLowerCase() === normalizedLower) {
-        return {
-          statId: stat.id,
-          value: mod.values.length > 0 ? mod.values[0] : null,
-        };
-      }
-    }
-
-    return null;
+    const best = exactTyped ?? caseTyped ?? exactUntyped ?? caseUntyped;
+    return best ? {statId: best.id, value} : null;
   }
 
-  buildSearchPayload(item: ParsedItem, stats: StatEntry[]): SearchPayload {
-    const explicitFilters: SearchFilter[] = [];
-    const implicitFilters: SearchFilter[] = [];
+  buildSearchPayload(item: ParsedItem, index: StatIndex): SearchPayload {
+    // Fix #1: Separate stat groups for explicit vs implicit mods
+    const statGroups: Array<{type: string; filters: SearchFilter[]}> = [];
 
-    // Match explicit mods
-    for (const mod of item.explicits) {
-      const match = this.matchMod(mod, stats);
-      if (match) {
-        const filter: SearchFilter = {id: match.statId, value: {}};
-        if (match.value !== null) {
-          filter.value.min = match.value;
-        }
-        explicitFilters.push(filter);
-      }
+    const explicitFilters = this._matchMods(item.explicits, index);
+    const implicitFilters = this._matchMods(item.implicits, index);
+
+    if (explicitFilters.length) {
+      statGroups.push({type: 'and', filters: explicitFilters});
     }
-
-    // Match implicit mods
-    for (const mod of item.implicits) {
-      const match = this.matchMod(mod, stats);
-      if (match) {
-        const filter: SearchFilter = {id: match.statId, value: {}};
-        if (match.value !== null) {
-          filter.value.min = match.value;
-        }
-        implicitFilters.push(filter);
-      }
+    if (implicitFilters.length) {
+      statGroups.push({type: 'and', filters: implicitFilters});
     }
-
-    const allFilters = [...explicitFilters, ...implicitFilters];
+    if (!statGroups.length) {
+      statGroups.push({type: 'and', filters: []});
+    }
 
     const payload: SearchPayload = {
-      query: {
-        stats: [{type: 'and', filters: allFilters}],
-      },
+      query: {stats: statGroups},
       sort: {price: 'asc'},
     };
 
-    // Set type (base type) for non-magic items
     if (item.baseType && item.rarity !== 'Magic') {
       payload.query.type = item.baseType;
     }
 
-    // Set name for unique items
     if (item.rarity === 'Unique' && item.name) {
       payload.query.name = item.name;
     }
 
-    // Add misc filters
-    const miscFilters: SearchPayload['query']['filters'] = {
-      misc_filters: {filters: {}},
-    };
+    // Fix #4: No non-null assertions; build object directly
+    // Fix #13: Include mirrored and itemLevel in payload
+    const miscFilterValues: MiscFilterValues = {};
 
-    if (item.corrupted) {
-      miscFilters.misc_filters!.filters.corrupted = {option: true};
-    }
-    if (item.fractured) {
-      miscFilters.misc_filters!.filters.fractured_item = {option: true};
-    }
+    if (item.corrupted) miscFilterValues.corrupted = {option: true};
+    if (item.mirrored) miscFilterValues.mirrored = {option: true};
+    if (item.fractured) miscFilterValues.fractured_item = {option: true};
+    if (item.itemLevel !== null) miscFilterValues.ilvl = {min: item.itemLevel};
 
-    // Only include filters if there's something in them
-    const hasMiscFilters = Object.keys(miscFilters.misc_filters!.filters).length > 0;
-    if (hasMiscFilters) {
-      payload.query.filters = miscFilters;
+    if (Object.keys(miscFilterValues).length > 0) {
+      payload.query.filters = {misc_filters: {filters: miscFilterValues}};
     }
 
     return payload;
@@ -208,23 +158,21 @@ export default class TradeSearch extends Service {
 
     if (!league) throw new Error('No league detected from current URL');
 
-    const stats = await this.fetchStats(version);
-    const payload = this.buildSearchPayload(item, stats);
+    const index = await this.fetchStats(version);
+    const payload = this.buildSearchPayload(item, index);
 
-    const basePath = version === '2' ? 'trade2' : 'trade';
-    const searchUrl = `https://www.pathofexile.com/api/${basePath}/search/${league}`;
+    // Fix #12: Derive basePath from shared constant
+    const basePath = this._basePath(version);
+    const searchUrl = `${BASE_URL}/api/${basePath}/search/${league}`;
 
     const response = await window.fetch(searchUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: {'Content-Type': 'application/json'},
       body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Trade search failed (${response.status}): ${errorText}`);
+      throw new Error(`Trade search failed (${response.status})`);
     }
 
     const data = await response.json();
@@ -232,22 +180,59 @@ export default class TradeSearch extends Service {
 
     if (!searchId) throw new Error('No search ID returned from trade API');
 
-    return `https://www.pathofexile.com/${basePath}/search/${league}/${searchId}`;
+    return `${BASE_URL}/${basePath}/search/${league}/${searchId}`;
   }
 
-  private getStatTypePrefix(tag: string): string {
-    switch (tag) {
-      case 'implicit':
-        return 'implicit';
-      case 'crafted':
-        return 'crafted';
-      case 'fractured':
-        return 'fractured';
-      case 'enchant':
-        return 'enchant';
-      default:
-        return 'explicit';
+  private async _doFetchStats(version: TradeSiteVersion): Promise<StatIndex> {
+    const basePath = this._basePath(version);
+    const url = `${BASE_URL}/api/${basePath}/data/stats`;
+
+    const response = await window.fetch(url);
+    if (!response.ok) throw new Error(`Failed to fetch stats: ${response.status}`);
+
+    const data = await response.json();
+    const entries: StatEntry[] = [];
+    const byText = new Map<string, StatEntry[]>();
+
+    for (const group of data.result || []) {
+      for (const entry of group.entries || []) {
+        const stat: StatEntry = {id: entry.id, text: entry.text, type: entry.type};
+        entries.push(stat);
+
+        // Build lookup index keyed by normalized lowercase text
+        const key = entry.text.toLowerCase();
+        const existing = byText.get(key);
+        if (existing) {
+          existing.push(stat);
+        } else {
+          byText.set(key, [stat]);
+        }
+      }
     }
+
+    return {entries, byText};
+  }
+
+  // DRY helper for matching a list of mods to search filters
+  private _matchMods(mods: ParsedMod[], index: StatIndex): SearchFilter[] {
+    const filters: SearchFilter[] = [];
+
+    for (const mod of mods) {
+      const match = this.matchMod(mod, index);
+      if (match) {
+        const filter: SearchFilter = {id: match.statId, value: {}};
+        if (match.value !== null) {
+          filter.value.min = match.value;
+        }
+        filters.push(filter);
+      }
+    }
+
+    return filters;
+  }
+
+  private _basePath(version: TradeSiteVersion): string {
+    return version === '2' ? 'trade2' : 'trade';
   }
 }
 

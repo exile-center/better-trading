@@ -3,7 +3,8 @@ import {ParsedItem, ParsedMod, ModTag} from 'better-trading/types/item-parser';
 const SEPARATOR = '--------';
 const ADVANCED_MOD_REGEX = /^\{ (Prefix|Suffix|Implicit|Unique) Modifier "([^"]*)"(?: \(Tier: (\d+)\))?(?: — .*)? \}$/;
 const NUMBER_REGEX = /[+-]?\d+(?:\.\d+)?/g;
-const RANGE_VALUE_REGEX = /(\d+(?:\.\d+)?)\([\d.]+[-–][\d.]+\)/g;
+// Matches advanced format range notations: "12(8-12)", "12 (8-12)", "12%(8-12)"
+const RANGE_VALUE_REGEX = /(\d+(?:\.\d+)?(%?))\s*\([\d.]+[-–][\d.]+\)/g;
 const MOD_TAG_REGEX = /\s*\((implicit|crafted|fractured|enchant|rune|desecrated)\)\s*$/;
 
 export function parseItemText(text: string): ParsedItem | null {
@@ -172,13 +173,16 @@ function isDefenseOrOffenseSection(lines: string[]): boolean {
 }
 
 function isFlavourText(lines: string[]): boolean {
-  // Flavour text lines typically have no numbers and no mod-like patterns
+  const modKeywords = /(?:increased |reduced |more |less |regenerate|adds |grants? |enemies |hits |cannot |you have |per second|chance to |while |during |with |nearby|leech|damage|resistance|modifier)/i;
+
   return lines.every((line) => {
     if (!line) return true;
     if (ADVANCED_MOD_REGEX.test(line)) return false;
     if (MOD_TAG_REGEX.test(line)) return false;
-    // If it has a number followed by typical mod keywords, it's a mod
-    if (/[+-]?\d+.*(?:to |increased |reduced |more |less |regenerate|adds)/i.test(line)) return false;
+    // Lines with numbers + mod keywords are mods
+    if (/[+-]?\d+/.test(line) && modKeywords.test(line)) return false;
+    // Lines without numbers but with mod keywords are also mods (e.g. "Hits cannot be Evaded")
+    if (modKeywords.test(line)) return false;
     return true;
   });
 }
