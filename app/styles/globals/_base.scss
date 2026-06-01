@@ -1,7 +1,7 @@
 body.bt-body {
   overflow-y: scroll;
 
-  #app {
+  #trade {
     width: calc(100% - #{$extension-width});
     margin: 0;
     transition: width 0.2s ease;
@@ -21,7 +21,7 @@ body.bt-body {
   }
 
   &.bt-is-collapsed {
-    #app {
+    #trade {
       width: 100%;
     }
 
