@@ -22,3 +22,15 @@ export const extensionApi = (): ExtensionApi => {
   // eslint-disable-next-line no-undef
   return config.APP.browser === 'chrome' ? chrome : browser;
 };
+
+export const isExtensionContextValid = (): boolean => {
+  try {
+    // Accessing runtime.id throws once the extension has been reloaded in DevTools.
+    // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+    // @ts-ignore
+    // eslint-disable-next-line no-undef
+    return Boolean(extensionApi().runtime.id);
+  } catch {
+    return false;
+  }
+};

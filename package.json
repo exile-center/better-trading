@@ -1,7 +1,7 @@
 {
   "name": "better-trading",
-  "version": "1.9.2",
-  "changelog": "1-9-2-mercenaries-2",
+  "version": "1.9.3",
+  "changelog": "1-9-3-runesOfAldur",
   "private": true,
   "directories": {
     "doc": "doc",
@@ -20,10 +20,10 @@
   "scripts": {
     "clean": "rimraf dist",
     "dev": "npm run clean && npm run scaffold-extension dev && npm run ember:watch",
-    "ember:watch": "ember build --watch --environment development --output-path ./dist/dev/ember-build",
+    "ember:watch": "node --openssl-legacy-provider ./node_modules/ember-cli/bin/ember build --watch --environment development --output-path ./dist/dev/ember-build",
     "postinstall": "patch-package",
     "scaffold-extension": "node ./scripts/scaffold-extension.js",
-    "test": "ember exam --reporter dot"
+    "test": "node --openssl-legacy-provider ./node_modules/ember-cli/bin/ember exam --reporter dot"
   },
   "devDependencies": {
     "@ember/optional-features": "~1.1.0",

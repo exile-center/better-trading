@@ -3,12 +3,18 @@ import Resolver from './resolver';
 import loadInitializers from 'ember-load-initializers';
 import config from './config/environment';
 
-// Initialize the extension root container
-const extensionContainer = document.createElement('div');
-extensionContainer.id = 'better-trading-container';
+const CONTAINER_ID = 'better-trading-container';
+
+// Reuse an existing container to avoid duplicate panels on reinjection.
+let extensionContainer = document.getElementById(CONTAINER_ID);
+
+if (!extensionContainer) {
+  extensionContainer = document.createElement('div');
+  extensionContainer.id = CONTAINER_ID;
+}
 
 // Check if the trading app is present (ie. not in maintenance)
-if (document.querySelector('#trade')) {
+if (document.querySelector('#trade') && document.querySelector('#app')) {
   document.body.classList.add('bt-body');
 
   const isCollapsed = Boolean(window.localStorage.getItem('bt-side-panel-collapsed'));
@@ -17,7 +23,9 @@ if (document.querySelector('#trade')) {
   extensionContainer.style.display = 'none';
 }
 
-document.body.appendChild(extensionContainer);
+if (!extensionContainer.parentElement) {
+  document.body.appendChild(extensionContainer);
+}
 
 const {modulePrefix, podModulePrefix} = config;
 const App = Application.extend({

@@ -1,6 +1,6 @@
 // Vendor
 import Service from '@ember/service';
-import {extensionApi} from 'better-trading/utilities/extension-api';
+import {extensionApi, isExtensionContextValid} from 'better-trading/utilities/extension-api';
 import window from 'ember-window-mock';
 
 // Constants
@@ -77,35 +77,59 @@ export default class Storage extends Service {
   }
 
   private async fetchAllKeys(): Promise<string[]> {
-    return new Promise((resolve, _reject) => {
-      extensionApi().storage.local.get(null, (result) => {
-        resolve(Object.keys(result));
+    if (!isExtensionContextValid()) return [];
+
+    try {
+      return await new Promise((resolve) => {
+        extensionApi().storage.local.get(null, (result) => {
+          resolve(Object.keys(result));
+        });
       });
-    });
+    } catch {
+      return [];
+    }
   }
 
   private async read(key: string): Promise<StoragePayload | null> {
-    return new Promise((resolve, _reject) => {
-      extensionApi().storage.local.get([key], (result) => {
-        if (result[key]) {
-          resolve(result[key]);
-        } else {
-          resolve(null);
-        }
+    if (!isExtensionContextValid()) return null;
+
+    try {
+      return await new Promise((resolve) => {
+        extensionApi().storage.local.get([key], (result) => {
+          if (result[key]) {
+            resolve(result[key]);
+          } else {
+            resolve(null);
+          }
+        });
       });
-    });
+    } catch {
+      return null;
+    }
   }
 
   private async write(key: string, value: StoragePayload): Promise<void> {
-    return new Promise((resolve, _reject) => {
-      extensionApi().storage.local.set({[key]: value}, resolve);
-    });
+    if (!isExtensionContextValid()) return;
+
+    try {
+      await new Promise<void>((resolve) => {
+        extensionApi().storage.local.set({[key]: value}, resolve);
+      });
+    } catch {
+      // Extension was reloaded; the page needs a refresh to reconnect.
+    }
   }
 
   private async remove(keys: string | string[]): Promise<void> {
-    return new Promise((resolve, _reject) => {
-      extensionApi().storage.local.remove(keys, resolve);
-    });
+    if (!isExtensionContextValid()) return;
+
+    try {
+      await new Promise<void>((resolve) => {
+        extensionApi().storage.local.remove(keys, resolve);
+      });
+    } catch {
+      // Extension was reloaded; the page needs a refresh to reconnect.
+    }
   }
 }
 

@@ -10,6 +10,9 @@ import Storage from 'better-trading/services/storage';
 import TradeLocation from 'better-trading/services/trade-location';
 import PageTitle from 'better-trading/services/page-title';
 
+// Utilities
+import {scheduleModFilteringInjection} from 'better-trading/utilities/inject-mod-filtering';
+
 // Constants
 const DEFAULT_LOCALE = 'en';
 
@@ -38,5 +41,6 @@ export default class ApplicationRoute extends Route {
     this.tradeLocation.initialize();
     await this.storage.initialize();
     await this.pageTitle.initialize();
+    scheduleModFilteringInjection();
   }
 }

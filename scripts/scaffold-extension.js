@@ -32,11 +32,11 @@ const manifest = Object.assign(
     background: {
       service_worker: 'background.js',
     },
-    permissions: ['storage'],
-    host_permissions: ['*://poe.ninja/*'],
+    permissions: ['storage', 'scripting'],
+    host_permissions: ['*://poe.ninja/*', '*://www.pathofexile.com/*', '*://pathofexile.com/*'],
     web_accessible_resources: [
       {
-        resources: [assetsPathFor('images/*')],
+        resources: ['mod-filtering.js', assetsPathFor('images/*')],
         matches: ['*://www.pathofexile.com/*', '*://pathofexile.com/*'],
       },
     ],
@@ -53,5 +53,11 @@ const manifest = Object.assign(
 fs.mkdirSync(outputDir, {recursive: true});
 for (const file of fs.readdirSync('./extension')) {
   fs.copyFileSync(path.join('./extension', file), path.join(outputDir, file));
+}
+
+// Remove legacy bootstrap if an older build left it behind.
+const legacyBootstrap = path.join(outputDir, 'mod-filtering-bootstrap.js');
+if (fs.existsSync(legacyBootstrap)) {
+  fs.unlinkSync(legacyBootstrap);
 }
 fs.writeFileSync(path.join(outputDir, 'manifest.json'), JSON.stringify(manifest, null, 2));

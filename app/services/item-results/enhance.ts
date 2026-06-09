@@ -10,6 +10,7 @@ import {Task} from 'better-trading/types/ember-concurrency';
 
 // Utilities
 import {asyncLoop} from 'better-trading/utilities/async-loop';
+import {injectModFilteringScript} from 'better-trading/utilities/inject-mod-filtering';
 
 export default class ItemResultsEnhance extends Service {
   @service('item-results')
@@ -39,6 +40,8 @@ export default class ItemResultsEnhance extends Service {
   async initialize() {
     const tradeAppElement = window.document.getElementById('trade');
     if (!tradeAppElement || !tradeAppElement.parentElement) return;
+
+    injectModFilteringScript();
 
     this.resultsObserver = new MutationObserver(() => {
       // eslint-disable-next-line @typescript-eslint/no-floating-promises

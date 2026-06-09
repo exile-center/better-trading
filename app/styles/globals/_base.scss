@@ -1,10 +1,11 @@
 body.bt-body {
   overflow-y: scroll;
+  box-sizing: border-box;
+  padding-right: $extension-width;
+  transition: padding-right 0.2s ease;
 
   #app {
-    width: calc(100% - #{$extension-width});
     margin: 0;
-    transition: width 0.2s ease;
   }
 
   #better-trading-container {
@@ -14,16 +15,15 @@ body.bt-body {
     right: 0;
     bottom: 0;
     overflow-y: auto;
+    box-sizing: border-box;
     width: $extension-width;
     padding: $extension-y-padding $extension-x-padding;
-    background-color: rgba(#0a0a0a, 0.8);
+    background-color: #0a0a0a;
     transition: right 0.2s ease;
   }
 
   &.bt-is-collapsed {
-    #app {
-      width: 100%;
-    }
+    padding-right: 0;
 
     #better-trading-container {
       right: #{-1 * $extension-width};
