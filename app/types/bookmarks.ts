@@ -93,6 +93,7 @@ export enum BookmarksFolderAscendancyPoE2RangerIcon {
 export enum BookmarksFolderAscendancyPoE2SorceressIcon {
   CHRONOMANCER = 'poe2-chronomancer',
   STORMWEAVER = 'poe2-stormweaver',
+  DISCIPLE_OF_VARASHTA = 'poe2-disciple-of-Varashta',
 }
 
 export enum BookmarksFolderAscendancyPoE2MercenaryIcon {
@@ -104,11 +105,13 @@ export enum BookmarksFolderAscendancyPoE2MercenaryIcon {
 export enum BookmarksFolderAscendancyPoE2MonkIcon {
   INVOKER = 'poe2-invoker',
   ACOLYTE_OF_CHAYULA = 'poe2-acolyte-of-chayula',
+  MARTIAL_ARTIST = 'poe-2-martial-artist',
 }
 
 export enum BookmarksFolderAscendancyPoE2HuntressIcon {
   RITUALIST = 'poe2-ritualist',
   AMAZON = 'poe2-amazon',
+  SPIRIT_WALKER = 'poe2-spirit-walker',
 }
 
 export type BookmarksFolderPoE1AscendancyIcon =
