@@ -1,7 +1,7 @@
 {
   "name": "better-trading",
-  "version": "1.9.2",
-  "changelog": "1-9-2-mercenaries-2",
+  "version": "1.9.3",
+  "changelog": "1-9-3-mercenaries-3",
   "private": true,
   "directories": {
     "doc": "doc",
