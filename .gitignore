@@ -19,3 +19,6 @@ testem.log
 
 # env
 .env
+
+# local debug/scratch folder
+/dev.debug
