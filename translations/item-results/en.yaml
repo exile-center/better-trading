@@ -1,4 +1,8 @@
 item-results:
+  copy-item:
+    success: Item text copied.
+    unreadable: "Couldn't read this item's details. Refresh the results and try again."
+    clipboard-failed: "Couldn't write to the clipboard. Keep the trade tab focused and try again."
   pinnable:
     pin: Pin
     unpin: Unpin
