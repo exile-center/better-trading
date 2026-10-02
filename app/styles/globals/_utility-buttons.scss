@@ -11,4 +11,10 @@
       opacity: 1;
     }
   }
+
+  // PoE2 puts searchBy in the copy slot when native item text is missing.
+  // We expose both controls, so always reserve a separate slot for searchBy.
+  .resultset .row .left button.copy ~ button.searchBy {
+    left: 40px !important;
+  }
 }

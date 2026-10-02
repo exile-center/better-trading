@@ -5,8 +5,10 @@ export const copyToClipboard = (text: string) => {
 
   window.document.body.append(dummyTextarea);
 
-  dummyTextarea.select();
-  document.execCommand('copy');
-
-  dummyTextarea.remove();
+  try {
+    dummyTextarea.select();
+    return document.execCommand('copy');
+  } finally {
+    dummyTextarea.remove();
+  }
 };
